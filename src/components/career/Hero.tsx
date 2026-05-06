@@ -19,7 +19,7 @@ export const Hero = () => {
           <span className="font-bold text-lg">CareerPath AI</span>
         </div>
         <div className="hidden sm:flex items-center gap-1 text-sm text-muted-foreground">
-          <ShieldCheck className="w-4 h-4 text-accent" /> Trusted by students & parents
+          <ShieldCheck className="w-4 h-4 text-accent" /> Built by Neeli Sivasai
         </div>
       </header>
       <div className="max-w-4xl mx-auto px-4 pt-12 sm:pt-20 pb-16 sm:pb-24 text-center animate-fade-in">
@@ -44,7 +44,7 @@ export const Hero = () => {
           </div>
         </div>
         <div className="mt-14 grid grid-cols-3 gap-4 max-w-xl mx-auto">
-          {[["50K+", "Students guided"], ["95%", "Accuracy"], ["6 steps", "To your report"]].map(([n, l]) => (
+          {[["95%", "Accuracy"], ["6 steps", "To your report"]].map(([n, l]) => (
             <div key={l} className="text-center">
               <div className="text-2xl sm:text-3xl font-bold text-gradient-primary">{n}</div>
               <div className="text-xs text-muted-foreground mt-1">{l}</div>
