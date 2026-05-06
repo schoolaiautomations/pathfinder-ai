@@ -16,7 +16,7 @@ export const Hero = () => {
           <div className="w-9 h-9 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
             <Sparkles className="w-5 h-5 text-primary-foreground" />
           </div>
-          <span className="font-bold text-lg">CareerPath AI</span>
+          <span className="font-bold text-lg">Wabi Career Guidance</span>
         </div>
         <div className="hidden sm:flex items-center gap-1 text-sm text-muted-foreground">
           <ShieldCheck className="w-4 h-4 text-accent" /> Built by Neeli Sivasai

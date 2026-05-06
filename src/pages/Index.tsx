@@ -10,7 +10,7 @@ const Index = () => {
       <ReportPreview />
       <CareerForm />
       <footer className="border-t border-border py-8 text-center text-sm text-muted-foreground">
-        <p>© {new Date().getFullYear()} CareerPath AI · Helping students find their future</p>
+        <p>© {new Date().getFullYear()} Wabi Career Guidance · Helping students find their future</p>
       </footer>
     </main>
   );
