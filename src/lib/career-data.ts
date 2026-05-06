@@ -65,3 +65,17 @@ export const financialOptions = ["No major constraint","Need affordable options"
 
 export const countries = ["India","United States","United Kingdom","Canada","Australia","Singapore","UAE","Other"];
 export const indianStates = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Other"];
+
+export type CareerReport = {
+  matches: { name: string; score: number; why: string }[];
+  insights: {
+    studyRoadmap: string;
+    whereToStudy: string;
+    skillsToBuild: string;
+    salaryAndDemand: string;
+    whatToStudyNext: string;
+    parentGuidance: string;
+  };
+};
+
+export const REPORT_STORAGE_KEY = "ai-career-report";
