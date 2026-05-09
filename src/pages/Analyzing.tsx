@@ -40,6 +40,33 @@ const Analyzing = () => {
       const report = await generateCareerReport(formData);
       reportRef.current = report;
       localStorage.setItem(REPORT_STORAGE_KEY, JSON.stringify(report));
+
+      // Save data to SheetDB
+      try {
+        const locationStr = [formData.city, formData.state, formData.country].filter(Boolean).join(", ");
+        await fetch("https://sheetdb.io/api/v1/v872qrt39irws", {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: [
+              {
+                name: formData.name || "Not provided",
+                class: formData.educationLevel || "Not provided",
+                location: locationStr || "Not provided",
+                performance: formData.performance || "Not provided",
+                intrests: formData.interests?.length ? formData.interests.join(", ") : "None",
+                skills: formData.skills?.length ? formData.skills.join(", ") : "None",
+              },
+            ],
+          }),
+        });
+      } catch (err) {
+        console.error("Failed to save to SheetDB:", err);
+      }
+
       setApiDone(true);
     } catch (err: any) {
       console.error("Gemini API error:", err);
