@@ -1,7 +1,7 @@
 import type { FormData, CareerReport } from "./career-data";
 
-const API_KEY = import.meta.env.VITE_GLM_API_KEY as string;
-const BASE_URL = "https://open.bigmodel.cn/api/paas/v4";
+const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY as string;
+const BASE_URL = "https://openrouter.ai/api/v1";
 
 function buildPrompt(d: FormData): string {
   const age = d.dob
@@ -73,7 +73,7 @@ The JSON must match this exact structure:
 
 export async function generateCareerReport(formData: FormData): Promise<CareerReport> {
   if (!API_KEY) {
-    throw new Error("GLM API key is not configured. Please add VITE_GLM_API_KEY to your .env file.");
+    throw new Error("OpenRouter API key is not configured. Please add VITE_OPENROUTER_API_KEY to your .env file.");
   }
 
   const prompt = buildPrompt(formData);
@@ -83,9 +83,11 @@ export async function generateCareerReport(formData: FormData): Promise<CareerRe
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${API_KEY}`,
+      "HTTP-Referer": window.location.origin,
+      "X-Title": "Pathfinder AI",
     },
     body: JSON.stringify({
-      model: "GLM-4.7-Flash",
+      model: "openai/gpt-oss-120b:free",
       messages: [
         {
           role: "system",
@@ -104,7 +106,7 @@ export async function generateCareerReport(formData: FormData): Promise<CareerRe
 
   if (!response.ok) {
     const errorBody = await response.text().catch(() => "");
-    console.error("GLM API error:", response.status, errorBody);
+    console.error("OpenRouter API error:", response.status, errorBody);
     throw new Error(`AI service returned an error (${response.status}). Please try again.`);
   }
 
@@ -113,7 +115,7 @@ export async function generateCareerReport(formData: FormData): Promise<CareerRe
   // Check if the response was truncated
   const finishReason = data?.choices?.[0]?.finish_reason;
   if (finishReason === "length") {
-    console.error("GLM response truncated (finish_reason=length)");
+    console.error("OpenRouter response truncated (finish_reason=length)");
     throw new Error("The AI response was too long and got cut off. Please try again.");
   }
 
@@ -159,7 +161,7 @@ export async function generateCareerReport(formData: FormData): Promise<CareerRe
 
     return parsed;
   } catch (e) {
-    console.error("Failed to parse GLM response:", content);
+    console.error("Failed to parse OpenRouter response:", content);
     throw new Error("The AI returned an invalid response. Please try again.");
   }
 }
