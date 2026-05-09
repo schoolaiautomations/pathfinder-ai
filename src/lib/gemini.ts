@@ -49,6 +49,11 @@ Based on the above profile, generate a career guidance report with:
    - "name": career title (string)
    - "score": match percentage 1-100 (number) — be realistic, don't give all 90+
    - "why": one-sentence personalised explanation why this career suits the student (string)
+   - "roadmap": An array of 3-6 steps (objects) starting from their current education level (${d.educationLevel || "current level"}) leading to the final career. Each step must have:
+     - "stage": Stage title (string, e.g., "Class 11-12", "B.Tech Computer Science")
+     - "description": What to do at this stage (string). If the stage is Class 11/12, clearly mention the stream to select (e.g., PCM, PCB, Commerce).
+     - "duration": Time required (string, e.g., "2 years")
+     - "institutes": Array of strings containing exactly 3-5 REAL institutes/colleges in India (or preferred location) excellent for this stage. IMPORTANT: If the stage is Class 11/12 (Intermediate), leave this array empty.
 
 2. **insights** — An object with exactly 6 keys, each value is a short paragraph (2-3 sentences, practical and specific to this student):
    - "studyRoadmap": what subjects/courses to focus on right now
@@ -61,7 +66,7 @@ Based on the above profile, generate a career guidance report with:
 IMPORTANT: Respond ONLY with valid JSON. No markdown, no code fences, no extra text.
 The JSON must match this exact structure:
 {
-  "matches": [{"name":"...","score":0,"why":"..."}],
+  "matches": [{"name":"...","score":0,"why":"...","roadmap":[{"stage":"...","description":"...","duration":"...","institutes":["..."]}]}],
   "insights": {"studyRoadmap":"...","whereToStudy":"...","skillsToBuild":"...","salaryAndDemand":"...","whatToStudyNext":"...","parentGuidance":"..."}
 }`;
 }
@@ -149,6 +154,7 @@ export async function generateCareerReport(formData: FormData): Promise<CareerRe
       name: m.name,
       score: Math.max(1, Math.min(100, Math.round(m.score))),
       why: m.why,
+      roadmap: m.roadmap || [],
     }));
 
     return parsed;
