@@ -15,16 +15,16 @@ export const InterestGrid = ({ selected, onChange }: { selected: string[]; onCha
             type="button"
             onClick={() => toggle(it.name)}
             className={cn(
-              "group relative p-4 rounded-2xl border-2 text-left transition-smooth hover:-translate-y-0.5",
+              "group relative p-4 rounded-2xl border-2 text-left transition-all hover:-translate-y-0.5",
               active
-                ? "border-primary bg-gradient-soft shadow-glow"
-                : "border-border bg-card hover:border-primary/40 shadow-soft"
+                ? "border-black bg-zinc-100 text-zinc-950 shadow-sm"
+                : "border-zinc-200 bg-white hover:border-zinc-400 shadow-none text-zinc-800"
             )}
           >
             <div className="text-2xl mb-1.5">{it.icon}</div>
-            <div className={cn("text-sm font-medium", active && "text-primary")}>{it.name}</div>
+            <div className={cn("text-sm font-semibold", active ? "text-black" : "text-zinc-800")}>{it.name}</div>
             {active && (
-              <div className="absolute top-2 right-2 w-5 h-5 rounded-full bg-gradient-primary flex items-center justify-center text-white text-xs">✓</div>
+              <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-black flex items-center justify-center text-white text-xs font-bold">✓</div>
             )}
           </button>
         );
@@ -32,3 +32,4 @@ export const InterestGrid = ({ selected, onChange }: { selected: string[]; onCha
     </div>
   );
 };
+

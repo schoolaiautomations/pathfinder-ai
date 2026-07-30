@@ -89,16 +89,16 @@ export const CareerForm = () => {
 
   return (
     <div id="form" className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
-      <Card className="bg-gradient-card shadow-card border-border/60 rounded-3xl p-6 sm:p-10">
+      <Card className="bg-white shadow-card border border-zinc-200 rounded-3xl p-6 sm:p-10">
         <Stepper current={step} />
 
         <div className="mt-8 mb-6 flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-primary flex items-center justify-center shadow-glow shrink-0">
-            <Icon className="w-6 h-6 text-primary-foreground" />
+          <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white shrink-0 shadow-sm">
+            <Icon className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold">{stepTitles[step].title}</h2>
-            <p className="text-muted-foreground mt-1">{stepTitles[step].desc}</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950">{stepTitles[step].title}</h2>
+            <p className="text-zinc-500 text-sm mt-1">{stepTitles[step].desc}</p>
           </div>
         </div>
 
@@ -111,16 +111,16 @@ export const CareerForm = () => {
           {step === 5 && <Step6 data={data} update={update} errors={errors} goTo={setStep} />}
         </div>
 
-        <div className="mt-10 flex flex-col-reverse sm:flex-row gap-3 sm:justify-between">
-          <Button variant="outline" onClick={back} disabled={step === 0} size="lg" className="rounded-xl">
+        <div className="mt-10 flex flex-col-reverse sm:flex-row gap-3 sm:justify-between pt-6 border-t border-zinc-100">
+          <Button variant="outline" onClick={back} disabled={step === 0} size="lg" className="rounded-xl border-zinc-300">
             <ArrowLeft /> Back
           </Button>
           {step < 5 ? (
-            <Button variant="hero" onClick={next} size="lg">
+            <Button onClick={next} size="lg" className="bg-black text-white hover:bg-zinc-800 rounded-xl px-8 font-semibold">
               Continue <ArrowRight />
             </Button>
           ) : (
-            <Button variant="hero" onClick={submit} size="xl">
+            <Button onClick={submit} size="xl" className="bg-black text-white hover:bg-zinc-800 rounded-2xl px-10 font-bold shadow-md">
               <Sparkles /> Generate My AI Career Report
             </Button>
           )}
@@ -221,8 +221,8 @@ const Step3 = ({ data, update, errors }: any) => (
       <Input className={inputCls()} value={data.customInterests} onChange={(e) => update("customInterests", e.target.value)} placeholder="e.g. Astronomy, Photography" />
     </Field>
     {data.interests.length > 0 && (
-      <div className="rounded-2xl bg-accent-soft p-4 text-sm">
-        <span className="font-semibold text-accent-foreground/80">{data.interests.length} interest{data.interests.length > 1 ? "s" : ""} selected</span>
+      <div className="rounded-2xl bg-zinc-100 border border-zinc-200 p-4 text-sm">
+        <span className="font-semibold text-zinc-900">{data.interests.length} interest{data.interests.length > 1 ? "s" : ""} selected</span>
       </div>
     )}
   </div>
@@ -267,8 +267,8 @@ const Step5 = ({ data, update }: any) => (
     <Field label="Preferred Study Mode">
       <RadioGroup value={data.studyMode} onValueChange={(v) => update("studyMode", v)} className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {studyModes.map((m) => (
-          <label key={m} className="flex items-center gap-2 p-3 rounded-xl border border-border hover:border-primary/40 cursor-pointer transition-smooth has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-secondary">
-            <RadioGroupItem value={m} /> <span className="text-sm font-medium">{m}</span>
+          <label key={m} className="flex items-center gap-2 p-3 rounded-xl border border-zinc-200 hover:border-black/50 cursor-pointer transition-all has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100">
+            <RadioGroupItem value={m} /> <span className="text-sm font-semibold text-zinc-900">{m}</span>
           </label>
         ))}
       </RadioGroup>
@@ -289,16 +289,16 @@ const Step5 = ({ data, update }: any) => (
 );
 
 const Summary = ({ title, items, onEdit }: { title: string; items: { label: string; value: any }[]; onEdit: () => void }) => (
-  <div className="rounded-2xl border border-border bg-card p-5">
+  <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
     <div className="flex items-center justify-between mb-3">
-      <h3 className="font-semibold">{title}</h3>
-      <Button variant="ghost" size="sm" onClick={onEdit} className="text-primary"><Pencil className="w-3.5 h-3.5" /> Edit</Button>
+      <h3 className="font-bold text-zinc-950">{title}</h3>
+      <Button variant="ghost" size="sm" onClick={onEdit} className="text-zinc-900 hover:bg-zinc-100"><Pencil className="w-3.5 h-3.5" /> Edit</Button>
     </div>
     <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
       {items.map((it) => (
         <div key={it.label} className="flex flex-col">
-          <dt className="text-muted-foreground text-xs">{it.label}</dt>
-          <dd className="font-medium">{Array.isArray(it.value) ? (it.value.length ? it.value.join(", ") : "—") : (it.value || "—")}</dd>
+          <dt className="text-zinc-500 text-xs font-medium">{it.label}</dt>
+          <dd className="font-semibold text-zinc-900">{Array.isArray(it.value) ? (it.value.length ? it.value.join(", ") : "—") : (it.value || "—")}</dd>
         </div>
       ))}
     </dl>
@@ -329,9 +329,9 @@ const Step6 = ({ data, update, errors, goTo }: any) => (
       { label: "Financial", value: data.financial }, { label: "Parent Expectations", value: data.parentExpectations },
       { label: "Not Wanted", value: data.notWanted },
     ]} />
-    <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-smooth ${errors.confirmed ? "border-destructive" : "border-border has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-secondary"}`}>
+    <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.confirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
       <Checkbox checked={data.confirmed} onCheckedChange={(v) => update("confirmed", !!v)} className="mt-0.5" />
-      <span className="text-sm">I confirm that the information provided is correct, and I'd like the AI to generate my personalised career report.</span>
+      <span className="text-sm font-medium text-zinc-900">I confirm that the information provided is correct, and I'd like the AI to generate my personalised career report.</span>
     </label>
   </div>
 );

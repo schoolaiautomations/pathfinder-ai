@@ -87,7 +87,7 @@ export async function generateCareerReport(formData: FormData): Promise<CareerRe
       "X-Title": "Pathfinder AI",
     },
     body: JSON.stringify({
-      model: "openai/gpt-oss-120b:free",
+      model: "openai/gpt-oss-120b",
       messages: [
         {
           role: "system",

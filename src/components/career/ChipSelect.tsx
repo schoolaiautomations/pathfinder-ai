@@ -8,7 +8,7 @@ type Props = {
   variant?: "default" | "accent";
 };
 
-export const ChipSelect = ({ options, selected, onChange, variant = "default" }: Props) => {
+export const ChipSelect = ({ options, selected, onChange }: Props) => {
   const toggle = (opt: string) => {
     onChange(selected.includes(opt) ? selected.filter((s) => s !== opt) : [...selected, opt]);
   };
@@ -22,12 +22,10 @@ export const ChipSelect = ({ options, selected, onChange, variant = "default" }:
             type="button"
             onClick={() => toggle(opt)}
             className={cn(
-              "px-4 py-2 rounded-full border text-sm font-medium transition-smooth flex items-center gap-1.5",
+              "px-4 py-2 rounded-full border text-sm font-medium transition-all flex items-center gap-1.5",
               active
-                ? variant === "accent"
-                  ? "bg-gradient-accent text-white border-transparent shadow-soft"
-                  : "bg-gradient-primary text-white border-transparent shadow-soft"
-                : "bg-card text-foreground border-border hover:border-primary/40 hover:bg-secondary"
+                ? "bg-black text-white border-black shadow-sm"
+                : "bg-white text-zinc-800 border-zinc-200 hover:border-zinc-400 hover:bg-zinc-50"
             )}
           >
             {active && <Check className="w-3.5 h-3.5" />}
@@ -38,3 +36,4 @@ export const ChipSelect = ({ options, selected, onChange, variant = "default" }:
     </div>
   );
 };
+

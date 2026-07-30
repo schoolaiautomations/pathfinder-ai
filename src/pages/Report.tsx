@@ -69,79 +69,79 @@ const Report = () => {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-hero pb-16">
+    <main className="min-h-screen bg-background pb-16">
       <div className="max-w-5xl mx-auto px-4 pt-10">
-        <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6">
+        <Link to="/" className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-black mb-6">
           <ArrowLeft className="w-4 h-4" /> Back to home
         </Link>
-        <Card className="bg-gradient-card rounded-3xl p-8 sm:p-10 shadow-card animate-fade-in">
+        <Card className="bg-white border border-zinc-200 rounded-3xl p-8 sm:p-10 shadow-card animate-fade-in">
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-5 h-5 text-primary" />
-            <span className="text-sm font-semibold text-primary">Your AI Career Report</span>
+            <Sparkles className="w-5 h-5 text-black" />
+            <span className="text-xs font-bold tracking-wider text-zinc-700 uppercase">Your AI Career Report</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-zinc-950">
             {studentName
               ? `${studentName}, here's your personalised career path`
               : "Your personalised career path"}
           </h1>
-          <p className="text-muted-foreground mt-3 max-w-2xl">Based on your interests, education, and goals — here are the careers our AI thinks suit you best.</p>
+          <p className="text-zinc-500 mt-3 max-w-2xl text-base">Based on your interests, education, and goals — here are the careers our AI thinks suit you best.</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Button variant="hero" size="lg" onClick={handleDownloadPDF}><Download /> Download PDF</Button>
-            <Button variant="outline" size="lg" className="rounded-xl">Share with parents</Button>
+            <Button size="lg" onClick={handleDownloadPDF} className="bg-black text-white hover:bg-zinc-800 rounded-xl px-6 font-semibold"><Download /> Download PDF</Button>
+            <Button variant="outline" size="lg" className="rounded-xl border-zinc-300 font-semibold">Share with parents</Button>
           </div>
         </Card>
 
-        <h2 className="text-xl font-bold mt-10 mb-4">Top career matches</h2>
+        <h2 className="text-xl font-bold text-zinc-950 mt-10 mb-4">Top career matches</h2>
         <div className="grid gap-4">
           {report.matches.map((m, i) => (
-            <Card key={m.name} className="p-6 rounded-2xl shadow-soft hover:shadow-card transition-smooth">
+            <Card key={m.name} className="p-6 rounded-2xl border border-zinc-200 bg-white shadow-sm hover:shadow-md transition-all">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center text-white font-bold shadow-glow">{i + 1}</div>
+                  <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-bold text-lg shadow-sm">{i + 1}</div>
                   <div>
-                    <h3 className="text-lg font-bold">{m.name}</h3>
-                    <p className="text-sm text-muted-foreground mt-0.5">{m.why}</p>
+                    <h3 className="text-lg font-bold text-zinc-950">{m.name}</h3>
+                    <p className="text-sm text-zinc-500 mt-0.5">{m.why}</p>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-3xl font-bold text-gradient-primary">{m.score}%</div>
-                  <div className="text-xs text-muted-foreground">Match score</div>
+                  <div className="text-3xl font-extrabold text-black">{m.score}%</div>
+                  <div className="text-xs text-zinc-500 font-medium">Match score</div>
                 </div>
               </div>
-              <div className="mt-4 h-2 bg-muted rounded-full overflow-hidden mb-4">
-                <div className="h-full bg-gradient-primary rounded-full transition-all duration-1000 ease-out" style={{ width: `${m.score}%` }} />
+              <div className="mt-4 h-2 bg-zinc-100 rounded-full overflow-hidden border border-zinc-200/50 mb-4">
+                <div className="h-full bg-black rounded-full transition-all duration-1000 ease-out" style={{ width: `${m.score}%` }} />
               </div>
 
               {m.roadmap && m.roadmap.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-border/50">
+                <div className="mt-4 pt-4 border-t border-zinc-100">
                   <button 
                     onClick={() => toggleMatch(i)}
-                    className="flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors w-full"
+                    className="flex items-center gap-2 text-sm font-bold text-zinc-950 hover:text-zinc-600 transition-colors w-full"
                   >
                     {expandedMatches.has(i) ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                     Explore Pathway to {m.name}
                   </button>
 
                   {expandedMatches.has(i) && (
-                    <div className="mt-6 ml-2 sm:ml-6 relative border-l-2 border-primary/20 space-y-8 pb-4 animate-fade-in">
+                    <div className="mt-6 ml-2 sm:ml-6 relative border-l-2 border-zinc-300 space-y-8 pb-4 animate-fade-in">
                       {m.roadmap.map((step, stepIdx) => (
                         <div key={stepIdx} className="relative pl-6 sm:pl-8">
                           {/* Timeline node */}
-                          <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-background border-4 border-primary shadow-glow"></div>
+                          <div className="absolute -left-[11px] top-1 w-5 h-5 rounded-full bg-white border-4 border-black shadow-sm"></div>
                           
-                          <div className="bg-gradient-soft p-4 rounded-xl shadow-sm border border-border/50">
-                            <h4 className="font-bold text-base sm:text-lg text-foreground">{step.stage}</h4>
-                            <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
+                          <div className="bg-zinc-50/80 p-4 rounded-2xl border border-zinc-200/80 shadow-none">
+                            <h4 className="font-bold text-base sm:text-lg text-zinc-950">{step.stage}</h4>
+                            <p className="text-sm text-zinc-600 mt-1 leading-relaxed">{step.description}</p>
                             
-                            <div className="flex flex-wrap items-center gap-4 mt-3">
-                              <div className="flex items-center gap-1.5 text-xs font-medium text-amber-600 bg-amber-50 px-2 py-1 rounded-md">
+                            <div className="flex flex-wrap items-center gap-3 mt-3">
+                              <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-800 bg-zinc-200/70 border border-zinc-300 px-2.5 py-1 rounded-md">
                                 <Clock className="w-3.5 h-3.5" />
                                 {step.duration}
                               </div>
                               {step.institutes && step.institutes.length > 0 && (
-                                <div className="flex items-start gap-1.5 text-xs text-primary bg-primary/5 px-2 py-1 rounded-md">
+                                <div className="flex items-start gap-1.5 text-xs text-zinc-900 bg-zinc-100 border border-zinc-200 px-2.5 py-1 rounded-md">
                                   <GraduationCap className="w-3.5 h-3.5 mt-0.5 shrink-0" />
-                                  <span className="font-medium">Institutes: {step.institutes.join(", ")}</span>
+                                  <span className="font-semibold">Institutes: {step.institutes.join(", ")}</span>
                                 </div>
                               )}
                             </div>
@@ -151,11 +151,11 @@ const Report = () => {
                       
                       {/* Final Destination Node */}
                       <div className="relative pl-6 sm:pl-8 pt-2">
-                        <div className="absolute -left-[15px] top-2 w-7 h-7 rounded-full bg-primary flex items-center justify-center text-white shadow-glow">
+                        <div className="absolute -left-[15px] top-2 w-7 h-7 rounded-full bg-black flex items-center justify-center text-white shadow-sm">
                           <Briefcase className="w-3.5 h-3.5" />
                         </div>
-                        <h4 className="font-bold text-lg text-primary">{m.name}</h4>
-                        <p className="text-xs text-muted-foreground mt-0.5">Destination Reached</p>
+                        <h4 className="font-bold text-lg text-zinc-950">{m.name}</h4>
+                        <p className="text-xs text-zinc-500 font-medium mt-0.5">Destination Reached</p>
                       </div>
                     </div>
                   )}
@@ -165,30 +165,30 @@ const Report = () => {
           ))}
         </div>
 
-        <h2 className="text-xl font-bold mt-10 mb-4">Personalised insights</h2>
+        <h2 className="text-xl font-bold text-zinc-950 mt-10 mb-4">Personalised insights</h2>
         <div className="grid sm:grid-cols-2 gap-4">
           {insightCards.map(({ icon: Icon, title, body }) => (
-            <Card key={title} className="p-6 rounded-2xl shadow-soft">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-gradient-soft flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-primary" />
+            <Card key={title} className="p-6 rounded-2xl border border-zinc-200 bg-white shadow-sm">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-900">
+                  <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="font-semibold">{title}</h3>
+                <h3 className="font-bold text-zinc-950">{title}</h3>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+              <p className="text-sm text-zinc-600 leading-relaxed">{body}</p>
             </Card>
           ))}
         </div>
 
         {/* Bottom download section */}
         <div className="mt-12 text-center">
-          <Card className="inline-flex flex-col items-center gap-4 p-8 rounded-3xl shadow-soft bg-gradient-card">
-            <Download className="w-8 h-8 text-primary" />
+          <Card className="inline-flex flex-col items-center gap-4 p-8 rounded-3xl border border-zinc-200 bg-white shadow-card">
+            <Download className="w-8 h-8 text-black" />
             <div>
-              <h3 className="text-lg font-bold">Save your report</h3>
-              <p className="text-sm text-muted-foreground mt-1">Download a PDF copy to share with parents or counsellors.</p>
+              <h3 className="text-lg font-bold text-zinc-950">Save your report</h3>
+              <p className="text-sm text-zinc-500 mt-1">Download a PDF copy to share with parents or counsellors.</p>
             </div>
-            <Button variant="hero" size="lg" onClick={handleDownloadPDF}>
+            <Button size="lg" onClick={handleDownloadPDF} className="bg-black text-white hover:bg-zinc-800 rounded-xl px-8 font-semibold">
               <Download /> Download PDF
             </Button>
           </Card>

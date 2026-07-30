@@ -110,13 +110,13 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
 
     .header {
       text-align: center;
-      border-bottom: 3px solid #7c3aed;
+      border-bottom: 3px solid #000;
       padding-bottom: 24px;
       margin-bottom: 32px;
     }
     .header h1 {
       font-size: 28px;
-      color: #7c3aed;
+      color: #000;
       margin-bottom: 4px;
     }
     .header .subtitle {
@@ -132,9 +132,9 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
     .section-title {
       font-size: 20px;
       font-weight: 700;
-      color: #7c3aed;
+      color: #000;
       margin: 28px 0 16px;
-      border-left: 4px solid #7c3aed;
+      border-left: 4px solid #000;
       padding-left: 12px;
     }
 
@@ -143,18 +143,20 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       grid-template-columns: 1fr 1fr;
       gap: 8px 24px;
       font-size: 14px;
-      background: #f8f7ff;
+      background: #f4f4f5;
       padding: 16px 20px;
       border-radius: 12px;
       margin-bottom: 8px;
+      border: 1px solid #e4e4e7;
     }
     .profile-grid .label {
       font-weight: 600;
-      color: #7c3aed;
+      color: #000;
     }
 
     .match-card {
-      background: #f8f7ff;
+      background: #fafafa;
+      border: 1px solid #e4e4e7;
       border-radius: 12px;
       padding: 16px 20px;
       margin-bottom: 12px;
@@ -168,7 +170,7 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       width: 40px;
       height: 40px;
       border-radius: 10px;
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      background: #000;
       color: #fff;
       font-weight: 700;
       font-size: 18px;
@@ -178,24 +180,24 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       flex-shrink: 0;
     }
     .match-info { flex: 1; }
-    .match-info h3 { font-size: 16px; font-weight: 700; }
-    .match-info p { font-size: 13px; color: #666; margin-top: 2px; }
+    .match-info h3 { font-size: 16px; font-weight: 700; color: #000; }
+    .match-info p { font-size: 13px; color: #555; margin-top: 2px; }
     .match-score {
       font-size: 28px;
       font-weight: 800;
-      color: #7c3aed;
+      color: #000;
       flex-shrink: 0;
     }
     .progress-bar {
       height: 6px;
-      background: #e2ddf5;
+      background: #e4e4e7;
       border-radius: 3px;
       margin-top: 12px;
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #7c3aed, #a855f7);
+      background: #000;
       border-radius: 3px;
     }
 
@@ -206,13 +208,13 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
     }
     .roadmap-title {
       font-weight: 700;
-      color: #7c3aed;
+      color: #000;
       font-size: 15px;
       margin-bottom: 16px;
     }
     .roadmap-timeline {
       padding-left: 12px;
-      border-left: 2px solid #e2ddf5;
+      border-left: 2px solid #d4d4d8;
       margin-left: 8px;
     }
     .roadmap-step {
@@ -227,13 +229,13 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       width: 12px;
       height: 12px;
       background: #fff;
-      border: 3px solid #7c3aed;
+      border: 3px solid #000;
       border-radius: 50%;
     }
     .step-content h4 {
       font-size: 14px;
       font-weight: 700;
-      color: #1a1a2e;
+      color: #000;
     }
     .step-content p {
       font-size: 13px;
@@ -248,18 +250,19 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       font-size: 12px;
     }
     .duration {
-      color: #d97706;
-      background: #fef3c7;
+      color: #27272a;
+      background: #e4e4e7;
       padding: 2px 6px;
       border-radius: 4px;
-      font-weight: 500;
+      font-weight: 600;
     }
     .institutes {
-      color: #7c3aed;
-      background: #f3f0ff;
+      color: #000;
+      background: #f4f4f5;
+      border: 1px solid #e4e4e7;
       padding: 2px 6px;
       border-radius: 4px;
-      font-weight: 500;
+      font-weight: 600;
     }
     .final-step {
       margin-bottom: 0;
@@ -269,15 +272,16 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       top: 0;
       width: 22px;
       height: 22px;
-      background: #7c3aed;
+      background: #000;
       border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 10px;
+      color: #fff;
     }
     .final-title {
-      color: #7c3aed !important;
+      color: #000 !important;
     }
 
     .insights-grid {
@@ -286,7 +290,8 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       gap: 12px;
     }
     .insight-card {
-      background: #f8f7ff;
+      background: #fafafa;
+      border: 1px solid #e4e4e7;
       border-radius: 12px;
       padding: 16px 20px;
     }
@@ -294,7 +299,7 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       font-size: 15px;
       font-weight: 700;
       margin-bottom: 6px;
-      color: #1a1a2e;
+      color: #000;
     }
     .insight-card p {
       font-size: 13px;
@@ -308,12 +313,12 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
       padding-top: 20px;
       border-top: 1px solid #e5e5e5;
       font-size: 12px;
-      color: #aaa;
+      color: #888;
     }
 
     .no-print { margin: 24px auto 0; text-align: center; }
     .no-print button {
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      background: #000;
       color: #fff;
       border: none;
       padding: 12px 32px;
@@ -340,23 +345,23 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
         print-color-adjust: exact;
       }
       .roadmap-timeline {
-        border-left-color: #e2ddf5 !important;
+        border-left-color: #d4d4d8 !important;
       }
       .step-node {
-        border-color: #7c3aed !important;
+        border-color: #000 !important;
       }
       .final-node {
-        background-color: #7c3aed !important;
+        background-color: #000 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
       .duration {
-        background-color: #fef3c7 !important;
+        background-color: #e4e4e7 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
       .institutes {
-        background-color: #f3f0ff !important;
+        background-color: #f4f4f5 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
