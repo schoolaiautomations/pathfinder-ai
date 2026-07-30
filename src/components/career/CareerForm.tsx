@@ -56,7 +56,7 @@ export const CareerForm = () => {
   const validate = (): boolean => {
     const e: Record<string, boolean> = {};
     if (step === 0) {
-      ["dob", "gender", "city", "state", "country"].forEach((f) => {
+      ["phone_number", "dob", "gender", "city", "state", "country"].forEach((f) => {
         if (!(data as any)[f]) e[f] = true;
       });
     } else if (step === 1) {
@@ -65,6 +65,7 @@ export const CareerForm = () => {
       if (data.interests.length === 0) e.interests = true;
     } else if (step === 5) {
       if (!data.confirmed) e.confirmed = true;
+      if (!data.aiDisclaimerConfirmed) e.aiDisclaimerConfirmed = true;
     }
     setErrors(e);
     if (Object.keys(e).length) {
@@ -150,6 +151,9 @@ const Step1 = ({ data, update, errors }: any) => (
   <div className="grid sm:grid-cols-2 gap-5">
     <Field label="Student Name" helper="Optional — what should we call you?">
       <Input className={inputCls()} value={data.name} onChange={(e) => update("name", e.target.value)} placeholder="e.g. Aarav Sharma" />
+    </Field>
+    <Field label="Phone Number" required error={errors.phone_number}>
+      <Input type="tel" className={inputCls(errors.phone_number)} value={data.phone_number} onChange={(e) => update("phone_number", e.target.value)} placeholder="e.g. +91 98765 43210" />
     </Field>
     <Field label="Date of Birth" required error={errors.dob}>
       <Input type="date" className={inputCls(errors.dob)} value={data.dob} onChange={(e) => update("dob", e.target.value)} />
@@ -308,8 +312,9 @@ const Summary = ({ title, items, onEdit }: { title: string; items: { label: stri
 const Step6 = ({ data, update, errors, goTo }: any) => (
   <div className="space-y-4">
     <Summary title="Basic Details" onEdit={() => goTo(0)} items={[
-      { label: "Name", value: data.name }, { label: "Date of Birth", value: data.dob },
-      { label: "Gender", value: data.gender }, { label: "Location", value: [data.city, data.state, data.country].filter(Boolean).join(", ") },
+      { label: "Name", value: data.name }, { label: "Phone Number", value: data.phone_number },
+      { label: "Date of Birth", value: data.dob }, { label: "Gender", value: data.gender },
+      { label: "Location", value: [data.city, data.state, data.country].filter(Boolean).join(", ") },
     ]} />
     <Summary title="Education" onEdit={() => goTo(1)} items={[
       { label: "Level", value: data.educationLevel }, { label: "Board", value: data.board },
@@ -332,6 +337,10 @@ const Step6 = ({ data, update, errors, goTo }: any) => (
     <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.confirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
       <Checkbox checked={data.confirmed} onCheckedChange={(v) => update("confirmed", !!v)} className="mt-0.5" />
       <span className="text-sm font-medium text-zinc-900">I confirm that the information provided is correct, and I'd like the AI to generate my personalised career report.</span>
+    </label>
+    <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.aiDisclaimerConfirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
+      <Checkbox checked={data.aiDisclaimerConfirmed} onCheckedChange={(v) => update("aiDisclaimerConfirmed", !!v)} className="mt-0.5" />
+      <span className="text-sm font-medium text-zinc-900">I understand that AI can make mistakes sometimes. I acknowledge that this report is for guidance purposes only, and I am strongly recommended to consult a certified career counsellor for critical decisions.</span>
     </label>
   </div>
 );

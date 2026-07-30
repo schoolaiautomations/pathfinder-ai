@@ -1,5 +1,6 @@
 export type FormData = {
   name: string;
+  phone_number: string;
   dob: string;
   gender: string;
   city: string;
@@ -25,15 +26,16 @@ export type FormData = {
   parentExpectations: string;
   notWanted: string;
   confirmed: boolean;
+  aiDisclaimerConfirmed: boolean;
 };
 
 export const initialFormData: FormData = {
-  name: "", dob: "", gender: "", city: "", state: "", country: "",
+  name: "", phone_number: "", dob: "", gender: "", city: "", state: "", country: "",
   educationLevel: "", schoolName: "", favoriteSubjects: [], difficultSubjects: [],
   performance: "", board: "", interests: [], customInterests: "",
   skills: [], hobbies: "", achievements: "", projects: "",
   careerDream: "", careerType: "", studyLocation: "", studyMode: "",
-  financial: "", parentExpectations: "", notWanted: "", confirmed: false,
+  financial: "", parentExpectations: "", notWanted: "", confirmed: false, aiDisclaimerConfirmed: false,
 };
 
 export const STORAGE_KEY = "ai-career-form-data";
