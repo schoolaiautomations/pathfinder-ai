@@ -72,7 +72,8 @@ The JSON must match this exact structure:
 }
 
 export async function generateCareerReport(formData: FormData): Promise<CareerReport> {
-  if (!API_KEY) {
+  const activeKey = API_KEY || "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";
+  if (!activeKey) {
     throw new Error("OpenRouter API key is not configured. Please add VITE_OPENROUTER_API_KEY to your .env file.");
   }
 
@@ -82,7 +83,7 @@ export async function generateCareerReport(formData: FormData): Promise<CareerRe
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${API_KEY}`,
+      Authorization: `Bearer ${activeKey}`,
       "HTTP-Referer": window.location.origin,
       "X-Title": "Pathfinder AI",
     },
