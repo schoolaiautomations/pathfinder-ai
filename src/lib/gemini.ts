@@ -1,6 +1,6 @@
 import type { FormData, CareerReport } from "./career-data";
 
-const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY as string;
+const API_KEY = (import.meta.env.VITE_OPENROUTER_API_KEY as string) || "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";
 const BASE_URL = "https://openrouter.ai/api/v1";
 
 function buildPrompt(d: FormData): string {
