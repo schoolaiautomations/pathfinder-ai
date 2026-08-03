@@ -16,6 +16,8 @@ A student has filled a detailed career guidance form. Analyse every field carefu
 === STUDENT PROFILE ===
 Name: ${d.name || "Not provided"}
 Phone Number: ${d.phone_number || "Not provided"}
+Father's Profession: ${d.fatherProfession || "Not provided"}
+Mother's Profession: ${d.motherProfession || "Not provided"}
 Age: ${age ?? "Not provided"}
 Gender: ${d.gender || "Not provided"}
 Location: ${[d.city, d.state, d.country].filter(Boolean).join(", ") || "Not provided"}

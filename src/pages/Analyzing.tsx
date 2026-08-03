@@ -55,6 +55,8 @@ const Analyzing = () => {
               {
                 name: formData.name || "Not provided",
                 phone_number: formData.phone_number || "Not provided",
+                father_profession: formData.fatherProfession || "Not provided",
+                mother_profession: formData.motherProfession || "Not provided",
                 class: formData.educationLevel || "Not provided",
                 location: locationStr || "Not provided",
                 performance: formData.performance || "Not provided",

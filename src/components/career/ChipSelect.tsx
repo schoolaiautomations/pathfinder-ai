@@ -6,9 +6,10 @@ type Props = {
   selected: string[];
   onChange: (next: string[]) => void;
   variant?: "default" | "accent";
+  labelsMap?: Record<string, string>;
 };
 
-export const ChipSelect = ({ options, selected, onChange }: Props) => {
+export const ChipSelect = ({ options, selected, onChange, labelsMap }: Props) => {
   const toggle = (opt: string) => {
     onChange(selected.includes(opt) ? selected.filter((s) => s !== opt) : [...selected, opt]);
   };
@@ -16,6 +17,7 @@ export const ChipSelect = ({ options, selected, onChange }: Props) => {
     <div className="flex flex-wrap gap-2">
       {options.map((opt) => {
         const active = selected.includes(opt);
+        const label = labelsMap?.[opt] || opt;
         return (
           <button
             key={opt}
@@ -29,7 +31,7 @@ export const ChipSelect = ({ options, selected, onChange }: Props) => {
             )}
           >
             {active && <Check className="w-3.5 h-3.5" />}
-            {opt}
+            {label}
           </button>
         );
       })}

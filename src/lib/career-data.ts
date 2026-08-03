@@ -1,6 +1,8 @@
 export type FormData = {
   name: string;
   phone_number: string;
+  fatherProfession: string;
+  motherProfession: string;
   dob: string;
   gender: string;
   city: string;
@@ -30,7 +32,7 @@ export type FormData = {
 };
 
 export const initialFormData: FormData = {
-  name: "", phone_number: "", dob: "", gender: "", city: "", state: "", country: "",
+  name: "", phone_number: "", fatherProfession: "", motherProfession: "", dob: "", gender: "", city: "", state: "", country: "",
   educationLevel: "", schoolName: "", favoriteSubjects: [], difficultSubjects: [],
   performance: "", board: "", interests: [], customInterests: "",
   skills: [], hobbies: "", achievements: "", projects: "",
@@ -40,10 +42,10 @@ export const initialFormData: FormData = {
 
 export const STORAGE_KEY = "ai-career-form-data";
 
-export const educationLevels = ["Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12","Diploma","Undergraduate","Graduate","Other"];
-export const boards = ["State Board","CBSE","ICSE","IB","IGCSE","University","Other"];
+export const educationLevels = ["Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12","Diploma","Undergraduate","Graduate"];
+export const boards = ["State Board","CBSE","ICSE","IB","IGCSE","University"];
 export const performances = ["Excellent","Good","Average","Needs Improvement"];
-export const genders = ["Male","Female","Other","Prefer not to say"];
+export const genders = ["Male","Female","Prefer not to say"];
 export const subjects = ["Mathematics","Physics","Chemistry","Biology","English","History","Geography","Computer Science","Economics","Accounting","Business Studies","Political Science","Art","Physical Education"];
 
 export const interestOptions = [
@@ -61,12 +63,12 @@ export const interestOptions = [
 export const skillsList = ["Communication","Coding","Drawing","Problem Solving","Leadership","Teamwork","Creativity","Writing","Public Speaking","Research","Mathematics","Logical Thinking","Hands-on Making","Video Editing","Social Media"];
 
 export const careerTypes = ["Medical","Engineering","Technology","Government","Business","Creative","Research","Teaching","Sports","Not Sure"];
-export const studyLocations = ["Near my city","Within my state","Anywhere in India","Abroad","Online","No preference"];
+export const studyLocations = ["Near my city","Within my state","Anywhere in India","Abroad","No preference"];
 export const studyModes = ["Full-time","Part-time","Online","Hybrid"];
 export const financialOptions = ["No major constraint","Need affordable options","Need scholarships","Prefer government institutions","Not sure"];
 
-export const countries = ["India","United States","United Kingdom","Canada","Australia","Singapore","UAE","Other"];
-export const indianStates = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Other"];
+export const countries = ["India","United States","United Kingdom","Canada","Australia","Singapore","UAE"];
+export const indianStates = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Delhi","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"];
 
 export type RoadmapStep = {
   stage: string;

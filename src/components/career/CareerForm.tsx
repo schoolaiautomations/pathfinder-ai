@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Sparkles, GraduationCap, Heart, Wrench, Target, ClipboardCheck, User, Pencil } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, GraduationCap, Heart, Wrench, Target, ClipboardCheck, User, Pencil, Languages } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,23 +19,21 @@ import {
   skillsList, careerTypes, studyLocations, studyModes, financialOptions,
   countries, indianStates,
 } from "@/lib/career-data";
+import { translations, Language } from "@/lib/translations";
 
 const stepIcons = [User, GraduationCap, Heart, Wrench, Target, ClipboardCheck];
-const stepTitles = [
-  { title: "Tell us about yourself", desc: "Basic details so we know who you are." },
-  { title: "Your education", desc: "Help us understand your academic background." },
-  { title: "What excites you?", desc: "Pick the topics that spark your curiosity." },
-  { title: "Skills & hobbies", desc: "Show us what you're great at." },
-  { title: "Your preferences", desc: "Tell us about your career dreams." },
-  { title: "Review & generate", desc: "Confirm your details and get your AI report." },
-];
 
 export const CareerForm = () => {
   const [step, setStep] = useState(0);
   const [data, setData] = useState<FormData>(initialFormData);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
+  const [lang, setLang] = useState<Language>(() => {
+    return (localStorage.getItem("ai-career-form-lang") as Language) || "en";
+  });
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const t = translations[lang];
 
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -47,6 +45,10 @@ export const CareerForm = () => {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }, [data]);
+
+  useEffect(() => {
+    localStorage.setItem("ai-career-form-lang", lang);
+  }, [lang]);
 
   const update = <K extends keyof FormData>(k: K, v: FormData[K]) => {
     setData((d) => ({ ...d, [k]: v }));
@@ -69,7 +71,7 @@ export const CareerForm = () => {
     }
     setErrors(e);
     if (Object.keys(e).length) {
-      toast({ title: "Please complete required fields", description: "Highlighted fields need your attention.", variant: "destructive" });
+      toast({ title: t.validation.title, description: t.validation.desc, variant: "destructive" });
       return false;
     }
     return true;
@@ -87,11 +89,34 @@ export const CareerForm = () => {
   };
 
   const Icon = stepIcons[step];
+  const stepTitles = t.stepTitles;
 
   return (
     <div id="form" className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
       <Card className="bg-white shadow-card border border-zinc-200 rounded-3xl p-6 sm:p-10">
-        <Stepper current={step} />
+        
+        {/* Language Toggle Header */}
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-zinc-100">
+          <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+            Language / భాష
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setLang(lang === "en" ? "te" : "en")}
+            className="rounded-full px-4 py-1.5 h-9 text-xs font-bold border-zinc-300 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-all flex items-center gap-2 shadow-sm text-zinc-900"
+          >
+            <Languages className="w-4 h-4 text-zinc-700" />
+            <span>{t.toggleLang}</span>
+          </Button>
+        </div>
+
+        <Stepper
+          current={step}
+          steps={t.stepperSteps}
+          stepTitleText={t.stepTitle}
+          percentText={t.percentComplete}
+        />
 
         <div className="mt-8 mb-6 flex items-start gap-4">
           <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white shrink-0 shadow-sm">
@@ -103,26 +128,26 @@ export const CareerForm = () => {
           </div>
         </div>
 
-        <div key={step} className="animate-slide-up space-y-6">
-          {step === 0 && <Step1 data={data} update={update} errors={errors} />}
-          {step === 1 && <Step2 data={data} update={update} errors={errors} />}
-          {step === 2 && <Step3 data={data} update={update} errors={errors} />}
-          {step === 3 && <Step4 data={data} update={update} />}
-          {step === 4 && <Step5 data={data} update={update} />}
-          {step === 5 && <Step6 data={data} update={update} errors={errors} goTo={setStep} />}
+        <div key={`${step}-${lang}`} className="animate-slide-up space-y-6">
+          {step === 0 && <Step1 data={data} update={update} errors={errors} t={t} />}
+          {step === 1 && <Step2 data={data} update={update} errors={errors} t={t} />}
+          {step === 2 && <Step3 data={data} update={update} errors={errors} t={t} />}
+          {step === 3 && <Step4 data={data} update={update} t={t} />}
+          {step === 4 && <Step5 data={data} update={update} t={t} />}
+          {step === 5 && <Step6 data={data} update={update} errors={errors} goTo={setStep} t={t} />}
         </div>
 
         <div className="mt-10 flex flex-col-reverse sm:flex-row gap-3 sm:justify-between pt-6 border-t border-zinc-100">
           <Button variant="outline" onClick={back} disabled={step === 0} size="lg" className="rounded-xl border-zinc-300">
-            <ArrowLeft /> Back
+            <ArrowLeft /> {t.buttons.back}
           </Button>
           {step < 5 ? (
             <Button onClick={next} size="lg" className="bg-black text-white hover:bg-zinc-800 rounded-xl px-8 font-semibold">
-              Continue <ArrowRight />
+              {t.buttons.continue} <ArrowRight />
             </Button>
           ) : (
             <Button onClick={submit} size="xl" className="bg-black text-white hover:bg-zinc-800 rounded-2xl px-10 font-bold shadow-md">
-              <Sparkles /> Generate My AI Career Report
+              <Sparkles /> {t.buttons.submit}
             </Button>
           )}
         </div>
@@ -133,170 +158,218 @@ export const CareerForm = () => {
 
 /* --- Step components --- */
 
-const Field = ({ label, required, error, helper, children }: any) => (
+const Field = ({ label, required, error, helper, requiredMsg, children }: any) => (
   <div className="space-y-2">
     <Label className="text-sm font-semibold">
       {label} {required && <span className="text-destructive">*</span>}
     </Label>
     {children}
     {helper && !error && <p className="text-xs text-muted-foreground">{helper}</p>}
-    {error && <p className="text-xs text-destructive">This field is required.</p>}
+    {error && <p className="text-xs text-destructive">{requiredMsg || "This field is required."}</p>}
   </div>
 );
 
 const inputCls = (err?: boolean) =>
   `rounded-xl h-11 ${err ? "border-destructive ring-1 ring-destructive" : ""}`;
 
-const Step1 = ({ data, update, errors }: any) => (
+const Step1 = ({ data, update, errors, t }: any) => (
   <div className="grid sm:grid-cols-2 gap-5">
-    <Field label="Student Name" helper="Optional — what should we call you?">
-      <Input className={inputCls()} value={data.name} onChange={(e) => update("name", e.target.value)} placeholder="e.g. Aarav Sharma" />
+    <Field label={t.fields.name.label} helper={t.fields.name.helper}>
+      <Input className={inputCls()} value={data.name} onChange={(e) => update("name", e.target.value)} placeholder={t.fields.name.placeholder} />
     </Field>
-    <Field label="Phone Number" required error={errors.phone_number}>
-      <Input type="tel" className={inputCls(errors.phone_number)} value={data.phone_number} onChange={(e) => update("phone_number", e.target.value)} placeholder="e.g. +91 98765 43210" />
+    <Field label={t.fields.phone_number.label} required error={errors.phone_number} requiredMsg={t.validation.required}>
+      <Input type="tel" className={inputCls(errors.phone_number)} value={data.phone_number} onChange={(e) => update("phone_number", e.target.value)} placeholder={t.fields.phone_number.placeholder} />
     </Field>
-    <Field label="Date of Birth" required error={errors.dob}>
+    <Field label={t.fields.fatherProfession.label} helper={t.fields.fatherProfession.helper}>
+      <Input className={inputCls()} value={data.fatherProfession} onChange={(e) => update("fatherProfession", e.target.value)} placeholder={t.fields.fatherProfession.placeholder} />
+    </Field>
+    <Field label={t.fields.motherProfession.label} helper={t.fields.motherProfession.helper}>
+      <Input className={inputCls()} value={data.motherProfession} onChange={(e) => update("motherProfession", e.target.value)} placeholder={t.fields.motherProfession.placeholder} />
+    </Field>
+    <Field label={t.fields.dob.label} required error={errors.dob} requiredMsg={t.validation.required}>
       <Input type="date" className={inputCls(errors.dob)} value={data.dob} onChange={(e) => update("dob", e.target.value)} />
     </Field>
-    <Field label="Gender" required error={errors.gender}>
+    <Field label={t.fields.gender.label} required error={errors.gender} requiredMsg={t.validation.required}>
       <Select value={data.gender} onValueChange={(v) => update("gender", v)}>
-        <SelectTrigger className={inputCls(errors.gender)}><SelectValue placeholder="Select gender" /></SelectTrigger>
-        <SelectContent>{genders.map((g) => <SelectItem key={g} value={g}>{g}</SelectItem>)}</SelectContent>
+        <SelectTrigger className={inputCls(errors.gender)}><SelectValue placeholder={t.fields.gender.placeholder} /></SelectTrigger>
+        <SelectContent>
+          {genders.map((g) => (
+            <SelectItem key={g} value={g}>
+              {t.options.genders[g] || g}
+            </SelectItem>
+          ))}
+        </SelectContent>
       </Select>
     </Field>
-    <Field label="City / Place" required error={errors.city}>
-      <Input className={inputCls(errors.city)} value={data.city} onChange={(e) => update("city", e.target.value)} placeholder="e.g. Bengaluru" />
+    <Field label={t.fields.city.label} required error={errors.city} requiredMsg={t.validation.required}>
+      <Input className={inputCls(errors.city)} value={data.city} onChange={(e) => update("city", e.target.value)} placeholder={t.fields.city.placeholder} />
     </Field>
-    <Field label="State" required error={errors.state}>
+    <Field label={t.fields.state.label} required error={errors.state} requiredMsg={t.validation.required}>
       <Select value={data.state} onValueChange={(v) => update("state", v)}>
-        <SelectTrigger className={inputCls(errors.state)}><SelectValue placeholder="Select state" /></SelectTrigger>
-        <SelectContent className="max-h-72">{indianStates.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+        <SelectTrigger className={inputCls(errors.state)}><SelectValue placeholder={t.fields.state.placeholder} /></SelectTrigger>
+        <SelectContent className="max-h-72">
+          {indianStates.map((s) => (
+            <SelectItem key={s} value={s}>{s}</SelectItem>
+          ))}
+        </SelectContent>
       </Select>
     </Field>
-    <Field label="Country" required error={errors.country}>
+    <Field label={t.fields.country.label} required error={errors.country} requiredMsg={t.validation.required}>
       <Select value={data.country} onValueChange={(v) => update("country", v)}>
-        <SelectTrigger className={inputCls(errors.country)}><SelectValue placeholder="Select country" /></SelectTrigger>
-        <SelectContent>{countries.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+        <SelectTrigger className={inputCls(errors.country)}><SelectValue placeholder={t.fields.country.placeholder} /></SelectTrigger>
+        <SelectContent>
+          {countries.map((c) => (
+            <SelectItem key={c} value={c}>{c}</SelectItem>
+          ))}
+        </SelectContent>
       </Select>
     </Field>
   </div>
 );
 
-const Step2 = ({ data, update, errors }: any) => (
+const Step2 = ({ data, update, errors, t }: any) => (
   <div className="space-y-5">
     <div className="grid sm:grid-cols-2 gap-5">
-      <Field label="Current Class / Education Level" required error={errors.educationLevel}>
+      <Field label={t.fields.educationLevel.label} required error={errors.educationLevel} requiredMsg={t.validation.required}>
         <Select value={data.educationLevel} onValueChange={(v) => update("educationLevel", v)}>
-          <SelectTrigger className={inputCls(errors.educationLevel)}><SelectValue placeholder="Select level" /></SelectTrigger>
-          <SelectContent>{educationLevels.map((l) => <SelectItem key={l} value={l}>{l}</SelectItem>)}</SelectContent>
+          <SelectTrigger className={inputCls(errors.educationLevel)}><SelectValue placeholder={t.fields.educationLevel.placeholder} /></SelectTrigger>
+          <SelectContent>
+            {educationLevels.map((l) => (
+              <SelectItem key={l} value={l}>{l}</SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </Field>
-      <Field label="Board / Curriculum">
+      <Field label={t.fields.board.label}>
         <Select value={data.board} onValueChange={(v) => update("board", v)}>
-          <SelectTrigger className={inputCls()}><SelectValue placeholder="Select board" /></SelectTrigger>
-          <SelectContent>{boards.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}</SelectContent>
+          <SelectTrigger className={inputCls()}><SelectValue placeholder={t.fields.board.placeholder} /></SelectTrigger>
+          <SelectContent>
+            {boards.map((b) => (
+              <SelectItem key={b} value={b}>{t.options.boards[b] || b}</SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </Field>
-      <Field label="School / College Name">
-        <Input className={inputCls()} value={data.schoolName} onChange={(e) => update("schoolName", e.target.value)} placeholder="e.g. Delhi Public School" />
+      <Field label={t.fields.schoolName.label}>
+        <Input className={inputCls()} value={data.schoolName} onChange={(e) => update("schoolName", e.target.value)} placeholder={t.fields.schoolName.placeholder} />
       </Field>
-      <Field label="Current Academic Performance">
+      <Field label={t.fields.performance.label}>
         <Select value={data.performance} onValueChange={(v) => update("performance", v)}>
-          <SelectTrigger className={inputCls()}><SelectValue placeholder="How are you doing academically?" /></SelectTrigger>
-          <SelectContent>{performances.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
+          <SelectTrigger className={inputCls()}><SelectValue placeholder={t.fields.performance.placeholder} /></SelectTrigger>
+          <SelectContent>
+            {performances.map((p) => (
+              <SelectItem key={p} value={p}>{t.options.performances[p] || p}</SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </Field>
     </div>
-    <Field label="Favorite Subjects" helper="Pick all that you enjoy.">
-      <ChipSelect options={subjects} selected={data.favoriteSubjects} onChange={(v) => update("favoriteSubjects", v)} />
+    <Field label={t.fields.favoriteSubjects.label} helper={t.fields.favoriteSubjects.helper}>
+      <ChipSelect options={subjects} selected={data.favoriteSubjects} onChange={(v) => update("favoriteSubjects", v)} labelsMap={t.options.subjects} />
     </Field>
-    <Field label="Subjects You Find Difficult" helper="It's okay — knowing this helps the AI guide you better.">
-      <ChipSelect options={subjects} selected={data.difficultSubjects} onChange={(v) => update("difficultSubjects", v)} variant="accent" />
+    <Field label={t.fields.difficultSubjects.label} helper={t.fields.difficultSubjects.helper}>
+      <ChipSelect options={subjects} selected={data.difficultSubjects} onChange={(v) => update("difficultSubjects", v)} variant="accent" labelsMap={t.options.subjects} />
     </Field>
   </div>
 );
 
-const Step3 = ({ data, update, errors }: any) => (
+const Step3 = ({ data, update, errors, t }: any) => (
   <div className="space-y-5">
-    <Field label="Select your interests" required error={errors.interests} helper="Pick as many as you like — there are no wrong answers.">
-      <InterestGrid selected={data.interests} onChange={(v) => update("interests", v)} />
+    <Field label={t.fields.interests.label} required error={errors.interests} helper={t.fields.interests.helper} requiredMsg={t.validation.required}>
+      <InterestGrid selected={data.interests} onChange={(v) => update("interests", v)} labelsMap={t.options.interests} />
     </Field>
-    <Field label="Add your own interests" helper="Anything else you love? Separate with commas.">
-      <Input className={inputCls()} value={data.customInterests} onChange={(e) => update("customInterests", e.target.value)} placeholder="e.g. Astronomy, Photography" />
+    <Field label={t.fields.customInterests.label} helper={t.fields.customInterests.helper}>
+      <Input className={inputCls()} value={data.customInterests} onChange={(e) => update("customInterests", e.target.value)} placeholder={t.fields.customInterests.placeholder} />
     </Field>
     {data.interests.length > 0 && (
       <div className="rounded-2xl bg-zinc-100 border border-zinc-200 p-4 text-sm">
-        <span className="font-semibold text-zinc-900">{data.interests.length} interest{data.interests.length > 1 ? "s" : ""} selected</span>
+        <span className="font-semibold text-zinc-900">
+          {t.fields.interestsSelectedCount
+            .replace("{count}", String(data.interests.length))
+            .replace("{s}", data.interests.length > 1 ? "s" : "")}
+        </span>
       </div>
     )}
   </div>
 );
 
-const Step4 = ({ data, update }: any) => (
+const Step4 = ({ data, update, t }: any) => (
   <div className="space-y-5">
-    <Field label="Your current skills" helper="What are you good at?">
-      <ChipSelect options={skillsList} selected={data.skills} onChange={(v) => update("skills", v)} />
+    <Field label={t.fields.skills.label} helper={t.fields.skills.helper}>
+      <ChipSelect options={skillsList} selected={data.skills} onChange={(v) => update("skills", v)} labelsMap={t.options.skills} />
     </Field>
-    <Field label="Hobbies" helper="What do you enjoy doing in your free time?">
-      <Textarea className="rounded-xl min-h-24" value={data.hobbies} onChange={(e) => update("hobbies", e.target.value)} placeholder="e.g. Playing chess, reading novels, cycling..." />
+    <Field label={t.fields.hobbies.label} helper={t.fields.hobbies.helper}>
+      <Textarea className="rounded-xl min-h-24" value={data.hobbies} onChange={(e) => update("hobbies", e.target.value)} placeholder={t.fields.hobbies.placeholder} />
     </Field>
-    <Field label="Achievements or Certificates">
-      <Textarea className="rounded-xl min-h-20" value={data.achievements} onChange={(e) => update("achievements", e.target.value)} placeholder="e.g. State-level science fair winner, Python certification..." />
+    <Field label={t.fields.achievements.label}>
+      <Textarea className="rounded-xl min-h-20" value={data.achievements} onChange={(e) => update("achievements", e.target.value)} placeholder={t.fields.achievements.placeholder} />
     </Field>
-    <Field label="Projects you have done">
-      <Textarea className="rounded-xl min-h-20" value={data.projects} onChange={(e) => update("projects", e.target.value)} placeholder="e.g. Built a weather app, designed a poster for school event..." />
+    <Field label={t.fields.projects.label}>
+      <Textarea className="rounded-xl min-h-20" value={data.projects} onChange={(e) => update("projects", e.target.value)} placeholder={t.fields.projects.placeholder} />
     </Field>
   </div>
 );
 
-const Step5 = ({ data, update }: any) => (
+const Step5 = ({ data, update, t }: any) => (
   <div className="space-y-5">
-    <Field label="Your career dream" helper="What do you imagine yourself doing in the future?">
-      <Input className={inputCls()} value={data.careerDream} onChange={(e) => update("careerDream", e.target.value)} placeholder="e.g. Become a doctor, build my own startup..." />
+    <Field label={t.fields.careerDream.label} helper={t.fields.careerDream.helper}>
+      <Input className={inputCls()} value={data.careerDream} onChange={(e) => update("careerDream", e.target.value)} placeholder={t.fields.careerDream.placeholder} />
     </Field>
     <div className="grid sm:grid-cols-2 gap-5">
-      <Field label="Preferred Career Type">
+      <Field label={t.fields.careerType.label}>
         <Select value={data.careerType} onValueChange={(v) => update("careerType", v)}>
-          <SelectTrigger className={inputCls()}><SelectValue placeholder="Select type" /></SelectTrigger>
-          <SelectContent>{careerTypes.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+          <SelectTrigger className={inputCls()}><SelectValue placeholder={t.fields.careerType.placeholder} /></SelectTrigger>
+          <SelectContent>
+            {careerTypes.map((c) => (
+              <SelectItem key={c} value={c}>{t.options.careerTypes[c] || c}</SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </Field>
-      <Field label="Preferred Study Location">
+      <Field label={t.fields.studyLocation.label}>
         <Select value={data.studyLocation} onValueChange={(v) => update("studyLocation", v)}>
-          <SelectTrigger className={inputCls()}><SelectValue placeholder="Where would you like to study?" /></SelectTrigger>
-          <SelectContent>{studyLocations.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+          <SelectTrigger className={inputCls()}><SelectValue placeholder={t.fields.studyLocation.placeholder} /></SelectTrigger>
+          <SelectContent>
+            {studyLocations.map((c) => (
+              <SelectItem key={c} value={c}>{t.options.studyLocations[c] || c}</SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </Field>
     </div>
-    <Field label="Preferred Study Mode">
+    <Field label={t.fields.studyMode.label}>
       <RadioGroup value={data.studyMode} onValueChange={(v) => update("studyMode", v)} className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {studyModes.map((m) => (
           <label key={m} className="flex items-center gap-2 p-3 rounded-xl border border-zinc-200 hover:border-black/50 cursor-pointer transition-all has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100">
-            <RadioGroupItem value={m} /> <span className="text-sm font-semibold text-zinc-900">{m}</span>
+            <RadioGroupItem value={m} /> <span className="text-sm font-semibold text-zinc-900">{t.options.studyModes[m] || m}</span>
           </label>
         ))}
       </RadioGroup>
     </Field>
-    <Field label="Financial Considerations">
+    <Field label={t.fields.financial.label}>
       <Select value={data.financial} onValueChange={(v) => update("financial", v)}>
-        <SelectTrigger className={inputCls()}><SelectValue placeholder="Select an option" /></SelectTrigger>
-        <SelectContent>{financialOptions.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}</SelectContent>
+        <SelectTrigger className={inputCls()}><SelectValue placeholder={t.fields.financial.placeholder} /></SelectTrigger>
+        <SelectContent>
+          {financialOptions.map((c) => (
+            <SelectItem key={c} value={c}>{t.options.financialOptions[c] || c}</SelectItem>
+          ))}
+        </SelectContent>
       </Select>
     </Field>
-    <Field label="Parent Expectations" helper="What do your parents hope you'll pursue?">
-      <Textarea className="rounded-xl min-h-20" value={data.parentExpectations} onChange={(e) => update("parentExpectations", e.target.value)} placeholder="e.g. They'd like me to become an engineer..." />
+    <Field label={t.fields.parentExpectations.label} helper={t.fields.parentExpectations.helper}>
+      <Textarea className="rounded-xl min-h-20" value={data.parentExpectations} onChange={(e) => update("parentExpectations", e.target.value)} placeholder={t.fields.parentExpectations.placeholder} />
     </Field>
-    <Field label="Any career you do NOT want">
-      <Textarea className="rounded-xl min-h-20" value={data.notWanted} onChange={(e) => update("notWanted", e.target.value)} placeholder="e.g. I don't want a desk-only job..." />
+    <Field label={t.fields.notWanted.label}>
+      <Textarea className="rounded-xl min-h-20" value={data.notWanted} onChange={(e) => update("notWanted", e.target.value)} placeholder={t.fields.notWanted.placeholder} />
     </Field>
   </div>
 );
 
-const Summary = ({ title, items, onEdit }: { title: string; items: { label: string; value: any }[]; onEdit: () => void }) => (
+const Summary = ({ title, items, onEdit, editLabel }: { title: string; items: { label: string; value: any }[]; onEdit: () => void; editLabel: string }) => (
   <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
     <div className="flex items-center justify-between mb-3">
       <h3 className="font-bold text-zinc-950">{title}</h3>
-      <Button variant="ghost" size="sm" onClick={onEdit} className="text-zinc-900 hover:bg-zinc-100"><Pencil className="w-3.5 h-3.5" /> Edit</Button>
+      <Button variant="ghost" size="sm" onClick={onEdit} className="text-zinc-900 hover:bg-zinc-100"><Pencil className="w-3.5 h-3.5" /> {editLabel}</Button>
     </div>
     <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
       {items.map((it) => (
@@ -309,38 +382,54 @@ const Summary = ({ title, items, onEdit }: { title: string; items: { label: stri
   </div>
 );
 
-const Step6 = ({ data, update, errors, goTo }: any) => (
-  <div className="space-y-4">
-    <Summary title="Basic Details" onEdit={() => goTo(0)} items={[
-      { label: "Name", value: data.name }, { label: "Phone Number", value: data.phone_number },
-      { label: "Date of Birth", value: data.dob }, { label: "Gender", value: data.gender },
-      { label: "Location", value: [data.city, data.state, data.country].filter(Boolean).join(", ") },
-    ]} />
-    <Summary title="Education" onEdit={() => goTo(1)} items={[
-      { label: "Level", value: data.educationLevel }, { label: "Board", value: data.board },
-      { label: "School/College", value: data.schoolName }, { label: "Performance", value: data.performance },
-      { label: "Favorite Subjects", value: data.favoriteSubjects }, { label: "Difficult Subjects", value: data.difficultSubjects },
-    ]} />
-    <Summary title="Interests" onEdit={() => goTo(2)} items={[
-      { label: "Selected", value: data.interests }, { label: "Custom", value: data.customInterests },
-    ]} />
-    <Summary title="Skills & Hobbies" onEdit={() => goTo(3)} items={[
-      { label: "Skills", value: data.skills }, { label: "Hobbies", value: data.hobbies },
-      { label: "Achievements", value: data.achievements }, { label: "Projects", value: data.projects },
-    ]} />
-    <Summary title="Preferences" onEdit={() => goTo(4)} items={[
-      { label: "Career Dream", value: data.careerDream }, { label: "Career Type", value: data.careerType },
-      { label: "Study Location", value: data.studyLocation }, { label: "Study Mode", value: data.studyMode },
-      { label: "Financial", value: data.financial }, { label: "Parent Expectations", value: data.parentExpectations },
-      { label: "Not Wanted", value: data.notWanted },
-    ]} />
-    <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.confirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
-      <Checkbox checked={data.confirmed} onCheckedChange={(v) => update("confirmed", !!v)} className="mt-0.5" />
-      <span className="text-sm font-medium text-zinc-900">I confirm that the information provided is correct, and I'd like the AI to generate my personalised career report.</span>
-    </label>
-    <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.aiDisclaimerConfirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
-      <Checkbox checked={data.aiDisclaimerConfirmed} onCheckedChange={(v) => update("aiDisclaimerConfirmed", !!v)} className="mt-0.5" />
-      <span className="text-sm font-medium text-zinc-900">I understand that AI can make mistakes sometimes. I acknowledge that this report is for guidance purposes only, and I am strongly recommended to consult a certified career counsellor for critical decisions.</span>
-    </label>
-  </div>
-);
+const Step6 = ({ data, update, errors, goTo, t }: any) => {
+  const l = t.summaries.labels;
+  return (
+    <div className="space-y-4">
+      <Summary title={t.summaries.basic} editLabel={t.buttons.edit} onEdit={() => goTo(0)} items={[
+        { label: l.name, value: data.name },
+        { label: l.phone_number, value: data.phone_number },
+        { label: l.fatherProfession, value: data.fatherProfession },
+        { label: l.motherProfession, value: data.motherProfession },
+        { label: l.dob, value: data.dob },
+        { label: l.gender, value: t.options.genders[data.gender] || data.gender },
+        { label: l.location, value: [data.city, data.state, data.country].filter(Boolean).join(", ") },
+      ]} />
+      <Summary title={t.summaries.education} editLabel={t.buttons.edit} onEdit={() => goTo(1)} items={[
+        { label: l.educationLevel, value: data.educationLevel },
+        { label: l.board, value: t.options.boards[data.board] || data.board },
+        { label: l.schoolName, value: data.schoolName },
+        { label: l.performance, value: t.options.performances[data.performance] || data.performance },
+        { label: l.favoriteSubjects, value: data.favoriteSubjects.map((s: string) => t.options.subjects[s] || s) },
+        { label: l.difficultSubjects, value: data.difficultSubjects.map((s: string) => t.options.subjects[s] || s) },
+      ]} />
+      <Summary title={t.summaries.interests} editLabel={t.buttons.edit} onEdit={() => goTo(2)} items={[
+        { label: l.interests, value: data.interests.map((i: string) => t.options.interests[i] || i) },
+        { label: l.customInterests, value: data.customInterests },
+      ]} />
+      <Summary title={t.summaries.skills} editLabel={t.buttons.edit} onEdit={() => goTo(3)} items={[
+        { label: l.skills, value: data.skills.map((sk: string) => t.options.skills[sk] || sk) },
+        { label: l.hobbies, value: data.hobbies },
+        { label: l.achievements, value: data.achievements },
+        { label: l.projects, value: data.projects },
+      ]} />
+      <Summary title={t.summaries.preferences} editLabel={t.buttons.edit} onEdit={() => goTo(4)} items={[
+        { label: l.careerDream, value: data.careerDream },
+        { label: l.careerType, value: t.options.careerTypes[data.careerType] || data.careerType },
+        { label: l.studyLocation, value: t.options.studyLocations[data.studyLocation] || data.studyLocation },
+        { label: l.studyMode, value: t.options.studyModes[data.studyMode] || data.studyMode },
+        { label: l.financial, value: t.options.financialOptions[data.financial] || data.financial },
+        { label: l.parentExpectations, value: data.parentExpectations },
+        { label: l.notWanted, value: data.notWanted },
+      ]} />
+      <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.confirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
+        <Checkbox checked={data.confirmed} onCheckedChange={(v) => update("confirmed", !!v)} className="mt-0.5" />
+        <span className="text-sm font-medium text-zinc-900">{t.checkboxes.confirmInfo}</span>
+      </label>
+      <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.aiDisclaimerConfirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
+        <Checkbox checked={data.aiDisclaimerConfirmed} onCheckedChange={(v) => update("aiDisclaimerConfirmed", !!v)} className="mt-0.5" />
+        <span className="text-sm font-medium text-zinc-900">{t.checkboxes.aiDisclaimer}</span>
+      </label>
+    </div>
+  );
+};
