@@ -9,6 +9,10 @@ import Analyzing from "./pages/Analyzing.tsx";
 import Report from "./pages/Report.tsx";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import RoadmapForm from "./pages/RoadmapForm.tsx";
+import RoadmapGenerating from "./pages/RoadmapGenerating.tsx";
+import RoadmapResult from "./pages/RoadmapResult.tsx";
+import SkillLearning from "./pages/SkillLearning.tsx";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +28,10 @@ const App = () => (
           <Route path="/analyzing" element={<Analyzing />} />
           <Route path="/report" element={<Report />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/roadmap" element={<RoadmapForm />} />
+          <Route path="/roadmap/generating" element={<RoadmapGenerating />} />
+          <Route path="/roadmap/result" element={<RoadmapResult />} />
+          <Route path="/roadmap/learn" element={<SkillLearning />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

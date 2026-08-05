@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Sparkles, ShieldCheck, Users } from "lucide-react";
+import { Sparkles, ShieldCheck, Users, Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
@@ -40,9 +40,12 @@ export const Hero = () => {
           <Button size="xl" onClick={startAnalysis} className="w-full sm:w-auto bg-black text-white hover:bg-zinc-800 rounded-full px-8 h-12 sm:h-14 font-bold shadow-md transition-all text-sm sm:text-base">
             <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-1" /> Start Career Analysis
           </Button>
-          <div className="flex items-center gap-2 text-xs sm:text-sm font-medium text-zinc-500">
-            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-800" /> For students from school to college level
-          </div>
+          <Button size="xl" onClick={() => navigate("/roadmap")} variant="outline" className="w-full sm:w-auto border-2 border-black text-black hover:bg-zinc-100 rounded-full px-8 h-12 sm:h-14 font-bold shadow-sm transition-all text-sm sm:text-base">
+            <Map className="w-4 h-4 sm:w-5 sm:h-5 mr-1" /> Build Learning Roadmap
+          </Button>
+        </div>
+        <div className="mt-4 flex items-center gap-2 justify-center text-xs sm:text-sm font-medium text-zinc-500">
+          <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-800" /> For students from school to college level
         </div>
         <div className="mt-10 sm:mt-14 grid grid-cols-2 gap-4 sm:gap-6 max-w-md mx-auto pt-5 sm:pt-6 border-t border-zinc-200/80">
           {[["95%", "Accuracy"], ["6 steps", "To your report"]].map(([n, l]) => (
