@@ -92,21 +92,21 @@ export const CareerForm = () => {
   const stepTitles = t.stepTitles;
 
   return (
-    <div id="form" className="max-w-4xl mx-auto px-4 py-12 sm:py-16">
-      <Card className="bg-white shadow-card border border-zinc-200 rounded-3xl p-6 sm:p-10">
+    <div id="form" className="max-w-4xl mx-auto px-2.5 sm:px-4 py-4 sm:py-16 safe-bottom">
+      <Card className="bg-white shadow-card border border-zinc-200 rounded-2xl sm:rounded-3xl p-4 sm:p-10">
         
         {/* Language Toggle Header */}
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-zinc-100">
-          <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+        <div className="flex items-center justify-between mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-zinc-100">
+          <div className="text-[11px] sm:text-xs font-semibold text-zinc-500 uppercase tracking-wider">
             Language / భాష
           </div>
           <Button
             variant="outline"
             size="sm"
             onClick={() => setLang(lang === "en" ? "te" : "en")}
-            className="rounded-full px-4 py-1.5 h-9 text-xs font-bold border-zinc-300 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-all flex items-center gap-2 shadow-sm text-zinc-900"
+            className="rounded-full px-3.5 py-1.5 h-8 sm:h-9 text-xs font-bold border-zinc-300 hover:border-black bg-zinc-50 hover:bg-zinc-100 transition-all flex items-center gap-1.5 shadow-sm text-zinc-900"
           >
-            <Languages className="w-4 h-4 text-zinc-700" />
+            <Languages className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-700" />
             <span>{t.toggleLang}</span>
           </Button>
         </div>
@@ -118,17 +118,17 @@ export const CareerForm = () => {
           percentText={t.percentComplete}
         />
 
-        <div className="mt-8 mb-6 flex items-start gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white shrink-0 shadow-sm">
-            <Icon className="w-6 h-6 text-white" />
+        <div className="mt-6 sm:mt-8 mb-5 sm:mb-6 flex items-start gap-3 sm:gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-black flex items-center justify-center text-white shrink-0 shadow-sm">
+            <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950">{stepTitles[step].title}</h2>
-            <p className="text-zinc-500 text-sm mt-1">{stepTitles[step].desc}</p>
+            <h2 className="text-xl sm:text-3xl font-extrabold text-zinc-950 leading-tight">{stepTitles[step].title}</h2>
+            <p className="text-zinc-500 text-xs sm:text-sm mt-0.5 sm:mt-1 leading-normal">{stepTitles[step].desc}</p>
           </div>
         </div>
 
-        <div key={`${step}-${lang}`} className="animate-slide-up space-y-6">
+        <div key={`${step}-${lang}`} className="animate-slide-up space-y-5 sm:space-y-6">
           {step === 0 && <Step1 data={data} update={update} errors={errors} t={t} />}
           {step === 1 && <Step2 data={data} update={update} errors={errors} t={t} />}
           {step === 2 && <Step3 data={data} update={update} errors={errors} t={t} />}
@@ -137,17 +137,17 @@ export const CareerForm = () => {
           {step === 5 && <Step6 data={data} update={update} errors={errors} goTo={setStep} t={t} />}
         </div>
 
-        <div className="mt-10 flex flex-col-reverse sm:flex-row gap-3 sm:justify-between pt-6 border-t border-zinc-100">
-          <Button variant="outline" onClick={back} disabled={step === 0} size="lg" className="rounded-xl border-zinc-300">
-            <ArrowLeft /> {t.buttons.back}
+        <div className="mt-8 sm:mt-10 flex flex-col-reverse sm:flex-row gap-3 sm:justify-between pt-5 sm:pt-6 border-t border-zinc-100">
+          <Button variant="outline" onClick={back} disabled={step === 0} size="lg" className="w-full sm:w-auto rounded-xl border-zinc-300 h-11 sm:h-12 text-sm sm:text-base font-semibold">
+            <ArrowLeft className="w-4 h-4 mr-1" /> {t.buttons.back}
           </Button>
           {step < 5 ? (
-            <Button onClick={next} size="lg" className="bg-black text-white hover:bg-zinc-800 rounded-xl px-8 font-semibold">
-              {t.buttons.continue} <ArrowRight />
+            <Button onClick={next} size="lg" className="w-full sm:w-auto bg-black text-white hover:bg-zinc-800 rounded-xl px-8 h-11 sm:h-12 text-sm sm:text-base font-semibold shadow-md">
+              {t.buttons.continue} <ArrowRight className="w-4 h-4 ml-1" />
             </Button>
           ) : (
-            <Button onClick={submit} size="xl" className="bg-black text-white hover:bg-zinc-800 rounded-2xl px-10 font-bold shadow-md">
-              <Sparkles /> {t.buttons.submit}
+            <Button onClick={submit} size="xl" className="w-full sm:w-auto bg-black text-white hover:bg-zinc-800 rounded-2xl px-10 h-12 sm:h-14 text-base sm:text-lg font-bold shadow-md">
+              <Sparkles className="w-5 h-5 mr-1" /> {t.buttons.submit}
             </Button>
           )}
         </div>
@@ -239,6 +239,9 @@ const Step2 = ({ data, update, errors, t }: any) => (
             ))}
           </SelectContent>
         </Select>
+      </Field>
+      <Field label={t.fields.section.label}>
+        <Input className={inputCls()} value={data.section} onChange={(e) => update("section", e.target.value)} placeholder={t.fields.section.placeholder} />
       </Field>
       <Field label={t.fields.board.label}>
         <Select value={data.board} onValueChange={(v) => update("board", v)}>
@@ -338,10 +341,10 @@ const Step5 = ({ data, update, t }: any) => (
       </Field>
     </div>
     <Field label={t.fields.studyMode.label}>
-      <RadioGroup value={data.studyMode} onValueChange={(v) => update("studyMode", v)} className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <RadioGroup value={data.studyMode} onValueChange={(v) => update("studyMode", v)} className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
         {studyModes.map((m) => (
-          <label key={m} className="flex items-center gap-2 p-3 rounded-xl border border-zinc-200 hover:border-black/50 cursor-pointer transition-all has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100">
-            <RadioGroupItem value={m} /> <span className="text-sm font-semibold text-zinc-900">{t.options.studyModes[m] || m}</span>
+          <label key={m} className="flex items-center gap-2 p-2.5 sm:p-3 rounded-xl border border-zinc-200 hover:border-black/50 cursor-pointer transition-all has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100 touch-manipulation">
+            <RadioGroupItem value={m} /> <span className="text-xs sm:text-sm font-semibold text-zinc-900 leading-tight">{t.options.studyModes[m] || m}</span>
           </label>
         ))}
       </RadioGroup>
@@ -366,16 +369,16 @@ const Step5 = ({ data, update, t }: any) => (
 );
 
 const Summary = ({ title, items, onEdit, editLabel }: { title: string; items: { label: string; value: any }[]; onEdit: () => void; editLabel: string }) => (
-  <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm">
-    <div className="flex items-center justify-between mb-3">
-      <h3 className="font-bold text-zinc-950">{title}</h3>
-      <Button variant="ghost" size="sm" onClick={onEdit} className="text-zinc-900 hover:bg-zinc-100"><Pencil className="w-3.5 h-3.5" /> {editLabel}</Button>
+  <div className="rounded-xl sm:rounded-2xl border border-zinc-200 bg-white p-4 sm:p-5 shadow-sm">
+    <div className="flex items-center justify-between mb-2.5 sm:mb-3">
+      <h3 className="font-bold text-sm sm:text-base text-zinc-950">{title}</h3>
+      <Button variant="ghost" size="sm" onClick={onEdit} className="h-8 text-xs text-zinc-900 hover:bg-zinc-100 px-2 sm:px-3"><Pencil className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1" /> {editLabel}</Button>
     </div>
-    <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+    <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-xs sm:text-sm">
       {items.map((it) => (
         <div key={it.label} className="flex flex-col">
-          <dt className="text-zinc-500 text-xs font-medium">{it.label}</dt>
-          <dd className="font-semibold text-zinc-900">{Array.isArray(it.value) ? (it.value.length ? it.value.join(", ") : "—") : (it.value || "—")}</dd>
+          <dt className="text-zinc-500 text-[11px] sm:text-xs font-medium">{it.label}</dt>
+          <dd className="font-semibold text-zinc-900 break-words">{Array.isArray(it.value) ? (it.value.length ? it.value.join(", ") : "—") : (it.value || "—")}</dd>
         </div>
       ))}
     </dl>
@@ -385,7 +388,7 @@ const Summary = ({ title, items, onEdit, editLabel }: { title: string; items: { 
 const Step6 = ({ data, update, errors, goTo, t }: any) => {
   const l = t.summaries.labels;
   return (
-    <div className="space-y-4">
+    <div className="space-y-3.5 sm:space-y-4">
       <Summary title={t.summaries.basic} editLabel={t.buttons.edit} onEdit={() => goTo(0)} items={[
         { label: l.name, value: data.name },
         { label: l.phone_number, value: data.phone_number },
@@ -397,6 +400,7 @@ const Step6 = ({ data, update, errors, goTo, t }: any) => {
       ]} />
       <Summary title={t.summaries.education} editLabel={t.buttons.edit} onEdit={() => goTo(1)} items={[
         { label: l.educationLevel, value: data.educationLevel },
+        { label: l.section, value: data.section },
         { label: l.board, value: t.options.boards[data.board] || data.board },
         { label: l.schoolName, value: data.schoolName },
         { label: l.performance, value: t.options.performances[data.performance] || data.performance },
@@ -422,13 +426,13 @@ const Step6 = ({ data, update, errors, goTo, t }: any) => {
         { label: l.parentExpectations, value: data.parentExpectations },
         { label: l.notWanted, value: data.notWanted },
       ]} />
-      <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.confirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
-        <Checkbox checked={data.confirmed} onCheckedChange={(v) => update("confirmed", !!v)} className="mt-0.5" />
-        <span className="text-sm font-medium text-zinc-900">{t.checkboxes.confirmInfo}</span>
+      <label className={`flex items-start gap-2.5 sm:gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 cursor-pointer transition-all touch-manipulation ${errors.confirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
+        <Checkbox checked={data.confirmed} onCheckedChange={(v) => update("confirmed", !!v)} className="mt-0.5 shrink-0" />
+        <span className="text-xs sm:text-sm font-medium text-zinc-900 leading-snug">{t.checkboxes.confirmInfo}</span>
       </label>
-      <label className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${errors.aiDisclaimerConfirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
-        <Checkbox checked={data.aiDisclaimerConfirmed} onCheckedChange={(v) => update("aiDisclaimerConfirmed", !!v)} className="mt-0.5" />
-        <span className="text-sm font-medium text-zinc-900">{t.checkboxes.aiDisclaimer}</span>
+      <label className={`flex items-start gap-2.5 sm:gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 cursor-pointer transition-all touch-manipulation ${errors.aiDisclaimerConfirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
+        <Checkbox checked={data.aiDisclaimerConfirmed} onCheckedChange={(v) => update("aiDisclaimerConfirmed", !!v)} className="mt-0.5 shrink-0" />
+        <span className="text-xs sm:text-sm font-medium text-zinc-900 leading-snug">{t.checkboxes.aiDisclaimer}</span>
       </label>
     </div>
   );

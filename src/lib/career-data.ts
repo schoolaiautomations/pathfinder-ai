@@ -9,6 +9,7 @@ export type FormData = {
   state: string;
   country: string;
   educationLevel: string;
+  section: string;
   schoolName: string;
   favoriteSubjects: string[];
   difficultSubjects: string[];
@@ -33,7 +34,7 @@ export type FormData = {
 
 export const initialFormData: FormData = {
   name: "", phone_number: "", fatherProfession: "", motherProfession: "", dob: "", gender: "", city: "", state: "", country: "",
-  educationLevel: "", schoolName: "", favoriteSubjects: [], difficultSubjects: [],
+  educationLevel: "", section: "", schoolName: "", favoriteSubjects: [], difficultSubjects: [],
   performance: "", board: "", interests: [], customInterests: "",
   skills: [], hobbies: "", achievements: "", projects: "",
   careerDream: "", careerType: "", studyLocation: "", studyMode: "",

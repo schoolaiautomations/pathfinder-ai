@@ -58,6 +58,7 @@ const Analyzing = () => {
                 father_profession: formData.fatherProfession || "Not provided",
                 mother_profession: formData.motherProfession || "Not provided",
                 class: formData.educationLevel || "Not provided",
+                section: formData.section || "Not provided",
                 location: locationStr || "Not provided",
                 performance: formData.performance || "Not provided",
                 intrests: formData.interests?.length ? formData.interests.join(", ") : "None",
