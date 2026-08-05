@@ -67,23 +67,23 @@ export async function saveSubmissionToSupabase(formData: FormData, report: Caree
 
   // 2. Try saving to Supabase REST endpoint
   try {
-    const endpoints = ["submissions", "career_submissions", "reports"];
-    for (const table of endpoints) {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-        method: "POST",
-        headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-          "Content-Type": "application/json",
-          "Prefer": "return=representation",
-        },
-        body: JSON.stringify(record),
-      });
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/submissions`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+      },
+      body: JSON.stringify(record),
+    });
 
-      if (response.ok) {
-        console.log(`Successfully saved submission to Supabase table: ${table}`);
-        return true;
-      }
+    if (response.ok) {
+      console.log("Successfully saved submission to Supabase");
+      return true;
+    } else {
+      const errorBody = await response.text();
+      console.warn("Supabase save response error:", response.status, errorBody);
     }
   } catch (err) {
     console.warn("Supabase save network warning (saved to local backup):", err);
@@ -99,23 +99,19 @@ export async function getSubmissionsFromSupabase(): Promise<SubmissionRecord[]> 
   let remoteRecords: SubmissionRecord[] = [];
 
   try {
-    const endpoints = ["submissions", "career_submissions", "reports"];
-    for (const table of endpoints) {
-      const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc`, {
-        method: "GET",
-        headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-          "Content-Type": "application/json",
-        },
-      });
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/submissions?select=*&order=created_at.desc`, {
+      method: "GET",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-          remoteRecords = data;
-          break;
-        }
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        remoteRecords = data;
       }
     }
   } catch (err) {
@@ -154,16 +150,13 @@ export async function deleteSubmission(id: string): Promise<void> {
 
   // Delete from Supabase if possible
   try {
-    const endpoints = ["submissions", "career_submissions", "reports"];
-    for (const table of endpoints) {
-      await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
-        method: "DELETE",
-        headers: {
-          "apikey": SUPABASE_ANON_KEY,
-          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-      });
-    }
+    await fetch(`${SUPABASE_URL}/rest/v1/submissions?id=eq.${id}`, {
+      method: "DELETE",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+    });
   } catch (err) {
     console.warn("Supabase delete failed:", err);
   }
