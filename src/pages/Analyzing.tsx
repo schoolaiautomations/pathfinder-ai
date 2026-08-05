@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { generateCareerReport } from "@/lib/gemini";
 import { STORAGE_KEY, REPORT_STORAGE_KEY } from "@/lib/career-data";
 import type { FormData, CareerReport } from "@/lib/career-data";
+import { saveSubmissionToSupabase } from "@/lib/supabase";
 
 const steps = [
   { icon: Brain, label: "Understanding your profile" },
@@ -40,6 +41,9 @@ const Analyzing = () => {
       const report = await generateCareerReport(formData);
       reportRef.current = report;
       localStorage.setItem(REPORT_STORAGE_KEY, JSON.stringify(report));
+
+      // Save complete form data & AI report to Supabase
+      saveSubmissionToSupabase(formData, report).catch((err) => console.error("Failed to save to Supabase:", err));
 
       // Save data to SheetDB
       try {

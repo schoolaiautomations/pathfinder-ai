@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Sparkles, GraduationCap, Heart, Wrench, Target, ClipboardCheck, User, Pencil, Languages } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, GraduationCap, Heart, Wrench, Target, ClipboardCheck, User, Pencil, Languages, Download, FileText } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,7 @@ import {
   countries, indianStates,
 } from "@/lib/career-data";
 import { translations, Language } from "@/lib/translations";
+import { downloadFormPreviewAsPDF } from "@/lib/pdf-report";
 
 const stepIcons = [User, GraduationCap, Heart, Wrench, Target, ClipboardCheck];
 
@@ -426,6 +427,17 @@ const Step6 = ({ data, update, errors, goTo, t }: any) => {
         { label: l.parentExpectations, value: data.parentExpectations },
         { label: l.notWanted, value: data.notWanted },
       ]} />
+      <div className="flex justify-end pt-1">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => downloadFormPreviewAsPDF(data)}
+          className="rounded-xl border-zinc-300 text-xs font-semibold h-9 px-4 bg-zinc-50 hover:bg-zinc-100 text-zinc-900"
+        >
+          <FileText className="w-3.5 h-3.5 mr-1.5" /> Save / Print Filled Form Answers PDF
+        </Button>
+      </div>
       <label className={`flex items-start gap-2.5 sm:gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 cursor-pointer transition-all touch-manipulation ${errors.confirmed ? "border-red-600 bg-red-50/20" : "border-zinc-200 has-[[data-state=checked]]:border-black has-[[data-state=checked]]:bg-zinc-100"}`}>
         <Checkbox checked={data.confirmed} onCheckedChange={(v) => update("confirmed", !!v)} className="mt-0.5 shrink-0" />
         <span className="text-xs sm:text-sm font-medium text-zinc-900 leading-snug">{t.checkboxes.confirmInfo}</span>
