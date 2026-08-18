@@ -14,6 +14,8 @@ import { Card } from "@/components/ui/card";
 import { ROADMAP_FORM_KEY, ROADMAP_RESULT_KEY } from "@/lib/roadmap-data";
 import type { LearningRoadmap, RoadmapFormData } from "@/lib/roadmap-data";
 
+import { Navbar } from "@/components/common/Navbar";
+
 const RoadmapResult = () => {
   const [roadmap, setRoadmap] = useState<LearningRoadmap | null>(null);
   const [formData, setFormData] = useState<RoadmapFormData | null>(null);
@@ -44,14 +46,9 @@ const RoadmapResult = () => {
 
   return (
     <main className="min-h-screen bg-background pb-16 safe-bottom">
-      <div className="max-w-4xl mx-auto px-3 sm:px-4 pt-6 sm:pt-10">
-        {/* Back Link */}
-        <Link
-          to="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-black mb-4 sm:mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to home
-        </Link>
+      <Navbar backTo="/roadmap" backLabel="New Roadmap" />
+
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 pt-6 sm:pt-8">
 
         {/* Hero Card */}
         <Card className="bg-white border border-zinc-200 rounded-2xl sm:rounded-3xl p-5 sm:p-10 shadow-card animate-fade-in">

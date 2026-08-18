@@ -16,6 +16,8 @@ import { ROADMAP_FORM_KEY, roadmapEducationLevels } from "@/lib/roadmap-data";
 import type { RoadmapFormData } from "@/lib/roadmap-data";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
+import { Navbar } from "@/components/common/Navbar";
+
 const RoadmapForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -46,23 +48,12 @@ const RoadmapForm = () => {
   };
 
   return (
-    <main className="min-h-screen bg-background py-8 px-4">
-      <div className="max-w-4xl mx-auto mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <img
-            src={wabiLogo}
-            alt="Wabi Resolutions Logo"
-            className="w-9 h-9 rounded-full object-cover border border-zinc-200 shadow-sm"
-          />
-          <span className="font-extrabold text-base text-zinc-950">Wabi Career Guidance</span>
-        </div>
-        <Link to="/" className="inline-flex items-center gap-2 text-sm font-bold text-zinc-600 hover:text-black transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Back to Home
-        </Link>
-      </div>
+    <main className="min-h-screen bg-background pb-16">
+      <Navbar backTo="/" backLabel="Back to Home" />
 
-      <Card className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-zinc-200 bg-white shadow-card p-6 sm:p-10 animate-fade-in">
-        <div className="text-center mb-8">
+      <div className="max-w-4xl mx-auto pt-8 px-4">
+        <Card className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-zinc-200 bg-white shadow-card p-6 sm:p-10 animate-fade-in">
+        <div className="text-center mb-6">
           <div className="w-14 h-14 mx-auto rounded-2xl bg-black flex items-center justify-center text-white shadow-md mb-4">
             <Map className="w-7 h-7" />
           </div>
@@ -72,6 +63,15 @@ const RoadmapForm = () => {
           <p className="text-sm sm:text-base text-zinc-500 mt-2 max-w-md mx-auto leading-relaxed font-medium">
             Tell us your career goal and we'll create a step-by-step learning path with skills you can click and start learning.
           </p>
+        </div>
+
+        {/* Roadmap Visual Graphic */}
+        <div className="rounded-2xl border border-zinc-200 bg-zinc-50 overflow-hidden mb-6">
+          <img
+            src="/learning_roadmap_journey.jpg"
+            alt="Step by step learning path"
+            className="w-full h-44 sm:h-52 object-cover object-top"
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -132,6 +132,7 @@ const RoadmapForm = () => {
           </Button>
         </form>
       </Card>
+      </div>
     </main>
   );
 };

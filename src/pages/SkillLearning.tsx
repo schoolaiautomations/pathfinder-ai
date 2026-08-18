@@ -20,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { ROADMAP_FORM_KEY } from "@/lib/roadmap-data";
 import type { RoadmapFormData, SkillLesson } from "@/lib/roadmap-data";
 import { generateSkillLesson } from "@/lib/roadmap-ai";
+import { Navbar } from "@/components/common/Navbar";
 
 const SkillLearning = () => {
   const [searchParams] = useSearchParams();
@@ -77,21 +78,24 @@ const SkillLearning = () => {
   // Loading state
   if (loading) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center px-4 py-12">
-        <div className="max-w-lg w-full bg-white border border-zinc-200 rounded-3xl shadow-card p-8 sm:p-10 text-center animate-scale-in">
-          <div className="w-16 h-16 mx-auto rounded-2xl bg-black flex items-center justify-center text-white shadow-md mb-6">
-            <Loader2 className="w-8 h-8 text-white animate-spin" />
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-zinc-950">
-            Preparing your lesson
-          </h1>
-          <p className="text-zinc-500 text-sm mt-3 leading-relaxed">
-            Creating a personalised lesson for{" "}
-            <span className="font-bold text-zinc-800">"{skillName}"</span>…
-          </p>
-          <div className="mt-6 flex items-center justify-center gap-2 text-sm text-zinc-500 font-medium">
-            <GraduationCap className="w-4 h-4 text-zinc-800" />
-            <span>Tailored to your level</span>
+      <main className="min-h-screen bg-background flex flex-col">
+        <Navbar backTo="/roadmap/result" backLabel="Back to Roadmap" />
+        <div className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="max-w-lg w-full bg-white border border-zinc-200 rounded-3xl shadow-card p-8 sm:p-10 text-center animate-scale-in">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-black flex items-center justify-center text-white shadow-md mb-6">
+              <Loader2 className="w-8 h-8 text-white animate-spin" />
+            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-zinc-950">
+              Preparing your lesson
+            </h1>
+            <p className="text-zinc-500 text-sm mt-3 leading-relaxed">
+              Creating a personalised lesson for{" "}
+              <span className="font-bold text-zinc-800">"{skillName}"</span>…
+            </p>
+            <div className="mt-6 flex items-center justify-center gap-2 text-sm text-zinc-500 font-medium">
+              <GraduationCap className="w-4 h-4 text-zinc-800" />
+              <span>Tailored to your level</span>
+            </div>
           </div>
         </div>
       </main>
@@ -101,32 +105,25 @@ const SkillLearning = () => {
   // Error state
   if (error) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center px-4 py-12">
-        <div className="max-w-lg w-full bg-white border border-zinc-200 rounded-3xl shadow-card p-8 sm:p-10 text-center animate-scale-in">
-          <div className="w-16 h-16 mx-auto rounded-2xl bg-black flex items-center justify-center text-white shadow-md mb-6">
-            <AlertCircle className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-zinc-950">
-            Something went wrong
-          </h1>
-          <p className="text-zinc-500 text-sm mt-3 leading-relaxed">{error}</p>
-          <div className="mt-6 flex flex-col gap-3 items-center">
-            <Button
-              size="lg"
-              className="bg-black text-white hover:bg-zinc-800 rounded-xl px-6"
+      <main className="min-h-screen bg-background flex flex-col">
+        <Navbar backTo="/roadmap/result" backLabel="Back to Roadmap" />
+        <div className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="max-w-lg w-full bg-white border border-zinc-200 rounded-3xl shadow-card p-8 sm:p-10 text-center animate-scale-in">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-black flex items-center justify-center text-white shadow-md mb-6">
+              <AlertCircle className="w-8 h-8 text-white" />
+            </div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-zinc-950">
+              Something went wrong
+            </h1>
+            <p className="text-zinc-500 text-sm mt-3 leading-relaxed">
+              {error}
+            </p>
+            <button
               onClick={fetchLesson}
+              className="mt-6 bg-black text-white hover:bg-zinc-800 rounded-xl px-5 py-2.5 font-bold text-sm inline-flex items-center gap-2 cursor-pointer"
             >
               <RefreshCw className="w-4 h-4" /> Try Again
-            </Button>
-            <Link to="/roadmap/result">
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-xl border-zinc-300"
-              >
-                <ArrowLeft className="w-4 h-4" /> Back to Roadmap
-              </Button>
-            </Link>
+            </button>
           </div>
         </div>
       </main>
@@ -137,15 +134,8 @@ const SkillLearning = () => {
 
   return (
     <main className="min-h-screen bg-background pb-16 safe-bottom">
-      <div className="max-w-4xl mx-auto px-3 sm:px-4 pt-6 sm:pt-10">
-        {/* Back Link */}
-        <Link
-          to="/roadmap/result"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 hover:text-black mb-4 sm:mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Roadmap
-        </Link>
-
+      <Navbar backTo="/roadmap/result" backLabel="Back to Roadmap" />
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 pt-6 sm:pt-8">
         {/* Header */}
         <Card className="bg-white border border-zinc-200 rounded-2xl sm:rounded-3xl p-5 sm:p-10 shadow-card animate-fade-in mb-6 sm:mb-8">
           <div className="flex items-center gap-2 mb-2 sm:mb-3">
