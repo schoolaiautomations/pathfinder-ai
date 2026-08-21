@@ -74,6 +74,7 @@ export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsig
 
     // Save directly to Supabase table `book_councelling`
     saveBookCouncellingToSupabase({
+      councellor_name: formData?.councellorName || null,
       student_name: bookingForm.name.trim(),
       student_phone: bookingForm.phone.trim(),
       student_class: bookingForm.currentClass.trim() || null,
@@ -237,120 +238,120 @@ export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsig
 
       {/* Booking Dialog Modal */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-lg bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-zinc-200 shadow-2xl">
-          <DialogHeader className="text-left space-y-1">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#7E6A2E] uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-black" />
+        <DialogContent className="max-w-md w-[92vw] sm:w-full max-h-[88vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-zinc-200 shadow-2xl">
+          <DialogHeader className="text-left space-y-0.5 pb-1">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#7E6A2E] uppercase tracking-wider">
+              <Sparkles className="w-3 h-3 text-black" />
               Wabi Career Mentorship
             </div>
-            <DialogTitle className="text-xl sm:text-2xl font-extrabold text-zinc-950">
+            <DialogTitle className="text-lg sm:text-xl font-extrabold text-zinc-950">
               Book a Career Guidance Session
             </DialogTitle>
-            <DialogDescription className="text-xs sm:text-sm text-zinc-500">
-              Get personalized 1-on-1 guidance for <strong className="text-zinc-900">{careerGoal}</strong> with our certified mentors.
+            <DialogDescription className="text-xs text-zinc-500">
+              Get personalized 1-on-1 guidance for <strong className="text-zinc-900">{careerGoal}</strong>.
             </DialogDescription>
           </DialogHeader>
 
           {submitted ? (
-            <div className="py-8 text-center space-y-3">
-              <div className="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
-                <CheckCircle2 className="w-6 h-6" />
+            <div className="py-6 text-center space-y-2.5">
+              <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-5 h-5" />
               </div>
-              <h4 className="text-lg font-extrabold text-zinc-950">Thank You, {bookingForm.name}!</h4>
-              <p className="text-xs sm:text-sm text-zinc-600 max-w-sm mx-auto leading-relaxed">
-                We have received your guidance request for <strong>{careerGoal}</strong>. Our counselor will contact you at <strong>{bookingForm.phone}</strong> to confirm your slot.
+              <h4 className="text-base font-extrabold text-zinc-950">Thank You, {bookingForm.name}!</h4>
+              <p className="text-xs text-zinc-600 max-w-xs mx-auto leading-relaxed">
+                We have received your request for <strong>{careerGoal}</strong>. Our counselor will contact you at <strong>{bookingForm.phone}</strong> shortly.
               </p>
-              <div className="pt-3">
+              <div className="pt-2">
                 <Button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="bg-black text-white rounded-xl px-6 h-11 text-xs font-bold"
+                  className="bg-black text-white rounded-xl px-5 h-9 text-xs font-bold cursor-pointer"
                 >
                   Done
                 </Button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleBookingSubmit} className="space-y-4 pt-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zinc-800">Student Name *</label>
+            <form onSubmit={handleBookingSubmit} className="space-y-2.5 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Student Name *</label>
                   <Input
                     required
                     value={bookingForm.name}
                     onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
                     placeholder="Student name"
-                    className="h-10 rounded-xl text-xs sm:text-sm"
+                    className="h-9 rounded-xl text-xs"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zinc-800">Phone Number *</label>
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Phone Number *</label>
                   <Input
                     required
                     type="tel"
                     value={bookingForm.phone}
                     onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
                     placeholder="Mobile number"
-                    className="h-10 rounded-xl text-xs sm:text-sm"
+                    className="h-9 rounded-xl text-xs"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zinc-800">Current Class</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Current Class</label>
                   <Input
                     value={bookingForm.currentClass}
                     onChange={(e) => setBookingForm({ ...bookingForm, currentClass: e.target.value })}
                     placeholder="e.g. Class 10"
-                    className="h-10 rounded-xl text-xs sm:text-sm"
+                    className="h-9 rounded-xl text-xs"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-bold text-zinc-800">Location / City</label>
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Location / City</label>
                   <Input
                     value={bookingForm.location}
                     onChange={(e) => setBookingForm({ ...bookingForm, location: e.target.value })}
                     placeholder="e.g. Kakinada"
-                    className="h-10 rounded-xl text-xs sm:text-sm"
+                    className="h-9 rounded-xl text-xs"
                   />
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-zinc-800">School / College Name</label>
+              <div className="space-y-0.5">
+                <label className="text-[11px] font-bold text-zinc-800">School / College Name</label>
                 <Input
                   value={bookingForm.school}
                   onChange={(e) => setBookingForm({ ...bookingForm, school: e.target.value })}
                   placeholder="School or college"
-                  className="h-10 rounded-xl text-xs sm:text-sm"
+                  className="h-9 rounded-xl text-xs"
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-xs font-bold text-zinc-800">Any specific question or doubt?</label>
+              <div className="space-y-0.5">
+                <label className="text-[11px] font-bold text-zinc-800">Any specific question or doubt?</label>
                 <Input
                   value={bookingForm.message}
                   onChange={(e) => setBookingForm({ ...bookingForm, message: e.target.value })}
                   placeholder="e.g. Which intermediate group to take? Fee structure details?"
-                  className="h-10 rounded-xl text-xs sm:text-sm"
+                  className="h-9 rounded-xl text-xs"
                 />
               </div>
 
-              <div className="pt-2 flex items-center justify-end gap-2">
+              <div className="pt-1.5 flex items-center justify-end gap-2">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setIsOpen(false)}
-                  className="rounded-xl h-11 text-xs font-semibold"
+                  className="rounded-xl h-9 px-4 text-xs font-semibold"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-black text-white hover:bg-zinc-800 rounded-xl h-11 px-5 text-xs font-bold shadow"
+                  className="bg-black text-white hover:bg-zinc-800 rounded-xl h-9 px-4 text-xs font-bold shadow cursor-pointer"
                 >
-                  <Send className="w-3.5 h-3.5 mr-1.5" />
+                  <Send className="w-3 h-3 mr-1.5" />
                   Confirm Booking Request
                 </Button>
               </div>

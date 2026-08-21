@@ -234,6 +234,7 @@ export async function saveRoadmapBasicToSupabase(data: RoadmapBasicRecord): Prom
 // ─── Book Counselling Session Submissions ────────────────────────────────────
 
 export interface BookCouncellingRecord {
+  councellor_name?: string | null;
   student_name: string;
   student_phone: string;
   student_class?: string | null;
@@ -256,6 +257,7 @@ export async function saveBookCouncellingToSupabase(data: BookCouncellingRecord)
         "Prefer": "return=representation",
       },
       body: JSON.stringify({
+        councellor_name: data.councellor_name || null,
         student_name: data.student_name,
         student_phone: data.student_phone,
         student_class: data.student_class || null,
@@ -278,3 +280,89 @@ export async function saveBookCouncellingToSupabase(data: BookCouncellingRecord)
   return false;
 }
 
+// ─── Counsellor Dashboard: Fetch Submissions ─────────────────────────────────
+
+export interface RoadmapBasicRow {
+  id: number;
+  created_at: string;
+  councellor_name: string | null;
+  student_name: string | null;
+  student_class: string | null;
+  student_school: string | null;
+  student_location: string | null;
+  student_phone: string | null;
+  career_opted: string | null;
+}
+
+export interface BookCouncellingRow {
+  id: number;
+  created_at: string;
+  councellor_name: string | null;
+  student_name: string | null;
+  student_phone: string | null;
+  student_class: string | null;
+  student_school: string | null;
+  student_location: string | null;
+  query_description: string | null;
+}
+
+/**
+ * Fetch roadmap_basic submissions for a specific counsellor (or all if counsellorName is empty)
+ */
+export async function fetchRoadmapBasicByCounsellor(counsellorName?: string): Promise<RoadmapBasicRow[]> {
+  try {
+    const url = counsellorName?.trim()
+      ? `${SUPABASE_URL}/rest/v1/roadmap_basic?councellor_name=eq.${encodeURIComponent(counsellorName.trim())}&order=created_at.desc`
+      : `${SUPABASE_URL}/rest/v1/roadmap_basic?order=created_at.desc`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    }
+    console.warn("Failed to fetch roadmap_basic:", response.status);
+  } catch (err) {
+    console.warn("Error fetching roadmap_basic:", err);
+  }
+  return [];
+}
+
+/**
+ * Fetch book_councelling submissions (optionally filtered by counsellorName)
+ */
+export async function fetchBookCouncellingByCounsellor(counsellorName?: string): Promise<BookCouncellingRow[]> {
+  try {
+    const url = counsellorName?.trim()
+      ? `${SUPABASE_URL}/rest/v1/book_councelling?councellor_name=eq.${encodeURIComponent(counsellorName.trim())}&order=created_at.desc`
+      : `${SUPABASE_URL}/rest/v1/book_councelling?order=created_at.desc`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    }
+    console.warn("Failed to fetch book_councelling:", response.status);
+  } catch (err) {
+    console.warn("Error fetching book_councelling:", err);
+  }
+  return [];
+}
+
+/**
+ * Fetch all book_councelling submissions (for admin)
+ */
+export async function fetchBookCouncellingAll(): Promise<BookCouncellingRow[]> {
+  return fetchBookCouncellingByCounsellor();
+}

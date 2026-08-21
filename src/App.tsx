@@ -15,6 +15,7 @@ import RoadmapResult from "./pages/RoadmapResult.tsx";
 import SkillLearning from "./pages/SkillLearning.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
+import CounsellorDashboard from "./pages/CounsellorDashboard.tsx";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/roadmap/generating" element={<RoadmapGenerating />} />
           <Route path="/roadmap/result" element={<RoadmapResult />} />
           <Route path="/roadmap/learn" element={<SkillLearning />} />
+          <Route path="/counsellor" element={<CounsellorDashboard />} />
           <Route path="/roadmap/:counsellorName" element={<RoadmapForm />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

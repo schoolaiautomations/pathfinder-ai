@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { Map, Sparkles, User, GraduationCap, School, MapPin, Phone, Briefcase, Check, ArrowLeft } from "lucide-react";
+import { Map, Sparkles, User, GraduationCap, School, MapPin, Phone, Briefcase, Check, ArrowLeft, Calendar, Send, CheckCircle2, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -18,7 +25,7 @@ import {
   findCareerFormatFile,
 } from "@/lib/roadmap-data";
 import type { RoadmapFormData } from "@/lib/roadmap-data";
-import { saveRoadmapBasicToSupabase } from "@/lib/supabase";
+import { saveRoadmapBasicToSupabase, saveBookCouncellingToSupabase } from "@/lib/supabase";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
 const RoadmapForm = () => {
@@ -38,6 +45,18 @@ const RoadmapForm = () => {
     councellorName: rawCounsellor || undefined,
   });
 
+  // Booking Modal State for custom careers / guidance
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingSubmitted, setBookingSubmitted] = useState(false);
+  const [bookingData, setBookingData] = useState({
+    name: "",
+    phone: "",
+    currentClass: "",
+    school: "",
+    location: "",
+    query: "",
+  });
+
   useEffect(() => {
     if (rawCounsellor) {
       setForm((prev) => ({ ...prev, councellorName: rawCounsellor }));
@@ -45,6 +64,10 @@ const RoadmapForm = () => {
   }, [rawCounsellor]);
 
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
+
+  const isCustomCareer = form.careerGoal.trim().length > 0 && !DEFAULT_CAREER_OPTIONS.some(
+    (opt) => opt.label.toLowerCase() === form.careerGoal.trim().toLowerCase()
+  );
 
   const handleSelectDefault = (opt: (typeof DEFAULT_CAREER_OPTIONS)[number]) => {
     setSelectedOptionId(opt.id);
@@ -57,6 +80,47 @@ const RoadmapForm = () => {
       (opt) => opt.label.toLowerCase() === val.trim().toLowerCase()
     );
     setSelectedOptionId(match ? match.id : null);
+  };
+
+  const handleOpenBookingModal = () => {
+    setBookingData({
+      name: form.name,
+      phone: form.phone,
+      currentClass: form.currentClass,
+      school: form.school,
+      location: form.location,
+      query: form.careerGoal ? `Interested in guidance for custom career: ${form.careerGoal}` : "",
+    });
+    setBookingSubmitted(false);
+    setIsBookingOpen(true);
+  };
+
+  const handleConfirmBooking = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!bookingData.name.trim() || !bookingData.phone.trim()) {
+      toast({
+        title: "Required fields missing",
+        description: "Please enter your name and phone number.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    saveBookCouncellingToSupabase({
+      councellor_name: rawCounsellor || form.councellorName || null,
+      student_name: bookingData.name.trim(),
+      student_phone: bookingData.phone.trim(),
+      student_class: bookingData.currentClass.trim() || null,
+      student_school: bookingData.school.trim() || null,
+      student_location: bookingData.location.trim() || null,
+      query_description: bookingData.query.trim() || `Custom career: ${form.careerGoal}`,
+    });
+
+    setBookingSubmitted(true);
+    toast({
+      title: "Session Request Received!",
+      description: `Our expert counselor will contact you at ${bookingData.phone} shortly.`,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -292,7 +356,7 @@ const RoadmapForm = () => {
               </div>
 
               {/* Right Column: Career Goal Selection & Submit */}
-              <div className="lg:col-span-7 space-y-3.5">
+              <div className="lg:col-span-7 space-y-3">
                 <div className="flex items-center justify-between">
                   <label className="text-xs sm:text-sm font-bold text-stone-900 flex items-center gap-1.5">
                     <Briefcase className="w-3.5 h-3.5" style={{ color: "#B5956A" }} />
@@ -334,27 +398,59 @@ const RoadmapForm = () => {
                 </div>
 
                 {/* Custom Goal Input */}
-                <div className="pt-1">
-                  <div className="text-[11px] font-semibold mb-1" style={{ color: "#7C6C62" }}>
+                <div className="pt-1 space-y-1.5">
+                  <div className="text-[11px] font-semibold" style={{ color: "#7C6C62" }}>
                     Or enter another custom career direction:
                   </div>
                   <Input
                     type="text"
-                    placeholder="e.g. Data Scientist, Fashion Designer, Pilot, Civil Judge..."
+                    placeholder="e.g. Data Scientist, Civil Judge, Commercial Diver, Animator..."
                     value={form.careerGoal}
                     onChange={(e) => handleCustomGoalChange(e.target.value)}
                     className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900"
                   />
+
+                  {/* Dynamic Book Session Banner if Custom Career entered */}
+                  {isCustomCareer && (
+                    <div
+                      className="p-3 rounded-2xl border transition-all animate-fade-in flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 shadow-2xs"
+                      style={{ background: "#F0EBE1", borderColor: "#C9A97A" }}
+                    >
+                      <div className="space-y-0.5">
+                        <div className="text-xs font-bold text-stone-900 flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+                          Exploring "{form.careerGoal}"?
+                        </div>
+                        <p className="text-[11px] text-stone-600 leading-tight">
+                          Book a 1-on-1 session with our certified counsellors to get deeper personalized insights on this pathway.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleOpenBookingModal}
+                        className="shrink-0 px-3.5 py-2 rounded-xl font-bold text-xs cursor-pointer shadow-sm hover:shadow transition-all flex items-center gap-1.5 active:scale-95"
+                        style={{ background: "#1C1917", color: "#FAF8F5" }}
+                      >
+                        <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+                        Book Guidance Session
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full rounded-2xl h-11 sm:h-12 font-bold text-xs sm:text-sm cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 mt-2"
+                  disabled={isCustomCareer}
+                  className={`w-full rounded-2xl h-11 sm:h-12 font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 mt-2 ${
+                    isCustomCareer
+                      ? "opacity-40 cursor-not-allowed"
+                      : "cursor-pointer shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                  }`}
                   style={{ background: "#1C1917", color: "#FAF8F5" }}
                 >
                   <Sparkles className="w-4 h-4" style={{ color: "#C9A97A" }} />
-                  Generate Learning Roadmap &amp; Fit Report
+                  {isCustomCareer ? "Book a Guidance Session for this career ↑" : "Generate Learning Roadmap & Fit Report"}
                 </button>
               </div>
 
@@ -363,6 +459,130 @@ const RoadmapForm = () => {
 
         </div>
       </div>
+
+      {/* ─── BOOK COUNSELLING SESSION MODAL (MOBILE-OPTIMIZED) ─────────────── */}
+      <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
+        <DialogContent className="max-w-md w-[92vw] sm:w-full max-h-[88vh] overflow-y-auto bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-zinc-200 shadow-2xl">
+          <DialogHeader className="text-left space-y-0.5 pb-1">
+            <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#7E6A2E] uppercase tracking-wider">
+              <Sparkles className="w-3 h-3 text-black" />
+              Wabi Career Mentorship
+            </div>
+            <DialogTitle className="text-lg sm:text-xl font-extrabold text-zinc-950">
+              Book a Career Guidance Session
+            </DialogTitle>
+            <DialogDescription className="text-xs text-zinc-500">
+              Get personalized 1-on-1 guidance for <strong className="text-zinc-900">{form.careerGoal || "your career direction"}</strong>.
+            </DialogDescription>
+          </DialogHeader>
+
+          {bookingSubmitted ? (
+            <div className="py-6 text-center space-y-2.5">
+              <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <h4 className="text-base font-extrabold text-zinc-950">Thank You, {bookingData.name || "Student"}!</h4>
+              <p className="text-xs text-zinc-600 max-w-xs mx-auto leading-relaxed">
+                We have received your guidance request for <strong>{form.careerGoal}</strong>. Our counselor will contact you at <strong>{bookingData.phone}</strong> shortly.
+              </p>
+              <div className="pt-2">
+                <Button
+                  type="button"
+                  onClick={() => setIsBookingOpen(false)}
+                  className="bg-black text-white rounded-xl px-5 h-9 text-xs font-bold cursor-pointer"
+                >
+                  Done
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleConfirmBooking} className="space-y-2.5 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Student Name *</label>
+                  <Input
+                    required
+                    value={bookingData.name}
+                    onChange={(e) => setBookingData({ ...bookingData, name: e.target.value })}
+                    placeholder="Student name"
+                    className="h-9 rounded-xl text-xs"
+                  />
+                </div>
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Phone Number *</label>
+                  <Input
+                    required
+                    type="tel"
+                    value={bookingData.phone}
+                    onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
+                    placeholder="Mobile number"
+                    className="h-9 rounded-xl text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Current Class</label>
+                  <Input
+                    value={bookingData.currentClass}
+                    onChange={(e) => setBookingData({ ...bookingData, currentClass: e.target.value })}
+                    placeholder="e.g. Class 10"
+                    className="h-9 rounded-xl text-xs"
+                  />
+                </div>
+                <div className="space-y-0.5">
+                  <label className="text-[11px] font-bold text-zinc-800">Location / City</label>
+                  <Input
+                    value={bookingData.location}
+                    onChange={(e) => setBookingData({ ...bookingData, location: e.target.value })}
+                    placeholder="e.g. Kakinada"
+                    className="h-9 rounded-xl text-xs"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-0.5">
+                <label className="text-[11px] font-bold text-zinc-800">School / College Name</label>
+                <Input
+                  value={bookingData.school}
+                  onChange={(e) => setBookingData({ ...bookingData, school: e.target.value })}
+                  placeholder="School or college"
+                  className="h-9 rounded-xl text-xs"
+                />
+              </div>
+
+              <div className="space-y-0.5">
+                <label className="text-[11px] font-bold text-zinc-800">Any specific question or doubt?</label>
+                <Input
+                  value={bookingData.query}
+                  onChange={(e) => setBookingData({ ...bookingData, query: e.target.value })}
+                  placeholder="e.g. Which intermediate group to take? Fee structure details?"
+                  className="h-9 rounded-xl text-xs"
+                />
+              </div>
+
+              <div className="pt-1.5 flex items-center justify-end gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsBookingOpen(false)}
+                  className="rounded-xl h-9 px-4 text-xs font-semibold"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="bg-black text-white hover:bg-zinc-800 rounded-xl h-9 px-4 text-xs font-bold shadow cursor-pointer"
+                >
+                  <Send className="w-3 h-3 mr-1.5" />
+                  Confirm Booking Request
+                </Button>
+              </div>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* ─── FOOTER ─────────────────────────────────────────────────────── */}
       <footer style={{ borderTop: "1px solid #E0D6CA", background: "#F0EBE1" }}>
