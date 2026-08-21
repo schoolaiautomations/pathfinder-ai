@@ -123,3 +123,20 @@
   }
 }
 
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .card, [class*="rounded-"] {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+  header {
+    display: none !important;
+  }
+}
+

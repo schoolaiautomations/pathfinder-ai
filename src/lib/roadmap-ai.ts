@@ -72,33 +72,100 @@ export async function generateLearningRoadmap(
   formData: RoadmapFormData
 ): Promise<LearningRoadmap> {
   const systemPrompt =
-    "You are an expert education and career mentor. Always respond with valid JSON only, no markdown fences or extra text.";
+    "You are an expert Indian education and career mentor with deep knowledge of Indian academics, exams like JEE, NEET, CLAT, CAT, GATE, UPSC, entrance tests, and career pathways. Always respond with valid JSON only, no markdown fences or extra text.";
 
   const userPrompt = `A student wants to become a "${formData.careerGoal}".
 They are currently in "${formData.currentClass}" and located in "${formData.location}".
 
-Generate a detailed, phase-by-phase learning roadmap that takes them from where they are RIGHT NOW to achieving their career goal. The roadmap should be a clean, step-by-step learning path.
+Generate a comprehensive career guidance response with ALL of the following sections:
 
-Create 5 to 8 learning phases. Each phase must have:
-- "title": Phase name (e.g., "Foundation Building", "Core Skills Development")
-- "description": 2-3 sentence description of what this phase covers and why it matters
-- "skills": Array of 3-5 specific skills to learn in this phase (these should be concrete and learnable)
-- "resources": Array of 2-4 specific learning resources (real course names, book titles, websites, YouTube channels)
-- "actions": Array of 2-3 immediate action items — things to start doing RIGHT NOW for this phase
-- "milestone": A single clear, measurable milestone that marks completion of this phase
-- "duration": Estimated time to complete this phase (e.g., "2-3 months", "6 months")
+---
 
-IMPORTANT: 
-- Make the phases progressive — start from their current level and build up
-- Skills should be specific enough that a student can search for and learn them
-- Resources should be REAL (actual courses, books, platforms that exist)
-- Action items should be immediately actionable
-- Milestones should be measurable
+SECTION 1 — ACADEMIC PATHWAY (MUST BE STRICTLY CHRONOLOGICAL & LINEAR):
+Generate the exact academic progression in this 3-step chronological order:
 
-Respond ONLY with valid JSON matching this structure:
+Step 1: intermediateOptions: 2-3 stream options for Class 11-12 (e.g. PCM, PCB, Commerce, Humanities) with subjects studied, duration ("2 years"), and why it fits this career.
+Step 2: keyExams: 3-5 crucial entrance/competitive exams they must write BEFORE entering college/degree. Each exam MUST clearly state:
+  - name: Name of the exam (e.g., "JEE Main & Advanced", "NEET-UG", "CUET-UG", "CLAT", "NDA")
+  - when: Exactly when to write it in chronological order (e.g. "During Class 12 / Right after 12th Board Exams in April-May", "After Class 10 for Polytechnic Diploma", "Final year of Degree for GATE/CAT")
+  - description: 1-2 sentence overview of what the exam tests and syllabus
+  - forCourses: 2-3 specific degree courses/colleges this exam gives admission into
+Step 3: degreeOptions: 3-4 degree/diploma courses they will pursue AFTER qualifying the entrance exams above (e.g. "B.Tech in Computer Science & Engineering", "MBBS", "B.Des in Product Design") with course duration (e.g. "4 years", "5.5 years"), type ("Degree" or "Diploma"), key subjects studied, and career relevance.
+
+---
+
+SECTION 2 — LEARNING PHASES:
+A step-by-step learning roadmap (5–7 phases) from their current level to career goal.
+Each phase must have: title, description, skills (3-5), resources (2-4 real ones), actions (2-3 immediate), milestone, duration.
+
+---
+
+SECTION 3 — HOBBIES TO DEVELOP:
+5-7 hobbies or extracurricular activities this student should actively cultivate FROM NOW that align with their career goal.
+Each with: hobby name, and reason why it helps their career.
+
+---
+
+SECTION 4 — SCHOLARSHIPS & SCHOLARSHIP EXAMS:
+3-5 crucial scholarships and merit scholarship examinations (Government & Private/Corporate in India) relevant to this career/degree track:
+- name: Name of the scholarship (e.g. "INSPIRE Scholarship (SHE)", "National Scholarship Portal (NSP) Post-Matric", "Reliance Foundation Undergraduate Scholarship", "AICTE Pragati / Saksham Scheme", "Kishore Vaigyanik / PM-USP Scheme")
+- provider: Organization providing it (e.g. "Govt of India / DST", "Ministry of Education", "Reliance Foundation", "AICTE / State Govt")
+- eligibility: Clear eligibility criteria (e.g. "Top 1% in 12th board exams / pursuing BSc or B.Tech", "Family income < 6 LPA")
+- benefits: Financial assistance / perk (e.g. "Up to ₹80,000 per year + mentorship", "Full tuition waiver")
+- examOrSelection: Selection process or exam required (e.g. "12th Board Merit + JEE/NEET Rank or NSP Aptitude Exam")
+- whenToApply: When to apply (e.g. "July–November during Class 12 / 1st Year College")
+
+---
+
+SECTION 5 — SIMILAR PROFESSIONS:
+3 related career alternatives that share significant skill overlap with their goal.
+Each with: title, reason (why it's similar), overlap (shared skills/knowledge).
+
+---
+
+SECTION 6 — FUTURE OUTLOOK:
+Honest, realistic future assessment of this profession in the next 5-15 years:
+- demandTrend: One of "High Growth", "Stable", "Moderate", or "Declining"
+- aiImpact: 2-3 sentences about how AI will affect this role (honestly — will it automate it? augment it? create new roles?)
+- emergingOpportunities: 3-5 new and emerging sub-fields or opportunities opening up
+- salaryRange: Realistic Indian salary range (entry level and senior level, in LPA)
+- topRecruiters: 5-6 top companies or organisations that hire for this role in India
+- jobSecurity: 1-2 sentences of honest job security assessment
+
+---
+
+Respond ONLY with valid JSON matching exactly this structure:
 {
   "careerGoal": "...",
-  "summary": "A 2-3 sentence overview of the complete learning journey",
+  "summary": "2-3 sentence overview of the journey",
+  "academicPathway": {
+    "intermediateOptions": [
+      {
+        "name": "...",
+        "type": "Intermediate",
+        "duration": "2 years",
+        "subjects": ["...", "..."],
+        "description": "..."
+      }
+    ],
+    "degreeOptions": [
+      {
+        "name": "...",
+        "type": "Degree",
+        "duration": "...",
+        "subjects": ["...", "..."],
+        "description": "..."
+      }
+    ],
+    "keyExams": [
+      {
+        "name": "...",
+        "description": "...",
+        "when": "...",
+        "forCourses": ["B.Tech at IITs/NITs", "B.E. at top engineering colleges"]
+      }
+    ]
+  },
   "phases": [
     {
       "title": "...",
@@ -109,7 +176,38 @@ Respond ONLY with valid JSON matching this structure:
       "milestone": "...",
       "duration": "..."
     }
-  ]
+  ],
+  "hobbies": [
+    {
+      "hobby": "...",
+      "reason": "..."
+    }
+  ],
+  "scholarships": [
+    {
+      "name": "...",
+      "provider": "...",
+      "eligibility": "...",
+      "benefits": "...",
+      "examOrSelection": "...",
+      "whenToApply": "..."
+    }
+  ],
+  "similarProfessions": [
+    {
+      "title": "...",
+      "reason": "...",
+      "overlap": "..."
+    }
+  ],
+  "futureOutlook": {
+    "demandTrend": "...",
+    "aiImpact": "...",
+    "emergingOpportunities": ["...", "..."],
+    "salaryRange": "...",
+    "topRecruiters": ["...", "..."],
+    "jobSecurity": "..."
+  }
 }`;
 
   const cleaned = await callOpenRouter(systemPrompt, userPrompt);
@@ -121,8 +219,25 @@ Respond ONLY with valid JSON matching this structure:
       throw new Error("Invalid response: missing phases array");
     }
 
-    // Ensure careerGoal is set
     parsed.careerGoal = parsed.careerGoal || formData.careerGoal;
+
+    // Provide defaults for new fields in case AI omits them
+    if (!parsed.academicPathway) {
+      parsed.academicPathway = { intermediateOptions: [], degreeOptions: [], keyExams: [] };
+    }
+    if (!parsed.hobbies) parsed.hobbies = [];
+    if (!parsed.scholarships) parsed.scholarships = [];
+    if (!parsed.similarProfessions) parsed.similarProfessions = [];
+    if (!parsed.futureOutlook) {
+      parsed.futureOutlook = {
+        demandTrend: "Stable",
+        aiImpact: "AI is expected to augment this profession.",
+        emergingOpportunities: [],
+        salaryRange: "Varies by experience",
+        topRecruiters: [],
+        jobSecurity: "Moderate job security.",
+      };
+    }
 
     return parsed;
   } catch (e) {

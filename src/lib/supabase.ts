@@ -181,3 +181,100 @@ function getFromLocalStorage(): SubmissionRecord[] {
     return [];
   }
 }
+
+// ─── Roadmap Basic (Career Roadmap Submissions) ──────────────────────────────
+
+export interface RoadmapBasicRecord {
+  councellor_name?: string | null;
+  student_name: string;
+  student_class: string;
+  student_school: string;
+  student_location: string;
+  student_phone: string;
+  career_opted: string;
+}
+
+/**
+ * Saves a basic roadmap form submission to the Supabase `roadmap_basic` table
+ */
+export async function saveRoadmapBasicToSupabase(data: RoadmapBasicRecord): Promise<boolean> {
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/roadmap_basic`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+      },
+      body: JSON.stringify({
+        councellor_name: data.councellor_name || null,
+        student_name: data.student_name,
+        student_class: data.student_class,
+        student_school: data.student_school,
+        student_location: data.student_location,
+        student_phone: data.student_phone,
+        career_opted: data.career_opted,
+      }),
+    });
+
+    if (response.ok) {
+      console.log("Successfully saved roadmap submission to Supabase table: roadmap_basic");
+      return true;
+    } else {
+      const errorBody = await response.text();
+      console.warn("Supabase save roadmap_basic error:", response.status, errorBody);
+    }
+  } catch (err) {
+    console.warn("Supabase save roadmap_basic network warning:", err);
+  }
+  return false;
+}
+
+// ─── Book Counselling Session Submissions ────────────────────────────────────
+
+export interface BookCouncellingRecord {
+  student_name: string;
+  student_phone: string;
+  student_class?: string | null;
+  student_school?: string | null;
+  student_location?: string | null;
+  query_description?: string | null;
+}
+
+/**
+ * Saves a 1-on-1 career counselling booking request to Supabase `book_councelling` table
+ */
+export async function saveBookCouncellingToSupabase(data: BookCouncellingRecord): Promise<boolean> {
+  try {
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/book_councelling`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+      },
+      body: JSON.stringify({
+        student_name: data.student_name,
+        student_phone: data.student_phone,
+        student_class: data.student_class || null,
+        student_school: data.student_school || null,
+        student_location: data.student_location || null,
+        query_description: data.query_description || null,
+      }),
+    });
+
+    if (response.ok) {
+      console.log("Successfully saved booking request to Supabase table: book_councelling");
+      return true;
+    } else {
+      const errorBody = await response.text();
+      console.warn("Supabase save book_councelling error:", response.status, errorBody);
+    }
+  } catch (err) {
+    console.warn("Supabase save book_councelling network warning:", err);
+  }
+  return false;
+}
+

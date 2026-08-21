@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Four Circles — career report</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet"><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap"><div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Teacher</h2><p class="standfirst">Shape young minds every day — but it takes patience, not just passion. Answer all four circles honestly. If even one comes out wrong, think twice before you spend years on it.</p></div><div class="printhead">Four Circles of Career &nbsp;·&nbsp; Teacher &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div><nav class="strip"><a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a><a class="pip" href="#c2"><div class="ring">2</div><b>Skills</b><em>Can you qualify?</em></a><a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Careful</em></a><a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Enough?</em></a></nav><section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want it?</h3><p class="lede">Many students want the idea of the job, not the work. Tap your honest answer.</p><div class="card"><div id="quiz"><div class="q" data-i="0"><p>Do you enjoy explaining things to others clearly?</p><div class="toggle"><button type="button" data-v="y" aria-pressed="false">Yes</button><button type="button" data-v="n" aria-pressed="false">No</button></div></div><div class="q" data-i="1"><p>Can you stay calm when students are noisy or distracted?</p><div class="toggle"><button type="button" data-v="y" aria-pressed="false">Yes</button><button type="button" data-v="n" aria-pressed="false">No</button></div></div><div class="q" data-i="2"><p>Are you okay repeating the same lesson many times?</p><div class="toggle"><button type="button" data-v="y" aria-pressed="false">Yes</button><button type="button" data-v="n" aria-pressed="false">No</button></div></div><div class="q" data-i="3"><p>Do you like preparing notes and lesson plans regularly?</p><div class="toggle"><button type="button" data-v="y" aria-pressed="false">Yes</button><button type="button" data-v="n" aria-pressed="false">No</button></div></div><div class="q" data-i="4"><p>Can you handle parents questioning your teaching?</p><div class="toggle"><button type="button" data-v="y" aria-pressed="false">Yes</button><button type="button" data-v="n" aria-pressed="false">No</button></div></div><div class="q" data-i="5"><p>Are you fine earning a modest salary for many years?</p><div class="toggle"><button type="button" data-v="y" aria-pressed="false">Yes</button><button type="button" data-v="n" aria-pressed="false">No</button></div></div></div><div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section><section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; skills</h3><p class="lede">What to focus on in school, and which road to take after Class 10.</p><div class="card"><div class="row"><div class="k"><span class="subno">1</span>English</div><div class="v">Teachers must speak and write clearly to explain any topic well.</div></div><div class="row"><div class="k"><span class="subno">2</span>Telugu</div><div class="v">Most AP students learn in Telugu; strong language skills help you reach them.</div></div><div class="row"><div class="k"><span class="subno">3</span>Social Studies</div><div class="v">Builds general knowledge needed to teach History, Civics or Geography subjects.</div></div><div class="row"><div class="k">After Class 10</div><div class="v"><b>After Class 10, take Intermediate with any stream — MPC, BiPC, MEC or CEC — based on the subject you want to teach. Then do a B.Ed degree. Alternatively, take D.El.Ed (Diploma in Elementary Education) after Intermediate to teach primary classes faster.</b></div></div><div class="row"><div class="k">Start these habits</div><div class="v"><div class="chips"><span class="chip">Teach a topic to friends</span><span class="chip">Read a book monthly</span><span class="chip">Keep a daily journal</span><span class="chip">Join quiz competitions</span><span class="chip">Practice public speaking</span><span class="chip">Summarise lessons in notes</span></div></div></div></div><div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">THE LONGER ROAD — QUALIFICATIONS YOU WILL NEED LATER</div><div class="row"><div class="k">D.El.Ed then TET</div><div class="v">Intermediate pass, then 2-year diploma, then AP TET exam</div></div><div class="row"><div class="k">Degree plus B.Ed then TET</div><div class="v">Any bachelor's degree, 2-year B.Ed, then AP TET or DSC</div></div><div class="row"><div class="k">Private school teacher</div><div class="v">Degree plus B.Ed; no government exam needed for private schools</div></div><div class="row"><div class="k">You must clear</div><div class="v">Class 10 → Intermediate → Degree or D.El.Ed → B.Ed → AP TET or DSC → Job</div></div><div class="flag red"><span class="mark">Do first</span><span>AP DSC (government teacher recruitment) happens only once in several years. Check the vacancy cycle early; many qualified candidates wait years for a post.</span></div></div></section><section id="c3"><div class="num">CIRCLE 3 · THE RISK</div><h3>How often are the jobs?</h3><p class="lede">This is the circle almost nobody checks — and it decides most careers.</p><div class="card"><div class="row"><div class="k">Who hires</div><div class="v">AP State Government (Zilla Parishad, Mandal schools), Navodaya and Kendriya Vidyalayas, private and corporate schools, coaching institutes.</div></div><div class="row"><div class="k">How often</div><div class="v">Government posts open irregularly, once every few years. Private school jobs open every year before June.</div></div><div class="row"><div class="k">How many</div><div class="v">Thousands apply for every government vacancy. Private schools have more openings but lower pay.</div></div><div class="flag "><span class="mark">Careful</span><span>Build skills for private schools first; apply for government posts when DSC is announced.</span></div><div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">Your Plan B</div><div class="v">Pick one that reuses the same preparation, so no year is wasted:<div class="chips"><span class="chip">Educational content creator</span><span class="chip">Corporate trainer</span><span class="chip">Librarian</span><span class="chip">Curriculum designer</span><span class="chip">Coaching centre owner</span></div></div></div></div></section><section id="c4"><div class="num">CIRCLE 4</div><h3>What you will earn</h3><p class="lede">And what it costs before the first salary arrives.</p><div class="card"><div class="row"><div class="k">Starting (Private school or fresher)</div><div class="v"><span class="money">Rs 12,000 - 20,000</span><br><span style="font-size:13px">Private school pay varies widely by school type.</span></div></div><div class="row"><div class="k">Middle (Government school, 5-8 years)</div><div class="v"><span class="money">Rs 35,000 - 50,000</span><br><span style="font-size:13px">After DSC selection and grade pay revisions.</span></div></div><div class="row"><div class="k">Senior (Headmaster or senior grade)</div><div class="v"><span class="money">Rs 55,000 - 75,000</span><br><span style="font-size:13px">With promotions and 7th Pay Commission benefits.</span></div></div><div class="row"><div class="k">The cost before that</div><div class="v">Roughly 3 to 5 non-earning years. Intermediate (2 years) plus degree (3 years) plus B.Ed (1 year). Government college fees: Rs 20,000 - 60,000 per year. Private college B.Ed can cost Rs 50,000 - 80,000 per year.</div></div><div class="flag"><span class="mark">Ask at home</span><span>Can my family manage the years before I start earning? If you are the only earner-to-be, you need a plan that lets you earn while you prepare.</span></div></div></section><div class="rule-box"><h4>How to read your four circles</h4><p><span class="hi">All four right</span> — go ahead with full commitment, starting today, not after results.</p><p><span class="hi">Any one wrong</span> — stop and think twice before you decide.</p><p><span class="hi">Two or more wrong</span> — you are choosing this career for the wrong reasons. Talk to your counsellor.</p><p style="margin-top:16px;color:#9FAAB9;font-size:14px">Write a deadline today: “If I am not selected by the age of ___, I move to my Plan B.” The deadline is what protects you.</p></div><section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">If the four circles came out right, this is your road. Nothing here needs money or coaching.</p><div class="card plan"><div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul><li>Teach one topic to classmates each week and note what confuses them</li><li>Join school assembly or debate to practice speaking in front of a group</li><li>Read one non-textbook book per month to build general knowledge</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul><li>Pick Intermediate stream matching the subject you want to teach later</li><li>Score above 60% to stay eligible for good B.Ed colleges</li><li>Volunteer at a local tuition centre to get real classroom experience</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">3</span>After Intermediate or diploma</div><ul><li>Complete B.Ed from an NCTE-approved college in AP</li><li>Register and appear for AP TET as soon as you are eligible</li><li>Apply to private schools for experience while waiting for DSC notification</li></ul></div></div><div class="flag"><span class="mark">Remember</span><span>You are in school. Nothing is decided yet — and that is your advantage. Every year you start early is a year you will not have to spend waiting later.</span></div></section><p class="note">This is guidance, not an official notice. Qualifications, age limits, vacancies and pay change with every notification — always confirm on the official website before you apply, and never pay an agent for a seat.</p></div></body></html>

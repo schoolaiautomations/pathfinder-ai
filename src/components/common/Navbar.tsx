@@ -70,14 +70,6 @@ export const Navbar = ({
             <span className="hidden md:inline">Roadmap</span>
           </Link>
 
-          <Link
-            to="/blogs"
-            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-bold text-zinc-700 hover:text-black hover:bg-zinc-100 transition-colors"
-          >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Research & Blogs</span>
-          </Link>
-
           {showShare && onShare && (
             <button
               onClick={onShare}

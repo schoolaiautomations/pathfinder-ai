@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Journalist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Journalist</h2><p class="standfirst">Find facts, ask difficult questions and explain what is happening clearly — in text, video, audio or digital media. The real job is reporting and verification, not just being on camera. Answer all four circles honestly. If even one comes out wrong, think twice before you spend years on it.</p></div>
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Journalist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip"><a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a><a class="pip" href="#c2"><div class="ring">2</div><b>Skills</b><em>Can you qualify?</em></a><a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Careful</em></a><a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Enough?</em></a></nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want it?</h3><p class="lede">Many students want the microphone, fame or television screen — not the daily reporting work behind it. Tap your honest answer.</p><div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>Can you approach strangers, ask clear questions and keep asking follow-ups when the first answer is vague?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="1"><p>Do you enjoy reading, writing and rewriting until a complicated story becomes simple and accurate?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="2"><p>Can you delay publishing an exciting claim until you verify it properly, even when others are posting it first?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="3"><p>Can you handle corrections, rejected story ideas, editor criticism and public disagreement without giving up?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="4"><p>Are you willing to follow current affairs every day — politics, courts, business, science, local issues and public policy — instead of only topics you personally like?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="5"><p>Can you work around breaking news, travel for field reporting, record video/audio and sometimes work evenings, weekends or holidays?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; skills</h3><p class="lede">What to focus on in school, and which road to take after Class 10.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>English</div><div class="v">Reading speed, grammar, vocabulary, interviewing and clear writing matter every day. Strong English also opens national and digital-media opportunities.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Telugu</div><div class="v">For journalism in Andhra Pradesh, strong spoken and written Telugu is a major advantage. Learn to explain serious issues in natural, simple Telugu — not only formal textbook language.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Social Studies &amp; Current Affairs</div><div class="v">History, civics, economics, geography and daily news help you understand what a story means instead of only repeating what someone said.</div></div>
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Intermediate CEC / Humanities is the most relevant route, but MPC, BiPC or any recognized stream is also accepted.</b> After Class 12, you can join BA Journalism / Mass Communication / BJMC. Admission may be through CUET-UG, a college-specific entrance test, or Class 12 merit depending on the institution.</div></div>
+<div class="row"><div class="k">Start these habits</div><div class="v"><div class="chips"><span class="chip">Read news daily</span><span class="chip">Write 150 words daily</span><span class="chip">Verify 2 sources</span><span class="chip">Interview people</span><span class="chip">Shoot short videos</span><span class="chip">Learn spreadsheets</span></div></div></div>
+</div>
+
+<div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">THE LONGER ROAD — QUALIFICATIONS YOU WILL NEED LATER</div>
+<div class="row"><div class="k">After Class 12</div><div class="v">You can choose <b>BA Journalism / Mass Communication, BJMC, BAMMC, BA Media Studies</b> or a related undergraduate programme. Eligibility varies by college, but these programmes commonly accept students from multiple Class 12 streams.</div></div>
+
+<div class="row"><div class="k">Is a journalism degree compulsory?</div><div class="v"><b>No single professional licence is required to work as a journalist in India.</b> Employers may hire graduates in Journalism, Communications, English or other fields if their reporting, writing and portfolio are strong. Subject expertise — for example economics, science, law or technology — can also become a reporting advantage.</div></div>
+<div class="row"><div class="k">Postgraduate route</div><div class="v">After a bachelor's degree, specialised journalism and media programmes are another option. IIMC currently offers postgraduate journalism, radio/TV, digital-media and related programmes. A postgraduate qualification can help, but it still does not replace a strong portfolio.</div></div>
+<div class="row"><div class="k">Portfolio you need</div><div class="v">Build 8–12 pieces that prove you can actually report: a local news story, interview, profile, fact-check, data story, short video report, photo story and one deeper explanatory piece. Show your sources and corrections clearly.</div></div>
+<div class="row"><div class="k">Tools to learn</div><div class="v">Phone/video recording, audio, basic editing, photography, headline writing, CMS publishing, social media, search, spreadsheets, simple data visualisation and fact-checking tools. Modern journalists are increasingly expected to work across formats.</div></div>
+<div class="row"><div class="k">Professional rules</div><div class="v">Accuracy, verification, fairness, source handling, privacy, copyright and legal awareness matter. The Press Council of India specifically emphasises checking factual accuracy and cross-checking information before publication.</div></div>
+<div class="row"><div class="k">You must clear</div><div class="v">Class 10 → any suitable Intermediate stream → bachelor's degree / journalism programme → portfolio + internships → reporter / sub-editor / digital journalist / video journalist → specialised beat or senior editorial role</div></div>
+<div class="flag red"><span class="mark">Do first</span><span>Before paying for a journalism course, report one real story yourself. Pick a local issue, speak to at least three people, verify the facts, write 500 words and make a 60-second video version. If you enjoy the reporting process — not just presenting it — this career deserves a closer look.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · THE RISK</div><h3>How often are the jobs?</h3><p class="lede">Journalism exists everywhere, but direct newsroom jobs are more competitive and fragmented than the number of YouTube channels makes them look.</p><div class="card">
+<div class="row"><div class="k">Who hires</div><div class="v">Newspapers, television news channels, digital newsrooms, magazines, news agencies, radio, specialised business/technology publications and local-language media. In Andhra Pradesh, current openings appear in cities such as Visakhapatnam and Vijayawada, while larger media markets include Hyderabad, Bengaluru, Chennai, Delhi and Mumbai.</div></div>
+<div class="row"><div class="k">How often</div><div class="v">Openings appear throughout the year, but many are internships, contract roles, freelance assignments or digital-content positions rather than permanent “Reporter” jobs. Current Andhra Pradesh listings include journalism internships and sub-editor roles, showing that entry paths can be mixed rather than one standard graduate recruitment cycle.</div></div>
+<div class="row"><div class="k">What employers now expect</div><div class="v">Writing alone is often not enough. Newsrooms increasingly ask for research, fact-checking, social media, CMS use, basic photo/video skills, scripting and audience understanding. Telugu + English + multimedia ability makes you much more employable in this region.</div></div>
+<div class="row"><div class="k">AI changes the job</div><div class="v">Routine summaries, transcription and basic rewriting are becoming easier to automate. Your stronger long-term value is <b>original reporting, trusted sources, field access, verification, judgement, interviews, investigation and subject expertise</b> — work that cannot be replaced by simply generating text.</div></div>
+<div class="flag"><span class="mark">Careful</span><span>A journalism degree by itself does not guarantee a newsroom job. If you graduate with no published work, no reporting experience and no multimedia ability, you will compete against candidates who already have clips, internships, YouTube packages, newsletters or local reporting experience.</span></div>
+<div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">Your Plan B</div><div class="v">Pick one that reuses the same communication skills:<div class="chips"><span class="chip">Copy / sub-editor</span><span class="chip">Content writer</span><span class="chip">PR / communications</span><span class="chip">Researcher</span><span class="chip">Script writer</span><span class="chip">Digital producer</span></div></div></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you will earn</h3><p class="lede">Journalism can become a respected and influential career, but the first few years are often paid much less than students expect.</p><div class="card">
+<div class="row"><div class="k">Intern / trainee</div><div class="v"><span class="money">Rs 0 – 15,000/month</span><br><span style="font-size:13px">Some internships are unpaid or offer small stipends. Current Indian listings include journalism internships around Rs 7,000–7,500/month.</span></div></div>
+<div class="row"><div class="k">Starting reporter / journalist</div><div class="v"><span class="money">Rs 15,000 – 30,000/month</span><br><span style="font-size:13px">Indeed currently reports an India-wide journalist average base salary of about Rs 17,205/month. Strong digital, English-language or metro roles can start higher.</span></div></div>
+<div class="row"><div class="k">Mid-level (3–7 years)</div><div class="v"><span class="money">Rs 30,000 – 70,000/month</span><br><span style="font-size:13px">Reporter, correspondent, producer, sub-editor or specialist beat journalist. Pay varies sharply by organisation, city, language, portfolio and audience reach.</span></div></div>
+<div class="row"><div class="k">Senior / specialist</div><div class="v"><span class="money">Rs 60,000 – 1,50,000+/month</span><br><span style="font-size:13px">Senior correspondents, editors, producers and recognised specialists can earn more. Famous anchors and national personalities are exceptions — do not use celebrity salaries when planning this career.</span></div></div>
+<div class="row"><div class="k">The cost before that</div><div class="v">Journalism education has no single national price. A local public-college degree can cost far less than a private media school. As a later postgraduate benchmark, IIMC's current published fee is about <b>Rs 95,500 for PG Diploma in Journalism (English)</b>, <b>Rs 1.685 lakh for Radio &amp; TV Journalism</b> and <b>Rs 2.085 lakh for Digital Media</b>. These are postgraduate fees, not Class-12 undergraduate fees.</div></div>
+<div class="flag"><span class="mark">Ask at home</span><span>Does it make sense to spend several lakhs on a private media degree if the likely first salary is Rs 15,000–30,000/month? Compare course fees, internships, alumni outcomes and newsroom access. In this field, a lower-cost degree plus excellent reporting work can sometimes be smarter than an expensive degree with no portfolio.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4><p><span class="hi">All four right</span> — go ahead with full commitment, starting today, not after results.</p><p><span class="hi">Any one wrong</span> — stop and think twice before you decide.</p><p><span class="hi">Two or more wrong</span> — you are choosing this career for the wrong reasons. Talk to your counsellor.</p><p style="margin-top:16px;color:#9FAAB9;font-size:14px">For journalism, add one extra test: would you still want this career if nobody recognised your face and your first job was behind the scenes? If the answer is no, you may want broadcasting fame more than journalism itself.</p></div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">If the four circles came out right, start reporting now. You do not need to wait for college to test whether this work suits you.</p><div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul><li>Read one Telugu and one English news source every day and compare how they report the same event</li><li>Write a 150-word summary of one local issue each week using only verified facts</li><li>Interview a teacher, shopkeeper, farmer, student, athlete or local worker and turn the conversation into a short profile</li></ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul><li>Choose the Intermediate stream you can perform well in; CEC/Humanities is useful but not compulsory</li><li>Improve Telugu + English writing, speaking, typing, basic photography, mobile video and editing</li><li>Create a simple student-news page, newsletter or YouTube series and publish one properly verified story every two weeks</li></ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>After Class 12</div><ul><li>Shortlist your target colleges first, then prepare for the correct admission route: <b>CUET-UG where required, university-specific entrance/aptitude tests where applicable, or merit-based admission</b>. Do not prepare for an exam until you confirm that your target programme actually uses it</li><li>Compare journalism/mass-communication degrees with other bachelor's routes; check fees, faculty, student publications, studio access, internships and alumni outcomes — not just advertisements</li><li>By the end of first year, build at least 8–12 strong published clips across text, interview, video, photo, fact-check and data formats</li><li>Apply early for internships with local newspapers, Telugu newsrooms, digital publications, radio, magazines and national media; be willing to move to a stronger media market if necessary</li></ul></div>
+</div><div class="flag green"><span class="mark">Best first test</span><span>This weekend, report one real local story. <b>Three interviews + two independent sources + 500 words + one 60-second video.</b> That single exercise will tell you far more about your fit for journalism than watching news anchors on television.</span></div></section>
+
+<p class="note">This is career guidance, not an official admission, employment or salary notice. Course eligibility, fees, newsroom requirements, vacancies and pay change over time. Journalism also involves legal, ethical and safety responsibilities. Confirm current programme details with the institution and current job requirements with the employer before applying or paying any fee.</p>
+</div></body></html>
