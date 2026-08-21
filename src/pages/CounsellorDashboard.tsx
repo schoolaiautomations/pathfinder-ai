@@ -45,7 +45,6 @@ const CounsellorDashboard = () => {
   const [bookings, setBookings] = useState<BookCouncellingRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"submissions" | "bookings">("submissions");
-  const [filterMode, setFilterMode] = useState<"my" | "all">("my");
 
   // Check sessionStorage for existing login
   useEffect(() => {
@@ -63,33 +62,26 @@ const CounsellorDashboard = () => {
     }
   }, [isLoggedIn, username]);
 
-  // Apply filter when data or filterMode changes
+  // Apply filter: strictly only this counsellor's submissions
   useEffect(() => {
-    if (filterMode === "all") {
-      setSubmissions(allSubmissions);
-      setBookings(allBookings);
-    } else {
-      const u = username.toLowerCase().trim();
-      const normalize = (s: string | null) => (s || "").toLowerCase().replace(/[\s_-]+/g, "");
-      
-      const filteredSubs = allSubmissions.filter((row) => {
-        if (!row.councellor_name) return false;
-        return normalize(row.councellor_name) === normalize(u) ||
-               row.councellor_name.toLowerCase().includes(u) ||
-               u.includes(row.councellor_name.toLowerCase());
-      });
+    const u = username.toLowerCase().trim();
+    const normalize = (s: string | null) => (s || "").toLowerCase().replace(/[\s_-]+/g, "");
+    
+    const filteredSubs = allSubmissions.filter((row) => {
+      if (!row.councellor_name) return false;
+      return normalize(row.councellor_name) === normalize(u) ||
+             row.councellor_name.toLowerCase().trim() === u;
+    });
 
-      const filteredBooks = allBookings.filter((row) => {
-        if (!row.councellor_name) return false;
-        return normalize(row.councellor_name) === normalize(u) ||
-               row.councellor_name.toLowerCase().includes(u) ||
-               u.includes(row.councellor_name.toLowerCase());
-      });
+    const filteredBooks = allBookings.filter((row) => {
+      if (!row.councellor_name) return false;
+      return normalize(row.councellor_name) === normalize(u) ||
+             row.councellor_name.toLowerCase().trim() === u;
+    });
 
-      setSubmissions(filteredSubs);
-      setBookings(filteredBooks);
-    }
-  }, [filterMode, allSubmissions, allBookings, username]);
+    setSubmissions(filteredSubs);
+    setBookings(filteredBooks);
+  }, [allSubmissions, allBookings, username]);
 
   const loadData = async () => {
     setLoading(true);
@@ -257,7 +249,6 @@ const CounsellorDashboard = () => {
             /* ─── DASHBOARD ──────────────────────────────────────────────── */
             <div className="space-y-6">
               {/* Header */}
-              {/* Header */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h1 className="text-xl sm:text-2xl font-extrabold text-stone-900">
@@ -270,40 +261,14 @@ const CounsellorDashboard = () => {
                   </p>
                 </div>
                 
-                <div className="flex items-center gap-2">
-                  {/* Filter Toggle */}
-                  <div className="inline-flex rounded-xl p-0.5 border border-stone-200 bg-white">
-                    <button
-                      onClick={() => setFilterMode("my")}
-                      className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        filterMode === "my"
-                          ? "bg-stone-900 text-white shadow-xs"
-                          : "text-stone-600 hover:text-stone-900"
-                      }`}
-                    >
-                      My ({username})
-                    </button>
-                    <button
-                      onClick={() => setFilterMode("all")}
-                      className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                        filterMode === "all"
-                          ? "bg-stone-900 text-white shadow-xs"
-                          : "text-stone-600 hover:text-stone-900"
-                      }`}
-                    >
-                      All ({allSubmissions.length})
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={loadData}
-                    disabled={loading}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-white border border-stone-200 hover:bg-stone-50 transition-all cursor-pointer shadow-2xs disabled:opacity-50"
-                  >
-                    <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-                    Refresh
-                  </button>
-                </div>
+                <button
+                  onClick={loadData}
+                  disabled={loading}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-stone-200 hover:bg-stone-50 transition-all cursor-pointer shadow-2xs disabled:opacity-50 self-start sm:self-auto"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+                  Refresh
+                </button>
               </div>
 
               {/* Stats */}
@@ -354,11 +319,7 @@ const CounsellorDashboard = () => {
                     <Users className="w-10 h-10 mx-auto text-stone-300 mb-3" />
                     <p className="text-sm font-bold text-stone-500">No submissions found</p>
                     <p className="text-xs text-stone-400 mt-1">
-                      {filterMode === "my" ? (
-                        <>Showing for <strong>{username}</strong>. Click <strong>"All"</strong> above to see all submissions.</>
-                      ) : (
-                        <>Share link <code className="bg-stone-100 px-1.5 py-0.5 rounded text-[11px] font-mono">/roadmap/{username}</code> to receive submissions.</>
-                      )}
+                      Share your referral link <code className="bg-stone-100 px-1.5 py-0.5 rounded text-[11px] font-mono">/roadmap/{username}</code> to start receiving submissions.
                     </p>
                   </div>
                 ) : (
@@ -374,7 +335,6 @@ const CounsellorDashboard = () => {
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Career Opted</th>
-                            <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Counsellor</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Date</th>
                           </tr>
                         </thead>
@@ -396,7 +356,6 @@ const CounsellorDashboard = () => {
                                   {row.career_opted || "—"}
                                 </span>
                               </td>
-                              <td className="px-3 py-2.5 text-stone-600 font-mono text-[10.5px]">{row.councellor_name || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
                             </tr>
                           ))}
@@ -412,11 +371,7 @@ const CounsellorDashboard = () => {
                     <Calendar className="w-10 h-10 mx-auto text-stone-300 mb-3" />
                     <p className="text-sm font-bold text-stone-500">No booking requests found</p>
                     <p className="text-xs text-stone-400 mt-1">
-                      {filterMode === "my" ? (
-                        <>Showing for <strong>{username}</strong>. Click <strong>"All"</strong> to see all booking requests.</>
-                      ) : (
-                        <>Booking requests from career reports will appear here.</>
-                      )}
+                      Booking requests from students using your link will appear here.
                     </p>
                   </div>
                 ) : (
@@ -432,7 +387,6 @@ const CounsellorDashboard = () => {
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Query</th>
-                            <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Counsellor</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Date</th>
                           </tr>
                         </thead>
@@ -450,7 +404,6 @@ const CounsellorDashboard = () => {
                               <td className="px-3 py-2.5 text-stone-700 max-w-[120px] truncate">{row.student_school || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-700">{row.student_location || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-600 max-w-[180px] truncate">{row.query_description || "—"}</td>
-                              <td className="px-3 py-2.5 text-stone-600 font-mono text-[10.5px]">{row.councellor_name || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
                             </tr>
                           ))}

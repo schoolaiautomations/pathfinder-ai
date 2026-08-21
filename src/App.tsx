@@ -37,6 +37,9 @@ const App = () => (
           <Route path="/roadmap/learn" element={<SkillLearning />} />
           <Route path="/counsellor" element={<CounsellorDashboard />} />
           <Route path="/roadmap/:counsellorName" element={<RoadmapForm />} />
+          <Route path="/roadmap/:counsellorName/generating" element={<RoadmapGenerating />} />
+          <Route path="/roadmap/:counsellorName/result" element={<RoadmapResult />} />
+          <Route path="/roadmap/:counsellorName/learn" element={<SkillLearning />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

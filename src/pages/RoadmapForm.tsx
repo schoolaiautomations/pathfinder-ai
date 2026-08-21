@@ -170,7 +170,11 @@ const RoadmapForm = () => {
       career_opted: form.careerGoal.trim(),
     });
 
-    navigate("/roadmap/generating");
+    if (rawCounsellor) {
+      navigate(`/roadmap/${rawCounsellor}/generating`);
+    } else {
+      navigate("/roadmap/generating");
+    }
   };
 
   return (

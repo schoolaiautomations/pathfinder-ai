@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Target, Map, BookOpen, Route, Check, Loader2, AlertCircle, RefreshCw, Sparkles, Compass } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ const steps = [
 ];
 
 const RoadmapGenerating = () => {
+  const { counsellorName } = useParams<{ counsellorName?: string }>();
   const [active, setActive] = useState(0);
   const [apiDone, setApiDone] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -78,10 +79,18 @@ const RoadmapGenerating = () => {
   // Navigate when both animation and API are done
   useEffect(() => {
     if (active >= steps.length && apiDone) {
-      const t = setTimeout(() => navigate("/roadmap/result"), 500);
+      const saved = localStorage.getItem(ROADMAP_FORM_KEY);
+      let counsellor = counsellorName;
+      if (!counsellor && saved) {
+        try {
+          counsellor = JSON.parse(saved)?.councellorName;
+        } catch {}
+      }
+      const targetResultUrl = counsellor ? `/roadmap/${counsellor}/result` : "/roadmap/result";
+      const t = setTimeout(() => navigate(targetResultUrl), 500);
       return () => clearTimeout(t);
     }
-  }, [active, apiDone, navigate]);
+  }, [active, apiDone, navigate, counsellorName]);
 
   const progressPercent = Math.min(100, Math.round(((active + 1) / (steps.length + 1)) * 100));
 

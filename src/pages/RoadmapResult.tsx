@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Clock,
   BookOpen,
@@ -47,6 +47,7 @@ const demandColor = (trend: string) => {
 };
 
 const RoadmapResult = () => {
+  const { counsellorName } = useParams<{ counsellorName?: string }>();
   const [roadmap, setRoadmap] = useState<LearningRoadmap | null>(null);
   const [formData, setFormData] = useState<RoadmapFormData | null>(null);
   const [curatedFile, setCuratedFile] = useState<string | null>(null);
@@ -69,8 +70,22 @@ const RoadmapResult = () => {
     if (savedForm) {
       try {
         parsedForm = JSON.parse(savedForm) as RoadmapFormData;
+        if (counsellorName) {
+          parsedForm.councellorName = counsellorName;
+        }
         setFormData(parsedForm);
       } catch {}
+    } else if (counsellorName) {
+      parsedForm = {
+        name: "",
+        currentClass: "",
+        school: "",
+        location: "",
+        phone: "",
+        careerGoal: "",
+        councellorName: counsellorName,
+      };
+      setFormData(parsedForm);
     }
 
     if (parsedForm?.careerGoal) {
