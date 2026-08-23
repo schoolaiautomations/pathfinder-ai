@@ -81,6 +81,7 @@ export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsig
       student_school: bookingForm.school.trim() || null,
       student_location: bookingForm.location.trim() || null,
       query_description: bookingForm.message.trim() || null,
+      career_opted: careerGoal || formData?.careerGoal || null,
     });
 
     setSubmitted(true);

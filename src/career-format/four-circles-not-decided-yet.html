@@ -1,0 +1,359 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Not Decided Yet</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career exploration · Andhra Pradesh</div><h2>Not Decided Yet</h2><p class="standfirst">You do not need to have your whole future figured out right now. There are hundreds of careers, and many adults also discover their real direction only after trying different things. Your goal today is not to choose one job forever — it is to understand yourself, explore options and keep the right doors open.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Not Decided Yet &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Curiosity</b><em>What interests you?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Strengths</b><em>What suits you?</em></a>
+<a class="pip" href="#c3"><div class="ring">3</div><b>Explore</b><em>Try before deciding</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Practical Fit</b><em>What is realistic?</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>It is okay not to know yet</h3><p class="lede">You are not behind. These questions are only to help you notice patterns — there is no “correct” result.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>Do you enjoy learning about more than one kind of subject or activity?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="1"><p>Are there some things you enjoy doing even if you do not know what career they lead to?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="2"><p>Would you be willing to try a small project, workshop, club or activity before deciding whether a career is right for you?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="3"><p>Can you accept that your first career idea may change as you learn more about yourself?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="4"><p>Can you choose subjects based on what you are good at and what keeps useful options open — instead of choosing only because friends are taking them?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="5"><p>Are you willing to spend the next 6–12 months exploring careers instead of forcing yourself to pick one immediately?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>There is no failure here</strong>Answer the six questions only to understand how ready you are to explore.</div></div>
+
+<div class="flag green"><span class="mark">Remember</span><span><b>Not having a career goal in Class 8, 9 or 10 is completely acceptable.</b> A good decision made after exploration is better than a rushed decision made only because everyone else seems certain.</span></div>
+</section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Start with yourself</h3><p class="lede">Instead of asking “What job should I choose?”, first ask “What kind of work feels natural to me?”</p>
+
+<div class="card">
+<div class="row"><div class="k">If you like solving</div><div class="v">Maths, coding, puzzles, machines, experiments, fixing things, analysing data.<div class="chips"><span class="chip">Engineering</span><span class="chip">Technology</span><span class="chip">Science</span><span class="chip">Data</span></div></div></div>
+
+<div class="row"><div class="k">If you like helping</div><div class="v">Listening, caring for people, teaching, health, community work, understanding behaviour.<div class="chips"><span class="chip">Medicine</span><span class="chip">Psychology</span><span class="chip">Teaching</span><span class="chip">Social sector</span></div></div></div>
+
+<div class="row"><div class="k">If you like leading</div><div class="v">Organising teams, making decisions, business ideas, public speaking, planning events.<div class="chips"><span class="chip">Business</span><span class="chip">Management</span><span class="chip">Civil services</span><span class="chip">Entrepreneurship</span></div></div></div>
+
+<div class="row"><div class="k">If you like creating</div><div class="v">Drawing, writing, photography, fashion, video, design, storytelling, making new things.<div class="chips"><span class="chip">Design</span><span class="chip">Media</span><span class="chip">Fashion</span><span class="chip">Architecture</span></div></div></div>
+
+<div class="row"><div class="k">If you like people &amp; ideas</div><div class="v">Debate, society, law, history, politics, languages, communication, current affairs.<div class="chips"><span class="chip">Law</span><span class="chip">Journalism</span><span class="chip">Public policy</span><span class="chip">Humanities</span></div></div></div>
+
+<div class="row"><div class="k">If you like hands-on work</div><div class="v">Building, repairing, operating equipment, practical outdoor work, agriculture, skilled trades.<div class="chips"><span class="chip">Technical trades</span><span class="chip">Agriculture</span><span class="chip">Manufacturing</span><span class="chip">Vocational careers</span></div></div></div>
+</div>
+
+<div class="flag"><span class="mark">Important</span><span>You may fit into <b>two or three groups at the same time.</b> That is normal. For example, someone may like technology + design, biology + business, or writing + law. Careers often combine interests.</span></div>
+</section>
+
+<section id="c3"><div class="num">CIRCLE 3</div><h3>Explore before you choose</h3><p class="lede">Do not decide a career only by its name, salary or one YouTube video. Test the work in small ways first.</p>
+
+<div class="card">
+<div class="row"><div class="k">Career test 1</div><div class="v"><b>Watch the real work.</b> Find a “day in the life” or introductory lesson from a reliable source. Ask: What does this person actually spend most of the day doing?</div></div>
+
+<div class="row"><div class="k">Career test 2</div><div class="v"><b>Try one small task.</b> Code a tiny program, sketch a product, interview someone, create a budget, solve a biology case, teach a concept, write a news story, or build something.</div></div>
+
+<div class="row"><div class="k">Career test 3</div><div class="v"><b>Talk to a real person.</b> Ask a teacher, professional, senior student or family friend: What is good about the career? What is difficult? What do beginners misunderstand?</div></div>
+
+<div class="row"><div class="k">Career test 4</div><div class="v"><b>Check the pathway.</b> What subjects are required after Class 10? Which degree? Which entrance exam? How many years? What does it cost?</div></div>
+
+<div class="row"><div class="k">Career test 5</div><div class="v"><b>Check the job reality.</b> Are jobs common? Where are they located? What is the realistic starting salary? Is there a Plan B?</div></div>
+</div>
+
+<div class="rule-box" style="margin-top:14px"><h4>Your goal is not “one career” yet</h4>
+<p>Start with <span class="hi">10 careers</span> you are curious about.</p>
+<p>After basic research, reduce them to <span class="hi">5 careers</span>.</p>
+<p>After trying mini-projects and talking to people, reduce them to <span class="hi">3 serious options</span>.</p>
+<p>Only then compare subjects, colleges, exams, costs and job opportunities.</p>
+</div>
+</section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>Choosing after Class 10</h3><p class="lede">You do not need your final career decided, but Class 11–12 subjects can affect some future options. Choose carefully enough to keep the doors you may want.</p>
+
+<div class="card">
+<div class="row"><div class="k">MPC</div><div class="v"><b>Maths + Physics + Chemistry.</b> Useful if you may want Engineering, Computer Science, Architecture, Aviation, Mathematics, Physics or many technology-related degrees.</div></div>
+
+<div class="row"><div class="k">BiPC</div><div class="v"><b>Biology + Physics + Chemistry.</b> Important for Medicine and many health/life-science pathways. Some courses have specific entrance and subject requirements.</div></div>
+
+<div class="row"><div class="k">CEC / Commerce</div><div class="v"><b>Commerce, Economics and related subjects.</b> Useful for Business, Finance, CA, Banking, Economics, Management and many government/civil-service pathways.</div></div>
+
+<div class="row"><div class="k">Humanities / Arts</div><div class="v">Useful for Law, Psychology, Journalism, Civil Services, Languages, Social Sciences, Public Policy, Design and many communication-oriented careers.</div></div>
+
+<div class="row"><div class="k">Vocational / skill route</div><div class="v">Diploma, ITI and other skill-based programmes can lead directly into technical, manufacturing, electrical, mechanical, construction and other practical careers. A university degree is not the only successful path.</div></div>
+
+<div class="flag red"><span class="mark">Do not do this</span><span>Do not choose a stream only because <b>“my friends are taking it,” “my parents heard it has scope,” or “this is what toppers choose.”</b> Before selecting a stream, identify at least 3–5 careers you may want and check whether any of them require specific Class 11–12 subjects.</span></div>
+</div>
+</section>
+
+<div class="rule-box"><h4>What should you decide right now?</h4>
+<p><span class="hi">Not your entire life.</span></p>
+<p>Decide what subjects you enjoy enough to study seriously.</p>
+<p>Decide which skills you want to improve.</p>
+<p>Decide which careers you will explore next.</p>
+<p>Decide to keep learning about yourself.</p>
+<p style="margin-top:16px;color:#C7CFDA"><b>Your career goal can change.</b> Changing after learning more is not failure — it is a better-informed decision.</p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">Instead of forcing an answer, use the next few months to collect evidence about what suits you.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>This week — know yourself</div><ul>
+<li>Write down 5 subjects or activities you enjoy and 5 things you strongly dislike</li>
+<li>Ask two teachers or adults: “What do you think I naturally do well?”</li>
+<li>List 10 careers that make you even slightly curious — there are no wrong choices yet</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>Next 2–3 months — explore</div><ul>
+<li>Research one career each week using the Four Circles: interest, skills, job opportunities and money</li>
+<li>For your top five careers, try at least one small real task or project related to each</li>
+<li>Talk to at least three real professionals, college students or teachers about what the work is actually like</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>Before choosing your stream</div><ul>
+<li>Narrow your list to 3–5 serious career families instead of one exact job</li>
+<li>Check which Class 11–12 subjects each option requires so you do not accidentally close an important door</li>
+<li>Choose the stream that best matches your strengths and keeps your strongest career options open</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first step</span><span>Take a blank page and write three headings: <b>“I enjoy,” “I am good at,” and “I want to explore.”</b> Put at least five items under each. Your first career clues usually appear where those three lists begin to overlap.</span></div>
+</section>
+
+<section style="margin-top:34px"><div class="num">ONE LAST THING</div><h3>You are allowed to be undecided</h3>
+<div class="card">
+<p style="margin-top:0">Some students know from childhood that they want to become a doctor, pilot or designer. Many others do not. <b>Both are normal.</b></p>
+<p>You are still learning what subjects you enjoy, what kind of people you like working with, what type of problems you want to solve and what kind of life you want in the future.</p>
+<p>A career decision becomes stronger when it comes from <b>experience and understanding</b>, not pressure.</p>
+<p style="margin-bottom:0"><b>You do not need a perfect goal today. You only need a good next step.</b></p>
+</div>
+</section>
+
+<p class="note">This report is designed for career exploration, not to force an early decision. Course eligibility and Class 11–12 subject requirements vary by career and institution. Before selecting a stream or dropping a subject, always check the requirements of the career options you are seriously considering.</p>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const verdict = document.getElementById("verdict");
+  const quiz = document.getElementById("quiz");
+  if(!quiz || !verdict) return;
+  const qs = [...quiz.querySelectorAll(".q")];
+  function updateSupport(){
+    const picked = qs.filter(q => q.querySelector('button[data-picked="1"]')).length;
+    if(picked < qs.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>There is no failure here</strong>Answer the six questions only to understand how ready you are to explore.";
+      return;
+    }
+    const yes = qs.filter(q => q.querySelector('button[data-picked="1"][data-v="y"]')).length;
+    if(yes >= 4){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>You are ready to explore</strong>You do not need one final career yet. Keep trying different fields and collect evidence about what suits you.";
+    } else if(yes >= 2){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Give yourself time</strong>You may feel uncertain or pressured right now. Start with small career experiments instead of forcing a final answer.";
+    } else {
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>That is still okay</strong>You do not have to feel excited about career planning today. Focus on school, strengths and one small exploration step at a time.";
+    }
+  }
+  quiz.addEventListener("click", function(e){
+    const b = e.target.closest("button");
+    if(!b) return;
+    const group = b.closest(".toggle");
+    group.querySelectorAll("button").forEach(x => {
+      x.setAttribute("aria-pressed","false");
+      x.removeAttribute("data-picked");
+    });
+    b.setAttribute("aria-pressed","true");
+    b.setAttribute("data-picked","1");
+    updateSupport();
+  }, true);
+});
+</script>
+</body></html>

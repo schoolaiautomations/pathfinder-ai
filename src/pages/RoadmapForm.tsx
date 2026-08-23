@@ -113,7 +113,8 @@ const RoadmapForm = () => {
       student_class: bookingData.currentClass.trim() || null,
       student_school: bookingData.school.trim() || null,
       student_location: bookingData.location.trim() || null,
-      query_description: bookingData.query.trim() || `Custom career: ${form.careerGoal}`,
+      query_description: bookingData.query.trim() || (form.careerGoal ? `Custom career: ${form.careerGoal}` : null),
+      career_opted: null, // explicit null from form page per requirement
     });
 
     setBookingSubmitted(true);
@@ -375,26 +376,36 @@ const RoadmapForm = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {DEFAULT_CAREER_OPTIONS.map((opt) => {
                     const isSelected = selectedOptionId === opt.id || form.careerGoal.trim().toLowerCase() === opt.label.toLowerCase();
+                    const isNotDecided = opt.id === "not-decided";
                     return (
                       <button
                         key={opt.id}
                         type="button"
                         onClick={() => handleSelectDefault(opt)}
-                        className={`flex items-center gap-2 p-2 sm:p-2.5 min-h-[40px] rounded-xl border text-left transition-all cursor-pointer select-none ${
+                        className={`flex items-center gap-2 p-2 sm:p-2.5 min-h-[40px] rounded-xl border text-left transition-all cursor-pointer select-none relative ${
                           isSelected
                             ? "shadow-sm scale-[1.01]"
+                            : isNotDecided
+                            ? "hover:scale-[1.01] shadow-2xs"
                             : "hover:scale-[1.01]"
                         }`}
                         style={{
-                          background: isSelected ? "#1C1917" : "#FAF8F5",
-                          color: isSelected ? "#FAF8F5" : "#2E2520",
-                          borderColor: isSelected ? "#1C1917" : "#E0D6CA",
+                          background: isSelected ? "#1C1917" : isNotDecided ? "#FDF8F0" : "#FAF8F5",
+                          color: isSelected ? "#FAF8F5" : isNotDecided ? "#7C5C3E" : "#2E2520",
+                          borderColor: isSelected ? "#1C1917" : isNotDecided ? "#C9A97A" : "#E0D6CA",
                         }}
                       >
                         <span className="text-sm sm:text-base shrink-0">{opt.icon}</span>
-                        <span className="text-[11px] sm:text-[11.5px] font-bold leading-tight flex-1">
-                          {opt.label}
-                        </span>
+                        <div className="flex-1 min-w-0 flex items-center justify-between gap-1">
+                          <span className="text-[11px] sm:text-[11.5px] font-bold leading-tight">
+                            {opt.label}
+                          </span>
+                          {isNotDecided && !isSelected && (
+                            <span className="text-[8.5px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-900 shrink-0 border border-amber-300/70">
+                              Guide
+                            </span>
+                          )}
+                        </div>
                         {isSelected && <Check className="w-3 h-3 shrink-0" style={{ color: "#C9A97A" }} />}
                       </button>
                     );

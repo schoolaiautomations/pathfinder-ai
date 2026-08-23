@@ -99,11 +99,14 @@ const CounsellorDashboard = () => {
     setLoading(false);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
 
-    if (!username.trim()) {
+    const trimmedUser = username.trim().toLowerCase();
+    if (!trimmedUser) {
       setLoginError("Please enter your counsellor name (URL slug).");
       return;
     }
@@ -112,10 +115,34 @@ const CounsellorDashboard = () => {
       return;
     }
 
-    sessionStorage.setItem("counsellor_logged_in", username.trim().toLowerCase());
-    setUsername(username.trim().toLowerCase());
-    setIsLoggedIn(true);
-    toast({ title: "Welcome!", description: `Logged in as ${username.trim()}` });
+    setIsLoggingIn(true);
+    try {
+      // Fetch submissions to check if councellor_name exists in roadmap_basic
+      const allSubs = await fetchRoadmapBasicByCounsellor();
+      const normalize = (s: string | null) => (s || "").toLowerCase().replace(/[\s_-]+/g, "");
+
+      const matchedRow = allSubs.find((row) => {
+        if (!row.councellor_name) return false;
+        const c = row.councellor_name.toLowerCase().trim();
+        return normalize(c) === normalize(trimmedUser) || c === trimmedUser;
+      });
+
+      if (!matchedRow) {
+        setLoginError("User not found.");
+        setIsLoggingIn(false);
+        return;
+      }
+
+      const activeSlug = matchedRow.councellor_name || trimmedUser;
+      sessionStorage.setItem("counsellor_logged_in", activeSlug);
+      setUsername(activeSlug);
+      setIsLoggedIn(true);
+      toast({ title: "Welcome!", description: `Logged in as ${activeSlug}` });
+    } catch (err) {
+      setLoginError("Unable to verify user. Please try again.");
+    } finally {
+      setIsLoggingIn(false);
+    }
   };
 
   const handleLogout = () => {
@@ -204,7 +231,7 @@ const CounsellorDashboard = () => {
                     <label className="text-xs font-bold text-stone-800">Username (Counsellor Name)</label>
                     <Input
                       type="text"
-                      placeholder="e.g. raviteja-karanam"
+                      placeholder="Enter username"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       className="h-10 rounded-xl border-[#D5C9BE] text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900"
@@ -236,11 +263,21 @@ const CounsellorDashboard = () => {
 
                   <Button
                     type="submit"
-                    className="w-full h-11 rounded-xl font-bold text-sm shadow cursor-pointer"
+                    disabled={isLoggingIn}
+                    className="w-full h-11 rounded-xl font-bold text-sm shadow cursor-pointer disabled:opacity-60"
                     style={{ background: "#1C1917", color: "#FAF8F5" }}
                   >
-                    <LogIn className="w-4 h-4 mr-2" />
-                    Login to Dashboard
+                    {isLoggingIn ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                        Verifying...
+                      </>
+                    ) : (
+                      <>
+                        <LogIn className="w-4 h-4 mr-2" />
+                        Login to Dashboard
+                      </>
+                    )}
                   </Button>
                 </form>
               </div>
@@ -386,6 +423,7 @@ const CounsellorDashboard = () => {
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Class</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
+                            <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Career Opted</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Query</th>
                             <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Date</th>
                           </tr>
@@ -403,6 +441,15 @@ const CounsellorDashboard = () => {
                               <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-700 max-w-[120px] truncate">{row.student_school || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-700">{row.student_location || "—"}</td>
+                              <td className="px-3 py-2.5">
+                                {row.career_opted ? (
+                                  <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#E8DFD0", color: "#7C5C3E" }}>
+                                    {row.career_opted}
+                                  </span>
+                                ) : (
+                                  <span className="text-stone-400">—</span>
+                                )}
+                              </td>
                               <td className="px-3 py-2.5 text-stone-600 max-w-[180px] truncate">{row.query_description || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
                             </tr>

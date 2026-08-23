@@ -241,6 +241,7 @@ export interface BookCouncellingRecord {
   student_school?: string | null;
   student_location?: string | null;
   query_description?: string | null;
+  career_opted?: string | null;
 }
 
 /**
@@ -264,6 +265,7 @@ export async function saveBookCouncellingToSupabase(data: BookCouncellingRecord)
         student_school: data.student_school || null,
         student_location: data.student_location || null,
         query_description: data.query_description || null,
+        career_opted: data.career_opted || null,
       }),
     });
 
@@ -304,6 +306,7 @@ export interface BookCouncellingRow {
   student_school: string | null;
   student_location: string | null;
   query_description: string | null;
+  career_opted: string | null;
 }
 
 /**

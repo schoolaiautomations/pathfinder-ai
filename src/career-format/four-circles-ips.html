@@ -1,0 +1,314 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — IPS</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>IPS — Indian Police Service</h2><p class="standfirst">Lead police forces, protect public safety, investigate serious crime and manage law-and-order situations. IPS is not simply wearing a uniform or having authority — it demands courage, judgement, physical fitness, legal knowledge, discipline and accountability under pressure.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; IPS — Indian Police Service &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Skills</b><em>Can you qualify?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Competition</b><em>Very high</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Enough?</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want it?</h3><p class="lede">Many students like the uniform, status and action. The real job also includes paperwork, investigations, public complaints, court processes, night calls and responsibility when something goes wrong. Tap your honest answer.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>Can you stay calm and make decisions during conflict, emergencies, crime scenes or tense public situations?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="1"><p>Are you willing to study law, criminal justice, investigation, public administration and current affairs — not just physical training?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="2"><p>Can you treat people fairly even when they are angry, accused of wrongdoing, politically influential or very different from you?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="3"><p>Can you handle transfers, night duty, emergency calls, public criticism and work that may sometimes involve personal risk?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="4"><p>Are you willing to maintain strong physical fitness and meet stricter medical/physical standards for the police service?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="5"><p>Would you still want this career if there were no social-media fame, sirens or visible authority — only responsibility for public safety and your team's actions?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">There is no separate “IPS course” after Class 10 or Class 12. IPS officers are selected through the UPSC Civil Services Examination after graduation.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Social Studies</div><div class="v">History, Geography, Civics/Polity and Economics become important for UPSC and for understanding government, society and law-and-order problems.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>English &amp; Writing</div><div class="v">UPSC requires reading, comprehension, essays and structured written answers. Police leadership also requires clear reports, briefings and communication.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Fitness &amp; Discipline</div><div class="v">IPS has service-specific medical and physical requirements, and SVPNPA training includes demanding outdoor components. Build regular running, strength, mobility and healthy habits — not crash fitness just before selection.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Humanities / CEC is the most directly related route, but MPC, BiPC, Commerce or any recognised stream can lead to IPS.</b> After Class 12, complete <b>any recognised bachelor’s degree</b> — BA, B.Com, B.Sc, B.Tech, MBBS, Law or another valid degree. UPSC does not require a specific graduation subject.</div></div>
+
+<div class="row"><div class="k">Start these habits</div><div class="v"><div class="chips">
+<span class="chip">Current affairs</span><span class="chip">Answer writing</span><span class="chip">Running</span><span class="chip">Strength</span><span class="chip">Leadership</span><span class="chip">Law awareness</span>
+</div></div></div>
+</div>
+
+<div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">THE UPSC ROUTE — WHAT YOU WILL NEED LATER</div>
+
+<div class="row"><div class="k">Entrance exam</div><div class="v"><b>UPSC Civil Services Examination (CSE).</b> There is <b>no separate IPS entrance exam</b>. You become eligible for CSE after completing a recognised graduate degree. For IPS specifically, the candidate must also be an Indian citizen.</div></div>
+
+<div class="row"><div class="k">Prelims</div><div class="v"><b>Stage 1 — Civil Services Preliminary Examination.</b> Two objective papers: General Studies Paper I and General Studies Paper II (CSAT). CSAT is qualifying at 33%. Prelims is only a screening stage; its marks are not added to the final merit score.</div></div>
+
+<div class="row"><div class="k">Mains</div><div class="v"><b>Stage 2 — Civil Services Main Examination.</b> Nine descriptive papers, including qualifying language papers, Essay, four General Studies papers and two papers of one optional subject. It tests analysis, judgement and writing ability.</div></div>
+
+<div class="row"><div class="k">Interview</div><div class="v"><b>Stage 3 — Interview / Personality Test.</b> Final ranking is based on the merit papers of Mains plus the Personality Test.</div></div>
+
+<div class="row"><div class="k">Medical &amp; physical fitness</div><div class="v"><b>IPS has additional service-specific medical and physical standards.</b> Candidates must meet the standards prescribed in the current Civil Services Examination medical rules. Do not rely on old internet charts for height, vision or other measurements — check the UPSC notification applicable in your exam year.</div></div>
+
+<div class="row"><div class="k">IPS allocation</div><div class="v"><b>Clearing UPSC does not automatically mean IPS.</b> CSE recruits for IAS, IPS, IFS, IRS and many other services. Your final rank, category, service preferences, vacancies and medical eligibility determine whether you receive IPS.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 12 in any stream → recognised bachelor’s degree → UPSC Prelims → UPSC Mains → Interview / Personality Test → IPS medical &amp; physical fitness → final merit + service preference → IPS allocation → SVPNPA training → Assistant Superintendent of Police (ASP).</b></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>IPS and Andhra Pradesh State Police recruitment are different routes.</b> UPSC CSE is the direct-recruit route to IPS. Constable, Sub-Inspector and State Police Service / DSP-level recruitment are conducted through separate state recruitment systems.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · THE COMPETITION</div><h3>How difficult is selection?</h3><p class="lede">IPS is a structured government career after selection. The major risk is getting selected and allocated to IPS in the first place.</p>
+
+<div class="card">
+<div class="row"><div class="k">Vacancies</div><div class="v">UPSC's <b>CSE 2026 expects about 933 vacancies across all participating Civil Services combined</b> — not 933 IPS seats. The final IPS number for that examination can change later. As a recent official benchmark, <b>CSE 2025 reported 150 IPS vacancies</b>.</div></div>
+
+<div class="row"><div class="k">What this means</div><div class="v">A very large number of graduates compete for a relatively small number of IPS allocations. You may clear stages of UPSC and still not receive IPS because service allocation depends on final merit, category, preferences and available seats.</div></div>
+
+<div class="row"><div class="k">Training reality</div><div class="v">After selection, IPS probationers train at the <b>Sardar Vallabhbhai Patel National Police Academy (SVPNPA), Hyderabad</b>. Training prepares officers for field leadership and includes criminal law, investigation, forensics, criminology, police management, ethics, human rights, internal security and ICT along with physical fitness, drill, weapon training, yoga, unarmed combat, field craft, tactics, map reading and equitation.</div></div>
+
+<div class="row"><div class="k">Job reality</div><div class="v">IPS officers can work in district policing, crime investigation, intelligence, traffic, cybercrime, anti-corruption, special units, security, central police organisations and senior leadership posts. SVPNPA states that newly trained officers are posted initially as <b>Assistant Superintendents of Police</b> in their states/cadres.</div></div>
+
+<div class="flag"><span class="mark">Careful</span><span>This is not an “action movie” career. A large part of good policing is documentation, investigation quality, evidence, personnel management, coordination, public communication, legal procedure and preventing problems before force is needed.</span></div>
+
+<div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">Your Plan B</div><div class="v">Your preparation can also support:
+<div class="chips"><span class="chip">Other UPSC services</span><span class="chip">APPSC Group I</span><span class="chip">State Police Service</span><span class="chip">CAPF Assistant Commandant</span><span class="chip">Other govt exams</span><span class="chip">Your graduation career</span></div>
+</div></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you will earn</h3><p class="lede">IPS provides a strong government career and structured pay progression, but salary and authority are poor reasons to choose policing.</p>
+
+<div class="card">
+<div class="row"><div class="k">Starting basic pay</div><div class="v"><span class="money">₹56,100/month basic pay</span><br><span style="font-size:13px">Direct-recruit IPS officers begin in the junior time scale / Level 10 pay structure. Applicable allowances and government facilities depend on rules and posting. Basic pay is not the same as monthly take-home.</span></div></div>
+
+<div class="row"><div class="k">Mid / senior levels</div><div class="v"><span class="money">₹78,800 – ₹1,82,200/month basic</span><br><span style="font-size:13px">As officers move through senior police leadership levels, the official pay matrix rises with qualifying service and appointment to eligible posts.</span></div></div>
+
+<div class="row"><div class="k">Top levels</div><div class="v"><span class="money">Up to about ₹2,25,000/month basic</span><br><span style="font-size:13px">Very senior IPS officers in the highest eligible pay levels can reach this basic-pay range. Only a small number of officers reach the top posts.</span></div></div>
+
+<div class="row"><div class="k">Preparation cost</div><div class="v">UPSC's examination fee itself is small compared with the cost of coaching, accommodation and preparation time. You <b>do not need expensive coaching from school</b>. Good books, official syllabus, previous papers, disciplined self-study and answer practice matter more.</div></div>
+
+<div class="flag red"><span class="mark">Ask yourself</span><span>Would you still choose IPS if another career paid more and gave you an easier lifestyle? If your main reasons are uniform, power, vehicle, security staff or social status, think again. Police leadership brings legal accountability, transfers, difficult hours, public scrutiny and real personal responsibility.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">All four right</span> — keep IPS as a serious goal while building a strong education, fitness and Plan B.</p>
+<p><span class="hi">Any one wrong</span> — stop and think carefully before committing years only to UPSC preparation.</p>
+<p><span class="hi">Two or more wrong</span> — you may like the uniform and image more than the work of policing. Talk to your counsellor.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule for IPS: <b>authority is not the goal — lawful, fair and effective public safety is.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">An 8th–10th class student does not need UPSC coaching. Build knowledge, character, fitness and leadership first.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Understand Civics, History, Geography, Economics, Science and English instead of memorising only for marks</li>
+<li>Build regular fitness: running, bodyweight strength, mobility and a healthy sleep routine</li>
+<li>Take responsibility in sports, NCC/scouting if available, school clubs, volunteering or team activities — learn to lead without bullying people</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose Humanities / CEC if you genuinely like those subjects, but remember MPC, BiPC and Commerce can also lead to IPS</li>
+<li>Improve current affairs, English/Telugu writing, public speaking, logical reasoning and basic understanding of law and the Constitution</li>
+<li>Keep fitness consistent while completing Class 11–12; do not neglect academics for physical preparation</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college &amp; after graduation</div><ul>
+<li>Complete a recognised degree you value and build employable skills as your Plan B</li>
+<li>Study the official UPSC syllabus and previous papers, then progress from NCERT/basic books to standard books, current affairs, answer writing and mock tests</li>
+<li>Before listing IPS as a service preference, read the current UPSC medical/physical standards and understand the actual work, cadre system and training demands</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Imagine there is a serious fight near your school with rumours spreading online. Write one page answering: <b>How would you protect people, verify what happened, prevent retaliation, collect evidence and treat both sides fairly?</b> If calm, lawful problem-solving interests you more than “catching bad guys,” IPS may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official UPSC, IPS, medical, recruitment or pay notice. Eligibility, attempts, vacancies, physical/medical standards, exam rules and pay can change. Current benchmarks were checked against UPSC Civil Services Examination 2026, Ministry of Home Affairs IPS material and SVPNPA information. Always use the official notification for the year in which you apply.</p>
+
+</div></body></html>
