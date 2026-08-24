@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -9,53 +10,97 @@ import {
   Users,
   Phone,
   ChevronRight,
+  Menu,
+  X,
+  Lock,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import councellingImg from "@/lib/councelling.png";
 
 const Index = () => {
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <main className="min-h-screen font-sans text-stone-900" style={{ background: "#FAF8F5" }}>
 
       {/* ─── NAVBAR ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-stone-200/70" style={{ background: "rgba(250,248,245,0.92)", backdropFilter: "blur(16px)" }}>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
             <img
               src={wabiLogo}
               alt="Wabi"
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm shrink-0"
             />
-            <div>
-              <span className="font-extrabold text-sm sm:text-base text-stone-900 tracking-tight block leading-none">
+            <div className="min-w-0">
+              <span className="font-extrabold text-xs sm:text-base text-stone-900 tracking-tight block leading-none truncate">
                 Wabi Career Guidance
               </span>
-              <span className="text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5">
+              <span className="text-[9px] sm:text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5 truncate">
                 Career Counselling
               </span>
             </div>
           </Link>
 
-          <nav className="flex items-center gap-1 sm:gap-2">
+          {/* Desktop Nav */}
+          <nav className="hidden sm:flex items-center gap-1 sm:gap-2">
             <Link
-              to="/roadmap"
+              to="/counsellor"
               className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
             >
-              <Map className="w-3.5 h-3.5" />
-              Roadmap
+              Counsellor Login
             </Link>
-            <button
-              onClick={() => navigate("/form")}
+            <Link
+              to="/roadmap"
               className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Start</span> Free Assessment
-            </button>
+              <Map className="w-3.5 h-3.5" />
+              Explore Roadmaps
+            </Link>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <div className="sm:hidden flex items-center">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-xl border border-stone-200 bg-white text-stone-700 hover:text-stone-950 shadow-2xs cursor-pointer transition-colors"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Panel */}
+        {mobileMenuOpen && (
+          <div className="sm:hidden border-t border-stone-200/80 px-4 py-3 space-y-2 bg-[#FAF8F5]/98 backdrop-blur-lg animate-in slide-in-from-top-2 duration-200">
+            <Link
+              to="/roadmap"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs shadow-sm cursor-pointer"
+              style={{ background: "#1C1917", color: "#FAF8F5" }}
+            >
+              <span className="flex items-center gap-2">
+                <Map className="w-4 h-4 text-[#C9A97A]" />
+                Explore Roadmaps
+              </span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </Link>
+            <Link
+              to="/counsellor"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-white border border-stone-200 text-stone-800 shadow-2xs hover:bg-stone-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <Lock className="w-4 h-4 text-stone-500" />
+                Counsellor Login
+              </span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </Link>
+          </div>
+        )}
       </header>
 
       {/* ─── HERO ──────────────────────────────────────────────────────────── */}
@@ -116,20 +161,12 @@ const Index = () => {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <button
                   onClick={() => navigate("/roadmap")}
-                  className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                  className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
                   style={{ background: "#1C1917", color: "#FAF8F5" }}
                 >
                   <Map className="w-4 h-4" />
                   Explore Career Roadmaps
-                </button>
-                <button
-                  onClick={() => navigate("/form")}
-                  className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all hover:-translate-y-0.5 active:translate-y-0"
-                  style={{ background: "#F0EBE1", color: "#3C2F27", border: "1.5px solid #DDD3C5" }}
-                >
-                  <Sparkles className="w-4 h-4" style={{ color: "#B5956A" }} />
-                  Take AI Career Test
-                  <ChevronRight className="w-4 h-4 opacity-50" />
+                  <ArrowRight className="w-4 h-4 ml-1" />
                 </button>
               </div>
 
@@ -231,22 +268,14 @@ const Index = () => {
             hand you a pre-packaged answer. We help you understand yourself — and from that
             understanding, build a future that is genuinely fulfilling.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-3">
+          <div className="flex justify-center pt-3">
             <button
               onClick={() => navigate("/roadmap")}
-              className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
+              className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
               <Map className="w-4 h-4" />
               Explore Career Roadmaps
-            </button>
-            <button
-              onClick={() => navigate("/form")}
-              className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl font-bold text-sm cursor-pointer transition-all hover:-translate-y-0.5"
-              style={{ background: "#E8DED2", color: "#3C2F27", border: "1.5px solid #D5C9BE" }}
-            >
-              <Sparkles className="w-4 h-4" style={{ color: "#B5956A" }} />
-              Start the Assessment
             </button>
           </div>
         </div>
@@ -337,7 +366,7 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-5 text-xs font-semibold" style={{ color: "#9B8B7E" }}>
             <Link to="/roadmap" className="hover:text-stone-900 transition-colors">Roadmap</Link>
-            <Link to="/form" className="hover:text-stone-900 transition-colors">Assessment</Link>
+            <Link to="/counsellor" className="hover:text-stone-900 transition-colors">Counsellor Login</Link>
           </div>
         </div>
       </footer>

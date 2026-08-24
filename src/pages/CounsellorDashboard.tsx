@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Lock,
@@ -15,6 +15,8 @@ import {
   EyeOff,
   RefreshCw,
   ClipboardList,
+  Sparkles,
+  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,6 +31,7 @@ import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 const COUNSELLOR_PASSWORD = "wabi123";
 
 const CounsellorDashboard = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   // Auth state
@@ -175,35 +178,36 @@ const CounsellorDashboard = () => {
         className="sticky top-0 z-50 border-b border-stone-200/70"
         style={{ background: "rgba(250,248,245,0.92)", backdropFilter: "blur(16px)" }}
       >
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
-            <img src={wabiLogo} alt="Wabi" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm" />
-            <div>
-              <span className="font-extrabold text-sm sm:text-base text-stone-900 tracking-tight block leading-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <img src={wabiLogo} alt="Wabi" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm shrink-0" />
+            <div className="min-w-0">
+              <span className="font-extrabold text-xs sm:text-base text-stone-900 tracking-tight block leading-none truncate">
                 Wabi Career Guidance
               </span>
-              <span className="text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5">
+              <span className="text-[9px] sm:text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5 truncate">
                 Counsellor Dashboard
               </span>
             </div>
-          </Link>
-          <div className="flex items-center gap-2">
-            {isLoggedIn && (
-              <button
-                onClick={handleLogout}
-                className="text-xs font-semibold text-stone-500 hover:text-stone-900 px-3 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all cursor-pointer"
-              >
-                Logout
-              </button>
-            )}
+          </div>
+
+          {isLoggedIn ? (
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-700 hover:text-stone-950 px-3.5 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all cursor-pointer shadow-2xs shrink-0"
+            >
+              <LogOut className="w-3.5 h-3.5 text-stone-500" />
+              <span>Logout</span>
+            </button>
+          ) : (
             <Link
               to="/"
-              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3.5 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all shadow-2xs"
+              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all shadow-2xs shrink-0"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Home</span>
             </Link>
-          </div>
+          )}
         </div>
       </header>
 
@@ -298,14 +302,25 @@ const CounsellorDashboard = () => {
                   </p>
                 </div>
                 
-                <button
-                  onClick={loadData}
-                  disabled={loading}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-stone-200 hover:bg-stone-50 transition-all cursor-pointer shadow-2xs disabled:opacity-50 self-start sm:self-auto"
-                >
-                  <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-                  Refresh
-                </button>
+                <div className="flex items-center gap-2 self-start sm:self-auto">
+                  <button
+                    onClick={() => navigate("/form")}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0"
+                    style={{ background: "#1C1917", color: "#FAF8F5" }}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" style={{ color: "#C9A97A" }} />
+                    Generate full report
+                  </button>
+
+                  <button
+                    onClick={loadData}
+                    disabled={loading}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-white border border-stone-200 hover:bg-stone-50 transition-all cursor-pointer shadow-2xs disabled:opacity-50"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+                    Refresh
+                  </button>
+                </div>
               </div>
 
               {/* Stats */}
@@ -467,12 +482,8 @@ const CounsellorDashboard = () => {
 
       {/* ─── FOOTER ───────────────────────────────────────────────────────── */}
       <footer style={{ borderTop: "1px solid #E0D6CA", background: "#F0EBE1" }}>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-stone-500">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-6 flex items-center justify-center text-xs font-semibold text-stone-500">
           <span>© {new Date().getFullYear()} Wabi Resolutions &amp; Career Guidance</span>
-          <div className="flex items-center gap-4">
-            <Link to="/" className="hover:text-stone-900 transition-colors">Home</Link>
-            <Link to="/roadmap" className="hover:text-stone-900 transition-colors">Roadmap</Link>
-          </div>
         </div>
       </footer>
     </main>

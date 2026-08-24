@@ -183,18 +183,18 @@ const RoadmapForm = () => {
       
       {/* ─── NAVBAR ─────────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-stone-200/70" style={{ background: "rgba(250,248,245,0.92)", backdropFilter: "blur(16px)" }}>
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
             <img
               src={wabiLogo}
               alt="Wabi"
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm shrink-0"
             />
-            <div>
-              <span className="font-extrabold text-sm sm:text-base text-stone-900 tracking-tight block leading-none">
+            <div className="min-w-0">
+              <span className="font-extrabold text-xs sm:text-base text-stone-900 tracking-tight block leading-none truncate">
                 Wabi Career Guidance
               </span>
-              <span className="text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5">
+              <span className="text-[9px] sm:text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5 truncate">
                 Career Counselling
               </span>
             </div>
@@ -202,7 +202,7 @@ const RoadmapForm = () => {
 
           <Link
             to="/"
-            className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3.5 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all shadow-2xs"
+            className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all shadow-2xs shrink-0"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Home</span>
