@@ -401,8 +401,8 @@ const CounsellorDashboard = () => {
                               <td className="px-3 py-2.5 font-bold text-stone-900">{row.student_name || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-700">{row.student_phone || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
-                              <td className="px-3 py-2.5 text-stone-700 max-w-[120px] truncate">{row.student_school || "—"}</td>
-                              <td className="px-3 py-2.5 text-stone-700">{row.student_location || "—"}</td>
+                              <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[140px] max-w-[240px]">{row.student_school || "—"}</td>
+                              <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[120px] max-w-[200px]">{row.student_location || "—"}</td>
                               <td className="px-3 py-2.5">
                                 <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#E8DFD0", color: "#7C5C3E" }}>
                                   {row.career_opted || "—"}
@@ -454,8 +454,8 @@ const CounsellorDashboard = () => {
                               <td className="px-3 py-2.5 font-bold text-stone-900">{row.student_name || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-700">{row.student_phone || "—"}</td>
                               <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
-                              <td className="px-3 py-2.5 text-stone-700 max-w-[120px] truncate">{row.student_school || "—"}</td>
-                              <td className="px-3 py-2.5 text-stone-700">{row.student_location || "—"}</td>
+                              <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[140px] max-w-[240px]">{row.student_school || "—"}</td>
+                              <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[120px] max-w-[200px]">{row.student_location || "—"}</td>
                               <td className="px-3 py-2.5">
                                 {row.career_opted ? (
                                   <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#E8DFD0", color: "#7C5C3E" }}>
@@ -465,7 +465,9 @@ const CounsellorDashboard = () => {
                                   <span className="text-stone-400">—</span>
                                 )}
                               </td>
-                              <td className="px-3 py-2.5 text-stone-600 max-w-[180px] truncate">{row.query_description || "—"}</td>
+                              <td className="px-3 py-2.5 text-stone-700 min-w-[180px] max-w-[400px] whitespace-normal break-words leading-relaxed">
+                                {row.query_description || "—"}
+                              </td>
                               <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
                             </tr>
                           ))}
