@@ -16,6 +16,7 @@ import SkillLearning from "./pages/SkillLearning.tsx";
 import Blogs from "./pages/Blogs.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import CounsellorDashboard from "./pages/CounsellorDashboard.tsx";
+import FaqPage from "./pages/FaqPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/analyzing" element={<Analyzing />} />
           <Route path="/report" element={<Report />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/faq" element={<FaqPage />} />
           <Route path="/roadmap" element={<RoadmapForm />} />
           <Route path="/roadmap/generating" element={<RoadmapGenerating />} />
           <Route path="/roadmap/result" element={<RoadmapResult />} />

@@ -46,6 +46,12 @@ const Index = () => {
           {/* Desktop Nav */}
           <nav className="hidden sm:flex items-center gap-1 sm:gap-2">
             <Link
+              to="/faq"
+              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
+            >
+              FAQ
+            </Link>
+            <Link
               to="/counsellor"
               className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
             >
@@ -85,6 +91,17 @@ const Index = () => {
               <span className="flex items-center gap-2">
                 <Map className="w-4 h-4 text-[#C9A97A]" />
                 Explore Roadmaps
+              </span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </Link>
+            <Link
+              to="/faq"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-white border border-stone-200 text-stone-800 shadow-2xs hover:bg-stone-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-stone-500" />
+                FAQ
               </span>
               <ChevronRight className="w-4 h-4 opacity-50" />
             </Link>
@@ -366,6 +383,7 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-5 text-xs font-semibold" style={{ color: "#9B8B7E" }}>
             <Link to="/roadmap" className="hover:text-stone-900 transition-colors">Roadmap</Link>
+            <Link to="/faq" className="hover:text-stone-900 transition-colors">FAQ</Link>
             <Link to="/counsellor" className="hover:text-stone-900 transition-colors">Counsellor Login</Link>
           </div>
         </div>

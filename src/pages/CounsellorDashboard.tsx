@@ -21,6 +21,7 @@ import {
   ChevronRight,
   Clock,
   FileText,
+  UserCheck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,7 @@ import {
   fetchBookCouncellingAll,
 } from "@/lib/supabase";
 import type { RoadmapBasicRow, BookCouncellingRow } from "@/lib/supabase";
+import { StudentProfileView } from "@/components/counsellor/StudentProfileView";
 import { DetailedReportsView } from "@/components/counsellor/DetailedReportsView";
 import { CompareCareersView } from "@/components/counsellor/CompareCareersView";
 import { DailyLifeView } from "@/components/counsellor/DailyLifeView";
@@ -48,8 +50,8 @@ const CounsellorDashboard = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
 
-  // Module state (null = main dashboard hub with 4 cards)
-  const [activeModule, setActiveModule] = useState<"requests" | "detailed_reports" | "compare" | "daily_life" | null>(null);
+  // Module state (null = main dashboard hub with 5 cards)
+  const [activeModule, setActiveModule] = useState<"student_profile" | "requests" | "detailed_reports" | "compare" | "daily_life" | null>(null);
 
   // Data state
   const [allSubmissions, setAllSubmissions] = useState<RoadmapBasicRow[]>([]);
@@ -327,9 +329,38 @@ const CounsellorDashboard = () => {
                     </div>
                   </div>
 
-                  {/* ─── 4 MAIN DASHBOARD CARDS ─── */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Card 1: Career Requests & Submissions */}
+                  {/* ─── 5 MAIN DASHBOARD CARDS ─── */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+                    {/* Card 1: Student Profile (FIRST) */}
+                    <div
+                      onClick={() => setActiveModule("student_profile")}
+                      className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
+                    >
+                      <div className="space-y-3.5">
+                        <div className="flex items-center justify-between">
+                          <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-stone-100 text-[#7C5C3E] group-hover:bg-stone-900 group-hover:text-[#C9A97A] transition-colors">
+                            <UserCheck className="w-5 h-5" />
+                          </div>
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-stone-100 text-stone-700">
+                            Session Tool
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-extrabold text-base text-stone-900 group-hover:text-[#7C5C3E] transition-colors leading-tight">
+                            Student Profile
+                          </h3>
+                          <p className="text-xs mt-1.5 text-stone-500 line-clamp-2 leading-relaxed">
+                            Fill in student diagnostic questionnaire and export session summary to PDF.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="pt-3.5 flex items-center justify-between text-xs font-bold text-stone-900 border-t border-stone-100">
+                        <span>Fill Profile</span>
+                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+
+                    {/* Card 2: Career Requests & Submissions */}
                     <div
                       onClick={() => setActiveModule("requests")}
                       className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
@@ -358,7 +389,7 @@ const CounsellorDashboard = () => {
                       </div>
                     </div>
 
-                    {/* Card 2: Detailed Report of Career */}
+                    {/* Card 3: Detailed Report of Career */}
                     <div
                       onClick={() => setActiveModule("detailed_reports")}
                       className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
@@ -387,7 +418,7 @@ const CounsellorDashboard = () => {
                       </div>
                     </div>
 
-                    {/* Card 3: Compare Careers */}
+                    {/* Card 4: Compare Careers */}
                     <div
                       onClick={() => setActiveModule("compare")}
                       className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
@@ -416,7 +447,7 @@ const CounsellorDashboard = () => {
                       </div>
                     </div>
 
-                    {/* Card 4: A daily life of a career */}
+                    {/* Card 5: A daily life of a career */}
                     <div
                       onClick={() => setActiveModule("daily_life")}
                       className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
@@ -450,7 +481,7 @@ const CounsellorDashboard = () => {
                 /* ─── DEDICATED SUB-SCREEN VIEW (WITH BACK BUTTON) ─── */
                 <div className="space-y-6 animate-in fade-in duration-150">
                   {/* Sub-Screen Top Bar */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-stone-200/80">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-stone-200/80 print:hidden">
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => setActiveModule(null)}
@@ -465,6 +496,7 @@ const CounsellorDashboard = () => {
                       <span className="text-xs font-bold text-stone-500 hidden sm:inline">
                         {username} /{" "}
                         <span className="text-stone-900">
+                          {activeModule === "student_profile" && "Student Profile & Session Assessment"}
                           {activeModule === "requests" && "Career Requests & Submissions"}
                           {activeModule === "detailed_reports" && "Detailed Report of Career"}
                           {activeModule === "compare" && "Compare Careers"}
@@ -488,6 +520,7 @@ const CounsellorDashboard = () => {
                   </div>
 
                   {/* Sub-Screen Content */}
+                  {activeModule === "student_profile" && <StudentProfileView counsellorName={username} />}
                   {activeModule === "detailed_reports" && <DetailedReportsView />}
                   {activeModule === "compare" && <CompareCareersView />}
                   {activeModule === "daily_life" && <DailyLifeView />}
@@ -555,6 +588,7 @@ const CounsellorDashboard = () => {
                                     <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Student Name</th>
                                     <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Phone</th>
                                     <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Class</th>
+                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Section</th>
                                     <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
                                     <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
                                     <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Career Opted</th>
@@ -572,6 +606,7 @@ const CounsellorDashboard = () => {
                                       <td className="px-3 py-2.5 font-bold text-stone-900">{row.student_name || "—"}</td>
                                       <td className="px-3 py-2.5 text-stone-700">{row.student_phone || "—"}</td>
                                       <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
+                                      <td className="px-3 py-2.5 text-stone-700 font-medium">{row.student_section || "—"}</td>
                                       <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[140px] max-w-[240px]">{row.student_school || "—"}</td>
                                       <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[120px] max-w-[200px]">{row.student_location || "—"}</td>
                                       <td className="px-3 py-2.5">

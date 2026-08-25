@@ -188,6 +188,7 @@ export interface RoadmapBasicRecord {
   councellor_name?: string | null;
   student_name: string;
   student_class: string;
+  student_section?: string | null;
   student_school: string;
   student_location: string;
   student_phone: string;
@@ -211,6 +212,7 @@ export async function saveRoadmapBasicToSupabase(data: RoadmapBasicRecord): Prom
         councellor_name: data.councellor_name || null,
         student_name: data.student_name,
         student_class: data.student_class,
+        student_section: data.student_section || null,
         student_school: data.student_school,
         student_location: data.student_location,
         student_phone: data.student_phone,
@@ -290,6 +292,7 @@ export interface RoadmapBasicRow {
   councellor_name: string | null;
   student_name: string | null;
   student_class: string | null;
+  student_section?: string | null;
   student_school: string | null;
   student_location: string | null;
   student_phone: string | null;
@@ -307,6 +310,54 @@ export interface BookCouncellingRow {
   student_location: string | null;
   query_description: string | null;
   career_opted: string | null;
+}
+
+// ─── Counsellor Customisation (School Names & Sections) ──────────────────────
+
+export interface CounsellorCustomisationData {
+  sections?: string[];
+  school_names?: string[];
+}
+
+export interface CounsellorCustomisationRecord {
+  id: number;
+  created_at: string;
+  councellor_customisation: CounsellorCustomisationData;
+  councellor_name: string | null;
+}
+
+/**
+ * Fetch customisation settings (school names & sections) for a counsellor
+ */
+export async function fetchCounsellorCustomisation(counsellorName: string): Promise<CounsellorCustomisationData | null> {
+  if (!counsellorName || !counsellorName.trim()) return null;
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/counsellor_customisation?councellor_name=eq.${encodeURIComponent(counsellorName.trim())}&order=created_at.desc&limit=1`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        const item = data[0];
+        const customObj = item.councellor_customisation || {};
+        return {
+          sections: Array.isArray(customObj.sections) ? customObj.sections.filter(Boolean) : [],
+          school_names: Array.isArray(customObj.school_names) ? customObj.school_names.filter(Boolean) : [],
+        };
+      }
+    } else {
+      console.warn("Failed to fetch counsellor customisation:", response.status);
+    }
+  } catch (err) {
+    console.warn("Error fetching counsellor customisation:", err);
+  }
+  return null;
 }
 
 /**

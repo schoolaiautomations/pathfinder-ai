@@ -25,7 +25,12 @@ import {
   findCareerFormatFile,
 } from "@/lib/roadmap-data";
 import type { RoadmapFormData } from "@/lib/roadmap-data";
-import { saveRoadmapBasicToSupabase, saveBookCouncellingToSupabase } from "@/lib/supabase";
+import {
+  saveRoadmapBasicToSupabase,
+  saveBookCouncellingToSupabase,
+  fetchCounsellorCustomisation,
+} from "@/lib/supabase";
+import type { CounsellorCustomisationData } from "@/lib/supabase";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
 const RoadmapForm = () => {
@@ -38,12 +43,16 @@ const RoadmapForm = () => {
   const [form, setForm] = useState<RoadmapFormData>({
     name: "",
     currentClass: "",
+    section: "",
     school: "",
     location: "",
     phone: "",
     careerGoal: "",
     councellorName: rawCounsellor || undefined,
   });
+
+  const [customisation, setCustomisation] = useState<CounsellorCustomisationData | null>(null);
+  const [isCustomSchool, setIsCustomSchool] = useState(false);
 
   // Booking Modal State for custom careers / guidance
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -60,6 +69,11 @@ const RoadmapForm = () => {
   useEffect(() => {
     if (rawCounsellor) {
       setForm((prev) => ({ ...prev, councellorName: rawCounsellor }));
+      fetchCounsellorCustomisation(rawCounsellor).then((data) => {
+        if (data) {
+          setCustomisation(data);
+        }
+      });
     }
   }, [rawCounsellor]);
 
@@ -165,6 +179,7 @@ const RoadmapForm = () => {
       councellor_name: rawCounsellor || form.councellorName || null,
       student_name: form.name.trim(),
       student_class: form.currentClass,
+      student_section: form.section?.trim() || null,
       student_school: form.school.trim(),
       student_location: form.location.trim(),
       student_phone: form.phone.trim(),
@@ -294,26 +309,59 @@ const RoadmapForm = () => {
                     />
                   </div>
 
-                  {/* Class / Education Level */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-bold text-stone-900">
-                      Current Class / Stage <span className="text-amber-800">*</span>
-                    </label>
-                    <Select
-                      value={form.currentClass}
-                      onValueChange={(v) => setForm({ ...form, currentClass: v })}
-                    >
-                      <SelectTrigger className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900">
-                        <SelectValue placeholder="Select current class" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {roadmapEducationLevels.map((level) => (
-                          <SelectItem key={level} value={level}>
-                            {level}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  {/* Class / Education Level & Section Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-stone-900">
+                        Current Class / Stage <span className="text-amber-800">*</span>
+                      </label>
+                      <Select
+                        value={form.currentClass}
+                        onValueChange={(v) => setForm({ ...form, currentClass: v })}
+                      >
+                        <SelectTrigger className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900">
+                          <SelectValue placeholder="Select current class" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {roadmapEducationLevels.map((level) => (
+                            <SelectItem key={level} value={level}>
+                              {level}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-1">
+                      <label className="text-xs font-bold text-stone-900">
+                        Section
+                      </label>
+                      {customisation?.sections && customisation.sections.length > 0 ? (
+                        <Select
+                          value={form.section || ""}
+                          onValueChange={(v) => setForm({ ...form, section: v })}
+                        >
+                          <SelectTrigger className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900">
+                            <SelectValue placeholder="Select section" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {customisation.sections.map((sec) => (
+                              <SelectItem key={sec} value={sec}>
+                                Section {sec}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      ) : (
+                        <Input
+                          type="text"
+                          placeholder="e.g. A, B or C"
+                          value={form.section || ""}
+                          onChange={(e) => setForm({ ...form, section: e.target.value })}
+                          className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900"
+                        />
+                      )}
+                    </div>
                   </div>
 
                   {/* School / College Name */}
@@ -321,13 +369,52 @@ const RoadmapForm = () => {
                     <label className="text-xs font-bold text-stone-900">
                       School / College Name <span className="text-amber-800">*</span>
                     </label>
-                    <Input
-                      type="text"
-                      placeholder="e.g. ZP High School, Kakinada"
-                      value={form.school}
-                      onChange={(e) => setForm({ ...form, school: e.target.value })}
-                      className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900"
-                    />
+                    {customisation?.school_names && customisation.school_names.length > 0 ? (
+                      <div className="space-y-2">
+                        <Select
+                          value={isCustomSchool ? "__other__" : form.school}
+                          onValueChange={(v) => {
+                            if (v === "__other__") {
+                              setIsCustomSchool(true);
+                              setForm({ ...form, school: "" });
+                            } else {
+                              setIsCustomSchool(false);
+                              setForm({ ...form, school: v });
+                            }
+                          }}
+                        >
+                          <SelectTrigger className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900">
+                            <SelectValue placeholder="Select your school / college" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {customisation.school_names.map((schoolName) => (
+                              <SelectItem key={schoolName} value={schoolName}>
+                                {schoolName}
+                              </SelectItem>
+                            ))}
+                            <SelectItem value="__other__">Other (Enter manually)...</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {isCustomSchool && (
+                          <Input
+                            type="text"
+                            placeholder="Enter your school or college name"
+                            value={form.school}
+                            onChange={(e) => setForm({ ...form, school: e.target.value })}
+                            className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900"
+                            autoFocus
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <Input
+                        type="text"
+                        placeholder="e.g. ZP High School, Kakinada"
+                        value={form.school}
+                        onChange={(e) => setForm({ ...form, school: e.target.value })}
+                        className="h-10 rounded-xl border-[#D5C9BE] text-xs sm:text-sm bg-white font-medium focus:border-stone-900 focus:ring-stone-900"
+                      />
+                    )}
                   </div>
 
                   {/* Location */}
