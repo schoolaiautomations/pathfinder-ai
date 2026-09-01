@@ -22,13 +22,28 @@ import {
   Clock,
   FileText,
   UserCheck,
+  Search,
+  Filter,
+  X,
+  AlertTriangle,
+  CheckCircle2,
+  TrendingDown,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import {
   fetchRoadmapBasicByCounsellor,
   fetchBookCouncellingAll,
+  fetchCounsellorCustomisation,
 } from "@/lib/supabase";
 import type { RoadmapBasicRow, BookCouncellingRow } from "@/lib/supabase";
 import { StudentProfileView } from "@/components/counsellor/StudentProfileView";
@@ -38,6 +53,28 @@ import { DailyLifeView } from "@/components/counsellor/DailyLifeView";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
 const COUNSELLOR_PASSWORD = "wabi123";
+
+// Class Teachers & Total Strengths Roster for Classes 8-10 (ZPHS Lingamparthi)
+export interface ClassTeacherRosterItem {
+  id: string;
+  gradeLabel: string;   // "8th", "9th", "10th"
+  gradeNumber: number;  // 8, 9, 10
+  section: string;      // "A", "B", "C"
+  teacherName: string;
+  totalStrength: number;
+}
+
+export const CLASS_TEACHERS_ROSTER: ClassTeacherRosterItem[] = [
+  { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "Vijay Stalin", totalStrength: 39 },
+  { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "Nagendra Rao", totalStrength: 31 },
+  { id: "8-C", gradeLabel: "8th", gradeNumber: 8, section: "C", teacherName: "Ravikumar", totalStrength: 36 },
+  { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "Pushpa Kumari", totalStrength: 37 },
+  { id: "9-B", gradeLabel: "9th", gradeNumber: 9, section: "B", teacherName: "Savithri", totalStrength: 33 },
+  { id: "9-C", gradeLabel: "9th", gradeNumber: 9, section: "C", teacherName: "Nagaraju", totalStrength: 33 },
+  { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "Rajeev", totalStrength: 32 },
+  { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "Murthy", totalStrength: 37 },
+  { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "Vanaja", totalStrength: 34 },
+];
 
 const CounsellorDashboard = () => {
   const navigate = useNavigate();
@@ -61,6 +98,15 @@ const CounsellorDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"submissions" | "bookings">("submissions");
 
+  // Filter and search state
+  const [schoolFilter, setSchoolFilter] = useState<string>("ALL");
+  const [classFilter, setClassFilter] = useState<string>("ALL");
+  const [sectionFilter, setSectionFilter] = useState<string>("ALL");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [customSections, setCustomSections] = useState<string[]>([]);
+  const [customSchools, setCustomSchools] = useState<string[]>([]);
+  const [isRosterModalOpen, setIsRosterModalOpen] = useState(false);
+
   // Check sessionStorage for existing login
   useEffect(() => {
     const saved = sessionStorage.getItem("counsellor_logged_in");
@@ -77,7 +123,52 @@ const CounsellorDashboard = () => {
     }
   }, [isLoggedIn, username]);
 
-  // Apply filter: strictly only this counsellor's submissions
+  // Deduplicate bookings: keep only unique student bookings (prevent duplicates)
+  const deduplicateBookings = (rows: BookCouncellingRow[]): BookCouncellingRow[] => {
+    const seen = new Set<string>();
+    const result: BookCouncellingRow[] = [];
+
+    for (const row of rows) {
+      const phone = (row.student_phone || "").replace(/\D/g, "");
+      const name = (row.student_name || "").toLowerCase().trim().replace(/\s+/g, " ");
+      const school = (row.student_school || "").toLowerCase().trim().replace(/\s+/g, " ");
+
+      const key = phone.length >= 7
+        ? `${phone}|${name}`
+        : `${name}|${school}|${(row.student_class || "").trim().toLowerCase()}`;
+
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push(row);
+      }
+    }
+    return result;
+  };
+
+  // Deduplicate submissions: keep only unique roadmap submissions
+  const deduplicateSubmissions = (rows: RoadmapBasicRow[]): RoadmapBasicRow[] => {
+    const seen = new Set<string>();
+    const result: RoadmapBasicRow[] = [];
+
+    for (const row of rows) {
+      const phone = (row.student_phone || "").replace(/\D/g, "");
+      const name = (row.student_name || "").toLowerCase().trim().replace(/\s+/g, " ");
+      const school = (row.student_school || "").toLowerCase().trim().replace(/\s+/g, " ");
+      const career = (row.career_opted || "").trim().toLowerCase();
+
+      const key = phone.length >= 7
+        ? `${phone}|${name}|${career}`
+        : `${name}|${school}|${(row.student_class || "").trim().toLowerCase()}|${career}`;
+
+      if (!seen.has(key)) {
+        seen.add(key);
+        result.push(row);
+      }
+    }
+    return result;
+  };
+
+  // Apply filter: strictly only this counsellor's submissions & deduplicate
   useEffect(() => {
     const u = username.toLowerCase().trim();
     const normalize = (s: string | null) => (s || "").toLowerCase().replace(/[\s_-]+/g, "");
@@ -94,20 +185,29 @@ const CounsellorDashboard = () => {
              row.councellor_name.toLowerCase().trim() === u;
     });
 
-    setSubmissions(filteredSubs);
-    setBookings(filteredBooks);
+    setSubmissions(deduplicateSubmissions(filteredSubs));
+    setBookings(deduplicateBookings(filteredBooks));
   }, [allSubmissions, allBookings, username]);
 
   const loadData = async () => {
     setLoading(true);
     try {
-      // Fetch all records and filter in-memory for maximum resilience
-      const [subs, books] = await Promise.all([
+      // Fetch all records and customisation settings for maximum resilience
+      const [subs, books, custom] = await Promise.all([
         fetchRoadmapBasicByCounsellor(), // fetches all
         fetchBookCouncellingAll(),      // fetches all
+        username ? fetchCounsellorCustomisation(username) : Promise.resolve(null),
       ]);
       setAllSubmissions(subs);
       setAllBookings(books);
+      if (custom) {
+        if (Array.isArray(custom.sections)) {
+          setCustomSections(custom.sections.filter(Boolean));
+        }
+        if (Array.isArray(custom.school_names)) {
+          setCustomSchools(custom.school_names.filter(Boolean));
+        }
+      }
     } catch (err) {
       console.warn("Error loading dashboard data:", err);
     }
@@ -525,166 +625,608 @@ const CounsellorDashboard = () => {
                   {activeModule === "compare" && <CompareCareersView />}
                   {activeModule === "daily_life" && <DailyLifeView />}
 
-                  {activeModule === "requests" && (
-                    <div className="space-y-6">
-                      {/* Stats */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="rounded-2xl p-4" style={{ background: "#F0EBE1", border: "1px solid #DDD3C5" }}>
-                          <div className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider mb-1">Roadmap Submissions</div>
-                          <div className="text-2xl font-extrabold text-stone-900">{submissions.length}</div>
-                        </div>
-                        <div className="rounded-2xl p-4" style={{ background: "#F0EBE1", border: "1px solid #DDD3C5" }}>
-                          <div className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider mb-1">Booking Requests</div>
-                          <div className="text-2xl font-extrabold text-stone-900">{bookings.length}</div>
-                        </div>
-                      </div>
+                  {activeModule === "requests" && (() => {
+                    const activeList = activeTab === "submissions" ? submissions : bookings;
 
-                      {/* Tabs */}
-                      <div className="flex gap-1 p-1 rounded-xl" style={{ background: "#E8DFD0" }}>
-                        <button
-                          onClick={() => setActiveTab("submissions")}
-                          className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "submissions"
-                              ? "bg-white shadow-sm text-stone-900"
-                              : "text-stone-500 hover:text-stone-700"
-                          }`}
-                        >
-                          <ClipboardList className="w-3.5 h-3.5" />
-                          Roadmap Submissions ({submissions.length})
-                        </button>
-                        <button
-                          onClick={() => setActiveTab("bookings")}
-                          className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "bookings"
-                              ? "bg-white shadow-sm text-stone-900"
-                              : "text-stone-500 hover:text-stone-700"
-                          }`}
-                        >
-                          <Calendar className="w-3.5 h-3.5" />
-                          Booking Requests ({bookings.length})
-                        </button>
-                      </div>
+                    // 1. Schools List & Counts
+                    const schoolCounts = activeList.reduce<Record<string, number>>((acc, row) => {
+                      const rawSchool = (row.student_school || "").trim();
+                      const school = rawSchool && rawSchool !== "—" && rawSchool !== "-" ? rawSchool : "Other / Not Specified";
+                      acc[school] = (acc[school] || 0) + 1;
+                      return acc;
+                    }, {});
 
-                      {/* Data Table */}
-                      {loading ? (
-                        <div className="py-16 text-center text-sm text-stone-400 font-semibold">Loading data...</div>
-                      ) : activeTab === "submissions" ? (
-                        /* ── SUBMISSIONS TABLE ── */
-                        submissions.length === 0 ? (
-                          <div className="py-16 text-center rounded-2xl border" style={{ background: "#F5F1EC", borderColor: "#E0D6CA" }}>
-                            <Users className="w-10 h-10 mx-auto text-stone-300 mb-3" />
-                            <p className="text-sm font-bold text-stone-500">No submissions found</p>
-                            <p className="text-xs text-stone-400 mt-1">
-                              Share your referral link <code className="bg-stone-100 px-1.5 py-0.5 rounded text-[11px] font-mono">/roadmap/{username}</code> to start receiving submissions.
-                            </p>
+                    const allSchoolKeys = new Set([...Object.keys(schoolCounts), ...customSchools]);
+                    const uniqueSchools = Array.from(allSchoolKeys).filter(Boolean).sort((a, b) => a.localeCompare(b));
+
+                    // 2. Classes List & Counts
+                    const classCounts = activeList.reduce<Record<string, number>>((acc, row) => {
+                      const rawClass = (row.student_class || "").trim();
+                      const cls = rawClass && rawClass !== "—" && rawClass !== "-" ? rawClass : "Other / Not Specified";
+                      acc[cls] = (acc[cls] || 0) + 1;
+                      return acc;
+                    }, {});
+                    const uniqueClasses = Object.keys(classCounts).sort((a, b) => a.localeCompare(b));
+
+                    // 3. Sections List & Counts (fetched from councellor_customisation + data)
+                    const sectionCounts = activeList.reduce<Record<string, number>>((acc, row) => {
+                      const rawSec = ((row as any).student_section || "").trim();
+                      if (rawSec && rawSec !== "—" && rawSec !== "-") {
+                        acc[rawSec] = (acc[rawSec] || 0) + 1;
+                      }
+                      return acc;
+                    }, {});
+
+                    const allSectionKeys = new Set([...customSections, ...Object.keys(sectionCounts)]);
+                    const uniqueSections = Array.from(allSectionKeys).filter(Boolean).sort((a, b) => a.localeCompare(b));
+
+                    // Filter Submissions
+                    const displayedSubmissions = submissions.filter((row) => {
+                      const rawSchool = (row.student_school || "").trim();
+                      const school = rawSchool && rawSchool !== "—" && rawSchool !== "-" ? rawSchool : "Other / Not Specified";
+                      const matchesSchool = schoolFilter === "ALL" || school.toLowerCase() === schoolFilter.toLowerCase();
+
+                      const rawClass = (row.student_class || "").trim();
+                      const cls = rawClass && rawClass !== "—" && rawClass !== "-" ? rawClass : "Other / Not Specified";
+                      const matchesClass = classFilter === "ALL" || cls.toLowerCase() === classFilter.toLowerCase();
+
+                      const rawSec = (row.student_section || "").trim();
+                      const matchesSection = sectionFilter === "ALL" || (rawSec && rawSec.toLowerCase() === sectionFilter.toLowerCase());
+
+                      const q = searchQuery.toLowerCase().trim();
+                      const matchesSearch = !q ||
+                        (row.student_name || "").toLowerCase().includes(q) ||
+                        (row.student_phone || "").toLowerCase().includes(q) ||
+                        (row.student_school || "").toLowerCase().includes(q) ||
+                        (row.student_location || "").toLowerCase().includes(q) ||
+                        (row.student_class || "").toLowerCase().includes(q) ||
+                        (row.student_section || "").toLowerCase().includes(q) ||
+                        (row.career_opted || "").toLowerCase().includes(q);
+
+                      return matchesSchool && matchesClass && matchesSection && matchesSearch;
+                    });
+
+                    // Filter Bookings
+                    const displayedBookings = bookings.filter((row) => {
+                      const rawSchool = (row.student_school || "").trim();
+                      const school = rawSchool && rawSchool !== "—" && rawSchool !== "-" ? rawSchool : "Other / Not Specified";
+                      const matchesSchool = schoolFilter === "ALL" || school.toLowerCase() === schoolFilter.toLowerCase();
+
+                      const rawClass = (row.student_class || "").trim();
+                      const cls = rawClass && rawClass !== "—" && rawClass !== "-" ? rawClass : "Other / Not Specified";
+                      const matchesClass = classFilter === "ALL" || cls.toLowerCase() === classFilter.toLowerCase();
+
+                      const rawSec = ((row as any).student_section || "").trim();
+                      const matchesSection = sectionFilter === "ALL" || (rawSec && rawSec.toLowerCase() === sectionFilter.toLowerCase());
+
+                      const q = searchQuery.toLowerCase().trim();
+                      const matchesSearch = !q ||
+                        (row.student_name || "").toLowerCase().includes(q) ||
+                        (row.student_phone || "").toLowerCase().includes(q) ||
+                        (row.student_school || "").toLowerCase().includes(q) ||
+                        (row.student_location || "").toLowerCase().includes(q) ||
+                        (row.student_class || "").toLowerCase().includes(q) ||
+                        (row.career_opted || "").toLowerCase().includes(q) ||
+                        (row.query_description || "").toLowerCase().includes(q);
+
+                      return matchesSchool && matchesClass && matchesSection && matchesSearch;
+                    });
+
+                    const currentDisplayed = activeTab === "submissions" ? displayedSubmissions : displayedBookings;
+                    const hasActiveFilters = schoolFilter !== "ALL" || classFilter !== "ALL" || sectionFilter !== "ALL" || searchQuery.trim() !== "";
+
+                    // Class Teachers Roster Analytics (Classes 8-10 specifically for ZPHS Lingamparthi)
+                    const rosterStats = CLASS_TEACHERS_ROSTER.map((item) => {
+                      const matchingSubs = submissions.filter((row) => {
+                        const sch = (row.student_school || "").toLowerCase().trim();
+                        const cls = (row.student_class || "").toLowerCase().trim();
+                        const sec = (row.student_section || "").trim().toUpperCase();
+
+                        // Match specifically ZPHS Lingamparthi school
+                        const matchesSchool = sch.includes("lingamparthi") || sch.includes("lingam parthi") || sch.includes("lingamparti");
+
+                        const matchesGrade =
+                          (item.gradeNumber === 8 && (cls.includes("8") || cls.includes("eighth"))) ||
+                          (item.gradeNumber === 9 && (cls.includes("9") || cls.includes("ninth"))) ||
+                          (item.gradeNumber === 10 && (cls.includes("10") || cls.includes("tenth")));
+
+                        const matchesSection = sec === item.section || sec.startsWith(item.section);
+
+                        return matchesSchool && matchesGrade && matchesSection;
+                      });
+
+                      const receivedCount = matchingSubs.length;
+                      const percentage = item.totalStrength > 0 ? Math.round((receivedCount / item.totalStrength) * 100) : 0;
+                      const isBelowThreshold = percentage < 60;
+
+                      return {
+                        ...item,
+                        receivedCount,
+                        percentage,
+                        isBelowThreshold,
+                      };
+                    });
+
+                    const totalEnrolled = CLASS_TEACHERS_ROSTER.reduce((acc, curr) => acc + curr.totalStrength, 0); // 312
+                    const totalRosterReceived = rosterStats.reduce((acc, curr) => acc + curr.receivedCount, 0);
+                    const overallPercentage = totalEnrolled > 0 ? Math.round((totalRosterReceived / totalEnrolled) * 100) : 0;
+                    const belowThresholdCount = rosterStats.filter((r) => r.isBelowThreshold).length;
+
+                    return (
+                      <div className="space-y-6">
+                        {/* Stats */}
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="rounded-2xl p-4" style={{ background: "#F0EBE1", border: "1px solid #DDD3C5" }}>
+                            <div className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider mb-1">Roadmap Submissions</div>
+                            <div className="text-2xl font-extrabold text-stone-900">{submissions.length}</div>
                           </div>
-                        ) : (
-                          <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "#E0D6CA" }}>
-                            <div className="overflow-x-auto">
-                              <table className="w-full text-xs">
-                                <thead>
-                                  <tr style={{ background: "#F0EBE1" }}>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">#</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Student Name</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Phone</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Class</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Section</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Career Opted</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Date</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {submissions.map((row, i) => (
-                                    <tr
-                                      key={row.id}
-                                      className="border-t hover:bg-stone-50/50 transition-colors"
-                                      style={{ borderColor: "#E8DFD0" }}
+                          <div className="rounded-2xl p-4" style={{ background: "#F0EBE1", border: "1px solid #DDD3C5" }}>
+                            <div className="text-[11px] font-semibold text-stone-500 uppercase tracking-wider mb-1">Booking Requests</div>
+                            <div className="text-2xl font-extrabold text-stone-900">{bookings.length}</div>
+                          </div>
+                        </div>
+
+                        {/* ── ZPHS LINGAMPARTHI TEACHERS TRACKER BUTTON ── */}
+                        <div
+                          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-3xl border shadow-xs bg-white"
+                          style={{ borderColor: "#E0D6CA" }}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-11 h-11 rounded-2xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
+                              <GraduationCap className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-black text-stone-900">
+                                  ZPHS Lingamparthi &bull; Class Teachers Tracker
+                                </span>
+                              </div>
+                              <p className="text-xs text-stone-500 font-medium mt-0.5">
+                                Total Enrolled: <strong className="text-stone-900">{totalEnrolled} students</strong> (Classes 8–10) &bull; Received: <strong className="text-stone-900">{totalRosterReceived}</strong> ({overallPercentage}%)
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2.5 self-end sm:self-auto">
+                            {belowThresholdCount > 0 ? (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-2xs">
+                                <AlertTriangle className="w-3.5 h-3.5 text-rose-600 animate-pulse" />
+                                {belowThresholdCount} Teacher{belowThresholdCount > 1 ? "s" : ""} Below 60%
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                All &ge; 60% Target
+                              </span>
+                            )}
+
+                            <button
+                              type="button"
+                              onClick={() => setIsRosterModalOpen(true)}
+                              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-sm hover:scale-102 active:scale-98"
+                            >
+                              <span>View Roster &amp; Coverage</span>
+                              <ChevronRight className="w-3.5 h-3.5 text-[#C9A97A]" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* ── DIALOG POPUP: VERTICALLY ALIGNED FOR MOBILE ── */}
+                        <Dialog open={isRosterModalOpen} onOpenChange={setIsRosterModalOpen}>
+                          <DialogContent
+                            className="max-w-xl max-h-[90vh] flex flex-col p-0 rounded-3xl overflow-hidden border shadow-2xl bg-[#FAF8F5]"
+                            style={{ borderColor: "#E0D6CA" }}
+                          >
+                            {/* Top Header with Close/Cancel button */}
+                            <div className="p-4 sm:p-5 border-b border-stone-200 bg-white flex items-start justify-between gap-3 shrink-0">
+                              <div>
+                                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5] mb-1">
+                                  <GraduationCap className="w-3.5 h-3.5 text-[#C9A97A]" />
+                                  ZPHS Lingamparthi Roster
+                                </div>
+                                <DialogTitle className="text-base sm:text-lg font-black text-stone-900">
+                                  Class Teachers &amp; Submission Coverage
+                                </DialogTitle>
+                                <DialogDescription className="text-xs text-stone-500 font-medium mt-0.5">
+                                  Classes 8–10 (Total Strength: <strong>312 students</strong>) &bull; Target: <strong>&ge; 60%</strong>
+                                </DialogDescription>
+                              </div>
+
+                              <button
+                                type="button"
+                                onClick={() => setIsRosterModalOpen(false)}
+                                className="p-2 rounded-xl text-stone-500 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 transition-colors cursor-pointer shrink-0"
+                                aria-label="Close"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+
+                            {/* Summary Status Strip */}
+                            <div className="px-4 sm:px-5 py-2.5 bg-[#F0EBE1] border-b border-[#DDD3C5] flex items-center justify-between text-xs font-bold text-stone-700 shrink-0">
+                              <span>
+                                Received: <strong className="text-stone-900">{totalRosterReceived}</strong> / {totalEnrolled} ({overallPercentage}%)
+                              </span>
+                              {belowThresholdCount > 0 ? (
+                                <span className="text-rose-700 font-black flex items-center gap-1">
+                                  <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+                                  {belowThresholdCount} Teacher{belowThresholdCount > 1 ? "s" : ""} Below 60%
+                                </span>
+                              ) : (
+                                <span className="text-emerald-700 font-bold flex items-center gap-1">
+                                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                  All Sections Target Met
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Vertically Aligned Scrollable List for Mobile & Desktop */}
+                            <div className="p-4 sm:p-5 overflow-y-auto space-y-3 flex-1">
+                              {rosterStats.map((item) => (
+                                <div
+                                  key={item.id}
+                                  onClick={() => {
+                                    const matchingSchoolOption = uniqueSchools.find((s) => s.toLowerCase().includes("lingamparthi")) || "ALL";
+                                    setSchoolFilter(matchingSchoolOption);
+                                    setClassFilter(`Class ${item.gradeNumber}`);
+                                    setSectionFilter(item.section);
+                                    setActiveTab("submissions");
+                                    setIsRosterModalOpen(false);
+                                  }}
+                                  className={`p-3.5 rounded-2xl border transition-all cursor-pointer shadow-2xs hover:shadow-md ${
+                                    item.isBelowThreshold
+                                      ? "bg-rose-50/70 border-rose-300 hover:border-rose-400 hover:bg-rose-50"
+                                      : "bg-white border-stone-200 hover:border-stone-400 hover:bg-stone-50/60"
+                                  }`}
+                                >
+                                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-lg text-xs font-black bg-stone-900 text-white tracking-wide">
+                                      {item.gradeLabel} - Section {item.section}
+                                    </span>
+
+                                    {item.isBelowThreshold ? (
+                                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-rose-600 text-white shadow-2xs">
+                                        <TrendingDown className="w-3 h-3" />
+                                        {item.percentage}% (&lt;60%)
+                                      </span>
+                                    ) : (
+                                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-emerald-700 text-white">
+                                        <TrendingUp className="w-3 h-3" />
+                                        {item.percentage}%
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  {/* Teacher Name */}
+                                  <div className="my-1.5">
+                                    <div className="text-[10px] uppercase font-bold text-stone-500 tracking-wider">Class Teacher</div>
+                                    <div
+                                      className={`text-sm tracking-tight flex items-center gap-1.5 mt-0.5 ${
+                                        item.isBelowThreshold ? "font-black text-rose-700" : "font-extrabold text-stone-900"
+                                      }`}
                                     >
-                                      <td className="px-3 py-2.5 font-mono text-stone-400">{i + 1}</td>
-                                      <td className="px-3 py-2.5 font-bold text-stone-900">{row.student_name || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700">{row.student_phone || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700 font-medium">{row.student_section || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[140px] max-w-[240px]">{row.student_school || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[120px] max-w-[200px]">{row.student_location || "—"}</td>
-                                      <td className="px-3 py-2.5">
-                                        <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#E8DFD0", color: "#7C5C3E" }}>
-                                          {row.career_opted || "—"}
+                                      <UserCheck className={`w-4 h-4 shrink-0 ${item.isBelowThreshold ? "text-rose-600" : "text-stone-500"}`} />
+                                      <span>{item.teacherName}</span>
+                                      {item.isBelowThreshold && (
+                                        <span className="ml-auto text-[10px] font-black uppercase tracking-wider text-rose-700 bg-rose-200/80 px-1.5 py-0.5 rounded border border-rose-300">
+                                          Action Req.
                                         </span>
-                                      </td>
-                                      <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  {/* Submissions & Strength Count */}
+                                  <div className="flex items-center justify-between text-xs text-stone-600 font-semibold mb-1.5 pt-1 border-t border-stone-100">
+                                    <span>
+                                      Submissions: <strong className={item.isBelowThreshold ? "text-rose-700 font-extrabold" : "text-stone-900"}>{item.receivedCount}</strong> / {item.totalStrength} students
+                                    </span>
+                                    <span className="text-[11px] text-stone-400">Total: {item.totalStrength}</span>
+                                  </div>
+
+                                  {/* Progress Bar */}
+                                  <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
+                                    <div
+                                      className={`h-full transition-all duration-500 rounded-full ${
+                                        item.isBelowThreshold ? "bg-rose-500" : "bg-emerald-600"
+                                      }`}
+                                      style={{ width: `${Math.min(100, item.percentage)}%` }}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+
+                        {/* Tabs */}
+                        <div className="flex gap-1 p-1 rounded-xl" style={{ background: "#E8DFD0" }}>
+                          <button
+                            onClick={() => {
+                              setActiveTab("submissions");
+                              setSchoolFilter("ALL");
+                              setClassFilter("ALL");
+                              setSectionFilter("ALL");
+                            }}
+                            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                              activeTab === "submissions"
+                                ? "bg-white shadow-sm text-stone-900"
+                                : "text-stone-500 hover:text-stone-700"
+                            }`}
+                          >
+                            <ClipboardList className="w-3.5 h-3.5" />
+                            Roadmap Submissions ({submissions.length})
+                          </button>
+                          <button
+                            onClick={() => {
+                              setActiveTab("bookings");
+                              setSchoolFilter("ALL");
+                              setClassFilter("ALL");
+                              setSectionFilter("ALL");
+                            }}
+                            className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                              activeTab === "bookings"
+                                ? "bg-white shadow-sm text-stone-900"
+                                : "text-stone-500 hover:text-stone-700"
+                            }`}
+                          >
+                            <Calendar className="w-3.5 h-3.5" />
+                            Booking Requests ({bookings.length})
+                          </button>
+                        </div>
+
+                        {/* ── Filter Bar: School, Class, Section Dropdowns + Search Input ── */}
+                        <div
+                          className="flex flex-col gap-3 p-3.5 rounded-2xl border bg-white shadow-2xs"
+                          style={{ borderColor: "#E0D6CA" }}
+                        >
+                          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                            {/* School Dropdown */}
+                            <div
+                              className="flex items-center gap-2 px-3 py-2 rounded-xl border bg-stone-50 min-w-0"
+                              style={{ borderColor: "#DDD3C5" }}
+                            >
+                              <School className="w-4 h-4 text-[#7C5C3E] shrink-0" />
+                              <select
+                                value={schoolFilter}
+                                onChange={(e) => setSchoolFilter(e.target.value)}
+                                className="w-full bg-transparent text-xs font-bold text-stone-900 focus:outline-none cursor-pointer truncate"
+                              >
+                                <option value="ALL">All Schools</option>
+                                {uniqueSchools.map((sch) => (
+                                  <option key={sch} value={sch}>
+                                    {sch} ({schoolCounts[sch] || 0})
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Class Dropdown */}
+                            <div
+                              className="flex items-center gap-2 px-3 py-2 rounded-xl border bg-stone-50 min-w-0"
+                              style={{ borderColor: "#DDD3C5" }}
+                            >
+                              <GraduationCap className="w-4 h-4 text-[#7C5C3E] shrink-0" />
+                              <select
+                                value={classFilter}
+                                onChange={(e) => setClassFilter(e.target.value)}
+                                className="w-full bg-transparent text-xs font-bold text-stone-900 focus:outline-none cursor-pointer truncate"
+                              >
+                                <option value="ALL">All Classes</option>
+                                {uniqueClasses.map((cls) => (
+                                  <option key={cls} value={cls}>
+                                    {cls}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Section Dropdown (customisation + data) */}
+                            <div
+                              className="flex items-center gap-2 px-3 py-2 rounded-xl border bg-stone-50 min-w-0"
+                              style={{ borderColor: "#DDD3C5" }}
+                            >
+                              <Users className="w-4 h-4 text-[#7C5C3E] shrink-0" />
+                              <select
+                                value={sectionFilter}
+                                onChange={(e) => setSectionFilter(e.target.value)}
+                                className="w-full bg-transparent text-xs font-bold text-stone-900 focus:outline-none cursor-pointer truncate"
+                              >
+                                <option value="ALL">All Sections</option>
+                                {uniqueSections.map((sec) => (
+                                  <option key={sec} value={sec}>
+                                    Section {sec}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* Search Input */}
+                            <div className="relative min-w-0">
+                              <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                              <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder="Search name, phone..."
+                                className="w-full h-9 pl-8 pr-8 text-xs rounded-xl border bg-stone-50 font-medium text-stone-800 placeholder:text-stone-400 focus:outline-none focus:bg-white transition-colors"
+                                style={{ borderColor: "#DDD3C5" }}
+                              />
+                              {searchQuery && (
+                                <button
+                                  onClick={() => setSearchQuery("")}
+                                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 cursor-pointer"
+                                >
+                                  <X className="w-3.5 h-3.5" />
+                                </button>
+                              )}
                             </div>
                           </div>
-                        )
-                      ) : (
-                        /* ── BOOKINGS TABLE ── */
-                        bookings.length === 0 ? (
-                          <div className="py-16 text-center rounded-2xl border" style={{ background: "#F5F1EC", borderColor: "#E0D6CA" }}>
-                            <Calendar className="w-10 h-10 mx-auto text-stone-300 mb-3" />
-                            <p className="text-sm font-bold text-stone-500">No booking requests found</p>
-                            <p className="text-xs text-stone-400 mt-1">
-                              Booking requests from students using your link will appear here.
-                            </p>
-                          </div>
-                        ) : (
-                          <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "#E0D6CA" }}>
-                            <div className="overflow-x-auto">
-                              <table className="w-full text-xs">
-                                <thead>
-                                  <tr style={{ background: "#F0EBE1" }}>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">#</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Student Name</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Phone</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Class</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Career Opted</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Query</th>
-                                    <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Date</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {bookings.map((row, i) => (
-                                    <tr
-                                      key={row.id}
-                                      className="border-t hover:bg-stone-50/50 transition-colors"
-                                      style={{ borderColor: "#E8DFD0" }}
-                                    >
-                                      <td className="px-3 py-2.5 font-mono text-stone-400">{i + 1}</td>
-                                      <td className="px-3 py-2.5 font-bold text-stone-900">{row.student_name || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700">{row.student_phone || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[140px] max-w-[240px]">{row.student_school || "—"}</td>
-                                      <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[120px] max-w-[200px]">{row.student_location || "—"}</td>
-                                      <td className="px-3 py-2.5">
-                                        {row.career_opted ? (
+
+                          {/* Filter Status & Reset */}
+                          {hasActiveFilters && (
+                            <div className="flex items-center justify-between pt-1 border-t border-stone-100">
+                              <span className="text-[11px] font-bold text-stone-600 bg-stone-100 px-2.5 py-1 rounded-lg border border-stone-200">
+                                Showing {currentDisplayed.length} of {activeList.length} matching students
+                              </span>
+                              <button
+                                onClick={() => {
+                                  setSchoolFilter("ALL");
+                                  setClassFilter("ALL");
+                                  setSectionFilter("ALL");
+                                  setSearchQuery("");
+                                }}
+                                className="flex items-center gap-1 text-[11px] font-bold text-rose-600 hover:text-rose-800 transition-colors cursor-pointer px-2 py-1 rounded-lg hover:bg-rose-50"
+                              >
+                                <X className="w-3 h-3" />
+                                Reset all filters
+                              </button>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Data Table */}
+                        {loading ? (
+                          <div className="py-16 text-center text-sm text-stone-400 font-semibold">Loading data...</div>
+                        ) : activeTab === "submissions" ? (
+                          /* ── SUBMISSIONS TABLE ── */
+                          submissions.length === 0 ? (
+                            <div className="py-16 text-center rounded-2xl border" style={{ background: "#F5F1EC", borderColor: "#E0D6CA" }}>
+                              <Users className="w-10 h-10 mx-auto text-stone-300 mb-3" />
+                              <p className="text-sm font-bold text-stone-500">No submissions found</p>
+                              <p className="text-xs text-stone-400 mt-1">
+                                Share your referral link <code className="bg-stone-100 px-1.5 py-0.5 rounded text-[11px] font-mono">/roadmap/{username}</code> to start receiving submissions.
+                              </p>
+                            </div>
+                          ) : displayedSubmissions.length === 0 ? (
+                            <div className="py-12 text-center rounded-2xl border bg-white" style={{ borderColor: "#E0D6CA" }}>
+                              <School className="w-8 h-8 mx-auto text-stone-300 mb-2" />
+                              <p className="text-xs font-bold text-stone-600">No submissions match the current school / search filter</p>
+                              <button
+                                onClick={() => { setSchoolFilter("ALL"); setSearchQuery(""); }}
+                                className="mt-2 text-xs text-blue-600 hover:underline font-bold cursor-pointer"
+                              >
+                                Clear filters
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "#E0D6CA" }}>
+                              <div className="overflow-x-auto">
+                                <table className="w-full text-xs">
+                                  <thead>
+                                    <tr style={{ background: "#F0EBE1" }}>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">#</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Student Name</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Phone</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Class</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Section</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Career Opted</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Date</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {displayedSubmissions.map((row, i) => (
+                                      <tr
+                                        key={row.id}
+                                        className="border-t hover:bg-stone-50/50 transition-colors"
+                                        style={{ borderColor: "#E8DFD0" }}
+                                      >
+                                        <td className="px-3 py-2.5 font-mono text-stone-400">{i + 1}</td>
+                                        <td className="px-3 py-2.5 font-bold text-stone-900">{row.student_name || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700">{row.student_phone || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700 font-medium">{row.student_section || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[140px] max-w-[240px]">{row.student_school || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[120px] max-w-[200px]">{row.student_location || "—"}</td>
+                                        <td className="px-3 py-2.5">
                                           <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#E8DFD0", color: "#7C5C3E" }}>
-                                            {row.career_opted}
+                                            {row.career_opted || "—"}
                                           </span>
-                                        ) : (
-                                          <span className="text-stone-400">—</span>
-                                        )}
-                                      </td>
-                                      <td className="px-3 py-2.5 text-stone-700 min-w-[180px] max-w-[400px] whitespace-normal break-words leading-relaxed">
-                                        {row.query_description || "—"}
-                                      </td>
-                                      <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
+                                        </td>
+                                        <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
                             </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  )}
+                          )
+                        ) : (
+                          /* ── BOOKINGS TABLE ── */
+                          bookings.length === 0 ? (
+                            <div className="py-16 text-center rounded-2xl border" style={{ background: "#F5F1EC", borderColor: "#E0D6CA" }}>
+                              <Calendar className="w-10 h-10 mx-auto text-stone-300 mb-3" />
+                              <p className="text-sm font-bold text-stone-500">No booking requests found</p>
+                              <p className="text-xs text-stone-400 mt-1">
+                                Booking requests from students using your link will appear here.
+                              </p>
+                            </div>
+                          ) : displayedBookings.length === 0 ? (
+                            <div className="py-12 text-center rounded-2xl border bg-white" style={{ borderColor: "#E0D6CA" }}>
+                              <School className="w-8 h-8 mx-auto text-stone-300 mb-2" />
+                              <p className="text-xs font-bold text-stone-600">No booking requests match the current school / search filter</p>
+                              <button
+                                onClick={() => { setSchoolFilter("ALL"); setSearchQuery(""); }}
+                                className="mt-2 text-xs text-blue-600 hover:underline font-bold cursor-pointer"
+                              >
+                                Clear filters
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="rounded-2xl border overflow-hidden" style={{ borderColor: "#E0D6CA" }}>
+                              <div className="overflow-x-auto">
+                                <table className="w-full text-xs">
+                                  <thead>
+                                    <tr style={{ background: "#F0EBE1" }}>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">#</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Student Name</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Phone</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Class</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">School</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Location</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Career Opted</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Query</th>
+                                      <th className="text-left px-3 py-2.5 font-bold text-stone-600 uppercase tracking-wider text-[10px]">Date</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {displayedBookings.map((row, i) => (
+                                      <tr
+                                        key={row.id}
+                                        className="border-t hover:bg-stone-50/50 transition-colors"
+                                        style={{ borderColor: "#E8DFD0" }}
+                                      >
+                                        <td className="px-3 py-2.5 font-mono text-stone-400">{i + 1}</td>
+                                        <td className="px-3 py-2.5 font-bold text-stone-900">{row.student_name || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700">{row.student_phone || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700">{row.student_class || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[140px] max-w-[240px]">{row.student_school || "—"}</td>
+                                        <td className="px-3 py-2.5 text-stone-700 whitespace-normal break-words leading-relaxed min-w-[120px] max-w-[200px]">{row.student_location || "—"}</td>
+                                        <td className="px-3 py-2.5">
+                                          {row.career_opted ? (
+                                            <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold" style={{ background: "#E8DFD0", color: "#7C5C3E" }}>
+                                              {row.career_opted}
+                                            </span>
+                                          ) : (
+                                            <span className="text-stone-400">—</span>
+                                          )}
+                                        </td>
+                                        <td className="px-3 py-2.5 text-stone-700 min-w-[180px] max-w-[400px] whitespace-normal break-words leading-relaxed">
+                                          {row.query_description || "—"}
+                                        </td>
+                                        <td className="px-3 py-2.5 text-stone-400 text-[10px] whitespace-nowrap">{formatDate(row.created_at)}</td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
             </div>

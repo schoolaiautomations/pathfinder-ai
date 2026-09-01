@@ -12,6 +12,7 @@ import {
   Send,
   MessageSquare,
   ShieldCheck,
+  AlertCircle,
 } from "lucide-react";
 import {
   Dialog,
@@ -34,6 +35,8 @@ type LockedCareerInsightsProps = {
 export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsightsProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [bookingForm, setBookingForm] = useState({
     name: formData?.name || "",
     phone: formData?.phone || "",
@@ -57,12 +60,15 @@ export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsig
         location: formData.location || prev.location,
       }));
     }
+    setSubmitError(null);
     setSubmitted(false);
     setIsOpen(true);
   };
 
-  const handleBookingSubmit = (e: React.FormEvent) => {
+  const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
+
     if (!bookingForm.name.trim() || !bookingForm.phone.trim()) {
       toast({
         title: "Required fields missing",
@@ -72,23 +78,53 @@ export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsig
       return;
     }
 
-    // Save directly to Supabase table `book_councelling`
-    saveBookCouncellingToSupabase({
-      councellor_name: formData?.councellorName || null,
-      student_name: bookingForm.name.trim(),
-      student_phone: bookingForm.phone.trim(),
-      student_class: bookingForm.currentClass.trim() || null,
-      student_school: bookingForm.school.trim() || null,
-      student_location: bookingForm.location.trim() || null,
-      query_description: bookingForm.message.trim() || null,
-      career_opted: careerGoal || formData?.careerGoal || null,
-    });
+    setIsSubmitting(true);
 
-    setSubmitted(true);
-    toast({
-      title: "Session Request Received!",
-      description: `Our expert career counselor will contact you at ${bookingForm.phone} shortly.`,
-    });
+    try {
+      // Save directly to Supabase table `book_councelling`
+      const result = await saveBookCouncellingToSupabase({
+        councellor_name: formData?.councellorName || null,
+        student_name: bookingForm.name.trim(),
+        student_phone: bookingForm.phone.trim(),
+        student_class: bookingForm.currentClass.trim() || null,
+        student_school: bookingForm.school.trim() || null,
+        student_location: bookingForm.location.trim() || null,
+        query_description: bookingForm.message.trim() || null,
+        career_opted: careerGoal || formData?.careerGoal || null,
+      });
+
+      if (result.isDuplicate) {
+        const errorMsg = result.error || "Duplicate booking: You have already submitted a counselling booking request with this student name and phone number.";
+        setSubmitError(errorMsg);
+        toast({
+          title: "Duplicate Form Already Submitted",
+          description: errorMsg,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!result.success) {
+        const errorMsg = result.error || "Failed to submit booking request. Please try again.";
+        setSubmitError(errorMsg);
+        toast({
+          title: "Submission Error",
+          description: errorMsg,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setSubmitted(true);
+      toast({
+        title: "Session Request Received!",
+        description: `Our expert career counselor will contact you at ${bookingForm.phone} shortly.`,
+      });
+    } catch (err: any) {
+      setSubmitError(err?.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -339,6 +375,13 @@ export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsig
                 />
               </div>
 
+              {submitError && (
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-start gap-2 animate-in fade-in">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{submitError}</span>
+                </div>
+              )}
+
               <div className="pt-1.5 flex items-center justify-end gap-2">
                 <Button
                   type="button"
@@ -350,10 +393,11 @@ export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsig
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-black text-white hover:bg-zinc-800 rounded-xl h-9 px-4 text-xs font-bold shadow cursor-pointer"
+                  disabled={isSubmitting}
+                  className="bg-black text-white hover:bg-zinc-800 rounded-xl h-9 px-4 text-xs font-bold shadow cursor-pointer disabled:opacity-50"
                 >
                   <Send className="w-3 h-3 mr-1.5" />
-                  Confirm Booking Request
+                  {isSubmitting ? "Checking & Submitting..." : "Confirm Booking Request"}
                 </Button>
               </div>
             </form>

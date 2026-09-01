@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
-import { Map, Sparkles, User, GraduationCap, School, MapPin, Phone, Briefcase, Check, ArrowLeft, Calendar, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { Map, Sparkles, User, GraduationCap, School, MapPin, Phone, Briefcase, Check, ArrowLeft, Calendar, Send, CheckCircle2, MessageSquare, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -96,6 +96,9 @@ const RoadmapForm = () => {
     setSelectedOptionId(match ? match.id : null);
   };
 
+  const [isBookingSubmitting, setIsBookingSubmitting] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+
   const handleOpenBookingModal = () => {
     setBookingData({
       name: form.name,
@@ -105,12 +108,15 @@ const RoadmapForm = () => {
       location: form.location,
       query: form.careerGoal ? `Interested in guidance for custom career: ${form.careerGoal}` : "",
     });
+    setBookingError(null);
     setBookingSubmitted(false);
     setIsBookingOpen(true);
   };
 
-  const handleConfirmBooking = (e: React.FormEvent) => {
+  const handleConfirmBooking = async (e: React.FormEvent) => {
     e.preventDefault();
+    setBookingError(null);
+
     if (!bookingData.name.trim() || !bookingData.phone.trim()) {
       toast({
         title: "Required fields missing",
@@ -120,22 +126,52 @@ const RoadmapForm = () => {
       return;
     }
 
-    saveBookCouncellingToSupabase({
-      councellor_name: rawCounsellor || form.councellorName || null,
-      student_name: bookingData.name.trim(),
-      student_phone: bookingData.phone.trim(),
-      student_class: bookingData.currentClass.trim() || null,
-      student_school: bookingData.school.trim() || null,
-      student_location: bookingData.location.trim() || null,
-      query_description: bookingData.query.trim() || (form.careerGoal ? `Custom career: ${form.careerGoal}` : null),
-      career_opted: null, // explicit null from form page per requirement
-    });
+    setIsBookingSubmitting(true);
 
-    setBookingSubmitted(true);
-    toast({
-      title: "Session Request Received!",
-      description: `Our expert counselor will contact you at ${bookingData.phone} shortly.`,
-    });
+    try {
+      const result = await saveBookCouncellingToSupabase({
+        councellor_name: rawCounsellor || form.councellorName || null,
+        student_name: bookingData.name.trim(),
+        student_phone: bookingData.phone.trim(),
+        student_class: bookingData.currentClass.trim() || null,
+        student_school: bookingData.school.trim() || null,
+        student_location: bookingData.location.trim() || null,
+        query_description: bookingData.query.trim() || (form.careerGoal ? `Custom career: ${form.careerGoal}` : null),
+        career_opted: null, // explicit null from form page per requirement
+      });
+
+      if (result.isDuplicate) {
+        const errorMsg = result.error || "Duplicate booking: You have already submitted a counselling booking request with this student name and phone number.";
+        setBookingError(errorMsg);
+        toast({
+          title: "Duplicate Form Already Submitted",
+          description: errorMsg,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (!result.success) {
+        const errorMsg = result.error || "Failed to submit booking request. Please try again.";
+        setBookingError(errorMsg);
+        toast({
+          title: "Submission Error",
+          description: errorMsg,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      setBookingSubmitted(true);
+      toast({
+        title: "Session Request Received!",
+        description: `Our expert counselor will contact you at ${bookingData.phone} shortly.`,
+      });
+    } catch (err: any) {
+      setBookingError(err?.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsBookingSubmitting(false);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -664,6 +700,13 @@ const RoadmapForm = () => {
                 />
               </div>
 
+              {bookingError && (
+                <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold flex items-start gap-2 animate-in fade-in">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{bookingError}</span>
+                </div>
+              )}
+
               <div className="pt-1.5 flex items-center justify-end gap-2">
                 <Button
                   type="button"
@@ -675,10 +718,11 @@ const RoadmapForm = () => {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-black text-white hover:bg-zinc-800 rounded-xl h-9 px-4 text-xs font-bold shadow cursor-pointer"
+                  disabled={isBookingSubmitting}
+                  className="bg-black text-white hover:bg-zinc-800 rounded-xl h-9 px-4 text-xs font-bold shadow cursor-pointer disabled:opacity-50"
                 >
                   <Send className="w-3 h-3 mr-1.5" />
-                  Confirm Booking Request
+                  {isBookingSubmitting ? "Checking & Submitting..." : "Confirm Booking Request"}
                 </Button>
               </div>
             </form>

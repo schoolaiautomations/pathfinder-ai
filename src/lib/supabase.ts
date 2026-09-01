@@ -246,11 +246,44 @@ export interface BookCouncellingRecord {
   career_opted?: string | null;
 }
 
+export interface SaveBookingResult {
+  success: boolean;
+  isDuplicate?: boolean;
+  error?: string;
+}
+
 /**
- * Saves a 1-on-1 career counselling booking request to Supabase `book_councelling` table
+ * Saves a 1-on-1 career counselling booking request to Supabase `book_councelling` table.
+ * Automatically checks and prevents duplicate bookings for the same student phone / name.
  */
-export async function saveBookCouncellingToSupabase(data: BookCouncellingRecord): Promise<boolean> {
+export async function saveBookCouncellingToSupabase(data: BookCouncellingRecord): Promise<SaveBookingResult> {
   try {
+    const cleanPhone = (data.student_phone || "").trim();
+    const cleanName = (data.student_name || "").trim();
+
+    // Check if an identical booking already exists in Supabase
+    if (cleanPhone && cleanName) {
+      const checkUrl = `${SUPABASE_URL}/rest/v1/book_councelling?student_phone=eq.${encodeURIComponent(cleanPhone)}&student_name=eq.${encodeURIComponent(cleanName)}&select=id,created_at&order=created_at.desc&limit=1`;
+      const checkRes = await fetch(checkUrl, {
+        method: "GET",
+        headers: {
+          "apikey": SUPABASE_ANON_KEY,
+          "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      });
+      if (checkRes.ok) {
+        const existing = await checkRes.json();
+        if (existing && existing.length > 0) {
+          console.warn("Duplicate booking request rejected for:", cleanName, cleanPhone);
+          return {
+            success: false,
+            isDuplicate: true,
+            error: "A booking request for this student and phone number has already been submitted.",
+          };
+        }
+      }
+    }
+
     const response = await fetch(`${SUPABASE_URL}/rest/v1/book_councelling`, {
       method: "POST",
       headers: {
@@ -273,15 +306,22 @@ export async function saveBookCouncellingToSupabase(data: BookCouncellingRecord)
 
     if (response.ok) {
       console.log("Successfully saved booking request to Supabase table: book_councelling");
-      return true;
+      return { success: true };
     } else {
       const errorBody = await response.text();
       console.warn("Supabase save book_councelling error:", response.status, errorBody);
+      return {
+        success: false,
+        error: "Failed to submit booking request. Please try again.",
+      };
     }
-  } catch (err) {
+  } catch (err: any) {
     console.warn("Supabase save book_councelling network warning:", err);
+    return {
+      success: false,
+      error: err?.message || "Network error while submitting booking request.",
+    };
   }
-  return false;
 }
 
 // ─── Counsellor Dashboard: Fetch Submissions ─────────────────────────────────
