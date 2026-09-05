@@ -29,6 +29,10 @@ import {
   CheckCircle2,
   TrendingDown,
   TrendingUp,
+  PieChart,
+  BarChart3,
+  BookOpen,
+  FlaskConical,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,6 +54,8 @@ import { StudentProfileView } from "@/components/counsellor/StudentProfileView";
 import { DetailedReportsView } from "@/components/counsellor/DetailedReportsView";
 import { CompareCareersView } from "@/components/counsellor/CompareCareersView";
 import { DailyLifeView } from "@/components/counsellor/DailyLifeView";
+import { CareerAnalyticsView } from "@/components/counsellor/CareerAnalyticsView";
+import { CourseCurriculumView } from "@/components/counsellor/CourseCurriculumView";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
 const COUNSELLOR_PASSWORD = "wabi123";
@@ -87,8 +93,8 @@ const CounsellorDashboard = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState("");
 
-  // Module state (null = main dashboard hub with 5 cards)
-  const [activeModule, setActiveModule] = useState<"student_profile" | "requests" | "detailed_reports" | "compare" | "daily_life" | null>(null);
+  // Module state (null = main dashboard hub with 7 cards)
+  const [activeModule, setActiveModule] = useState<"student_profile" | "requests" | "detailed_reports" | "compare" | "daily_life" | "analytics" | "curriculum" | null>(null);
 
   // Data state
   const [allSubmissions, setAllSubmissions] = useState<RoadmapBasicRow[]>([]);
@@ -106,6 +112,7 @@ const CounsellorDashboard = () => {
   const [customSections, setCustomSections] = useState<string[]>([]);
   const [customSchools, setCustomSchools] = useState<string[]>([]);
   const [isRosterModalOpen, setIsRosterModalOpen] = useState(false);
+  const [isAnalyticsModalOpen, setIsAnalyticsModalOpen] = useState(false);
 
   // Check sessionStorage for existing login
   useEffect(() => {
@@ -185,7 +192,7 @@ const CounsellorDashboard = () => {
              row.councellor_name.toLowerCase().trim() === u;
     });
 
-    setSubmissions(deduplicateSubmissions(filteredSubs));
+    setSubmissions(filteredSubs);
     setBookings(deduplicateBookings(filteredBooks));
   }, [allSubmissions, allBookings, username]);
 
@@ -429,8 +436,8 @@ const CounsellorDashboard = () => {
                     </div>
                   </div>
 
-                  {/* ─── 5 MAIN DASHBOARD CARDS ─── */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5">
+                  {/* ─── MAIN DASHBOARD HUB CARDS ─── */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {/* Card 1: Student Profile (FIRST) */}
                     <div
                       onClick={() => setActiveModule("student_profile")}
@@ -575,6 +582,64 @@ const CounsellorDashboard = () => {
                         <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>
+
+                    {/* Card 6: Career Analytics & Insights */}
+                    <div
+                      onClick={() => setActiveModule("analytics")}
+                      className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
+                    >
+                      <div className="space-y-3.5">
+                        <div className="flex items-center justify-between">
+                          <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-stone-100 text-[#7C5C3E] group-hover:bg-stone-900 group-hover:text-[#C9A97A] transition-colors">
+                            <PieChart className="w-5 h-5" />
+                          </div>
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-stone-100 text-stone-700">
+                            Pie &amp; Trends
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-extrabold text-base text-stone-900 group-hover:text-[#7C5C3E] transition-colors leading-tight">
+                            Career Analytics &amp; Insights
+                          </h3>
+                          <p className="text-xs mt-1.5 text-stone-500 line-clamp-2 leading-relaxed">
+                            Visual pie charts, most selected careers, class-wise trends, and school comparison.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="pt-3.5 flex items-center justify-between text-xs font-bold text-stone-900 border-t border-stone-100">
+                        <span>View Visual Analytics</span>
+                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+
+                    {/* Card 7: Course Curriculum, Syllabus & Labs */}
+                    <div
+                      onClick={() => setActiveModule("curriculum")}
+                      className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
+                    >
+                      <div className="space-y-3.5">
+                        <div className="flex items-center justify-between">
+                          <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-stone-100 text-[#7C5C3E] group-hover:bg-stone-900 group-hover:text-[#C9A97A] transition-colors">
+                            <BookOpen className="w-5 h-5" />
+                          </div>
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-stone-100 text-stone-700">
+                            Syllabus &amp; Labs
+                          </span>
+                        </div>
+                        <div>
+                          <h3 className="font-extrabold text-base text-stone-900 group-hover:text-[#7C5C3E] transition-colors leading-tight">
+                            Course Syllabus &amp; Labs
+                          </h3>
+                          <p className="text-xs mt-1.5 text-stone-500 line-clamp-2 leading-relaxed">
+                            Year-by-year subjects, practical lab experiments, equipment, and skills across courses.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="pt-3.5 flex items-center justify-between text-xs font-bold text-stone-900 border-t border-stone-100">
+                        <span>Explore Syllabus &amp; Labs</span>
+                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -601,11 +666,13 @@ const CounsellorDashboard = () => {
                           {activeModule === "detailed_reports" && "Detailed Report of Career"}
                           {activeModule === "compare" && "Compare Careers"}
                           {activeModule === "daily_life" && "A daily life of a career"}
+                          {activeModule === "analytics" && "Career Analytics & Pie Charts"}
+                          {activeModule === "curriculum" && "Course Curriculum, Syllabus & Practical Labs"}
                         </span>
                       </span>
                     </div>
 
-                    {activeModule === "requests" && (
+                    {(activeModule === "requests" || activeModule === "analytics") && (
                       <div className="flex items-center gap-2 self-start sm:self-auto">
                         <button
                           onClick={loadData}
@@ -624,6 +691,8 @@ const CounsellorDashboard = () => {
                   {activeModule === "detailed_reports" && <DetailedReportsView />}
                   {activeModule === "compare" && <CompareCareersView />}
                   {activeModule === "daily_life" && <DailyLifeView />}
+                  {activeModule === "analytics" && <CareerAnalyticsView submissions={submissions} bookings={bookings} />}
+                  {activeModule === "curriculum" && <CourseCurriculumView />}
 
                   {activeModule === "requests" && (() => {
                     const activeList = activeTab === "submissions" ? submissions : bookings;
@@ -766,50 +835,97 @@ const CounsellorDashboard = () => {
                           </div>
                         </div>
 
-                        {/* ── ZPHS LINGAMPARTHI TEACHERS TRACKER BUTTON ── */}
-                        <div
-                          className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-3xl border shadow-xs bg-white"
-                          style={{ borderColor: "#E0D6CA" }}
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className="w-11 h-11 rounded-2xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
-                              <GraduationCap className="w-5 h-5" />
-                            </div>
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-black text-stone-900">
-                                  ZPHS Lingamparthi &bull; Class Teachers Tracker
-                                </span>
+                        {/* ── TWO ACTION CARDS: 1. CAREER ANALYTICS & PIE CHARTS, 2. ZPHS LINGAMPARTHI TEACHERS TRACKER ── */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
+                          {/* Card 1: Career Analytics & Pie Charts */}
+                          <div
+                            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-3xl border shadow-xs bg-white"
+                            style={{ borderColor: "#E0D6CA" }}
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className="w-11 h-11 rounded-2xl bg-[#7C5C3E] text-white flex items-center justify-center shrink-0 shadow-xs">
+                                <PieChart className="w-5 h-5" />
                               </div>
-                              <p className="text-xs text-stone-500 font-medium mt-0.5">
-                                Total Enrolled: <strong className="text-stone-900">{totalEnrolled} students</strong> (Classes 8–10) &bull; Received: <strong className="text-stone-900">{totalRosterReceived}</strong> ({overallPercentage}%)
-                              </p>
+                              <div className="min-w-0">
+                                <div className="text-sm font-black text-stone-900 truncate">
+                                  Career Analytics &amp; Pie Charts
+                                </div>
+                                <p className="text-xs text-stone-500 font-medium mt-0.5 truncate">
+                                  Most selected careers, class trends &amp; school stats
+                                </p>
+                              </div>
                             </div>
-                          </div>
-
-                          <div className="flex items-center gap-2.5 self-end sm:self-auto">
-                            {belowThresholdCount > 0 ? (
-                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-2xs">
-                                <AlertTriangle className="w-3.5 h-3.5 text-rose-600 animate-pulse" />
-                                {belowThresholdCount} Teacher{belowThresholdCount > 1 ? "s" : ""} Below 60%
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                                All &ge; 60% Target
-                              </span>
-                            )}
 
                             <button
                               type="button"
-                              onClick={() => setIsRosterModalOpen(true)}
-                              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-sm hover:scale-102 active:scale-98"
+                              onClick={() => setIsAnalyticsModalOpen(true)}
+                              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-[#7C5C3E] text-white hover:bg-[#634830] transition-all cursor-pointer shadow-sm hover:scale-102 active:scale-98 shrink-0"
                             >
-                              <span>View Roster &amp; Coverage</span>
+                              <span>View Analytics</span>
                               <ChevronRight className="w-3.5 h-3.5 text-[#C9A97A]" />
                             </button>
                           </div>
+
+                          {/* Card 2: ZPHS Lingamparthi Teachers Tracker */}
+                          <div
+                            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-3xl border shadow-xs bg-white"
+                            style={{ borderColor: "#E0D6CA" }}
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className="w-11 h-11 rounded-2xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
+                                <GraduationCap className="w-5 h-5" />
+                              </div>
+                              <div className="min-w-0">
+                                <div className="text-sm font-black text-stone-900 truncate">
+                                  ZPHS Lingamparthi Tracker
+                                </div>
+                                <p className="text-xs text-stone-500 font-medium mt-0.5 truncate">
+                                  Enrolled: <strong>{totalEnrolled}</strong> &bull; Received: <strong>{totalRosterReceived}</strong> ({overallPercentage}%)
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                              {belowThresholdCount > 0 ? (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-black bg-rose-100 text-rose-800 border border-rose-300">
+                                  <AlertTriangle className="w-3 h-3 text-rose-600 animate-pulse" />
+                                  {belowThresholdCount} &lt;60%
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                                  Target Met
+                                </span>
+                              )}
+
+                              <button
+                                type="button"
+                                onClick={() => setIsRosterModalOpen(true)}
+                                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-extrabold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-sm hover:scale-102 active:scale-98"
+                              >
+                                <span>Roster</span>
+                                <ChevronRight className="w-3.5 h-3.5 text-[#C9A97A]" />
+                              </button>
+                            </div>
+                          </div>
                         </div>
+
+                        {/* ── DIALOG POPUP: CAREER ANALYTICS & PIE CHARTS ── */}
+                        <Dialog open={isAnalyticsModalOpen} onOpenChange={setIsAnalyticsModalOpen}>
+                          <DialogContent
+                            className="max-w-4xl max-h-[92vh] flex flex-col p-0 rounded-3xl overflow-hidden border shadow-2xl bg-[#FAF8F5]"
+                            style={{ borderColor: "#E0D6CA" }}
+                          >
+                            <div className="p-4 sm:p-6 overflow-y-auto flex-1">
+                              <CareerAnalyticsView
+                                submissions={submissions}
+                                bookings={bookings}
+                                onClose={() => setIsAnalyticsModalOpen(false)}
+                                isModal={true}
+                              />
+                            </div>
+                          </DialogContent>
+                        </Dialog>
 
                         {/* ── DIALOG POPUP: VERTICALLY ALIGNED FOR MOBILE ── */}
                         <Dialog open={isRosterModalOpen} onOpenChange={setIsRosterModalOpen}>
