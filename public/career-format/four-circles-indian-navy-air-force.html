@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Indian Navy / Air Force</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Indian Navy / Indian Air Force</h2><p class="standfirst">Serve India at sea or in the air — as an officer, technical specialist, aviator, operator or Agniveer. These careers combine discipline, technology, teamwork, physical fitness and responsibility. The uniform and adventure are real, but so are transfers, strict standards, difficult training and service before personal convenience.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Indian Navy / Indian Air Force &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>How to enter?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Roles</b><em>Navy or Air Force?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Understand it</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want defence life?</h3><p class="lede">Do not choose the Navy or Air Force only for the uniform, aircraft, ships or status. Answer based on the lifestyle and responsibility.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>Can you follow strict rules, timings and procedures even when nobody is watching?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="1"><p>Are you willing to stay physically fit and meet medical standards throughout your career?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="2"><p>Can you work as part of a team where discipline and safety matter more than personal preference?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="3"><p>Can you accept transfers, time away from home, sea deployments or postings at air bases in different parts of India?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="4"><p>Do you enjoy technology, machines, navigation, electronics, aircraft, ships or operational problem-solving?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="5"><p>Would you still want this career if the job involved routine maintenance, administration, study and training — not constant action?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>How do you enter?</h3><p class="lede">There are several routes. The biggest distinction is <b>Officer entry</b> versus <b>Agniveer entry</b>.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Maths &amp; Physics</div><div class="v">These are especially important for Navy and Air Force officer entries after Class 12, flying, technical branches and many Agniveer technical/science routes.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>English</div><div class="v">Written tests, instructions, technical material, interviews, radio/operational communication and training all require strong English comprehension and communication.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Fitness &amp; Discipline</div><div class="v">Running, strength, swimming where relevant, healthy body composition, sleep discipline and medical fitness matter. Do not wait until the recruitment notice to become fit.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Intermediate MPC (Maths, Physics, Chemistry) is the safest route if you want to keep the widest Navy and Air Force officer options open.</b> After Class 12, the main officer route is <b>UPSC NDA &amp; NA Examination</b>. Separate Navy 10+2 B.Tech and Agniveer routes may also be available depending on the notification.</div></div>
+
+<div class="row"><div class="k">Officer — NDA</div><div class="v"><b>UPSC NDA &amp; NA Examination</b> — major officer-entry route after Class 12 for the Armed Forces. Current Navy and Air Force 10+2 officer pathways require Physics and Mathematics/PCM as specified by the entry. Selection continues through the <b>Services Selection Board (SSB)</b>, medical examination and merit.</div></div>
+
+<div class="row"><div class="k">Navy — 10+2 B.Tech</div><div class="v"><b>Indian Navy 10+2 (B.Tech) Cadet Entry Scheme</b> is another officer route for eligible PCM students. Current notifications shortlist candidates for SSB using the <b>JEE Main All India Common Rank List</b>, followed by SSB, medical and merit. Selected cadets undergo a 4-year B.Tech course at the Indian Naval Academy.</div></div>
+
+<div class="row"><div class="k">After graduation</div><div class="v"><b>Navy:</b> entries can include CDS and direct/SSC officer notifications for Executive, Technical, Pilot, Naval Air Operations, Logistics and other branches depending on degree and notification.<br><br><b>Air Force:</b> <b>AFCAT</b> is a major graduate-level route for Flying and Ground Duty branches. <b>CDS</b> can also be a route to the Air Force Academy for eligible Flying Branch candidates. Exact degree, marks and age requirements vary by branch.</div></div>
+
+<div class="row"><div class="k">Agniveer entry</div><div class="v"><b>This is different from becoming a commissioned officer.</b><br><b>Navy:</b> Agniveer SSR and other notified entries use their own online examination/screening, Physical Fitness Test and medical process. Current SSR guidance includes 10+2 Maths &amp; Physics or specified diploma/vocational alternatives.<br><br><b>Air Force:</b> <b>Agniveervayu</b> recruitment is notified separately and has its own online test, physical/medical standards and educational conditions for Science/Non-Science categories.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Officer after Class 12:</b> Class 12 MPC → NDA/NA or eligible Navy 10+2 entry → written/shortlisting → SSB → medical → merit → academy training → commissioned officer.<br><br><b>Officer after graduation:</b> degree → AFCAT / CDS / Navy officer entry as applicable → selection board/SSB → medical → merit → academy training.<br><br><b>Agniveer:</b> required Class 10/12/diploma qualification → service-specific test → physical fitness → medical → merit → training → 4-year Agniveer engagement.</div></div>
+
+<div class="flag red"><span class="mark">Do not confuse</span><span><b>NDA, AFCAT, CDS and Agniveer are different entry routes.</b> A student does not need to write all of them. Choose the route that matches your age, education and whether you want to enter as an Officer or Agniveer.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · THE SERVICES</div><h3>Navy or Air Force?</h3><p class="lede">Both are technology-heavy defence services, but the working environment and branches are very different.</p>
+
+<div class="card">
+<div class="row"><div class="k">Indian Navy</div><div class="v"><b>Think: ships, submarines, maritime aviation, oceans and naval bases.</b> Officers and sailors operate complex ships, weapons, sensors, engines, communications and aviation systems, often at sea for extended periods.<div class="chips"><span class="chip">Ships</span><span class="chip">Submarines</span><span class="chip">Naval Aviation</span><span class="chip">Ocean</span></div></div></div>
+
+<div class="row"><div class="k">Navy — Executive</div><div class="v">General Service, navigation, warfare, operations, hydrography, logistics and other leadership roles. Officers may lead shipboard teams and operational departments.</div></div>
+
+<div class="row"><div class="k">Navy — Pilot / Naval Air</div><div class="v">Fly or operate naval aircraft/helicopters and aviation systems from shore bases or ships, subject to the specific pilot/Naval Air Operations selection and medical standards.</div></div>
+
+<div class="row"><div class="k">Navy — Technical</div><div class="v">Engineering and Electrical branches maintain and manage propulsion, machinery, power, electronics, weapons, sensors and other complex ship/submarine systems.</div></div>
+
+<div class="row"><div class="k">Navy — Logistics</div><div class="v">Supply chains, materials, finance, inventory and operational support. A warship cannot operate without strong logistics behind it.</div></div>
+
+<div class="row"><div class="k">Indian Air Force</div><div class="v"><b>Think: aircraft, air defence, radar, weapons, air bases and aerospace operations.</b> The service combines flying operations with large technical, logistics and command systems on the ground.<div class="chips"><span class="chip">Aircraft</span><span class="chip">Air Defence</span><span class="chip">Radar</span><span class="chip">Aerospace</span></div></div></div>
+
+<div class="row"><div class="k">Air Force — Flying</div><div class="v">Pilots may operate fighter, transport or helicopter aircraft depending on selection, training, medical category and service allocation. Flying Branch has particularly strict medical standards.</div></div>
+
+<div class="row"><div class="k">Air Force — Technical</div><div class="v">Aeronautical Engineering branches work with aircraft systems, electronics, mechanical systems, maintenance, reliability and technical readiness.</div></div>
+
+<div class="row"><div class="k">Air Force — Ground Duty</div><div class="v">Branches can include Administration, Logistics, Accounts, Weapon Systems, Education, Meteorology and other notified roles. These are essential operational careers even though they do not involve piloting aircraft.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Officer vs Agniveer</div><div class="v"><b>Officer:</b> commissioned leadership career with responsibility for people, operations and specialised branches; selection is highly competitive and training is longer.<br><br><b>Agniveer:</b> separate four-year enlisted engagement under the Agnipath scheme. It provides military training and service experience, but continuation into the regular cadre after four years is <b>not automatic</b>.</div></div>
+
+<div class="row"><div class="k">Medical standards</div><div class="v">Defence entries have detailed standards for height, weight, vision, hearing, musculoskeletal health and other conditions. Flying, submarine/diving and certain technical roles can have additional requirements. <b>Never use an old social-media chart as your final eligibility check.</b> Read the medical appendix in the current notification.</div></div>
+
+<div class="row"><div class="k">Training reality</div><div class="v">Expect military discipline, academics, physical conditioning, drill, field/sea/air-service orientation, technical study and continuous assessment. Training is meant to develop reliable officers and personnel, not simply physical toughness.</div></div>
+
+<div class="row"><div class="k">Civilian Plan B</div><div class="v">The same interests can also lead to:
+<div class="chips"><span class="chip">Commercial Pilot</span><span class="chip">Aerospace Engineering</span><span class="chip">Marine Engineering</span><span class="chip">Merchant Navy</span><span class="chip">Electronics</span><span class="chip">Defence Technology</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Choose by life</span><span><b>Navy:</b> you must be comfortable with the sea, ships and deployments away from shore.<br><b>Air Force:</b> you must be comfortable with aviation, air bases and highly technical air operations.<br>Do not choose only by which uniform looks better.</span></div>
+</div>
+</section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you will earn</h3><p class="lede">Officer pay is structured by the Defence Pay Matrix. Agniveer pay follows a separate four-year package.</p>
+
+<div class="card">
+<div class="row"><div class="k">Navy Officer — starting</div><div class="v"><span class="money">₹56,100 basic + ₹15,500 MSP/month</span><br><span style="font-size:13px">A newly commissioned Navy <b>Sub Lieutenant</b> is placed at Level 10. Applicable allowances and service benefits are additional and depend on duty/posting.</span></div></div>
+
+<div class="row"><div class="k">Air Force Officer — starting</div><div class="v"><span class="money">₹56,100 basic + ₹15,500 MSP/month</span><br><span style="font-size:13px">A newly commissioned <b>Flying Officer</b> is at Level 10. The current AFCAT 02/2026 notification lists the pay range as ₹56,100–₹1,77,500 plus MSP ₹15,500. Flying, technical, transport, risk/hardship and other allowances may apply depending on branch and posting.</span></div></div>
+
+<div class="row"><div class="k">Officer progression</div><div class="v">Pay rises with rank and service. For example, current IAF scales list Flight Lieutenant at Level 10B, Squadron Leader at Level 11 and Wing Commander at Level 12A. Navy officer scales similarly progress from Sub Lieutenant to Lieutenant, Lieutenant Commander and Commander.</div></div>
+
+<div class="row"><div class="k">Agniveer — Year 1</div><div class="v"><span class="money">₹30,000 package → about ₹21,000 in hand/month</span><br><span style="font-size:13px">30% is contributed to the Agniveer Corpus Fund, with a matching Government contribution. Applicable allowances are separate.</span></div></div>
+
+<div class="row"><div class="k">Agniveer — Year 4</div><div class="v"><span class="money">₹40,000 package → about ₹28,000 in hand/month</span><br><span style="font-size:13px">The package increases each year. Current Agnipath tables show an exit <b>Seva Nidhi of approximately ₹10.04 lakh excluding interest</b> after four years, based on the individual's and Government's matching corpus contributions.</span></div></div>
+
+<div class="row"><div class="k">Benefits</div><div class="v">Depending on entry and service status, defence personnel may receive accommodation, medical facilities, ration, leave, travel, insurance, CSD and other benefits under prevailing rules. Do not convert every benefit into an inflated “salary package” when comparing careers.</div></div>
+
+<div class="flag red"><span class="mark">Understand this</span><span><b>Agniveer is not the same as a permanent 20–30 year defence career.</b> The current scheme is a four-year engagement, and regular-cadre continuation is subject to service requirements, policy, performance and selection. Students and families should understand this before choosing the route.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Discipline + service + technical interest</span> — Navy/Air Force may be a strong fit.</p>
+<p><span class="hi">Love aircraft but not military life</span> — explore Commercial Pilot, Aerospace Engineering or aviation technology.</p>
+<p><span class="hi">Love ships but not military life</span> — explore Merchant Navy, Marine Engineering or Naval Architecture.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>choose the Armed Forces because you accept the service lifestyle — not only because you like the uniform.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">An 8th–10th class student does not need defence coaching yet. Build academics, fitness and discipline first.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen Maths, Physics, English and general knowledge</li>
+<li>Build consistent fitness: running, push-ups, core strength, mobility and swimming if you have safe access to training</li>
+<li>Take responsibility in sports, NCC/scouting if available, school teams or volunteering — learn teamwork and leadership</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>MPC</b> if you want to keep the widest NDA, Navy technical and Air Force flying/technical routes open</li>
+<li>Start understanding the <b>NDA written exam + SSB</b> process, but do not neglect your Class 11–12 fundamentals</li>
+<li>Compare Navy and Air Force lifestyles: sea deployments and ships versus aviation and air-base operations</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>After Class 12 / during college</div><ul>
+<li>If eligible, target <b>NDA/NA</b> and relevant Navy 10+2 entries after Class 12</li>
+<li>If you complete graduation first, explore <b>AFCAT, CDS and Navy graduate officer entries</b> that match your degree and age</li>
+<li>If considering Agniveer, read the entire current service notification — education, four-year terms, physical standards, medical rules, pay and continuation policy — before applying</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>For one week, follow a defence-style routine: wake on time, exercise daily, study Maths/Physics for one hour, keep your room/equipment organised and complete every task without reminders. <b>If you enjoy discipline rather than only admiring it, this career deserves serious exploration.</b></span></div>
+</section>
+
+<p class="note">This is career guidance, not an official recruitment notice. Age limits, educational qualifications, gender eligibility, vacancies, physical/medical standards, commissions, Agniveer conditions and pay rules change by entry and notification. Current guidance was checked against UPSC, Indian Navy and Indian Air Force material available in 2026. Always use the official notification for the exact entry and batch you apply to.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong defence fit</strong>You seem comfortable with discipline, service and technical responsibility. Now compare Navy versus Air Force and Officer versus Agniveer routes carefully.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>Some parts fit you, but test whether you really accept the discipline, postings, medical standards and lifestyle — not only the technology and uniform.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>The military lifestyle may not match what you naturally want. Explore civilian aviation, engineering, Merchant Navy or other technical careers too.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

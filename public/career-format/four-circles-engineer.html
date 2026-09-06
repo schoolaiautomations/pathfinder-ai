@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Engineer</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Engineer</h2><p class="standfirst">Engineers solve real problems using maths, science, design and technology. But “Engineer” is not one career — Civil, Mechanical, Electrical, Electronics, Computer Science, Chemical, Biotechnology, Instrumentation and many other branches lead to very different kinds of work. First decide whether engineering fits you; then decide which branch fits you.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Engineer &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Skills</b><em>Can you qualify?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Choose branch</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Worth it?</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want engineering?</h3><p class="lede">Do not choose engineering only because it is popular. Engineers spend a lot of time solving, testing, calculating, debugging, redesigning and learning.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>When something breaks or does not work, do you naturally want to understand <b>why</b>?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="1"><p>Can you work patiently with Maths, Physics, logic or technical diagrams even when the answer is not obvious?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="2"><p>Do you enjoy building, coding, designing, experimenting, repairing or improving things?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="3"><p>Can you accept that your first design or solution may fail and then test it again instead of giving up?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="4"><p>Are you willing to learn software, tools and new technology even after college?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="5"><p>Would you still choose engineering if your favourite branch did <b>not</b> have the highest advertised salary?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">For a student who wants to keep the widest range of engineering branches open, the route is straightforward.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Mathematics</div><div class="v">The most important school subject for most engineering branches. Algebra, trigonometry, calculus, vectors, probability and problem solving appear repeatedly in engineering.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Physics</div><div class="v">Mechanics, electricity, waves, heat, electronics and forces become the foundation for Civil, Mechanical, Electrical, ECE, Aerospace and many other branches.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Chemistry &amp; Computing</div><div class="v">Chemistry matters strongly in Chemical, Materials, Biotechnology, Environmental and process industries. Basic coding is increasingly useful in almost every engineering branch.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Intermediate MPC (Maths, Physics, Chemistry) is the standard and safest route if you want to keep most B.E./B.Tech engineering branches open.</b> After Class 12, join a 4-year B.E./B.Tech programme in the branch that matches the kind of work you want.</div></div>
+
+<div class="row"><div class="k">Entrance exams</div><div class="v"><b>AP EAPCET</b> — major route for participating engineering colleges in Andhra Pradesh.<br><b>JEE Main</b> — route to NITs, IIITs and other participating institutes; it is also the qualifying route for eligible candidates who want to attempt JEE Advanced.<br><b>JEE Advanced</b> — admission route to IITs after meeting JEE Main / Advanced eligibility.<br><b>Private universities</b> — some conduct their own entrance tests or use JEE scores.</div></div>
+
+<div class="row"><div class="k">Diploma route</div><div class="v">Another route after Class 10 is a <b>Polytechnic Diploma in Engineering</b>. In Andhra Pradesh, eligible diploma holders can use <b>AP ECET</b> for lateral-entry admissions into engineering programmes. Choose this route if you prefer earlier practical/technical training.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Main route: Class 10 → Intermediate MPC → AP EAPCET / JEE Main / JEE Advanced or college-specific admission → 4-year B.E./B.Tech → projects + internships + branch skills → engineering job.</b><br><br><b>Diploma route: Class 10 → Polytechnic Diploma → AP ECET / lateral-entry process → B.Tech → engineering job.</b></div></div>
+
+<div class="flag red"><span class="mark">Do not rush</span><span><b>Do not choose a branch only because its cutoff is high or somebody says “CSE has scope.”</b> First understand what engineers in that branch actually do every day.</span></div>
+</div></section>
+
+
+<section id="c3"><div class="num">CIRCLE 3 · BRANCHES &amp; JOBS</div><h3>Which engineer could you become?</h3><p class="lede">The branch name matters because it changes what you study, what you build and where you may work. These are the major engineering families.</p>
+
+<div class="card">
+
+<div class="row"><div class="k">Civil Engineering</div><div class="v"><b>Build the physical world.</b> Buildings, bridges, highways, railways, water systems, foundations and infrastructure.<br><b>Careers:</b> Site Engineer, Structural Engineer, Transportation Engineer, Geotechnical Engineer, Water Resources Engineer, Quantity/Planning Engineer, Project Engineer.<br><b>Employers:</b> Construction, EPC, infrastructure, real estate, consulting, government departments.<div class="chips"><span class="chip">Structures</span><span class="chip">Construction</span><span class="chip">Roads</span><span class="chip">Water</span></div></div></div>
+
+<div class="row"><div class="k">Mechanical Engineering</div><div class="v"><b>Design and improve machines.</b> Engines, manufacturing equipment, vehicles, thermal systems, HVAC and mechanical products.<br><b>Careers:</b> Design Engineer, Manufacturing Engineer, Maintenance Engineer, Automotive Engineer, Thermal/HVAC Engineer, Reliability Engineer.<br><b>Employers:</b> Automotive, manufacturing, energy, aerospace, heavy industry, factories.<div class="chips"><span class="chip">Machines</span><span class="chip">CAD</span><span class="chip">Manufacturing</span><span class="chip">Automotive</span></div></div></div>
+
+<div class="row"><div class="k">Electrical Engineering / EEE</div><div class="v"><b>Work with electrical power and machines.</b> Power generation, transmission, motors, transformers, drives, renewable energy and EV electrical systems.<br><b>Careers:</b> Electrical Design Engineer, Power Systems Engineer, Maintenance Engineer, Renewable Energy Engineer, EV Engineer, Protection Engineer.<br><b>Employers:</b> Power utilities, manufacturing, renewables, railways, EV, infrastructure, industrial plants.<div class="chips"><span class="chip">Power</span><span class="chip">Motors</span><span class="chip">EV</span><span class="chip">Renewables</span></div></div></div>
+
+<div class="row"><div class="k">Electronics &amp; Communication — ECE</div><div class="v"><b>Build electronic and communication systems.</b> Chips, circuits, embedded systems, telecom, sensors, IoT and digital hardware.<br><b>Careers:</b> Embedded Engineer, VLSI/Chip Design Engineer, Hardware Engineer, Telecom Engineer, Firmware Engineer, Electronics Test Engineer.<br><b>Employers:</b> Semiconductor, electronics, telecom, automotive electronics, defence, consumer devices.<div class="chips"><span class="chip">Semiconductors</span><span class="chip">Embedded</span><span class="chip">Telecom</span><span class="chip">IoT</span></div></div></div>
+
+<div class="row"><div class="k">Computer Science / IT</div><div class="v"><b>Build software and computing systems.</b> Apps, websites, cloud systems, AI, data platforms, cybersecurity and software infrastructure.<br><b>Careers:</b> Software Engineer, AI/ML Engineer, Data Engineer, Cybersecurity Engineer, Cloud/DevOps Engineer, Backend/Frontend Engineer.<br><b>Employers:</b> Technology companies, banks, startups, consulting, product firms — and increasingly every industry.<div class="chips"><span class="chip">Software</span><span class="chip">AI</span><span class="chip">Data</span><span class="chip">Cybersecurity</span></div></div></div>
+
+<div class="row"><div class="k">Chemical Engineering</div><div class="v"><b>Turn raw materials into useful products safely and efficiently.</b> Large-scale processes involving chemicals, fuels, medicines, food, batteries and materials.<br><b>Careers:</b> Process Engineer, Production Engineer, Process Design Engineer, Safety/Process Safety Engineer, Operations Engineer, Project Engineer.<br><b>Employers:</b> Chemicals, pharma, refining, oil &amp; gas, batteries, food, fertilizers, specialty materials.<div class="chips"><span class="chip">Process plants</span><span class="chip">Pharma</span><span class="chip">Energy</span><span class="chip">Batteries</span></div></div></div>
+
+<div class="row"><div class="k">Biotechnology Engineering</div><div class="v"><b>Use biology with engineering.</b> Bioprocessing, fermentation, biologics, diagnostics, food biotech and bio-manufacturing.<br><b>Careers:</b> Bioprocess Engineer, Fermentation Engineer, Production Associate, Validation/Quality roles, Bioinformatics/Research roles with additional skills.<br><b>Employers:</b> Biotech, pharma, vaccines, diagnostics, food, research organisations.<br><b>Reality:</b> Some research-heavy roles may prefer M.Tech/M.Sc/PhD or specialised experience.<div class="chips"><span class="chip">Bioprocess</span><span class="chip">Pharma</span><span class="chip">Fermentation</span><span class="chip">Biology</span></div></div></div>
+
+<div class="row"><div class="k">Instrumentation &amp; Control</div><div class="v"><b>Measure and control industrial processes.</b> Sensors, PLCs, DCS, automation, control loops, calibration and industrial data.<br><b>Careers:</b> Instrumentation Engineer, Control Engineer, Automation Engineer, PLC/DCS Engineer, Commissioning Engineer.<br><b>Employers:</b> Process plants, oil &amp; gas, pharma, power, manufacturing, automation companies.<div class="chips"><span class="chip">Sensors</span><span class="chip">PLC/DCS</span><span class="chip">Automation</span><span class="chip">Control</span></div></div></div>
+
+<div class="row"><div class="k">Mechatronics / Robotics</div><div class="v"><b>Combine Mechanical + Electronics + Control + Coding.</b> Robots, automated machines, smart manufacturing and autonomous systems.<br><b>Careers:</b> Robotics Engineer, Automation Engineer, Mechatronics Engineer, Controls Engineer, Manufacturing Automation Engineer.<br><b>Employers:</b> Robotics, automotive, electronics, factories, warehouse automation, industrial equipment.<div class="chips"><span class="chip">Robots</span><span class="chip">Automation</span><span class="chip">Controls</span><span class="chip">Coding</span></div></div></div>
+
+<div class="row"><div class="k">Aerospace / Aeronautical</div><div class="v"><b>Work on aircraft and spacecraft.</b> Aerodynamics, propulsion, flight structures, controls and aircraft systems.<br><b>Careers:</b> Aerospace Design Engineer, Structures Engineer, Propulsion Engineer, Flight/Systems Engineer, Manufacturing Engineer.<br><b>Employers:</b> Aerospace, defence, aviation suppliers, space organisations and research labs.<br><b>Reality:</b> More specialised and geographically concentrated than broad branches such as Mechanical or CSE.<div class="chips"><span class="chip">Aircraft</span><span class="chip">Space</span><span class="chip">Aerodynamics</span><span class="chip">Defence</span></div></div></div>
+
+<div class="row"><div class="k">Environmental Engineering</div><div class="v"><b>Engineer solutions for water, waste and pollution.</b> Water treatment, wastewater, air pollution, waste management and environmental compliance.<br><b>Careers:</b> Water/Wastewater Engineer, Environmental Engineer, EHS/Environmental Consultant, Sustainability Engineer.<br><b>Employers:</b> Utilities, industries, consulting firms, infrastructure, government and environmental services.<div class="chips"><span class="chip">Water</span><span class="chip">Waste</span><span class="chip">Pollution</span><span class="chip">Sustainability</span></div></div></div>
+
+<div class="row"><div class="k">Industrial / Production</div><div class="v"><b>Make factories and operations work better.</b> Production systems, quality, productivity, lean manufacturing, supply chains and operations.<br><b>Careers:</b> Production Engineer, Industrial Engineer, Quality Engineer, Manufacturing Engineer, Continuous Improvement Engineer, Supply Chain/Operations roles.<br><b>Employers:</b> Manufacturing, automotive, electronics, consumer goods, logistics and industrial companies.<div class="chips"><span class="chip">Production</span><span class="chip">Quality</span><span class="chip">Lean</span><span class="chip">Operations</span></div></div></div>
+
+<div class="row"><div class="k">Materials / Metallurgical</div><div class="v"><b>Understand what products are made from and why materials fail.</b> Metals, alloys, polymers, ceramics, electronic materials and battery materials.<br><b>Careers:</b> Materials Engineer, Metallurgist, Quality/Failure Analysis Engineer, Process Engineer, Battery/Materials R&amp;D roles.<br><b>Employers:</b> Steel, metals, automotive, aerospace, batteries, semiconductor/materials companies.<div class="chips"><span class="chip">Metals</span><span class="chip">Materials</span><span class="chip">Failure analysis</span><span class="chip">Batteries</span></div></div></div>
+
+<div class="row"><div class="k">Biomedical Engineering</div><div class="v"><b>Apply engineering to healthcare.</b> Medical devices, sensors, imaging systems, prosthetics and hospital technology.<br><b>Careers:</b> Biomedical Engineer, Medical Device Engineer, Field Service Engineer, Quality/Regulatory Engineer, Clinical Engineering roles.<br><b>Employers:</b> Medical-device companies, hospitals, diagnostics, healthcare technology and research.<div class="chips"><span class="chip">Medical devices</span><span class="chip">Healthcare</span><span class="chip">Sensors</span><span class="chip">Imaging</span></div></div></div>
+
+<div class="row"><div class="k">Agricultural / Food Engineering</div><div class="v"><b>Use engineering in agriculture and food systems.</b> Farm machinery, irrigation, post-harvest systems, food processing, storage and agricultural technology.<br><b>Careers:</b> Agricultural Engineer, Food Process Engineer, Irrigation/Equipment Engineer, Production/Quality roles.<br><b>Employers:</b> Agri-tech, food processing, farm equipment, irrigation, government/agriculture organisations.<div class="chips"><span class="chip">Farm tech</span><span class="chip">Food</span><span class="chip">Irrigation</span><span class="chip">Processing</span></div></div></div>
+
+</div>
+
+<div class="flag green"><span class="mark">Branch rule</span><span><b>Choose by the problems you want to solve.</b> Buildings → Civil. Machines → Mechanical. Power → Electrical. Chips/electronics → ECE. Software → CSE. Process plants → Chemical. Biology + manufacturing → Biotechnology. Sensors/automation → Instrumentation. Robots → Mechatronics.</span></div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Can branches overlap?</div><div class="v"><b>Yes.</b> A Mechanical engineer may work in EVs or robotics. An ECE engineer may move into software or semiconductors. A Chemical engineer may work in batteries or pharma. An Instrumentation engineer may work in automation and controls. Your projects, electives, internships and skills can move you toward neighbouring fields.</div></div>
+
+<div class="row"><div class="k">Government / higher study</div><div class="v">After B.Tech, students may work directly, prepare for government technical recruitment, or pursue M.Tech/MS/MBA. <b>GATE</b> is commonly used for postgraduate engineering admissions and is also used by some public-sector organisations for recruitment; it is <b>not compulsory</b> for a normal private-sector engineering job.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">An engineering degree can also lead to adjacent careers depending on skills:
+<div class="chips"><span class="chip">Data / software</span><span class="chip">Product</span><span class="chip">Consulting</span><span class="chip">Operations</span><span class="chip">Technical sales</span><span class="chip">Government exams</span></div>
+</div></div>
+</div>
+</section>
+
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Engineering salary is not decided by the word “B.Tech.” Branch, college, skills, internships, industry, city and actual job role matter enormously.</p>
+
+<div class="card">
+<div class="row"><div class="k">Core engineering — starting</div><div class="v"><span class="money">₹20,000 – ₹45,000/month</span><br><span style="font-size:13px">A rough early-career range for many Civil, Mechanical, Electrical, Chemical, Production, Instrumentation and similar roles. Strong campus placements and specialised companies can pay more.</span></div></div>
+
+<div class="row"><div class="k">Software / digital — starting</div><div class="v"><span class="money">₹25,000 – ₹80,000+/month</span><br><span style="font-size:13px">CSE/IT and software-oriented roles can vary dramatically. Top product companies may pay far above this, while mass-recruitment and smaller firms may pay much less.</span></div></div>
+
+<div class="row"><div class="k">Specialised technology</div><div class="v"><span class="money">₹30,000 – ₹70,000+/month</span><br><span style="font-size:13px">Semiconductor/VLSI, automation, controls, EV, energy, advanced manufacturing and specialised engineering roles can start higher when the student has strong practical skills.</span></div></div>
+
+<div class="row"><div class="k">After 5–10 years</div><div class="v"><span class="money">₹60,000 – ₹2,00,000+/month</span><br><span style="font-size:13px">Experienced design, project, software, manufacturing, process, semiconductor, energy and engineering-management professionals can move into this broad range or beyond. The spread is large because “engineer” covers many industries.</span></div></div>
+
+<div class="row"><div class="k">College cost</div><div class="v">Engineering fees vary enormously between government, university, IIT/NIT and private colleges. <b>Do not compare colleges only by highest package.</b> Compare total four-year cost, median placement, branch-wise placements, laboratories, faculty, internships, accreditation and the types of companies actually hiring that branch.</div></div>
+
+<div class="flag red"><span class="mark">Ask at home</span><span>If one college costs several lakhs more than another, what exactly are you getting for the extra money? Check <b>branch-wise median salary and placement percentage</b>, not one student's highest package. A good low-cost college + strong projects can sometimes produce better ROI than an expensive degree with weak practical training.</span></div>
+</div>
+</section>
+
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Engineering fits + branch fits</span> — move ahead and build real technical skills.</p>
+<p><span class="hi">Engineering fits, branch unclear</span> — do not panic. Explore 3–4 branches through mini-projects before deciding.</p>
+<p><span class="hi">Maths/science pathway does not fit</span> — engineering may not be your best route, and that is completely okay.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>the best engineering branch is not the branch with the highest cutoff. It is the branch whose work you can become very good at.</b></p>
+</div>
+
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">An 8th–10th class student does not need to decide between 15 engineering branches today. Start by testing what type of engineering problems you enjoy.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen Maths and Physics fundamentals instead of memorising formulas only for exams</li>
+<li>Try at least three different technical activities: basic coding, simple electronics, CAD/design, a small science build, repair project or model construction</li>
+<li>When you see a bridge, machine, phone, power line, factory or app, ask: “Which engineers made this work?”</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>MPC</b> if you want to keep the widest engineering options open</li>
+<li>Prepare for <b>AP EAPCET</b> if targeting Andhra Pradesh engineering colleges; add <b>JEE Main</b> and, if eligible and aiming for IITs, <b>JEE Advanced</b></li>
+<li>If you prefer practical technical education directly after Class 10, compare the Polytechnic Diploma → AP ECET → B.Tech lateral-entry route</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>Before choosing your branch</div><ul>
+<li>Shortlist 3–5 branches and compare the first-year subjects, core subjects, laboratories and actual job roles of each</li>
+<li>Do one mini-project for your top branches — code something for CSE, use Arduino for ECE/Instrumentation, CAD a mechanism for Mechanical, study a structure for Civil, map a process for Chemical</li>
+<li>Check <b>branch-wise</b> placements at the exact colleges you are considering instead of using overall college placement numbers</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Choose one everyday object — a <b>smartphone</b>. List the engineers needed to create it: materials, mechanical, electronics, communication, software, manufacturing, chemical/battery and industrial engineers. Then ask yourself: <b>which part would I most like to design?</b> That answer is a strong clue toward your engineering branch.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission, eligibility, placement or salary notice. Entrance-exam rules, qualifying subjects, branch names, college fees and job markets change. Current entrance guidance was checked against AP EAPCET 2026, AP ECET 2026, JEE Main 2026 and JEE Advanced 2026 information. Always verify the official notification for the year in which you apply.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong engineering fit</strong>You seem comfortable with the problem-solving mindset. Your next question is not “Engineering or not?” — it is “Which branch fits me best?”";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>Some parts of engineering fit you, but test coding, electronics, design, building and problem-solving before committing.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>Engineering may not match the kind of work you naturally enjoy. Explore other careers before choosing MPC or B.Tech only because others expect it.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

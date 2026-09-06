@@ -1,0 +1,390 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Entrepreneur / Business Owner</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Entrepreneur / Business Owner</h2><p class="standfirst">Build something that customers are willing to pay for — a shop, service, factory, farm business, restaurant, online brand, technology product or a completely new company. There is no guaranteed salary, promotion or fixed route. Entrepreneurship rewards initiative and problem-solving, but it also brings uncertainty, responsibility and the possibility of losing money.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Entrepreneur / Business Owner &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Do you want the responsibility?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Skills</b><em>How do you start?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Business Types</b><em>Which kind?</em></a>
+<a class="pip warn" href="#c4"><div class="ring">4</div><b>Money</b><em>Risk &amp; reward</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want to run a business?</h3><p class="lede">Being your own boss also means being responsible when sales are low, customers complain or employees need to be paid.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>When you see a problem, do you naturally think about how it could be solved better?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="1"><p>Can you talk to strangers, understand what they need and ask them to pay for something you created?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="2"><p>Can you make decisions when there is no teacher, manager or textbook telling you the correct answer?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="3"><p>Are you willing to track costs, sales, profit, inventory and cash instead of focusing only on the product idea?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="4"><p>If your first idea fails, can you learn from customers and change the idea instead of blaming them?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="5"><p>Would you still want entrepreneurship if the first few years gave you less money and more work than a normal job?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>What should you study?</h3><p class="lede">There is no compulsory degree or entrance exam for becoming an entrepreneur. Your education should give you useful skills, industry knowledge and a strong Plan B.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Communication &amp; Sales</div><div class="v">A business survives only if someone buys. Learn to listen to customers, explain value, negotiate, present and follow up.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Maths &amp; Money</div><div class="v">Understand percentages, margins, pricing, interest, tax basics, inventory and cash flow. A business can have high sales and still lose money.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Build a useful skill</div><div class="v">Coding, design, food production, agriculture, engineering, accounting, marketing, manufacturing, photography or any other valuable skill can become the foundation of a business.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Any recognised stream can lead to entrepreneurship.</b><br><b>CEC / Commerce</b> is useful for accounts, economics and business basics.<br><b>MPC</b> is strong for engineering, technology, manufacturing and technical startups.<br><b>BiPC</b> can support agriculture, food, healthcare and life-science businesses.<br><b>Humanities</b> can support media, design, law, communication and social-enterprise ideas.<br>Choose based on the industry you may want to build in — not because entrepreneurs must study Commerce.</div></div>
+
+<div class="row"><div class="k">After Class 12</div><div class="v"><b>There is no mandatory entrepreneurship degree.</b> B.Com, BBA, Economics and MBA can teach business concepts, but Engineering, Agriculture, Design, Pharmacy, Computer Science, Hotel Management, Law and many other degrees can be equally powerful if they give you deep industry knowledge.</div></div>
+
+<div class="row"><div class="k">Entrance exam</div><div class="v"><b>There is no entrance exam to become an entrepreneur.</b> You may write entrance exams only for the degree or college you choose — for example AP EAPCET/JEE for Engineering, CUET for participating universities, or other course-specific tests.</div></div>
+
+<div class="row"><div class="k">The real pathway</div><div class="v"><b>Problem → talk to customers → create a small solution → test whether people will pay → improve it → make repeatable sales → understand costs/profit → register/formalise when appropriate → hire/expand carefully.</b></div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Nothing like NEET, UPSC or CA is compulsory.</b> Your real tests are:<br><b>Can you solve a real problem? Can you get a paying customer? Can you deliver consistently? Can the business eventually earn more than it spends?</b></div></div>
+
+<div class="flag green"><span class="mark">Best rule</span><span><b>Start with a customer, not a company registration.</b> A logo, Instagram page and visiting card do not prove that you have a business. A paying customer is much stronger evidence.</span></div>
+</div></section>
+
+
+<section id="c3"><div class="num">CIRCLE 3 · BUSINESS TYPES</div><h3>What kind of entrepreneur could you become?</h3><p class="lede">Entrepreneurship is much bigger than technology startups. India is built on millions of small businesses, manufacturers, traders and service providers.</p>
+
+<div class="card">
+
+<div class="row"><div class="k">Local / Small Business</div><div class="v"><b>Solve a need in your town or neighbourhood.</b> Retail shop, repair centre, salon, tuition centre, printing, construction supplies, pharmacy, catering or other local services.<br><b>Success depends on:</b> location, repeat customers, pricing, inventory and reputation.<div class="chips"><span class="chip">Retail</span><span class="chip">Local service</span><span class="chip">Repeat customers</span></div></div></div>
+
+<div class="row"><div class="k">Service Business</div><div class="v"><b>Sell your skill instead of a physical product.</b> Design studio, digital marketing, accounting, software development, photography, consulting, tutoring, repair or professional services.<br><b>Advantage:</b> can often start with relatively little capital.<div class="chips"><span class="chip">Agency</span><span class="chip">Consulting</span><span class="chip">Freelance → Team</span></div></div></div>
+
+<div class="row"><div class="k">Manufacturing Business</div><div class="v"><b>Make physical products.</b> Food products, furniture, packaging, engineering components, chemicals, textiles, electronics or other goods.<br><b>Needs:</b> machinery, quality control, suppliers, working capital, safety, licences and production discipline.</div></div>
+
+<div class="row"><div class="k">Food / Restaurant</div><div class="v">Restaurant, bakery, cloud kitchen, snacks, packaged foods or catering.<br><b>Reality:</b> taste alone is not enough. Food safety, consistency, wastage, staff, location/delivery fees and margins decide whether the business survives.</div></div>
+
+<div class="row"><div class="k">Agribusiness</div><div class="v">Seedlings, nurseries, farm inputs, food processing, cold chain, dairy, aquaculture, agricultural equipment, farm services or direct-to-consumer products.<br><b>Andhra Pradesh relevance:</b> agriculture, horticulture, aquaculture and food processing create many local opportunities.</div></div>
+
+<div class="row"><div class="k">E-commerce / D2C Brand</div><div class="v"><b>Sell products online directly to customers.</b> You need sourcing/manufacturing, branding, product photos, marketplace/website operations, packaging, logistics, returns and customer acquisition.<br><b>Warning:</b> online sales can grow while profit remains poor if advertising and delivery costs are high.</div></div>
+
+<div class="row"><div class="k">Technology Startup</div><div class="v"><b>Build a scalable technology product or platform.</b> Software, AI, fintech, healthtech, edtech, agritech, SaaS or deep-tech products.<br><b>Goal:</b> solve a large repeatable problem for many customers, often with a model that can grow faster than a traditional local business.<div class="chips"><span class="chip">Software</span><span class="chip">AI</span><span class="chip">SaaS</span><span class="chip">Deep Tech</span></div></div></div>
+
+<div class="row"><div class="k">Family Business</div><div class="v"><b>Improve or expand an existing business.</b> Entrepreneurship does not always mean starting from zero. A student can professionalise accounts, introduce technology, improve branding, add new products or expand to new markets.</div></div>
+
+<div class="row"><div class="k">Franchise</div><div class="v"><b>Operate using an established brand and system.</b> You usually pay franchise fees/investment and follow brand rules.<br><b>Advantage:</b> tested model and brand recognition.<br><b>Risk:</b> high setup costs do not guarantee profit; study unit economics and franchise agreement carefully.</div></div>
+
+<div class="row"><div class="k">Social Enterprise</div><div class="v"><b>Build a sustainable organisation around a social or environmental problem.</b> Examples include waste, education, rural livelihoods, accessibility, healthcare or clean energy. Social impact still requires a viable operating and funding model.</div></div>
+
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Business Owner vs Startup Founder</div><div class="v"><b>Business Owner:</b> may build a profitable local or regional company without needing rapid scale or investors.<br><b>Startup Founder:</b> usually aims to build an innovative/scalable model capable of rapid growth.<br><b>Both are entrepreneurship.</b> A profitable ₹1-crore local company is not “less entrepreneurial” because it did not raise venture capital.</div></div>
+
+<div class="row"><div class="k">Freelancer vs Entrepreneur</div><div class="v"><b>Freelancer:</b> mainly earns by selling their own time/skill.<br><b>Entrepreneur:</b> gradually creates systems, products or a team so the business can serve more customers without depending entirely on one person's hours.</div></div>
+
+<div class="row"><div class="k">Founder vs Manager</div><div class="v"><b>Founder:</b> discovers the opportunity and accepts ownership risk.<br><b>Manager:</b> runs people/processes inside an organisation.<br>A successful entrepreneur eventually needs both founder thinking and management ability.</div></div>
+
+<div class="row"><div class="k">Registration basics</div><div class="v">When the business becomes real, the legal structure may be a <b>proprietorship, partnership, LLP, private limited company or another appropriate form</b> depending on ownership, risk and growth plans. Registrations such as GST, FSSAI, local trade permissions or sector licences depend on the activity and applicable law. Use a qualified CA/CS/legal professional when needed rather than copying another business's setup.</div></div>
+
+<div class="row"><div class="k">MSME / Udyam</div><div class="v"><b>Udyam is the Government of India's official MSME registration system.</b> The official portal states that registration is <b>free and paperless</b>. Under current classification, a Micro enterprise can have investment up to ₹2.5 crore and turnover up to ₹10 crore, with higher limits for Small and Medium enterprises.</div></div>
+
+<div class="row"><div class="k">DPIIT Startup Recognition</div><div class="v">This is <b>not required for every business.</b> Current Startup India rules allow eligible innovative/scalable entities such as Private Limited Companies, registered Partnerships, LLPs and Cooperative Societies to apply. The current central definition generally allows recognition for up to <b>10 years</b> and turnover below <b>₹200 crore</b> in a previous financial year, with separate DeepTech provisions. Recognition can provide access to certain Startup India benefits subject to rules.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh support</div><div class="v">Andhra Pradesh currently has an <b>Innovation &amp; Startup Policy 4.0 (2024–29)</b>. The state's <b>AP MSME ONE</b> platform also brings together enterprise profiles, Udyam/startup links and scheme discovery for eligible businesses. Use current portals when you actually launch; incentives and eligibility change.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Build employable skills even while experimenting:
+<div class="chips"><span class="chip">Sales</span><span class="chip">Accounting</span><span class="chip">Coding</span><span class="chip">Design</span><span class="chip">Operations</span><span class="chip">Digital Marketing</span></div>
+</div></div>
+
+<div class="flag red"><span class="mark">Scam warning</span><span><b>You do not need to pay a private agent for government Udyam registration.</b> The official Udyam portal explicitly states that MSME registration is free. Be equally careful with fake grants, guaranteed loans and paid “startup certificates.”</span></div>
+</div>
+</section>
+
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What will you earn?</h3><p class="lede">There is no entrepreneur salary scale. A business owner can earn ₹0, lose money, earn less than an employee — or eventually build a very valuable company.</p>
+
+<div class="card">
+<div class="row"><div class="k">Idea stage</div><div class="v"><span class="money">₹0 income is normal</span><br><span style="font-size:13px">Before customers pay, you have an idea or project — not yet a proven business. Keep early experiments cheap.</span></div></div>
+
+<div class="row"><div class="k">First customers</div><div class="v"><span class="money">Revenue ≠ profit</span><br><span style="font-size:13px">If you sell ₹50,000 in one month, that does <b>not</b> mean you earned ₹50,000. Product cost, salaries, rent, electricity, delivery, marketing, interest, returns and taxes may consume most of the revenue.</span></div></div>
+
+<div class="row"><div class="k">Profit</div><div class="v"><span class="money">Revenue − expenses = profit</span><br><span style="font-size:13px">A smaller company with healthy profit and cash flow may be stronger than a company showing huge sales but continuously losing money.</span></div></div>
+
+<div class="row"><div class="k">Owner income</div><div class="v"><span class="money">Can be ₹0 → very high</span><br><span style="font-size:13px">Owners may take salary/drawings or reinvest profit into growth. During difficult periods, owners are sometimes the <b>last</b> people to get paid because staff, suppliers and lenders still need payment.</span></div></div>
+
+<div class="row"><div class="k">Investment / Funding</div><div class="v"><b>Investor money is not your personal income.</b> If a startup raises ₹1 crore, that money belongs to the company and is meant to fund operations and growth. In exchange, founders usually give investors ownership/equity and accept greater expectations.</div></div>
+
+<div class="row"><div class="k">Loans</div><div class="v"><b>Debt must be repaid even if the business struggles.</b> Do not take a large loan only because you are excited about an idea. First test demand cheaply, understand margins and make a repayment plan under a bad-sales scenario.</div></div>
+
+<div class="row"><div class="k">How much to start?</div><div class="v">It depends completely on the model. A tutoring or design service can start with almost no capital. A restaurant, manufacturing plant or franchise may require lakhs or crores. <b>Start with the smallest experiment that can prove whether customers want the product.</b></div></div>
+
+<div class="flag red"><span class="mark">Family rule</span><span><b>Do not risk money the family cannot afford to lose.</b> Avoid using essential education funds, emergency savings or the family home as collateral for an untested student business idea. Test small first; increase investment only after evidence improves.</span></div>
+</div></section>
+
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Love problems + customers + ownership</span> — Entrepreneurship may fit you.</p>
+<p><span class="hi">Love creating but hate selling</span> — you may need a business partner or a career where somebody else handles commercial work.</p>
+<p><span class="hi">Want only freedom and money</span> — think again; early entrepreneurship often gives less freedom and less money.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>do not ask “What business should I start?” first. Ask “Whose problem do I understand well enough to solve?”</b></p>
+</div>
+
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">An 8th–10th class student does not need investors, a company or a ₹10-lakh idea. Your best entrepreneurship education is a tiny real business experiment.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>This month — find problems</div><ul>
+<li>Write down <b>20 annoying problems</b> you see at school, home, local shops or your village/town</li>
+<li>Talk to at least five people who experience one problem and ask how they currently solve it</li>
+<li>Do not tell them your solution first — learn what they actually need</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>Build a ₹0–₹2,000 experiment</div><ul>
+<li>Create the smallest version of the solution: a service, sample, simple website, handmade product or preorder</li>
+<li>Ask real customers to <b>pay</b>; likes and compliments are not enough</li>
+<li>Write down every rupee of sales and every rupee of cost</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>If customers return</div><ul>
+<li>Improve quality, pricing and delivery; learn why customers buy again or stop buying</li>
+<li>Separate personal money from business records and learn basic bookkeeping</li>
+<li>Only when the activity becomes real and repeatable, discuss appropriate registration, tax and licences with an adult and qualified professional</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Try to earn your first <b>₹500 from something you created or organised</b> — tutoring, designing a poster, selling plants/snacks with permission, repairing something, photography, making a simple digital product or another safe age-appropriate activity. Then calculate <b>sales − costs = actual profit</b>. The lesson is more valuable than the ₹500.</span></div>
+</section>
+
+<p class="note">This is career guidance, not legal, tax, investment or business-registration advice. Company structures, tax/GST requirements, sector licences, MSME limits, startup-recognition rules, loans and government incentives change over time and depend on the exact activity. Current examples were checked against Startup India/DPIIT, the official Udyam portal and Andhra Pradesh's current startup/MSME ecosystem information available in 2026. Students should involve parents/guardians and qualified professionals before entering contracts, borrowing money or formally registering a business.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong entrepreneurial fit</strong>You seem comfortable with customers, uncertainty and ownership. Do not start with a big loan — start with a tiny paying-customer experiment.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Test it before deciding</strong>You like parts of entrepreneurship. Try a very small business project and see whether you enjoy selling, accounting and customer problems as much as creating the product.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Business ownership may not be your first fit</strong>You can still build an excellent career as a specialist or manager — and entrepreneurship can always be explored later with more experience.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

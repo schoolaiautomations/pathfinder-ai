@@ -43,7 +43,7 @@ export const DetailedReportsView = () => {
             </div>
             <h2 className="text-xl sm:text-2xl font-extrabold text-stone-900">Detailed Report of Career</h2>
             <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
-              Launch a full multi-dimensional student psychometric assessment or inspect our 19 comprehensive Four-Circles career blueprints covering passion, natural stream fit, market viability, and backup plans.
+              Launch a full multi-dimensional student psychometric assessment or inspect our {DEFAULT_CAREER_OPTIONS.length} comprehensive Four-Circles career blueprints covering passion, natural stream fit, market viability, and backup plans.
             </p>
           </div>
 

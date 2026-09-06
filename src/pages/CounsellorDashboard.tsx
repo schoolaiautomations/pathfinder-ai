@@ -33,6 +33,7 @@ import {
   BarChart3,
   BookOpen,
   FlaskConical,
+  Printer,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -76,7 +77,7 @@ export const CLASS_TEACHERS_ROSTER: ClassTeacherRosterItem[] = [
   { id: "8-C", gradeLabel: "8th", gradeNumber: 8, section: "C", teacherName: "Ravikumar", totalStrength: 36 },
   { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "Pushpa Kumari", totalStrength: 37 },
   { id: "9-B", gradeLabel: "9th", gradeNumber: 9, section: "B", teacherName: "Savithri", totalStrength: 33 },
-  { id: "9-C", gradeLabel: "9th", gradeNumber: 9, section: "C", teacherName: "Nagaraju", totalStrength: 33 },
+  { id: "9-C", gradeLabel: "9th", gradeNumber: 9, section: "C", teacherName: "Gangaraju", totalStrength: 33 },
   { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "Rajeev", totalStrength: 32 },
   { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "Murthy", totalStrength: 37 },
   { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "Vanaja", totalStrength: 34 },
@@ -821,6 +822,141 @@ const CounsellorDashboard = () => {
                     const overallPercentage = totalEnrolled > 0 ? Math.round((totalRosterReceived / totalEnrolled) * 100) : 0;
                     const belowThresholdCount = rosterStats.filter((r) => r.isBelowThreshold).length;
 
+                    const handlePrintRosterPDF = () => {
+                      const dateStr = new Date().toLocaleDateString("en-IN", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      });
+
+                      const rowsHtml = rosterStats
+                        .map(
+                          (item) => `
+                        <tr style="border-bottom: 1px solid #e5e7eb;">
+                          <td style="padding: 10px 14px; font-weight: 700; color: #111827;">${item.gradeLabel} - Section ${item.section}</td>
+                          <td style="padding: 10px 14px; font-weight: 600; color: #1f2937;">${item.teacherName}</td>
+                          <td style="padding: 10px 14px; text-align: center; color: #4b5563;">${item.totalStrength}</td>
+                          <td style="padding: 10px 14px; text-align: center; font-weight: 700; color: ${item.isBelowThreshold ? "#dc2626" : "#047857"};">${item.receivedCount}</td>
+                          <td style="padding: 10px 14px; text-align: center;">
+                            <span style="display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 11px; font-weight: 700; ${
+                              item.isBelowThreshold ? "background: #fee2e2; color: #991b1b;" : "background: #d1fae5; color: #065f46;"
+                            }">
+                              ${item.percentage}%
+                            </span>
+                          </td>
+                          <td style="padding: 10px 14px; text-align: center; font-size: 11px; font-weight: 700; color: ${item.isBelowThreshold ? "#b91c1c" : "#047857"};">
+                            ${item.isBelowThreshold ? "⚠️ Action Required (&lt;60%)" : "✓ Target Met"}
+                          </td>
+                        </tr>`
+                        )
+                        .join("");
+
+                      const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>ZPHS Lingamparthi - Teachers & Submission Coverage Report</title>
+  <style>
+    @page { size: A4 portrait; margin: 14mm; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: #1f2937; margin: 0; padding: 12px; }
+    .header { border-bottom: 2px solid #1c1917; padding-bottom: 14px; margin-bottom: 16px; }
+    .badge { display: inline-block; font-size: 10px; font-weight: 800; text-transform: uppercase; color: #7c5c3e; letter-spacing: 0.05em; margin-bottom: 4px; }
+    .title { font-size: 20px; font-weight: 800; color: #111827; margin: 0 0 4px 0; }
+    .subtitle { font-size: 13px; color: #4b5563; margin: 0 0 10px 0; font-weight: 500; }
+    .meta-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; font-size: 12px; }
+    .meta-item { background: #f5f1ec; padding: 6px 12px; border-radius: 8px; border: 1px solid #e0d6ca; }
+    .meta-item strong { color: #111827; }
+    .summary-cards { display: flex; gap: 12px; margin: 16px 0; }
+    .card { flex: 1; padding: 12px 14px; border-radius: 8px; background: #fafaf9; border: 1px solid #e7e5e4; }
+    .card-title { font-size: 10px; text-transform: uppercase; color: #78716c; font-weight: 700; letter-spacing: 0.05em; }
+    .card-val { font-size: 18px; font-weight: 800; color: #1c1917; margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 12px; }
+    th { background: #f5f1ec; color: #44403c; text-align: left; padding: 10px 14px; font-weight: 700; text-transform: uppercase; font-size: 10px; letter-spacing: 0.05em; border-bottom: 2px solid #d6d3d1; }
+    .footer { margin-top: 40px; padding-top: 16px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; color: #6b7280; }
+    .sig-box { text-align: center; min-width: 220px; }
+    .sig-line { border-top: 1px dashed #9ca3af; margin-top: 45px; padding-top: 6px; font-weight: 700; color: #111827; font-size: 12px; }
+    .no-print { margin-bottom: 16px; }
+    .btn { background: #1c1917; color: #fff; border: none; padding: 9px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; }
+    @media print { .no-print { display: none !important; } body { padding: 0; } }
+  </style>
+</head>
+<body>
+  <div class="no-print">
+    <button class="btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+
+  <div class="header">
+    <div class="badge">Wabi Career Guidance &bull; School Administration Diagnostic Report</div>
+    <h1 class="title">ZPHS Lingamparthi — Class Teachers &amp; Submission Coverage</h1>
+    <div class="subtitle">Classes 8–10 Career Roadmap Submission &amp; Diagnostic Participation Coverage</div>
+    <div class="meta-bar">
+      <div class="meta-item">🏫 School: <strong>ZPHS Lingamparthi</strong></div>
+      <div class="meta-item">👤 Headmaster: <strong>D Ravikumar</strong></div>
+      <div class="meta-item">📅 Generated: <strong>${dateStr}</strong></div>
+      <div class="meta-item">🎯 Benchmark Target: <strong>&ge; 60% Submissions</strong></div>
+    </div>
+  </div>
+
+  <div class="summary-cards">
+    <div class="card">
+      <div class="card-title">Total Enrolled (8th–10th)</div>
+      <div class="card-val">${totalEnrolled} Students</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Received Submissions</div>
+      <div class="card-val" style="color: ${overallPercentage >= 60 ? "#047857" : "#b91c1c"};">${totalRosterReceived} (${overallPercentage}%)</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Target Compliance</div>
+      <div class="card-val" style="color: ${belowThresholdCount > 0 ? "#b91c1c" : "#047857"};">
+        ${belowThresholdCount > 0 ? `${belowThresholdCount} Teachers Below 60%` : "All Sections Met Target (≥60%)"}
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Class &amp; Section</th>
+        <th>Class Teacher</th>
+        <th style="text-align: center;">Total Strength</th>
+        <th style="text-align: center;">Submissions</th>
+        <th style="text-align: center;">Coverage %</th>
+        <th style="text-align: center;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rowsHtml}
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <div>
+      <div style="font-weight: 700; color: #111827;">Wabi Career Guidance Portal</div>
+      <div style="font-size: 11px; margin-top: 2px;">School: ZPHS Lingamparthi &bull; Headmaster: D Ravikumar</div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-line">
+        D Ravikumar<br/>
+        <span style="font-weight: 500; font-size: 11px; color: #4b5563;">Headmaster, ZPHS Lingamparthi</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+
+                      const printWindow = window.open("", "_blank");
+                      if (printWindow) {
+                        printWindow.document.write(html);
+                        printWindow.document.close();
+                        printWindow.onload = () => {
+                          setTimeout(() => printWindow.print(), 250);
+                        };
+                      }
+                    };
+
                     return (
                       <div className="space-y-6">
                         {/* Stats */}
@@ -880,7 +1016,7 @@ const CounsellorDashboard = () => {
                                   ZPHS Lingamparthi Tracker
                                 </div>
                                 <p className="text-xs text-stone-500 font-medium mt-0.5 truncate">
-                                  Enrolled: <strong>{totalEnrolled}</strong> &bull; Received: <strong>{totalRosterReceived}</strong> ({overallPercentage}%)
+                                  HM: <strong>D Ravikumar</strong> &bull; Enrolled: <strong>{totalEnrolled}</strong> &bull; Received: <strong>{totalRosterReceived}</strong> ({overallPercentage}%)
                                 </p>
                               </div>
                             </div>
@@ -933,29 +1069,51 @@ const CounsellorDashboard = () => {
                             className="max-w-xl max-h-[90vh] flex flex-col p-0 rounded-3xl overflow-hidden border shadow-2xl bg-[#FAF8F5]"
                             style={{ borderColor: "#E0D6CA" }}
                           >
-                            {/* Top Header with Close/Cancel button */}
+                            {/* Top Header with Close/Cancel button and Print PDF option */}
                             <div className="p-4 sm:p-5 border-b border-stone-200 bg-white flex items-start justify-between gap-3 shrink-0">
                               <div>
-                                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5] mb-1">
-                                  <GraduationCap className="w-3.5 h-3.5 text-[#C9A97A]" />
-                                  ZPHS Lingamparthi Roster
+                                <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5]">
+                                    <GraduationCap className="w-3.5 h-3.5 text-[#C9A97A]" />
+                                    ZPHS Lingamparthi Roster
+                                  </div>
+                                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E8DFD0] text-stone-900 border border-[#DDD3C5]">
+                                    <UserCheck className="w-3 h-3 text-[#7C5C3E]" />
+                                    Headmaster: <span className="font-black text-stone-900">D Ravikumar</span>
+                                  </div>
                                 </div>
                                 <DialogTitle className="text-base sm:text-lg font-black text-stone-900">
                                   Class Teachers &amp; Submission Coverage
                                 </DialogTitle>
-                                <DialogDescription className="text-xs text-stone-500 font-medium mt-0.5">
-                                  Classes 8–10 (Total Strength: <strong>312 students</strong>) &bull; Target: <strong>&ge; 60%</strong>
+                                <DialogDescription className="text-xs text-stone-500 font-medium mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                                  <span>Classes 8–10 (Total Strength: <strong className="text-stone-900">312 students</strong>)</span>
+                                  <span>&bull;</span>
+                                  <span>Headmaster: <strong className="text-stone-900">D Ravikumar</strong></span>
+                                  <span>&bull;</span>
+                                  <span>Target: <strong>&ge; 60%</strong></span>
                                 </DialogDescription>
                               </div>
 
-                              <button
-                                type="button"
-                                onClick={() => setIsRosterModalOpen(false)}
-                                className="p-2 rounded-xl text-stone-500 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 transition-colors cursor-pointer shrink-0"
-                                aria-label="Close"
-                              >
-                                <X className="w-4 h-4" />
-                              </button>
+                              <div className="flex items-center gap-2 shrink-0">
+                                <button
+                                  type="button"
+                                  onClick={handlePrintRosterPDF}
+                                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-xs hover:scale-102 active:scale-98"
+                                  title="Print or Save PDF"
+                                >
+                                  <Printer className="w-3.5 h-3.5 text-[#C9A97A]" />
+                                  <span>Print PDF</span>
+                                </button>
+
+                                <button
+                                  type="button"
+                                  onClick={() => setIsRosterModalOpen(false)}
+                                  className="p-2 rounded-xl text-stone-500 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 transition-colors cursor-pointer shrink-0"
+                                  aria-label="Close"
+                                >
+                                  <X className="w-4 h-4" />
+                                </button>
+                              </div>
                             </div>
 
                             {/* Summary Status Strip */}

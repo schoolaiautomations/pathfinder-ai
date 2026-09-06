@@ -229,6 +229,55 @@ export const CAREER_PROFILES: CareerProfile[] = [
     }
   },
   {
+    id: "engineer",
+    name: "Engineer (Core / Mechanical / Civil / Electrical)",
+    category: "Engineering & Technology",
+    icon: "⚙️",
+    tagline: "Design machines, power grids, structures, robotics, and industrial systems shaping the physical world.",
+    stream: "Science - MPC (Maths, Physics, Chemistry in 10+2)",
+    educationRoute: "B.Tech / B.E. (Mechanical / Civil / EEE / ECE / Chemical) ➔ GATE / M.Tech / Core Industry",
+    durationYears: "4 Yrs (B.Tech) or Diploma (3 Yrs) + B.Tech Lateral Entry (3 Yrs)",
+    estimatedCost: "Govt (IIT/NIT/Univ): ₹1.5 - ₹5 Lakhs | Private: ₹4 - ₹12 Lakhs",
+    keyExams: "JEE Main, JEE Advanced, AP EAPCET, TS EAMCET, AP ECET, GATE, IES / ESE",
+    salaryStarting: "₹3.5 Lakhs – ₹8 Lakhs/year (Core Sector / PSUs / Tech)",
+    salaryPeak: "₹25 Lakhs – ₹80 Lakhs+/year (Chief Engineer / Plant Head / VP Operations)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "50% Plant / Site / Lab, 50% Office / CAD Design",
+    keyPros: [
+      "Tangible real-world impact: seeing bridges, engines, circuits, and plants you built operate",
+      "Broad versatility: easy pivot to robotics, EVs, automation, semiconductors, or data",
+      "Strong public sector opportunities (ISRO, DRDO, BHEL, NTPC, ONGC, Indian Railways)"
+    ],
+    keyCons: [
+      "Plant/site work requires safety boots, heat, noise, and on-ground field execution",
+      "Campus placements in core manufacturing can start with lower pay than IT services",
+      "Requires strong physical intuition and rigorous applied math/physics"
+    ],
+    backupPlan: "Automation / PLC Engineer, CAD Design Specialist, Technical Sales, Operations / Supply Chain, Software / Data Roles, Govt Technical Exams",
+    dayInTheLife: {
+      workHours: "8:30 AM – 5:30 PM (Plant / project shift schedules)",
+      workEnvironment: "Design office, manufacturing plant floor, testing lab, construction site",
+      mythsVsReality: [
+        { myth: "Engineers only do greasy manual labor in factories.", reality: "Modern engineering is 70% computer simulation, 3D CAD design, PLC automation, and data analytics." },
+        { myth: "Only CSE branch gets good jobs.", reality: "Core engineers in VLSI, EVs, renewables, automation, and infrastructure have long-term evergreen demand with zero layoff volatility." }
+      ],
+      timeline: [
+        { time: "08:30 AM", title: "Plant Floor Walk & Safety Briefing", desc: "Reviews machinery uptime, production line yields, and conducts 5-minute safety toolbox meeting." },
+        { time: "10:00 AM", title: "3D CAD Modeling & FEA Simulation", desc: "Refines mechanical part designs in SolidWorks/AutoCAD and runs stress/thermal simulation tests." },
+        { time: "01:30 PM", title: "Testing & Quality Diagnostics Lab", desc: "Performs tensile/hardness tests on metal samples or inspects electrical circuit oscilloscopes." },
+        { time: "03:30 PM", title: "Cross-Functional Vendor & Site Sync", desc: "Coordinates with component vendors, site contractors, and commissioning technicians." },
+        { time: "05:00 PM", title: "Engineering Change Orders (ECO) & Log", desc: "Documents tolerance revisions, updates bill of materials (BOM), and files daily inspection log." }
+      ],
+      dailyChallenges: [
+        "Troubleshooting unexpected equipment failures during high-capacity manufacturing runs.",
+        "Ensuring structural designs meet exact tolerance limits and safety compliance codes.",
+        "Balancing material cost efficiency with long-term reliability and thermal durability."
+      ],
+      toolsUsed: ["AutoCAD / SolidWorks CAD", "Ansys Simulation", "MATLAB / Simulink", "PLC / SCADA Control Panels", "Digital Calipers / Oscilloscopes"]
+    }
+  },
+  {
     id: "ca",
     name: "Chartered Accountant (CA)",
     category: "Finance & Commerce",
@@ -917,6 +966,402 @@ export const CAREER_PROFILES: CareerProfile[] = [
         "Maintaining objective neutrality without succumbing to sensationalism."
       ],
       toolsUsed: ["DSLR / Wireless Mic Kits", "Adobe Premiere Pro", "Content Management Systems (CMS)", "RTI Government Portals"]
+    }
+  },
+  {
+    id: "architect",
+    name: "Architect (B.Arch)",
+    category: "Architecture & Design",
+    icon: "🏛️",
+    tagline: "Design spaces, homes, and skyline landmarks merging spatial creativity with structural physics.",
+    stream: "Science - MPC (Physics & Mathematics in 10+2 compulsory)",
+    educationRoute: "10+2 (PCM) ➔ NATA / JEE Main Paper 2A ➔ B.Arch (5 Yrs) ➔ Council of Architecture (CoA) License",
+    durationYears: "5 Yrs B.Arch",
+    estimatedCost: "Govt (SPA/NIT): ₹2 - ₹6 Lakhs | Private: ₹8 - ₹20 Lakhs",
+    keyExams: "NATA, JEE Main Paper 2A (B.Arch), State Architecture CETs",
+    salaryStarting: "₹25,000 – ₹50,000/mo (Junior Architect / BIM Specialist)",
+    salaryPeak: "₹25 Lakhs – ₹1 Crore+/year (Principal Architect / Partner in Design Firm)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "65% Studio & BIM CAD, 35% Construction Site Visits",
+    keyPros: [
+      "Thrilling artistic satisfaction seeing physical structures you designed stand permanently",
+      "Independent practice potential: establish your own architectural studio with direct client base",
+      "Booming sustainable green architecture, luxury interior architecture, and urban planning"
+    ],
+    keyCons: [
+      "Rigorous 5-year study with intensive late-night design studio juries and scale models",
+      "Managing demanding clients with endless design revision requests and tight budgets",
+      "Coordinating conflicts between structural engineers, MEP contractors, and municipal approvals"
+    ],
+    backupPlan: "Interior Architect, Urban Planner (M.Plan), 3D Visualization / BIM Manager, Landscape Architect, Sustainable Green Building Consultant",
+    dayInTheLife: {
+      workHours: "9:30 AM – 6:30 PM (Longer before municipal submission deadlines or client pitches)",
+      workEnvironment: "Architectural design studio, client boardrooms, active construction sites",
+      mythsVsReality: [
+        { myth: "Architects only sketch pretty facade drawings.", reality: "Architecture is 70% building bylaws, MEP service coordination, material specifications, and site inspections." },
+        { myth: "Civil engineers and architects do the exact same work.", reality: "Architects shape space, aesthetics, human experience, and climate responsiveness; civil engineers ensure load-bearing structural integrity." }
+      ],
+      timeline: [
+        { time: "09:30 AM", title: "Studio Design Review & Concept Sketching", desc: "Reviews schematic floor plans, functional layouts, and material palettes with the design team." },
+        { time: "11:00 AM", title: "Revit BIM & 3D Visualization", desc: "Develops 3D parametric digital building models, checks clash detection with plumbing and HVAC ducts." },
+        { time: "02:00 PM", title: "Active Construction Site Inspection", desc: "Inspects concrete column reinforcement, verifies masonry dimensions match approved working blueprints." },
+        { time: "04:30 PM", title: "Client Presentation & Material Sample Selection", desc: "Presents walkthrough renderings to property owners, selects Italian marble and facade glass samples." },
+        { time: "06:30 PM", title: "Municipal Bylaw Compliance & Working Drawings", desc: "Cross-checks setback distances and FSI calculations for municipal corporation building permit filing." }
+      ],
+      dailyChallenges: [
+        "Resolving unforeseen on-site construction discrepancies without compromising architectural aesthetics.",
+        "Balancing visionary creative concepts with tight developer construction budgets.",
+        "Ensuring 100% adherence to municipal fire, environmental, and building safety codes."
+      ],
+      toolsUsed: ["Autodesk Revit / AutoCAD", "Trimble SketchUp", "Lumion / V-Ray", "Rhino / Grasshopper", "Laser Measure & Blueprints"]
+    }
+  },
+  {
+    id: "navy-airforce",
+    name: "Indian Navy & Air Force (Officer / Specialist)",
+    category: "Armed Forces & Defense",
+    icon: "⚓",
+    tagline: "Defend national sovereignty across oceans and airspace commanding high-tech warships and fighter aircraft.",
+    stream: "Science - MPC (Physics & Mathematics in 10+2 compulsory)",
+    educationRoute: "NDA / Navy 10+2 B.Tech / CDS / AFCAT ➔ SSB Interview ➔ Naval / Air Force Academy Training",
+    durationYears: "3-4 Yrs Academy + 1-1.5 Yrs Specialist School",
+    estimatedCost: "Zero (Fully Government Funded with Cadet Stipend)",
+    keyExams: "UPSC NDA & NA, AFCAT, UPSC CDS, JEE Main (for Navy B.Tech Cadet Scheme), 5-Day SSB Interview",
+    salaryStarting: "₹56,100/mo (Sub-Lieutenant / Flying Officer) + MSP (₹15,500) + Flying/Sea Allowances (approx ₹1L–₹1.4L net)",
+    salaryPeak: "₹2,25,000/mo (Admiral / Air Chief Marshal) + Official Residence & Life Perks",
+    workLifeBalance: "Demanding",
+    jobDemand: "Stable",
+    fieldRatio: "70% Warship / Cockpit / Air Base, 30% Command Staff Postings",
+    keyPros: [
+      "Incredible adventure, pride, and supreme honor serving as a commissioned defense officer",
+      "Operating supersonic fighter jets, nuclear submarines, guided missile destroyers, and radars",
+      "Comprehensive defense perks: government quarters, world-class medical, club facilities, and CSD"
+    ],
+    keyCons: [
+      "Extended sea deployments or remote border airbase postings away from family",
+      "High operational danger and strict physical and medical category requirements",
+      "Zero room for procedural error when operating multi-million dollar military equipment"
+    ],
+    backupPlan: "Commercial Airline Pilot (DGCA conversion for IAF pilots), Maritime Shipping Officer, Aerospace Defence Industry Lead, Coast Guard Officer",
+    dayInTheLife: {
+      workHours: "Round-the-clock defense readiness – Scheduled operations + watchkeeping shifts",
+      workEnvironment: "Guided missile destroyers, aircraft carriers, fighter squadrons, radar control rooms",
+      mythsVsReality: [
+        { myth: "Everyone in the Air Force is a fighter pilot.", reality: "Over 80% of officers and personnel lead aeronautical engineering, radar air defence, logistics, and administration." },
+        { myth: "Navy life is only on ships.", reality: "Naval officers rotate between frontline warship sea missions, naval air stations, marine technical dockyards, and naval headquarters." }
+      ],
+      timeline: [
+        { time: "06:00 AM", title: "Morning Muster & Physical Conditioning", desc: "Participates in squadron drill parade, physical endurance run, and flight safety briefing." },
+        { time: "08:00 AM", title: "Pre-Flight Briefing / Bridge Watch Handover", desc: "Coordinates radar surveillance tracks, weather updates, and navigational course coordinates." },
+        { time: "10:30 AM", title: "Combat Sortie / Naval Tactical Maneuvers", desc: "Executes tactical training sorties or conducts anti-submarine warfare exercises in open ocean." },
+        { time: "01:30 PM", title: "Technical Systems Inspection & Debriefing", desc: "Inspects jet engine telemetry, avionics maintenance logs, or warship propulsion plant data." },
+        { time: "04:30 PM", title: "Division Games & Troop Welfare", desc: "Plays basketball/squash with junior sailors/airmen to maintain high operational morale." },
+        { time: "07:30 PM", title: "Night Operations & Radar Watchstanding", desc: "Supervises maritime radar coverage and electronic combat readiness across designated maritime zones." }
+      ],
+      dailyChallenges: [
+        "Handling extreme G-forces during aerial combat or enduring rough monsoon seas.",
+        "Maintaining total mission focus under strict radio silence and high-stakes operational pressure.",
+        "Managing precision military technology with zero room for equipment failure."
+      ],
+      toolsUsed: ["Tactical Radar & Sonar Consoles", "Flight Mission Simulators", "Encrypted Tactical Radio Networks", "Military Avionics & Telemetry"]
+    }
+  },
+  {
+    id: "hotel-management",
+    name: "Hotel Management & Hospitality",
+    category: "Hospitality & Tourism",
+    icon: "🏨",
+    tagline: "Curate five-star luxury guest experiences across top international hotels, fine-dining restaurants, and resorts.",
+    stream: "Any Stream (MPC, BiPC, CEC, MEC, or Humanities with English)",
+    educationRoute: "10+2 (with English) ➔ NCHM JEE ➔ B.Sc Hospitality & Hotel Administration (3 Yrs) ➔ Management Training (MT)",
+    durationYears: "3 Yrs Degree + 1-2 Yrs Hotel Management Trainee Program",
+    estimatedCost: "Govt (IHM): ₹3 - ₹5 Lakhs | Private: ₹5 - ₹10 Lakhs",
+    keyExams: "NCHM JEE, State Hotel Management CETs",
+    salaryStarting: "₹22,000 – ₹45,000/mo (Hotel Associate / Management Trainee)",
+    salaryPeak: "₹20 Lakhs – ₹60 Lakhs+/year (General Manager / Corporate Director of Hospitality)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "100% Hotel Property, Banquets & Kitchens",
+    keyPros: [
+      "Dynamic global career with international hospitality transfers (Dubai, Europe, USA, cruise liners)",
+      "Polished grooming, executive communication skills, and interactions with celebrities and diplomats",
+      "Diverse specializations: Executive Chef, Food & Beverage Director, Revenue Manager, or Resort General Manager"
+    ],
+    keyCons: [
+      "Demanding shift schedules working on weekends, New Year, festivals, and late nights",
+      "Physically tiring early career years involving long hours of standing and guest service",
+      "Strict service standards where even minor guest complaints require immediate diplomatic resolution"
+    ],
+    backupPlan: "Airline Cabin Crew / Ground Staff, Luxury Retail Store Manager, Corporate Event & Wedding Planner, Food & Beverage Entrepreneur, Tourism Board Lead",
+    dayInTheLife: {
+      workHours: "Rotational 8-10 hour shifts (Morning 7-4, Afternoon 2-11, Night 11-7)",
+      workEnvironment: "5-star luxury hotel lobby, commercial culinary kitchens, banquet ballrooms, rooftop restaurants",
+      mythsVsReality: [
+        { myth: "Hotel management is only about cooking and cleaning.", reality: "It is multi-million dollar business management: pricing analytics, corporate sales, talent management, and luxury hospitality." },
+        { myth: "It has low career prestige.", reality: "General Managers of five-star luxury properties are senior corporate executives commanding seven-figure compensation with palatial suites." }
+      ],
+      timeline: [
+        { time: "07:30 AM", title: "Morning Operations Briefing", desc: "Reviews VIP guest arrivals, daily hotel occupancy rates, and special dietary/allergy requirements." },
+        { time: "09:00 AM", title: "Lobby & Guest Relations Inspection", desc: "Welcomes corporate delegates, monitors check-in flow at reception, and verifies room readiness." },
+        { time: "11:30 AM", title: "Kitchen & F&B Quality Walkthrough", desc: "Inspects food hygiene standards, samples lunch buffet preparation, and reviews food cost margins." },
+        { time: "02:30 PM", title: "Corporate Banquet & Wedding Planning Sync", desc: "Coordinates layout, sound, lighting, and customized menus with event planners for a 500-guest gala." },
+        { time: "05:00 PM", title: "Revenue Management & Room Pricing Strategy", desc: "Adjusts weekend room rates dynamically on booking engines based on competitor occupancy trends." },
+        { time: "07:30 PM", title: "Evening Restaurant Operations Oversight", desc: "Ensures smooth guest seating, monitors service pace, and resolves guest dining feedback." }
+      ],
+      dailyChallenges: [
+        "Defusing high-stress guest complaints with supreme diplomacy and professional charm.",
+        "Managing peak banquet rush with flawless food delivery and impeccable table etiquette.",
+        "Maintaining high staff morale and service consistency during relentless holiday seasons."
+      ],
+      toolsUsed: ["Opera / IDS Hotel PMS Software", "Point of Sale (POS) Billing", "Commercial Kitchen Automation", "Yield & Revenue Analytics Portals"]
+    }
+  },
+  {
+    id: "sports",
+    name: "Sports / Professional Athlete & Coaching",
+    category: "Sports & Athletics",
+    icon: "🏆",
+    tagline: "Compete at peak physical prowess in professional leagues, national championships, and international sporting arenas.",
+    stream: "Any Stream (MPC, BiPC, CEC, MEC, or Humanities)",
+    educationRoute: "Sporting Academy / Federation Pathway (District ➔ State ➔ National) + Optional B.P.Ed / Sports Science",
+    durationYears: "Long-term athletic development (Starts age 8-16, Peak career 18-35)",
+    estimatedCost: "₹50,000 - ₹5 Lakhs/year (Coaching, nutrition, gear & tournament travel; subsidised via SAI/Khelo India)",
+    keyExams: "Sport-specific Federation Trials, State/National Selections, AP PECET (for B.P.Ed)",
+    salaryStarting: "₹20,000 – ₹80,000/mo (Sports Quota Govt Jobs / Academy Trainee / League Contracts)",
+    salaryPeak: "₹50 Lakhs – ₹10 Crore+/year (Elite National Athletes / IPL / ISL / Endorsements)",
+    workLifeBalance: "Demanding",
+    jobDemand: "Niche / Competitive",
+    fieldRatio: "100% Sports Arenas, Tracks, Gyms & Tournaments",
+    keyPros: [
+      "Living your childhood passion: getting paid to play and master the sport you truly love",
+      "Prestigious public employment under Sports Quota (Railways, Police, Income Tax, Defense, ONGC)",
+      "National hero status, athletic medals, international travel, and corporate sponsorships"
+    ],
+    keyCons: [
+      "Extremely narrow selection funnel — only top 1% secure long-term lucrative contracts",
+      "Constant risk of career-threatening ligament or joint injuries requiring surgery",
+      "Relatively short athletic playing career requiring proactive planning for life after 35"
+    ],
+    backupPlan: "Certified High-Performance Coach, Physical Education Teacher (B.P.Ed), Sports Physiotherapist, Sports Analyst, Sports League Operations Lead",
+    dayInTheLife: {
+      workHours: "6:00 AM – 6:30 PM (Structured into morning technical drills, afternoon conditioning, and recovery)",
+      workEnvironment: "Stadium turf, indoor badminton courts, gym fitness facilities, physiotherapy suites",
+      mythsVsReality: [
+        { myth: "Sports is only about raw natural talent.", reality: "Elite sports is 95% relentless daily discipline: diet, sleep, film study, mental toughness, and thousands of drill repetitions." },
+        { myth: "If you don't play for Team India, sports has no career.", reality: "Sports quota government jobs, franchise domestic leagues, academy coaching, and sports science offer thousands of stable careers." }
+      ],
+      timeline: [
+        { time: "06:00 AM", title: "Morning Conditioning & Movement Drills", desc: "Performs dynamic warm-ups, agility ladder runs, sprint acceleration drills, and sport technique." },
+        { time: "08:30 AM", title: "Nutrition, Hydration & Video Analysis", desc: "Takes high-protein recovery breakfast, analyzes high-speed video footage of yesterday's performance." },
+        { time: "11:00 AM", title: "Sports Psychology & Mental Visualization", desc: "Practices pressure scenario visualization and breathing techniques with the sports mental coach." },
+        { time: "03:30 PM", title: "Gym Strength & Power Resistance Session", desc: "Executes periodized compound lifts, plyometrics, and rotator cuff/core injury prevention sets." },
+        { time: "05:00 PM", title: "Simulated Match Play & Strategy Scrimmage", desc: "Plays competitive match scenarios under strict tactical instructions from the head coach." },
+        { time: "06:30 PM", title: "Physiotherapy, Ice Bath & Active Recovery", desc: "Undergoes sports massage, cold plunge ice bath, and foam rolling for rapid muscular recovery." }
+      ],
+      dailyChallenges: [
+        "Overcoming performance slumps or selection heartbreaks without losing competitive drive.",
+        "Strict adherence to nutrition and sleep schedules while peers enjoy carefree lifestyles.",
+        "Rehabilitating injuries patiently without rushing back too early and risking permanent damage."
+      ],
+      toolsUsed: ["Wearable GPS Vests (Catapult/STATSports)", "Force Plates & Jump Mats", "High-Speed Biomechanics Video Cameras", "Ice Bath & Recovery Compression Boots"]
+    }
+  },
+  {
+    id: "govt-jobs",
+    name: "Government Jobs (SSC / Railways / State Services)",
+    category: "Public Administration",
+    icon: "📋",
+    tagline: "Serve the public, administer government policies, and enjoy unparalleled lifetime career stability.",
+    stream: "Any Stream (HEC, CEC, MEC, MPC, BiPC, or Technical Diploma)",
+    educationRoute: "10+2 / Any Bachelor Degree ➔ SSC (CGL/CHSL) / RRB (NTPC/ALP) / APPSC (Group 1, 2, 4) Recruitment Exams",
+    durationYears: "3-4 Yrs Degree + 6-18 Months Competitive Exam Preparation",
+    estimatedCost: "₹10,000 - ₹50,000 (Books, Mock Test Series & Online Preparation)",
+    keyExams: "SSC CGL, SSC CHSL, RRB NTPC, APPSC Group 1 & 2, Railway ALP, State Police SI",
+    salaryStarting: "₹30,000 – ₹75,000/mo (Basic + DA + HRA + Medical + Central Pension)",
+    salaryPeak: "₹1.5 Lakhs – ₹2.5 Lakhs+/mo (Senior Administrative Officer / Department Director)",
+    workLifeBalance: "High",
+    jobDemand: "Very High",
+    fieldRatio: "80% Government Secretariats & Offices, 20% Field Inspections",
+    keyPros: [
+      "Unmatched career stability and job security immune to private-sector economic recessions",
+      "Fixed working hours, comprehensive gazetted holidays, and structured promotional ladders",
+      "Direct authority to implement welfare schemes, public infrastructure, and citizen services"
+    ],
+    keyCons: [
+      "Highly competitive applicant volume (lakhs of candidates competing for hundreds of posts)",
+      "Recruitment cycles, exam notifications, and appointment processes can experience administrative delays",
+      "Bureaucratic hierarchy and procedural file paperwork can feel repetitive"
+    ],
+    backupPlan: "Banking Examinations (IBPS/SBI PO), State Cooperative Banks, Public Sector Undertakings (PSUs), Corporate Administration, Legal/Compliance Officer",
+    dayInTheLife: {
+      workHours: "10:00 AM – 5:30 PM (Monday to Saturday / 5-day week depending on department)",
+      workEnvironment: "District Collectorate, Central Government Ministry office, Railway Divisional HQ, Sub-Divisional Office",
+      mythsVsReality: [
+        { myth: "Government employees don't do any real work.", reality: "Modern officers handle extensive e-Office digitisation, public grievance resolution, budget auditing, and direct citizen welfare." },
+        { myth: "You need personal recommendations or influence to get selected.", reality: "Central SSC and RRB recruitments are 100% transparent computer-based testing (CBT) evaluated on objective merit." }
+      ],
+      timeline: [
+        { time: "10:00 AM", title: "e-Office Portal Login & File Scrutiny", desc: "Reviews pending digital files, official correspondence, and ministerial notices on the government intranet." },
+        { time: "11:30 AM", title: "Citizen Public Grievance Hearing", desc: "Listens to visiting citizens, receives public petitions, and initiates departmental inquiry files." },
+        { time: "01:30 PM", title: "Inter-Departmental Review Coordination", desc: "Coordinates with revenue, engineering, and welfare officers on project expenditure and fund utilization." },
+        { time: "03:30 PM", title: "Field Inspection / Regional Audit Verification", desc: "Inspects local civil works, fair price ration supply outlets, or government school infrastructure." },
+        { time: "05:00 PM", title: "Dispatch of Official Reports & Daily Clearance", desc: "Drafts replies to legislative assembly queries, verifies statistical progress data, and signs daily dispatches." }
+      ],
+      dailyChallenges: [
+        "Ensuring complete compliance with government financial rules and anti-corruption audit regulations.",
+        "Managing large queues of citizen applicants with patience, clarity, and empathy.",
+        "Balancing urgent political deadlines with strict statutory legal procedures."
+      ],
+      toolsUsed: ["e-Office Government Workflow Portal", "PFMS Public Financial Management System", "CPGRAMS Citizen Grievance Portal", "Advanced Excel Data Audits"]
+    }
+  },
+  {
+    id: "scientist",
+    name: "Scientist / Scientific Researcher",
+    category: "Pure & Applied Sciences",
+    icon: "🔬",
+    tagline: "Unravel mysteries of nature, design groundbreaking experiments, and pioneer new technologies.",
+    stream: "Science - MPC or BiPC (Physics, Chemistry, Maths/Biology in 10+2)",
+    educationRoute: "BS-MS / B.Sc (3-5 Yrs) ➔ M.Sc ➔ CSIR-NET / GATE ➔ Ph.D ➔ Post-Doc Fellowship ➔ Scientist",
+    durationYears: "5 Yrs (BS-MS) or 3+2 Yrs (B.Sc+M.Sc) + 4-5 Yrs Ph.D",
+    estimatedCost: "Zero to Modest (Govt IISER/IISc fees are low; Ph.D students receive JRF stipends of ₹37,000–₹42,000/mo)",
+    keyExams: "IAT (IISER), NEST, JEE Advanced (IISc BS), IIT JAM, CSIR-UGC NET JRF, GATE",
+    salaryStarting: "₹56,100/mo (Scientist 'C' / Assistant Professor) + HRA/DA (approx ₹85,000–₹1.1L net)",
+    salaryPeak: "₹2,25,000/mo (Distinguished Scientist / Lab Director at ISRO, DRDO, CSIR)",
+    workLifeBalance: "High",
+    jobDemand: "High",
+    fieldRatio: "85% Advanced Labs & Cleanrooms, 15% Conferences / Field Trials",
+    keyPros: [
+      "Pure intellectual joy: discovering phenomena or inventing technologies that have never existed before",
+      "Prestigious positions in national laboratories (ISRO, DRDO, BARC, TIFR, CSIR) and global universities",
+      "Fully funded international research fellowships and global scientific conferences"
+    ],
+    keyCons: [
+      "Long academic runway requiring 8-10 years of patient study before independent tenure",
+      "Experiments frequently fail, requiring relentless emotional resilience and repetition",
+      "Competitive race for high-impact journal publications (Nature/Science) and research grants"
+    ],
+    backupPlan: "Data Scientist, Quantitative Analyst, Pharma/Biotech R&D Lead, Intellectual Property (Patent) Attorney, College Professor",
+    dayInTheLife: {
+      workHours: "9:00 AM – 6:30 PM (Flexible, often driven by experiment incubation cycles)",
+      workEnvironment: "High-tech cleanrooms, laser optics labs, supercomputing clusters, fume-hood wet labs",
+      mythsVsReality: [
+        { myth: "Scientists have instant 'Eureka' moments every week.", reality: "Real science is 90% careful calibration, meticulous documentation, error tracing, and statistical validation." },
+        { myth: "Pure science graduates have no jobs compared to engineers.", reality: "Top scientists in materials, quantum computing, semiconductors, and genomics command immense corporate and government demand." }
+      ],
+      timeline: [
+        { time: "09:00 AM", title: "Lab Prep & Experiment Status Check", desc: "Checks overnight sample incubation, laser cryostat temperatures, and spectroscopic sensors." },
+        { time: "10:30 AM", title: "Primary Laboratory Experimentation", desc: "Runs spectrophotometer or particle accelerator measurements, logs data into digital lab notebooks." },
+        { time: "01:30 PM", title: "Group Lab Sync & Journal Club", desc: "Discusses fresh breakthrough papers published in peer-reviewed journals with research scholars." },
+        { time: "03:30 PM", title: "Scientific Python Modeling & Data Simulation", desc: "Processes raw experimental datasets using Python scripts, analyzes error bars and p-values." },
+        { time: "05:30 PM", title: "Research Paper Manuscript Drafting", desc: "Drafts methodology sections and renders high-resolution publication charts for journal submission." }
+      ],
+      dailyChallenges: [
+        "Troubleshooting experimental noise and unexpected anomalies in sensitive measurement apparatus.",
+        "Synthesizing complex mathematical models with real-world empirical data.",
+        "Securing competitive national research grants (DST, SERB) through meticulous proposal writing."
+      ],
+      toolsUsed: ["Spectrophotometers & NMR", "Python / MATLAB / SciPy", "Electron Microscopes (SEM)", "LaTeX Manuscript Editor", "Cleanroom Vacuum Systems"]
+    }
+  },
+  {
+    id: "entrepreneur",
+    name: "Entrepreneur / Business Owner",
+    category: "Business & Enterprise",
+    icon: "🚀",
+    tagline: "Build innovative ventures, create jobs, solve consumer problems, and generate scalable enterprise wealth.",
+    stream: "Any Stream (Commerce, Science, or Humanities)",
+    educationRoute: "Any Graduation Degree ➔ Market Problem Discovery ➔ MVP Prototyping ➔ Venture Scaling",
+    durationYears: "Immediate Venture Execution (Lifelong entrepreneurship journey)",
+    estimatedCost: "Variable (Can start lean with under ₹50,000 for digital/services or self-funded bootstrapping)",
+    keyExams: "None required — Customer willingness to pay is your real entrance exam",
+    salaryStarting: "Variable / Modest founder stipend (₹20,000 - ₹50,000/mo reinvested into business)",
+    salaryPeak: "Unlimited equity valuation & profit dividends (Crores to multi-crores in scaled businesses)",
+    workLifeBalance: "Demanding",
+    jobDemand: "Very High",
+    fieldRatio: "50% Client / Vendor Ground Market, 50% Strategy & Operations",
+    keyPros: [
+      "Total independence and creative freedom: you are the master of your own destiny and enterprise vision",
+      "Uncapped financial upside through equity wealth creation and profit distributions",
+      "Immense pride creating employment, solving real human problems, and impacting communities"
+    ],
+    keyCons: [
+      "High financial risk: no guaranteed monthly salary, with risk of initial capital loss",
+      "Buck stops with you: responsible for payroll, taxes, customer escalations, and crises 24/7",
+      "High emotional pressure during early customer acquisition or cash flow crunch cycles"
+    ],
+    backupPlan: "Business Development Director, Product Management Lead, Management Consultant, Corporate Strategy Head, Franchise Operator",
+    dayInTheLife: {
+      workHours: "8:30 AM – 8:00 PM+ (High flexibility, but founder mindset never truly clocks off)",
+      workEnvironment: "Startup office, co-working hub, client meeting venues, warehouse/manufacturing floor",
+      mythsVsReality: [
+        { myth: "Entrepreneurs must raise millions from VCs immediately.", reality: "Over 85% of successful Indian businesses are profitable, self-funded, cash-flow positive enterprises." },
+        { myth: "You need a revolutionary tech app to be an entrepreneur.", reality: "Thriving businesses succeed in manufacturing, retail, food processing, logistics, and local services through superior execution." }
+      ],
+      timeline: [
+        { time: "08:30 AM", title: "Daily Cash Flow & Sales Dashboard Review", desc: "Analyzes yesterday's orders, bank collections, inventory burn rate, and advertising ROAS." },
+        { time: "10:00 AM", title: "Morning Team Standup & Priorities", desc: "Aligns sales, operations, and product teams on daily delivery targets and operational bottlenecks." },
+        { time: "12:00 PM", title: "High-Value Client / Vendor Partnership Pitch", desc: "Negotiates bulk supply contracts with suppliers or closes a key corporate enterprise client." },
+        { time: "03:00 PM", title: "Customer Interviews & Product Feedback", desc: "Personally speaks with 3 customers to uncover friction points and identify new product feature needs." },
+        { time: "05:30 PM", title: "Financial Unit Economics & Growth Strategy", desc: "Refines unit margins, reviews marketing CAC vs LTV, and models next quarter expansion budgets." },
+        { time: "07:30 PM", title: "Long-Term Vision & Strategic Planning", desc: "Researches competitor moves, evaluates expansion into new cities, and drafts key leadership hiring profiles." }
+      ],
+      dailyChallenges: [
+        "Managing working capital cycles and chasing overdue client payments to ensure smooth payroll.",
+        "Motivating team members when early sales results face friction or setbacks.",
+        "Balancing urgent day-to-day fires with long-term strategic company building."
+      ],
+      toolsUsed: ["Notion / JIRA Project Management", "QuickBooks / Tally ERP", "Stripe / Razorpay Gateways", "Google Analytics & Meta Ads", "Slack / WhatsApp Business"]
+    }
+  },
+  {
+    id: "interior-designer",
+    name: "Interior Designer (B.Des / B.Sc)",
+    category: "Design & Spatial Arts",
+    icon: "🛋️",
+    tagline: "Transform bare architectural shells into breathtaking, functional, ergonomic residential and commercial spaces.",
+    stream: "Any Stream (MPC, BiPC, CEC, MEC, or Humanities)",
+    educationRoute: "10+2 Any Stream ➔ NID DAT / College Aptitude ➔ B.Des / B.Sc Interior Design (3-4 Yrs) ➔ Design Studio Practice",
+    durationYears: "3-4 Yrs Degree / Diploma",
+    estimatedCost: "Govt: ₹1.5 - ₹4 Lakhs | Private: ₹4 - ₹12 Lakhs",
+    keyExams: "NID DAT, UCEED, State Design Entrance Tests, Portfolio Assessment",
+    salaryStarting: "₹22,000 – ₹45,000/mo (Junior Interior Designer / 3D Visualizer)",
+    salaryPeak: "₹20 Lakhs – ₹80 Lakhs+/year (Principal Interior Design Firm Owner / Luxury Consultant)",
+    workLifeBalance: "Moderate",
+    jobDemand: "Very High",
+    fieldRatio: "60% Design Studio & CAD, 40% On-Site Execution Supervision",
+    keyPros: [
+      "Booming real estate market with soaring demand for modular homes, luxury villas, and chic cafes",
+      "Direct creative expression choosing textures, custom lighting, bespoke furniture, and artwork",
+      "Fast trajectory to independent entrepreneurship running your own interior design practice"
+    ],
+    keyCons: [
+      "Contractor headaches: managing carpenters, electricians, plumbers, and painters to hit deadlines",
+      "Demanding clients changing design preferences mid-construction after materials are ordered",
+      "Initial years require building a strong visual portfolio before charging premium design commissions"
+    ],
+    backupPlan: "Furniture Designer, Retail Store Visual Merchandiser, 3D Architectural Visualizer, Lighting Design Specialist, Set & Exhibition Designer",
+    dayInTheLife: {
+      workHours: "9:30 AM – 6:30 PM (Site visits often scheduled around client weekend availability)",
+      workEnvironment: "Interior design studio, material experience centers, ongoing apartment interior sites",
+      mythsVsReality: [
+        { myth: "Interior design is just choosing pretty curtains and pillows.", reality: "It is 80% spatial ergonomics, false ceiling electrical layout, plumbing routing, modular carpentry, and vendor coordination." },
+        { myth: "You must be great at freehand drawing on paper.", reality: "Modern interior designers rely heavily on 3D computer software like SketchUp, AutoCAD, and Lumion to visualize spaces." }
+      ],
+      timeline: [
+        { time: "09:30 AM", title: "Studio Design Review & AutoCAD Drafting", desc: "Refines modular kitchen floor plans, electrical switchboard coordinates, and false ceiling blueprints." },
+        { time: "11:00 AM", title: "Material Experience Center Sourcing", desc: "Selects fluted wooden panels, quartz countertops, designer tiles, and fabric swatches with the client." },
+        { time: "02:00 PM", title: "Live Residential Site Inspection", desc: "Checks carpentry woodwork carcass precision, verifies electrical conduit placement, and reviews paint swatches." },
+        { time: "04:30 PM", title: "Photorealistic 3D Rendering in Lumion", desc: "Renders 3D walkthrough views of master bedroom wardrobes and accent lighting for evening client presentation." },
+        { time: "06:30 PM", title: "Bill of Quantities (BOQ) & Vendor Costing", desc: "Prepares detailed material cost breakdown, cross-checks carpenter quote against budget limits." }
+      ],
+      dailyChallenges: [
+        "Resolving on-site construction misalignments between civil walls and precision modular carpentry.",
+        "Navigating client budget constraints without sacrificing aesthetic luxury and design elegance.",
+        "Ensuring contractors maintain high craftsmanship standards and meet handover deadlines."
+      ],
+      toolsUsed: ["AutoCAD 2D Drafting", "Trimble SketchUp", "V-Ray / Lumion 3D", "Photoshop", "Laser Distance Meter & Swatch Kits"]
     }
   },
   {

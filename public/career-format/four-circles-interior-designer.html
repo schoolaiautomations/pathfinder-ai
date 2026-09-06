@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Interior Designer</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Interior Designer</h2><p class="standfirst">Interior Designers shape how indoor spaces look, feel and function. The career combines creativity with measurements, furniture, lighting, materials, budgets, software, client meetings and site execution. It is not only “choosing colours” — a good designer must make a space practical, buildable and affordable.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Interior Designer &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Skills</b><em>Can you learn it?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Many design areas</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Worth it?</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want interior design?</h3><p class="lede">Do not answer based only on beautiful rooms on Instagram. Real interior design includes measurements, drawings, budgets, contractors and many client changes.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>When you enter a room, do you notice layout, furniture, lighting, colour and how people move through the space?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="1"><p>Do you enjoy both <b>creative ideas</b> and <b>practical problem-solving</b>?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="2"><p>Can you measure carefully and work with dimensions, scale, floor plans and accurate drawings?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="3"><p>Can you accept a client saying “I don't like it” and redesign the same space several times?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="4"><p>Would you enjoy learning materials, furniture, lighting, plumbing/electrical coordination and how things are actually built on site?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="5"><p>Would you still choose this career if some days were spent on contractor calls, site problems, quotations and deadlines instead of designing?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">Interior Design is more flexible than Architecture. You usually do not need MPC or a single compulsory national entrance exam.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Drawing &amp; Visual Thinking</div><div class="v">Sketching, perspective, proportion, colour, composition and visual communication help you develop and explain design ideas.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Maths &amp; Measurement</div><div class="v">Interior designers constantly use dimensions, scale, areas, quantities, budgets and material calculations. Advanced Maths is not the centre of the career, but accuracy matters.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Communication</div><div class="v">You must understand what a client actually needs, explain ideas clearly, negotiate changes and coordinate contractors, carpenters, electricians and vendors.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Intermediate / Class 12 in any recognised stream — MPC, BiPC, CEC, Commerce or Humanities — can lead to Interior Design.</b> After Class 12, you can join a <b>B.Des., B.Sc., BA/B.Voc or diploma programme in Interior Design / Interior &amp; Spatial Design / Furniture &amp; Interior Design</b>, depending on the institution.</div></div>
+
+<div class="row"><div class="k">Entrance exams</div><div class="v"><b>There is no single entrance exam for every Interior Design college.</b><br><br><b>NID DAT</b> — if targeting NID's B.Des admissions. NID Ahmedabad currently offers <b>Furniture and Interior Design</b> as a B.Des discipline, and NID's 2026 B.Des eligibility accepts Class 12 students from <b>any stream</b>.<br><br>Other design colleges may use their <b>own design aptitude test, interview, portfolio review or Class 12 merit</b>.</div></div>
+
+<div class="row"><div class="k">Degree or diploma?</div><div class="v"><b>Degree route:</b> usually gives broader design education, internships and stronger long-term progression.<br><b>Diploma route:</b> can be faster and practical, but quality varies greatly. Check curriculum, portfolio work, software, site exposure and placements before paying.</div></div>
+
+<div class="row"><div class="k">What you must learn</div><div class="v"><div class="chips"><span class="chip">Space Planning</span><span class="chip">AutoCAD</span><span class="chip">SketchUp / 3D</span><span class="chip">Materials</span><span class="chip">Lighting</span><span class="chip">Furniture</span><span class="chip">Estimation</span><span class="chip">Site Execution</span></div></div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 12 in any stream → design entrance / college admission if required → Interior Design degree or diploma → strong portfolio + CAD/3D skills → internship/site experience → Junior Interior Designer → Interior Designer.</b></div></div>
+
+<div class="flag red"><span class="mark">Do not confuse</span><span><b>Interior Design is not the same qualification as Architecture.</b> If your goal is to use the regulated title <b>Architect</b> and practise architecture, that is a separate B.Arch + Council of Architecture registration pathway.</span></div>
+</div></section>
+
+
+<section id="c3"><div class="num">CIRCLE 3 · CAREER AREAS</div><h3>What can an Interior Designer work on?</h3><p class="lede">You can specialise by type of space, design skill or stage of a project.</p>
+
+<div class="card">
+<div class="row"><div class="k">Residential Interiors</div><div class="v"><b>Homes, apartments and villas.</b> Space planning, kitchens, wardrobes, furniture, lighting, finishes and client-specific design.<div class="chips"><span class="chip">Homes</span><span class="chip">Kitchens</span><span class="chip">Furniture</span></div></div></div>
+
+<div class="row"><div class="k">Commercial Interiors</div><div class="v"><b>Offices, banks, clinics and business spaces.</b> Design must support workflow, staff needs, branding, safety and efficient use of space.</div></div>
+
+<div class="row"><div class="k">Hospitality Interiors</div><div class="v"><b>Hotels, resorts, restaurants and cafés.</b> Strong focus on atmosphere, guest experience, durability, lighting, materials and brand identity.</div></div>
+
+<div class="row"><div class="k">Retail Design</div><div class="v">Stores, showrooms and shopping spaces. The designer thinks about product display, customer movement, lighting and brand experience.</div></div>
+
+<div class="row"><div class="k">Workplace Design</div><div class="v">Corporate offices, co-working spaces and campuses. Work includes workstations, meeting rooms, collaboration areas, acoustics and employee experience.</div></div>
+
+<div class="row"><div class="k">Furniture Design</div><div class="v">Design chairs, tables, storage, modular systems and custom furniture. Requires understanding ergonomics, materials, joinery and manufacturing.</div></div>
+
+<div class="row"><div class="k">Kitchen &amp; Wardrobe Design</div><div class="v">A specialised commercial route involving modular kitchens, wardrobes, hardware, ergonomics, measurements and detailed execution.</div></div>
+
+<div class="row"><div class="k">Lighting Design</div><div class="v">Use natural and artificial light to improve function, comfort and atmosphere. Specialist lighting work often overlaps with architecture, electrical design and product specification.</div></div>
+
+<div class="row"><div class="k">Exhibition / Experience Design</div><div class="v">Museums, exhibitions, brand displays, event spaces and temporary installations. This combines interiors, graphics, storytelling and fabrication.</div></div>
+
+<div class="row"><div class="k">3D Visualisation</div><div class="v"><b>Create realistic images and walkthroughs before construction.</b> Strong skills in 3D modelling, rendering and visual communication can become a separate specialist career.<div class="chips"><span class="chip">SketchUp</span><span class="chip">3ds Max / Blender</span><span class="chip">Enscape / Lumion</span><span class="chip">Rendering</span></div></div></div>
+
+<div class="row"><div class="k">Site Execution</div><div class="v"><b>Turn drawings into reality.</b> Coordinate carpenters, electricians, painters, ceiling contractors, flooring teams and vendors; check dimensions, quality and timelines.</div></div>
+
+<div class="row"><div class="k">Turnkey / Design-Build</div><div class="v">Some designers take responsibility for both <b>design + execution</b>. This can increase revenue, but also increases risk because the designer must control costing, purchasing, labour, quality and deadlines.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Interior Designer vs Architect</div><div class="v"><b>Interior Designer:</b> focuses primarily on interior spaces, layouts, furniture, finishes, lighting and user experience.<br><b>Architect:</b> is trained for whole buildings and the wider built environment through a recognised architecture qualification.<br><br>India's Council of Architecture states that a person using the title <b>Architect</b> must be registered with the Council. Interior-design training does not by itself make someone a registered Architect.</div></div>
+
+<div class="row"><div class="k">Interior Designer vs Decorator</div><div class="v"><b>Interior Designer:</b> can work on space planning, technical drawings, furniture layouts, materials and site execution.<br><b>Interior Decorator:</b> usually focuses more narrowly on styling, colours, furnishings, accessories and visual finishing.<br>In real projects the roles can overlap, but technical design ability makes a major difference.</div></div>
+
+<div class="row"><div class="k">Who hires</div><div class="v">Interior design studios, architecture firms, real-estate developers, furniture/modular companies, home-interior brands, retail companies, hotel groups, workplace-design firms, construction/design-build companies and 3D visualisation studios.</div></div>
+
+<div class="row"><div class="k">Portfolio matters</div><div class="v"><b>Your portfolio is one of your strongest job tools.</b> Show the problem, floor plan, sketches, material thinking, 3D views and final execution — not only pretty rendered images. Employers want to know whether you can think and execute.</div></div>
+
+<div class="row"><div class="k">Freelance / Own studio</div><div class="v">Experienced designers often take independent residential or commercial projects. Income can improve significantly, but you must find clients, prepare quotations, control contractors, collect payments and manage mistakes.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Interior-design skills can also lead into:
+<div class="chips"><span class="chip">Furniture Design</span><span class="chip">3D Visualisation</span><span class="chip">Retail Design</span><span class="chip">BIM/CAD</span><span class="chip">Set Design</span><span class="chip">Project Coordination</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Reality</span><span><b>Software does not make you a designer.</b> AutoCAD, SketchUp and rendering tools help you communicate an idea. The harder skill is creating a layout that actually solves the client's problem and can be built within budget.</span></div>
+</div>
+</section>
+
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Interior Design income depends strongly on portfolio, software skills, city, site experience, sales ability and whether you work for a firm or independently.</p>
+
+<div class="card">
+<div class="row"><div class="k">Intern</div><div class="v"><span class="money">₹5,000 – ₹15,000/month</span><br><span style="font-size:13px">Current listings vary widely. Internship value should also be judged by real drawings, site visits, mentoring and portfolio work.</span></div></div>
+
+<div class="row"><div class="k">Junior Interior Designer</div><div class="v"><span class="money">₹15,000 – ₹25,000/month</span><br><span style="font-size:13px">Indeed's 2026 India-wide benchmark is about <b>₹18,800/month</b> for Junior Interior Designer, with reported salaries varying considerably by employer and city.</span></div></div>
+
+<div class="row"><div class="k">Interior Designer</div><div class="v"><span class="money">₹20,000 – ₹45,000+/month</span><br><span style="font-size:13px">Indeed's current India-wide average is about <b>₹23,400/month</b>. Designers with strong execution, client handling, 3D/BIM skills or larger-city experience can earn more.</span></div></div>
+
+<div class="row"><div class="k">Senior / Project Designer</div><div class="v"><span class="money">₹35,000 – ₹80,000+/month</span><br><span style="font-size:13px">Senior roles can include design leadership, client meetings, site control and team management. Current job listings show a broad spread, including ₹30,000–₹70,000+ offers for experienced designers.</span></div></div>
+
+<div class="row"><div class="k">Freelance / Own studio</div><div class="v"><span class="money">Highly variable</span><br><span style="font-size:13px">Independent designers may charge design fees, per-square-foot fees, consultation fees or earn margins through turnkey execution. Revenue can become much higher than salary — but so can project risk and unpaid bills.</span></div></div>
+
+<div class="row"><div class="k">Course cost</div><div class="v">There is no single standard fee because Interior Design is offered through B.Des, B.Sc, BA/B.Voc and diploma programmes across public and private institutions. <b>Private design education can become expensive.</b> Compare total fees with studio quality, faculty, portfolio outcomes, software/site training and placements.</div></div>
+
+<div class="flag red"><span class="mark">Ask at home</span><span>If a course costs several lakhs, does it produce strong portfolios and real internships? Since starting salaries can be around ₹15,000–25,000/month, avoid a large education loan for a weak programme simply because the campus looks attractive.</span></div>
+</div></section>
+
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Creative + practical + people-oriented</span> — Interior Design may be a strong fit.</p>
+<p><span class="hi">Love buildings at a larger scale</span> — compare Architecture.</p>
+<p><span class="hi">Love styling but dislike drawings/site work</span> — Interior Decoration, Styling or Visual Merchandising may fit better.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>the best interiors are not the most expensive-looking rooms. They solve the user's needs beautifully within real constraints.</b></p>
+</div>
+
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">You can test Interior Design before paying for a course.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Sketch rooms and furniture from observation instead of copying only Pinterest images</li>
+<li>Measure your bedroom/classroom and draw a simple floor plan to scale</li>
+<li>Learn why different materials are used — plywood, laminates, tiles, stone, glass, metal, fabric and paint</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose any stream you enjoy and can perform well in; there is no compulsory MPC requirement for most Interior Design routes</li>
+<li>Build drawing, spatial reasoning, colour/material understanding and communication</li>
+<li>If targeting NID or another competitive design school, prepare for its <b>design aptitude / studio-style selection process</b> rather than memorising only theory</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>Before choosing college</div><ul>
+<li>Compare <b>student portfolios</b>, not just campus photos or advertisements</li>
+<li>Check whether students learn CAD/3D, materials, estimation, site execution and internships — not only decorating</li>
+<li>Ask where recent graduates actually work and what their starting roles are</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Redesign one real room with a fixed budget of <b>₹50,000</b>. Measure it, create a floor plan, choose furniture/materials, estimate every cost and make one 3D/sketched view. If you enjoy balancing <b>beauty + function + dimensions + budget</b>, Interior Design may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission, registration, fee or salary notice. Interior-design programme names, eligibility, entrance processes and fees vary widely by institution. Current examples were checked against NID's 2026 B.Des admissions and Furniture &amp; Interior Design programme information, Council of Architecture information on the regulated Architect title, and current Indeed India salary data. Always verify the exact college and course before admission.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Interior Design fit</strong>You seem comfortable with both creative design and practical execution. Build one real room project and start a small portfolio.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>Some parts fit you, but test measurements, client revisions, budgeting and site work — not only mood boards and decoration.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>The technical/client/site side of Interior Design may not match what you enjoy. Compare Graphic Design, Fashion, Architecture, Visual Merchandising or other creative careers.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

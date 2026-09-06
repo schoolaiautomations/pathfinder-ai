@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Scientist / Researcher</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Scientist / Researcher</h2><p class="standfirst">Scientists ask questions that nobody has fully answered yet. They design experiments, collect evidence, analyse data and build new knowledge — in fields ranging from Physics and Biology to Space, Materials, Agriculture, Medicine and Artificial Intelligence. The work can be exciting, but it also means failed experiments, long study, careful writing and patience.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Scientist / Researcher &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Do you love questions?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>How to qualify?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Fields</b><em>Which science?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Long-term path</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want research?</h3><p class="lede">Do not choose “Scientist” only because ISRO rockets or laboratories look exciting. Real research is often slow, uncertain and full of repetition.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>When you learn a fact in Science, do you often ask <b>“Why does this happen?”</b> or <b>“How do we know this is true?”</b>?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="1"><p>Can you repeat an experiment or analysis many times when the first result is unclear or wrong?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="2"><p>Do you enjoy reading deeply about one topic rather than only learning enough to pass an exam?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="3"><p>Can you accept that a good scientific result may be “our idea was wrong”?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="4"><p>Are you comfortable with Maths, data, graphs, laboratory work or coding depending on your scientific field?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="5"><p>Would you still choose science if becoming an independent researcher required 5–10 years of higher study after Class 12?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">There is no single “Scientist entrance exam.” The route depends on what science you want to study.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Science fundamentals</div><div class="v">Physics, Chemistry, Biology and Mathematics are the foundations. You do not need to love all four equally, but strong scientists understand the basics around their speciality.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Maths &amp; Statistics</div><div class="v">Data, probability, graphs, modelling and measurement are central to modern research. Even many Biology and Medicine researchers use statistics and coding.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>English &amp; Writing</div><div class="v">Scientists read research papers, write reports, publish results, present at conferences and explain evidence. Clear writing is a scientific skill.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>MPC is the strongest route for Physics, Mathematics, Astronomy, Computer/AI, many Space and Materials fields.</b><br><b>BiPC is strong for Biology, Life Sciences, Biotechnology, Medical and many Agricultural research fields.</b><br><b>PCMB / Maths + Biology</b>, where available and manageable, keeps the widest science options open. The best stream depends on the scientific field you want.</div></div>
+
+<div class="row"><div class="k">Direct research-oriented routes</div><div class="v"><b>IISER Aptitude Test (IAT)</b> — major route into 5-year <b>BS-MS dual-degree</b> science programmes at IISERs. Current IAT 2026 rules require at least three subjects among Biology, Chemistry, Mathematics and Physics for the standard BS-MS science route.<br><br><b>NEST</b> — entrance to the 5-year Integrated M.Sc. programmes at <b>NISER Bhubaneswar and UM-DAE CEBS Mumbai</b>.<br><br><b>IISc BS (Research)</b> — in 2026, Indian applicants are selected using <b>JEE Advanced 2026 or IAT 2026</b>; IISc currently requires Physics, Chemistry and Mathematics at Class 12 level.</div></div>
+
+<div class="row"><div class="k">Regular university route</div><div class="v"><b>Class 12 → B.Sc. / BS in Physics, Chemistry, Mathematics, Biology, Biotechnology, Geology, Statistics or another science → M.Sc. / specialised master's → research / PhD.</b> Admission may be through CUET-UG, state/university admission, merit or an institution-specific entrance process.</div></div>
+
+<div class="row"><div class="k">After B.Sc. / BS</div><div class="v"><b>IIT JAM</b> is one major postgraduate route. JAM 2026 covers Biotechnology, Chemistry, Geology, Mathematics, Mathematical Statistics and Physics among its science papers, with postgraduate programmes across IITs and result-sharing institutions.<br><br>Other universities and institutes may have their own M.Sc., Integrated PhD or research admission routes.</div></div>
+
+<div class="row"><div class="k">PhD / research stage</div><div class="v">For many independent research-scientist, university and advanced R&amp;D careers, a <b>PhD is common and often required or strongly preferred</b>. Depending on the field, entry can involve <b>CSIR-UGC NET/JRF, GATE, institute exams/interviews</b> or other national fellowships. The exact requirement changes by programme.</div></div>
+
+<div class="row"><div class="k">Engineering route</div><div class="v"><b>You can also become a scientist through Engineering.</b> ISRO and DRDO, for example, recruit Scientist/Engineer or Scientist positions in engineering and technology disciplines. A student may follow <b>MPC → B.Tech → GATE / direct recruitment / M.Tech / PhD → R&amp;D scientist or scientist-engineer role</b>.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Pure-science route:</b> Class 12 science → IAT / NEST / university admission → BS-MS / Integrated M.Sc. OR B.Sc./BS → M.Sc. / research training → PhD for many advanced research careers → Scientist / Researcher.<br><br><b>Engineering-scientist route:</b> MPC → B.Tech → R&amp;D recruitment / M.Tech / PhD depending on role → Scientist / Scientist-Engineer.</div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>B.Sc. does not automatically make someone a “Scientist,” and PhD is not compulsory for every job with the word Scientist.</b> Qualification depends heavily on the organisation and role. Always read the exact recruitment notice.</span></div>
+</div></section>
+
+
+<section id="c3"><div class="num">CIRCLE 3 · SCIENCE FIELDS</div><h3>What kind of scientist could you become?</h3><p class="lede">“Scientist” becomes meaningful only when you add the field. These careers can feel completely different from one another.</p>
+
+<div class="card">
+
+<div class="row"><div class="k">Physics</div><div class="v"><b>Study matter, energy, forces and the laws of nature.</b><br><b>Fields:</b> condensed matter, optics, photonics, quantum science, particle physics, nuclear physics, instrumentation.<br><b>Workplaces:</b> universities, IISc/IISER/NISER, national labs, DAE/CSIR institutions.<div class="chips"><span class="chip">Quantum</span><span class="chip">Optics</span><span class="chip">Nuclear</span></div></div></div>
+
+<div class="row"><div class="k">Chemistry</div><div class="v"><b>Create and understand molecules and materials.</b><br><b>Fields:</b> organic, inorganic, physical, analytical, medicinal, catalysis and materials chemistry.<br><b>Workplaces:</b> pharma, chemicals, CSIR labs, universities, batteries and materials companies.<div class="chips"><span class="chip">Molecules</span><span class="chip">Drugs</span><span class="chip">Materials</span></div></div></div>
+
+<div class="row"><div class="k">Biology / Life Sciences</div><div class="v"><b>Study living systems.</b><br><b>Fields:</b> molecular biology, genetics, microbiology, cell biology, ecology, neuroscience and developmental biology.<br><b>Workplaces:</b> research institutes, biotech, pharma, universities, conservation and health research.<div class="chips"><span class="chip">Genes</span><span class="chip">Cells</span><span class="chip">Microbes</span></div></div></div>
+
+<div class="row"><div class="k">Biotechnology</div><div class="v"><b>Use biology to create useful products and processes.</b><br><b>Fields:</b> vaccines, biologics, fermentation, diagnostics, genomics, synthetic biology and bioprocess research.<br><b>Workplaces:</b> biotech/pharma companies, research institutes and start-ups.</div></div>
+
+<div class="row"><div class="k">Space Science</div><div class="v"><b>Study space or develop space technology.</b><br><b>Fields:</b> planetary science, atmospheric science, remote sensing, astrophysics, satellite science, propulsion and spacecraft systems.<br><b>Workplaces:</b> ISRO centres, universities, astronomy institutes and space companies.<div class="chips"><span class="chip">ISRO</span><span class="chip">Satellites</span><span class="chip">Planetary</span></div></div></div>
+
+<div class="row"><div class="k">Astronomy / Astrophysics</div><div class="v">Study stars, galaxies, black holes, cosmology and the Universe using Physics, Mathematics, telescopes, simulations and large datasets. Higher study — usually through Physics/Astronomy followed by postgraduate research — is the normal route.</div></div>
+
+<div class="row"><div class="k">Defence Research</div><div class="v"><b>Develop technology for national defence.</b><br><b>Fields:</b> missiles, radar, electronics, materials, AI, aeronautics, combat systems, sensors and life sciences.<br><b>Workplaces:</b> DRDO laboratories and defence R&amp;D organisations.</div></div>
+
+<div class="row"><div class="k">Materials Scientist</div><div class="v"><b>Study and invent materials with better properties.</b> Batteries, semiconductors, metals, polymers, ceramics, composites and nanomaterials.<br><b>Workplaces:</b> EV/battery companies, semiconductor firms, aerospace, steel, universities and national labs.</div></div>
+
+<div class="row"><div class="k">Medical / Biomedical Research</div><div class="v"><b>Investigate disease, diagnostics, drugs, public health and human biology.</b> Researchers may come from Biology, Biotechnology, Pharmacy, Medicine, Biomedical Engineering or related backgrounds.<br><b>Workplaces:</b> ICMR institutes, medical colleges, hospitals, pharma and biotech.</div></div>
+
+<div class="row"><div class="k">Agricultural Scientist</div><div class="v"><b>Improve crops, soil, livestock, pests, food and farming systems.</b><br><b>Fields:</b> plant breeding, genetics, agronomy, soil science, entomology, horticulture and agricultural biotechnology.<br><b>Workplaces:</b> ICAR institutes, agricultural universities, seed/agri-tech companies.</div></div>
+
+<div class="row"><div class="k">Environmental / Climate</div><div class="v"><b>Study climate, pollution, ecosystems, water and Earth systems.</b><br><b>Fields:</b> climate modelling, atmospheric science, oceanography, ecology, environmental chemistry and hydrology.</div></div>
+
+<div class="row"><div class="k">Earth / Geological Science</div><div class="v">Study rocks, minerals, earthquakes, groundwater, petroleum systems, natural hazards and Earth's history. Geology and Earth Sciences can lead to universities, surveys, energy/mining and environmental research.</div></div>
+
+<div class="row"><div class="k">Computer / AI Research</div><div class="v"><b>Invent new algorithms and computing methods.</b><br><b>Fields:</b> AI, machine learning, robotics, computer vision, language models, cybersecurity, algorithms and human-computer interaction.<br><b>Route:</b> CSE/Maths/Statistics/Engineering → advanced research experience → often M.Tech/MS/PhD for research-heavy roles.</div></div>
+
+<div class="row"><div class="k">Nuclear / Atomic Science</div><div class="v">Work in nuclear physics, reactors, radiation science, materials and atomic-energy applications. DAE institutions and BARC are major Indian ecosystems; recruitment pathways depend on the exact scientific or engineering discipline.</div></div>
+
+<div class="row"><div class="k">Ocean Scientist</div><div class="v">Study oceans, marine systems, climate, coastal processes and underwater resources using oceanography, Earth science, biology, chemistry and engineering.</div></div>
+
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Scientist vs Engineer</div><div class="v"><b>Scientist:</b> mainly asks “What is true? Why does this happen? Can we discover something new?”<br><b>Engineer:</b> mainly asks “How can we design something that works reliably under real constraints?”<br><b>Reality:</b> they overlap heavily. ISRO even uses the title <b>Scientist/Engineer</b> because advanced technology requires both.</div></div>
+
+<div class="row"><div class="k">Scientist vs Lab Technician</div><div class="v"><b>Scientist:</b> usually designs studies, interprets results and develops new knowledge.<br><b>Technician / Technical Assistant:</b> operates, maintains or supports laboratory and technical systems. Both are valuable careers, but the qualification and responsibility are different.</div></div>
+
+<div class="row"><div class="k">Where scientists work</div><div class="v">ISRO, DRDO, CSIR laboratories, DAE/BARC, ICMR, ICAR, IISc, IISERs, NISER, IITs, universities, pharma, biotech, chemicals, batteries, semiconductor, aerospace, agri-tech, AI companies and research start-ups.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Science training can also lead into:
+<div class="chips"><span class="chip">Data Science</span><span class="chip">Teaching</span><span class="chip">Quality / Lab</span><span class="chip">Scientific Writing</span><span class="chip">Patent / IP</span><span class="chip">Technical Consulting</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Research reality</span><span>A scientist can spend weeks getting a result that does not work, months revising a paper, or years solving one narrow problem. <b>If you need quick rewards every day, research can be frustrating.</b></span></div>
+</div>
+</section>
+
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Science has several earning stages. A PhD fellowship is training support, not the same thing as a permanent scientist salary.</p>
+
+<div class="card">
+<div class="row"><div class="k">B.Sc. / early lab role</div><div class="v"><span class="money">₹20,000 – ₹35,000/month</span><br><span style="font-size:13px">Lab assistants, project staff, QC/QA and junior research-support roles can fall around this range, but qualification and industry matter greatly. Many research-intensive scientist jobs require further study.</span></div></div>
+
+<div class="row"><div class="k">JRF — research fellowship</div><div class="v"><span class="money">₹37,000/month stipend</span><br><span style="font-size:13px">CSIR's current research-scheme rate lists <b>₹37,000/month for JRF</b> during the first two years, subject to the scheme's eligibility and conditions. This is a research fellowship, not a normal permanent salary.</span></div></div>
+
+<div class="row"><div class="k">SRF</div><div class="v"><span class="money">₹42,000/month stipend</span><br><span style="font-size:13px">Current CSIR research-scheme guidance lists <b>₹42,000/month</b> for SRF / upgraded fellowship stages where applicable.</span></div></div>
+
+<div class="row"><div class="k">Research Associate</div><div class="v"><span class="money">₹58,000 – ₹67,000/month</span><br><span style="font-size:13px">CSIR currently lists Research Associate consolidated emolument slabs of <b>₹58,000, ₹61,000 or ₹67,000</b> depending on qualification and experience.</span></div></div>
+
+<div class="row"><div class="k">Government Scientist — entry example</div><div class="v"><span class="money">₹56,100 basic/month + allowances</span><br><span style="font-size:13px"><b>DRDO Scientist B</b> currently begins at Pay Level 10 with ₹56,100 initial basic pay. <b>ISRO Scientist/Engineer 'SC'</b> is also commonly Level 10, ₹56,100–₹1,77,500, depending on recruitment discipline and notification.</span></div></div>
+
+<div class="row"><div class="k">Experienced scientist</div><div class="v"><span class="money">₹70,000 – ₹1,50,000+/month</span><br><span style="font-size:13px">Experienced government, private R&amp;D, pharma, biotech, materials, semiconductor and AI researchers can move into this broad range or above. Senior scientific leadership can earn substantially more.</span></div></div>
+
+<div class="row"><div class="k">Study cost &amp; support</div><div class="v">Science education can be relatively affordable at strong public institutions, and some research-oriented programmes offer scholarships. For example, NEST states that students admitted to NISER/UM-DAE CEBS can be eligible for a <b>₹60,000 annual DISHA scholarship plus ₹20,000 per year for summer internships</b>. Scholarship rules can change and should be checked in the admission year.</div></div>
+
+<div class="flag red"><span class="mark">Think long-term</span><span>If your family needs you to earn immediately after Class 12 or a bachelor's degree, understand that the classic research-scientist pathway may involve <b>M.Sc./Integrated Master's + PhD</b> before reaching stable independent research positions. Build employable laboratory, coding, data or technical skills along the way.</span></div>
+</div></section>
+
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Love asking questions + patient with uncertainty</span> — research may be a strong fit.</p>
+<p><span class="hi">Love science but prefer building products</span> — Engineering, Medicine, Pharmacy or applied technology may fit better.</p>
+<p><span class="hi">Love science but not long research study</span> — explore laboratory, quality, technical, data or science-communication careers.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>a scientist is not someone who knows every answer. A scientist is someone trained to find better evidence.</b></p>
+</div>
+
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">An 8th–10th class student does not need to choose a PhD topic. First find the type of questions you enjoy investigating.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen Science and Maths fundamentals and ask “why?” instead of memorising only textbook answers</li>
+<li>Do one small experiment or data project each month and write the <b>question → method → result → conclusion</b></li>
+<li>Read about scientists in different fields — not only famous physicists or space scientists</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>MPC</b> for Physics/Maths/Space/AI-heavy paths, <b>BiPC</b> for Biology/Life Science/Medical-heavy paths, or a suitable combination if you genuinely want both</li>
+<li>If targeting research-focused institutes, explore <b>IAT, NEST and IISc's current BS Research admission routes</b></li>
+<li>Learn basic Python/data analysis or laboratory measurement — modern scientists increasingly need quantitative skills</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Do research internships and work with professors before deciding whether a PhD genuinely suits you</li>
+<li>Read actual research papers, present posters and learn statistics/coding/lab techniques relevant to your field</li>
+<li>After B.Sc./BS, compare M.Sc., Integrated PhD, JAM, CSIR-NET/JRF, GATE and institute-specific research routes based on your speciality</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Choose a question you genuinely do not know the answer to — for example, <b>“Does water temperature affect how fast sugar dissolves?”</b> Design a fair experiment, collect measurements, make a graph and explain what the evidence says. If the investigation is more exciting than simply being told the answer, you may have a research mindset.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission, fellowship or recruitment notice. Entrance exams, eligibility, scholarships, research fellowships and scientist recruitment requirements change by field and institution. Current examples were checked against IISER IAT 2026, NEST 2026, IISc BS Research 2026, IIT JAM 2026, CSIR-HRDG, ISRO and DRDO information. Always verify the current official notification for the programme or scientist post you actually apply to.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong research mindset</strong>You seem comfortable with curiosity, uncertainty and long-term problem-solving. Now explore which scientific field gives you the questions you most want to answer.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore real research first</strong>You like science, but test experiments, coding, data analysis and research projects before choosing a long scientist pathway.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Science can still be for you</strong>You may enjoy science without wanting the research lifestyle. Explore Engineering, Medicine, Pharmacy, technology, laboratory or other applied careers too.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

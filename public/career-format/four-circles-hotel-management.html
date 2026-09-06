@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Hotel Management</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Hotel Management</h2><p class="standfirst">Run hotels, restaurants and hospitality operations so guests receive excellent service every day. The career can lead to luxury hotels, resorts, restaurants, events, cruise lines, tourism and airline hospitality — but the real work includes shifts, weekends, customer complaints, teamwork and constant attention to detail.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Hotel Management &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>How to enter?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Careers</b><em>Many departments</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Worth it?</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want hospitality?</h3><p class="lede">Many students imagine five-star hotels, travel and smart uniforms. The real job is making sure hundreds of small things go right for guests.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>Do you enjoy meeting new people and helping them feel comfortable?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="1"><p>Can you stay polite and solve the problem when a guest is angry or complains unfairly?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="2"><p>Are you comfortable working in a team where cleanliness, timing, grooming and small details matter every day?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="3"><p>Can you accept shifts, weekends, festivals and holidays as working days when hotels are busiest?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="4"><p>Would you be willing to learn food service, housekeeping, front office and kitchen operations even if you eventually specialise in only one department?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="5"><p>Would you still choose this career if your first job involved standing for long hours and earning a modest starting salary?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">Hotel Management is unusually flexible: students from almost any Class 12 stream can enter.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>English</div><div class="v">This is the most important school subject for the main NCHMCT B.Sc. route. Guests, interviews, hotel systems and hospitality training require clear speaking, listening and writing.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Communication</div><div class="v">Learn to speak confidently, listen carefully and explain solutions calmly. Hospitality is a people business.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Basic Maths &amp; Business</div><div class="v">Billing, percentages, food cost, budgets, occupancy, pricing, inventory and revenue management all use practical mathematics and business thinking.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Intermediate / Class 12 in any recognised stream — MPC, BiPC, CEC, Commerce or Humanities all work.</b> For the main NCHMCT B.Sc. Hospitality &amp; Hotel Administration route, <b>English must be one of your Class 12 subjects</b>. After Class 12, clear the required admission route and join a hotel/hospitality programme.</div></div>
+
+<div class="row"><div class="k">Entrance exam</div><div class="v"><b>NCHM JEE</b> — the main national entrance examination for the <b>3-year B.Sc. in Hospitality &amp; Hotel Administration</b> offered through NCHMCT-affiliated Institutes of Hotel Management. NCHMCT states that admission is based on NCHM JEE All India Rank followed by centralised counselling.<br><span style="font-size:13px">Private universities and other hotel-management colleges may use their own entrance test, interview or Class 12 merit. You do not need NCHM JEE for every hotel-management college.</span></div></div>
+
+<div class="row"><div class="k">Main degree</div><div class="v"><b>B.Sc. Hospitality &amp; Hotel Administration — 3 years / 6 semesters.</b> The NCHMCT curriculum includes Food Production, Food &amp; Beverage Service, Front Office Operations and Housekeeping, plus accountancy, food safety, HR, finance, facility planning, tourism and management subjects.</div></div>
+
+<div class="row"><div class="k">Diploma routes</div><div class="v">NCHMCT also lists shorter <b>1½-year diploma</b> options after Class 12 such as Food Production, Food &amp; Beverage Service, Front Office Operations, Housekeeping Operations and Bakery &amp; Confectionery. These can be useful when a student wants a faster, specialised route rather than a full degree.</div></div>
+
+<div class="row"><div class="k">After Class 10 directly</div><div class="v">NCHMCT also recognises some <b>Craftsmanship Certificate</b> routes after Class 10, including Food Production and Food &amp; Beverage Service. These are skill-oriented routes and are different from a full hotel-management degree.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Degree route: Class 12 in any stream with English → NCHM JEE / college admission → 3-year B.Sc. HHA or equivalent → industrial training → hotel/hospitality job.</b><br><br><b>Shorter route: Class 12 → specialised diploma → practical training → department-specific job.</b></div></div>
+
+<div class="flag red"><span class="mark">Choose carefully</span><span>Do not pay several lakhs for a private “Hotel Management” course without checking the <b>exact degree/diploma awarded, recognition, industrial training, hotel partnerships and real placement roles.</b></span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · CAREER OPTIONS</div><h3>Hotel Management is not one job</h3><p class="lede">Students train across departments and then usually specialise. The day-to-day work can be completely different between two departments in the same hotel.</p>
+
+<div class="card">
+<div class="row"><div class="k">Front Office</div><div class="v"><b>The face of the hotel.</b> Reservations, check-in/check-out, guest enquiries, room allocation, complaints and coordination.<br><b>Careers:</b> Front Office Associate, Guest Relations Executive, Duty Manager, Front Office Manager.<div class="chips"><span class="chip">Guests</span><span class="chip">Communication</span><span class="chip">Reservations</span></div></div></div>
+
+<div class="row"><div class="k">Food &amp; Beverage Service</div><div class="v"><b>Restaurants, banquets and service operations.</b> Take orders, supervise service, organise events and manage restaurant teams.<br><b>Careers:</b> F&amp;B Associate, Captain/Supervisor, Restaurant Manager, Banquet Manager, F&amp;B Manager.<div class="chips"><span class="chip">Restaurants</span><span class="chip">Banquets</span><span class="chip">Service</span></div></div></div>
+
+<div class="row"><div class="k">Food Production / Kitchen</div><div class="v"><b>The culinary side.</b> Cooking, menu production, hygiene, kitchen systems and food cost.<br><b>Careers:</b> Commis Chef, Chef de Partie, Sous Chef, Executive Chef.<br><b>Important:</b> If cooking itself is your main passion, a focused <b>Culinary Arts / Food Production</b> route may suit you better than broad Hotel Management.<div class="chips"><span class="chip">Cooking</span><span class="chip">Kitchen</span><span class="chip">Culinary</span></div></div></div>
+
+<div class="row"><div class="k">Housekeeping</div><div class="v"><b>Rooms, cleanliness and property standards.</b> Manage room readiness, linen, public areas, staff schedules and quality inspections.<br><b>Careers:</b> Housekeeping Associate, Floor Supervisor, Assistant Housekeeper, Executive Housekeeper.</div></div>
+
+<div class="row"><div class="k">Sales &amp; Marketing</div><div class="v">Win corporate accounts, weddings, conferences and travel-business partnerships. Strong communication and commercial skills can lead to hotel sales and marketing careers.</div></div>
+
+<div class="row"><div class="k">Revenue Management</div><div class="v"><b>Use data to decide room pricing and availability.</b> Analyse occupancy, demand, competition and booking patterns to maximise hotel revenue. This is a strong path for students who like numbers as well as hospitality.</div></div>
+
+<div class="row"><div class="k">Events &amp; Banquets</div><div class="v">Plan weddings, conferences, meetings and large functions. Work involves client coordination, food/service planning, vendors, timing and problem-solving on event day.</div></div>
+
+<div class="row"><div class="k">Hotel Operations</div><div class="v">Management Trainees and Operations Managers rotate across departments and eventually coordinate the overall guest experience and profitability of a property.</div></div>
+
+<div class="row"><div class="k">Beyond Hotels</div><div class="v">Hospitality skills also lead to <b>resorts, restaurant chains, cruise lines, railway/airline catering, tourism organisations, amusement parks, retail, corporate facilities and customer-service businesses.</b> NCHMCT specifically lists several of these as career avenues for B.Sc. HHA graduates.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Hotel Manager vs Chef</div><div class="v"><b>Hotel Manager:</b> manages people, departments, service quality, revenue and operations.<br><b>Chef:</b> specialises deeply in cooking and kitchen leadership.<br>You can enter culinary work through hotel management, but students who know they want to cook professionally should also compare dedicated Culinary Arts programmes.</div></div>
+
+<div class="row"><div class="k">Who hires</div><div class="v">Taj/IHCL, Marriott, ITC Hotels, Oberoi, Hyatt, Accor, Hilton and other hotel/resort groups, restaurant chains, catering companies, cruise and travel hospitality, hospitals, clubs, airlines/rail catering and facility-management firms.</div></div>
+
+<div class="row"><div class="k">Where are the jobs?</div><div class="v">Major tourism and business centres offer more opportunities: Hyderabad, Bengaluru, Chennai, Mumbai, Delhi NCR, Goa, Kerala and large resort destinations. In Andhra Pradesh, opportunities exist around <b>Visakhapatnam, Vijayawada, Tirupati and major tourism/business properties</b>, but students should be willing to relocate for stronger hotel brands and faster growth.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Hospitality skills can also lead into:
+<div class="chips"><span class="chip">Events</span><span class="chip">Travel &amp; Tourism</span><span class="chip">Airline Hospitality</span><span class="chip">Retail</span><span class="chip">Customer Experience</span><span class="chip">Entrepreneurship</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Reality</span><span>Luxury surroundings do not mean an easy job. Hospitality is operational work: <b>standing, rushing, solving complaints, working during festivals and maintaining service standards even when you are tired.</b></span></div>
+</div>
+</section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Starting salaries are usually modest. Growth can become much better once you move into supervisory, managerial, revenue, sales or luxury-brand roles.</p>
+
+<div class="card">
+<div class="row"><div class="k">Intern / Industrial Trainee</div><div class="v"><span class="money">₹5,000 – ₹15,000/month</span><br><span style="font-size:13px">Training stipends vary by hotel, city and brand. Industrial training is mainly about learning real operations.</span></div></div>
+
+<div class="row"><div class="k">Starting operations role</div><div class="v"><span class="money">₹15,000 – ₹25,000/month</span><br><span style="font-size:13px">Front Office, F&amp;B Service, Housekeeping and other entry roles commonly begin around this range. Indeed's 2026 India benchmark for a front desk executive is about <b>₹19,375/month</b>.</span></div></div>
+
+<div class="row"><div class="k">Management Trainee</div><div class="v"><span class="money">₹20,000 – ₹40,000+/month</span><br><span style="font-size:13px">Strong hotel chains run competitive management-training programmes. Pay varies widely by brand and programme; broader India management-trainee data averages higher, but hotel-specific trainee packages should be checked individually.</span></div></div>
+
+<div class="row"><div class="k">Supervisor / Manager</div><div class="v"><span class="money">₹25,000 – ₹60,000+/month</span><br><span style="font-size:13px">Indeed currently reports around <b>₹23,383/month</b> for Front Office Manager and <b>₹25,502/month</b> for Hotel Manager in India. Luxury brands and larger properties can pay more.</span></div></div>
+
+<div class="row"><div class="k">Senior hotel leadership</div><div class="v"><span class="money">₹60,000 – ₹2,00,000+/month</span><br><span style="font-size:13px">Department Heads, Revenue Managers, Executive Chefs, Directors and General Managers at strong hotels can move much higher with experience, brand and property size. These are not fresher salaries.</span></div></div>
+
+<div class="row"><div class="k">Course cost</div><div class="v">NCHMCT currently states that tuition for its <b>3-year / 6-semester B.Sc. HHA typically ranges around ₹3 lakh–₹5 lakh for the full programme</b>, depending on the institute. It separately lists admission/enrolment/JNU/examination/caution fees. Hostel, food, uniforms and personal expenses can add more.</div></div>
+
+<div class="flag red"><span class="mark">Ask at home</span><span>If a private hotel-management college costs ₹8–15 lakh or more, what exactly are its <b>placements, hotel partnerships and starting roles</b>? Compare that with NCHMCT/IHM options and the likely ₹15,000–30,000 starting salary before taking a large education loan.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">People + service + operations</span> — Hotel Management may be a strong fit.</p>
+<p><span class="hi">Love cooking more than managing guests</span> — compare Culinary Arts / Chef routes.</p>
+<p><span class="hi">Want only travel and luxury</span> — think again; those are surroundings, not the job itself.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>hospitality rewards attitude, communication and consistency as much as academic marks.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">You can test hospitality without waiting for college.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Improve spoken English and learn to introduce yourself confidently</li>
+<li>Help organise a school event, function, meal or guest visit and notice how much coordination is required</li>
+<li>Learn basic table etiquette, hygiene, customer service and simple budgeting</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose any recognised Intermediate stream you can perform well in, but <b>keep English as a Class 12 subject</b> if targeting the NCHMCT B.Sc. route</li>
+<li>Build communication, general knowledge, reasoning, basic maths and service aptitude for <b>NCHM JEE</b></li>
+<li>Visit or speak with someone working in a hotel and ask about shifts, starting roles, promotions and the department they enjoy most</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>After Class 12</div><ul>
+<li>Compare <b>NCHM JEE + IHM B.Sc. HHA</b>, private hotel-management degrees and specialised diploma routes</li>
+<li>Before admission, check industrial training, placement brands, exact job roles, total fees, hostel costs and alumni outcomes</li>
+<li>During college, use industrial training to identify whether you fit Front Office, F&amp;B, Kitchen, Housekeeping, Sales, Revenue or another hospitality path</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Plan a small dinner or school event for 10 people. Make the <b>menu, budget, seating, timing, guest welcome and cleanup plan</b>. Then run it. If you enjoy making the whole experience smooth for other people, hospitality may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission, fee, placement or salary notice. Entrance rules, programme fees, hotel hiring and salaries can change. Current education guidance was checked against NCHMCT's 2026 B.Sc. Hospitality &amp; Hotel Administration information; salary benchmarks were checked against current Indeed India data. Always verify the official institute and entrance information for your admission year.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong hospitality fit</strong>You seem comfortable with people, service, teamwork and the operational lifestyle. Now explore which hotel department fits you best.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>Some parts fit you, but test the shift work, guest-facing pressure and operational side before committing.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>The daily hospitality lifestyle may not match what you enjoy. Explore Tourism, Business, Culinary Arts, Events or other people-oriented careers too.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

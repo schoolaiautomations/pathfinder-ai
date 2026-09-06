@@ -89,7 +89,7 @@ export const CourseCurriculumView = () => {
               What Do Students Actually Study in Each Career?
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 font-medium max-w-2xl leading-relaxed">
-              12–14 crisp, single-liner topics showing what students study in college/training, what practical labs they do, and hands-on skills acquired across all 18 career paths after intermediate.
+              12–14 crisp, single-liner topics showing what students study in college/training, what practical labs they do, and hands-on skills acquired across all {ALL_18_CAREER_CURRICULA.length} career paths after intermediate.
             </p>
           </div>
 

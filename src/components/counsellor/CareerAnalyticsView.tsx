@@ -157,7 +157,7 @@ export const CareerAnalyticsView = ({
 
     const classes = ["Class 8", "Class 9", "Class 10"];
     return classes.map((clsName) => {
-      const classSubs = submissions.filter((s) => normalizeClass(s.student_class) === clsName);
+      const classSubs = filteredSubmissions.filter((s) => normalizeClass(s.student_class) === clsName);
       const row: Record<string, any> = { class: clsName, total: classSubs.length };
 
       topCareers.forEach((career) => {
@@ -167,13 +167,13 @@ export const CareerAnalyticsView = ({
 
       return row;
     });
-  }, [submissions, careerDistribution]);
+  }, [filteredSubmissions, careerDistribution]);
 
   // 3. School-wise Top Career & Submissions Count
   const schoolComparisonData = useMemo(() => {
     const map: Record<string, { school: string; count: number; careerCounts: Record<string, number> }> = {};
 
-    submissions.forEach((s) => {
+    filteredSubmissions.forEach((s) => {
       const rawSchool = (s.student_school || "").trim();
       const school = rawSchool && rawSchool !== "—" && rawSchool !== "-" ? rawSchool : "Other / Not Specified";
       const career = normalizeCareer(s.career_opted);
@@ -203,18 +203,18 @@ export const CareerAnalyticsView = ({
         };
       })
       .sort((a, b) => b.count - a.count);
-  }, [submissions]);
+  }, [filteredSubmissions]);
 
   // 4. Location / Village / Mandal Distribution
   const locationData = useMemo(() => {
     const counts: Record<string, number> = {};
-    submissions.forEach((s) => {
+    filteredSubmissions.forEach((s) => {
       const loc = (s.student_location || "").trim();
       const cleanLoc = loc && loc !== "—" && loc !== "-" ? loc : "Not Specified";
       counts[cleanLoc] = (counts[cleanLoc] || 0) + 1;
     });
 
-    const total = submissions.length || 1;
+    const total = filteredSubmissions.length || 1;
     return Object.entries(counts)
       .map(([location, count]) => ({
         location,
@@ -223,7 +223,7 @@ export const CareerAnalyticsView = ({
       }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
-  }, [submissions]);
+  }, [filteredSubmissions]);
 
   // 5. Booking Requests Analytics
   const bookingCareerData = useMemo(() => {
@@ -652,7 +652,7 @@ export const CareerAnalyticsView = ({
           {/* Class Breakdown Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {["Class 8", "Class 9", "Class 10"].map((clsName) => {
-              const classSubs = submissions.filter((s) => normalizeClass(s.student_class) === clsName);
+              const classSubs = filteredSubmissions.filter((s) => normalizeClass(s.student_class) === clsName);
               const classCareerCounts: Record<string, number> = {};
               classSubs.forEach((s) => {
                 const c = normalizeCareer(s.career_opted);

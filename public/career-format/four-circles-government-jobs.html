@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Government Jobs</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Government Jobs</h2><p class="standfirst">Work for the Central Government, Andhra Pradesh Government, Railways, public institutions or government technical departments. “Government Job” is not one career and there is no single exam — the correct route depends on whether you finish Class 10, Class 12, Diploma/ITI, Graduation or a professional degree.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Government Jobs &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Why government?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Which exam?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Many routes</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Stable, not instant</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want a government job?</h3><p class="lede">Do not choose it only because someone says “job security.” Think about the work and the competition too.</p>
+
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>Can you prepare consistently for competitive exams for months without knowing whether you will be selected?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="1"><p>Are you comfortable with work that may involve rules, files, public service, administration, documentation or routine procedures?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="2"><p>Can you accept being posted in a district, city or state that is not your first choice?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="3"><p>Are you willing to study General Awareness, Maths, Reasoning, English/Telugu and Computer skills repeatedly for competitive exams?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="4"><p>Would you accept a moderate starting salary if the role gives you structured pay, allowances and long-term stability?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+
+<div class="q" data-i="5"><p>Can you keep a degree, skill or private-sector Plan B while preparing instead of waiting years for only one notification?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Which route should you take?</h3><p class="lede">The biggest mistake is asking “Which government exam?” before deciding what qualification and type of job you want.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Maths &amp; Reasoning</div><div class="v">Percentages, ratios, arithmetic, logical reasoning and data interpretation appear in many SSC, Railway, Banking and state recruitment exams.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>English / Telugu</div><div class="v">Comprehension, grammar, vocabulary and communication matter in many competitive exams. Andhra Pradesh recruitments can also require Telugu/language knowledge depending on the post.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>General Awareness</div><div class="v">Current affairs, Indian polity, history, geography, economy, science and basic computer knowledge are common across many government examinations.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>There is no compulsory stream for “Government Jobs.”</b> Choose MPC, BiPC, CEC, Commerce or Humanities based on the jobs and backup career you may want later. If you are undecided, completing Class 12 and preferably a bachelor’s degree keeps far more government-job options open.</div></div>
+
+<div class="row"><div class="k">10th-level exams</div><div class="v">Examples include <b>SSC MTS / some SSC Selection Posts</b>, Railway Level-1/Group-D-type notifications and other department-specific recruitments when announced. Qualification, age and physical requirements depend on the exact post.</div></div>
+
+<div class="row"><div class="k">12th-level exams</div><div class="v"><b>SSC CHSL</b> is a major Central Government route for posts such as LDC/JSA and Data Entry roles. <b>RRB NTPC Undergraduate</b> is a Railway route for notified 12th-level non-technical posts. Stenographer and various department-specific recruitments are other possibilities.</div></div>
+
+<div class="row"><div class="k">Graduate-level exams</div><div class="v"><b>SSC CGL</b> — major route into Group B and Group C posts across Central Government ministries and organisations.<br><b>RRB NTPC Graduate</b> — Railway graduate roles such as Station Master, Goods Train Manager, Junior Accounts Assistant and Senior Clerk in recent notifications.<br><b>APPSC Group-I / Group-II and other APPSC recruitments</b> — state-government pathways depending on the notification and qualification.</div></div>
+
+<div class="row"><div class="k">Technical route</div><div class="v">ITI, Diploma, Engineering and other professional qualifications open specialised posts such as <b>Railway ALP/Technician/JE, SSC Junior Engineer, APPSC Assistant Engineer/AEE</b> and department-specific technical jobs. A technical qualification can therefore give you both government and private-sector options.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>There is no one fixed route.</b><br><br>
+<b>10th:</b> Class 10 → eligible SSC/Railway/department notification → exam/skill/physical stage as required → document verification → appointment.<br><br>
+<b>12th:</b> Class 12 → SSC CHSL / RRB NTPC UG / eligible notification → exam stages → skill/typing/medical if required → appointment.<br><br>
+<b>Graduate:</b> Bachelor’s degree → SSC CGL / APPSC Group exams / RRB NTPC Graduate / other recruitment → exam stages → document/medical/skill requirements → appointment.<br><br>
+<b>Technical:</b> ITI/Diploma/Degree → technical recruitment exam → trade/technical/medical stages as required → appointment.</div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Do not prepare for “all government exams” at once.</b> First choose 2–3 exam families with similar syllabus and eligibility — for example SSC + Railways, or APPSC + SSC — then prepare systematically.</span></div>
+</div></section>
+
+
+<section id="c3"><div class="num">CIRCLE 3 · JOB FAMILIES</div><h3>What government jobs actually exist?</h3><p class="lede">Government employment includes administration, finance, railways, engineering, clerical work, field inspection, teaching, health, public safety and many specialised departments.</p>
+
+<div class="card">
+<div class="row"><div class="k">SSC CGL — Central Government</div><div class="v"><b>For graduates.</b> Current CGL recruitments include posts such as Assistant Section Officer, Income Tax Inspector, Central Excise/Customs-related Inspector, Assistant Audit/Accounts roles, Auditor, Accountant and other Group B/C positions depending on the year.<div class="chips"><span class="chip">Ministries</span><span class="chip">Tax</span><span class="chip">Audit</span><span class="chip">Administration</span></div></div></div>
+
+<div class="row"><div class="k">SSC CHSL — 12th level</div><div class="v"><b>For eligible Class 12 candidates.</b> Current SSC CHSL recruitment covers Group C posts such as <b>Lower Division Clerk / Junior Secretariat Assistant</b> and Data Entry Operator categories in Central Government offices.</div></div>
+
+<div class="row"><div class="k">SSC MTS / Selection Posts</div><div class="v">Entry-level and post-specific Central Government recruitments. SSC Selection Post examinations can include vacancies with <b>Matriculation, 10+2 or Graduation-level</b> minimum qualifications depending on the individual post.</div></div>
+
+<div class="row"><div class="k">Railways — NTPC</div><div class="v"><b>Non-technical Railway careers.</b> Recent graduate notifications include <b>Station Master, Chief Commercial cum Ticket Supervisor, Goods Train Manager, Junior Account Assistant cum Typist and Senior Clerk cum Typist.</b> Separate undergraduate NTPC notifications cover 12th-level categories.<div class="chips"><span class="chip">Station Master</span><span class="chip">Operations</span><span class="chip">Accounts</span><span class="chip">Commercial</span></div></div></div>
+
+<div class="row"><div class="k">Railways — Technical</div><div class="v">Assistant Loco Pilot, Technician, Junior Engineer and specialised technical recruitments are notified separately. Eligibility can require ITI, Diploma or an engineering/technical qualification depending on the post.</div></div>
+
+<div class="row"><div class="k">APPSC Group-I</div><div class="v"><b>Higher-level Andhra Pradesh state administration.</b> Group-I can include executive and administrative services depending on the notification. This is highly competitive and should be treated as a separate serious exam pathway, similar in preparation intensity to other high-level civil-service exams.</div></div>
+
+<div class="row"><div class="k">APPSC Group-II</div><div class="v">A major Andhra Pradesh route for notified executive and non-executive state posts. The exact posts and qualifications change by notification, so do not memorise one old list and assume it will remain the same.</div></div>
+
+<div class="row"><div class="k">APPSC Specific Posts</div><div class="v">APPSC also recruits separately for specialised positions. Recent notification pages include posts such as <b>Agriculture Officer, Assistant Engineer, Assistant Executive Engineer, Forest Section Officer, Horticulture Officer, municipal accounts roles and welfare posts.</b> These often require a specific degree or professional qualification.</div></div>
+
+<div class="row"><div class="k">Government Engineering</div><div class="v">Civil, Mechanical and Electrical engineers can target <b>SSC JE, Railways JE, APPSC AE/AEE</b>, public works, water, power and other technical departments when vacancies are notified.</div></div>
+
+<div class="row"><div class="k">Teaching / Education</div><div class="v">Government Teacher, Lecturer and other education careers have their own qualification and recruitment rules — such as teacher-education requirements, TET/DSC or commission/university recruitment depending on the post. Do not treat a general SSC exam as the route to every teaching job.</div></div>
+
+<div class="row"><div class="k">Public Sector / PSU</div><div class="v">Government-owned companies recruit engineers, finance professionals, management graduates and other specialists through their own notifications. Some engineering PSUs use <b>GATE</b> scores; others run direct tests/interviews. PSU jobs are not the same as SSC civil-service posts.</div></div>
+
+<div class="row"><div class="k">Already separate careers</div><div class="v">Some government pathways deserve their own blueprint because the route is very different:
+<div class="chips"><span class="chip">IAS</span><span class="chip">IPS</span><span class="chip">Police</span><span class="chip">Army / Navy / Air Force</span><span class="chip">Bank PO</span><span class="chip">Agriculture Officer</span></div>
+</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">How often do jobs come?</div><div class="v"><b>Not on one guaranteed schedule.</b> SSC has an annual examination calendar, but vacancy numbers and posts vary. Railways issue separate Centralised Employment Notices. APPSC notifications depend on state vacancies and recruitment decisions. You may have periods with many notifications and periods with fewer suitable posts.</div></div>
+
+<div class="row"><div class="k">Competition</div><div class="v">Competition can be enormous. For example, SSC stated that <b>more than 28 lakh candidates submitted applications for CGL 2026</b>. That does not mean all 28 lakh will appear or compete for one post, but it shows why disciplined preparation and a Plan B matter.</div></div>
+
+<div class="row"><div class="k">Scams</div><div class="v"><b>No genuine government recruiter can “guarantee” selection for money.</b> Railway Recruitment Boards explicitly warn candidates to rely only on official RRB websites and beware of touts/job racketeers. Apply only through official recruitment portals.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Build a qualification that can earn outside government too:
+<div class="chips"><span class="chip">Private-sector job</span><span class="chip">Technical skill</span><span class="chip">Teaching</span><span class="chip">Accounting</span><span class="chip">IT / Data</span><span class="chip">Higher study</span></div>
+</div></div>
+</div>
+</section>
+
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What will you earn?</h3><p class="lede">Government pay is determined by the exact post and pay level — not simply by saying “government employee.” Basic pay is only one part; applicable DA, HRA, transport and other allowances vary.</p>
+
+<div class="card">
+<div class="row"><div class="k">10th / entry-level posts</div><div class="v"><span class="money">Often around ₹18,000+ basic/month</span><br><span style="font-size:13px">Many Level-1 Central Government posts begin around this basic-pay level. Exact pay, deductions and allowances depend on the notification and posting.</span></div></div>
+
+<div class="row"><div class="k">12th-level clerical posts</div><div class="v"><span class="money">₹19,900+ basic/month</span><br><span style="font-size:13px">For example, SSC CHSL currently lists <b>LDC/JSA at Pay Level-2: ₹19,900–₹63,200</b>. Other 12th-level posts can use different pay levels.</span></div></div>
+
+<div class="row"><div class="k">Railway graduate NTPC</div><div class="v"><span class="money">₹29,200 – ₹35,400 initial basic/month</span><br><span style="font-size:13px">Recent RRB NTPC graduate notifications list ₹29,200 initial pay for posts such as Goods Train Manager/JAA/Senior Clerk and ₹35,400 for Station Master/Chief Commercial cum Ticket Supervisor.</span></div></div>
+
+<div class="row"><div class="k">SSC CGL graduate posts</div><div class="v"><span class="money">Varies by post — up to ₹47,600 starting basic in current higher CGL levels</span><br><span style="font-size:13px">CGL 2026 includes multiple pay levels. Current Level-8 posts begin at <b>₹47,600 basic</b>, while other CGL posts are placed in lower pay levels. Do not assume every CGL selection starts at the highest level.</span></div></div>
+
+<div class="row"><div class="k">AP Government</div><div class="v">APPSC salaries depend on the <b>specific service and post</b>. Group-I, Group-II, engineering, agriculture, forest, welfare and clerical posts can have very different state pay scales. Always read the pay scale in the actual notification.</div></div>
+
+<div class="row"><div class="k">What comes with it?</div><div class="v">Depending on the service/post, compensation can include applicable <b>DA, HRA or government accommodation, travel allowances, leave and retirement benefits under prevailing rules.</b> Transfers, probation, departmental exams and promotion rules also vary.</div></div>
+
+<div class="flag red"><span class="mark">Do the maths</span><span>Do not spend 3–5 years preparing only because the job feels “secure.” Compare the likely salary with what you could earn using your degree in the private sector. <b>Government preparation is strongest when you have a real backup skill or career.</b></span></div>
+</div></section>
+
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Want public service + value stability</span> — Government jobs may fit you.</p>
+<p><span class="hi">Want very fast salary growth</span> — compare strong private-sector careers too.</p>
+<p><span class="hi">Only reason is “job security”</span> — explore the actual work before committing years to exams.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>“Government job” is too broad to be a career plan. Your plan should name the exam family and the actual roles you want.</b></p>
+</div>
+
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">An 8th–10th class student does not need government-exam coaching. Your biggest advantage now is building strong fundamentals and keeping options open.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen arithmetic, reasoning, English/Telugu reading and general awareness</li>
+<li>Learn basic computer skills: typing, spreadsheets, documents and internet research</li>
+<li>Do not memorise current-affairs books for an exam that is still years away — understand the world instead</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose the stream that supports both the government jobs and private/professional career you may want</li>
+<li>If possible, complete at least Class 12; a bachelor’s degree opens an even larger set of SSC, APPSC and Railway roles</li>
+<li>If you prefer practical work, an ITI or Polytechnic Diploma can create strong technical government + private-sector options</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>When you become eligible</div><ul>
+<li>Shortlist <b>2–3 exam families</b> based on qualification and desired jobs: SSC, Railways, APPSC, technical recruitment, etc.</li>
+<li>Read the official syllabus and previous papers before buying coaching</li>
+<li>Track only official websites — <b>ssc.gov.in, official RRB websites, APPSC portal and the recruiting department</b> — and never pay anyone promising guaranteed selection</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Choose three actual jobs — for example <b>SSC Assistant Section Officer, Railway Station Master and APPSC Group-II officer</b>. Compare their qualification, exam, work, posting, salary and promotion path. If you still prefer these jobs after understanding the work — not just the security — government service may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official recruitment or salary notice. Government vacancies, age limits, reservations, qualifications, exam patterns, medical/physical standards and pay scales change by post and notification. Current examples were checked against SSC 2026, Railway Recruitment Board and Andhra Pradesh Public Service Commission information available in 2026. Always use the official notification for the post you actually apply to.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong government-service fit</strong>You seem comfortable with competitive preparation, structured work and long-term stability. Now identify the exact exam family and roles you want.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before committing</strong>Some parts fit you, but compare real government roles with private-sector careers before spending years preparing.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>You may like the idea of security more than the work or exam process. Build your main professional career first and keep government exams as an option if they still interest you later.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>
