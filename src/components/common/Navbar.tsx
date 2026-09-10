@@ -7,6 +7,7 @@ import {
   BookOpen,
   Share2,
   Sparkles,
+  GitFork,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
@@ -60,6 +61,14 @@ export const Navbar = ({
           >
             <Home className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Home</span>
+          </Link>
+
+          <Link
+            to="/careers-tree"
+            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-bold text-zinc-700 hover:text-black hover:bg-zinc-100 transition-colors"
+          >
+            <GitFork className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Careers Tree</span>
           </Link>
 
           <Link

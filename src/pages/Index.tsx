@@ -13,6 +13,7 @@ import {
   Menu,
   X,
   Lock,
+  GitFork,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import councellingImg from "@/lib/councelling.png";
@@ -45,6 +46,12 @@ const Index = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden sm:flex items-center gap-1 sm:gap-2">
+            <Link
+              to="/careers-tree"
+              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
+            >
+              Careers Tree
+            </Link>
             <Link
               to="/faq"
               className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
@@ -82,6 +89,17 @@ const Index = () => {
         {/* Mobile Dropdown Panel */}
         {mobileMenuOpen && (
           <div className="sm:hidden border-t border-stone-200/80 px-4 py-3 space-y-2 bg-[#FAF8F5]/98 backdrop-blur-lg animate-in slide-in-from-top-2 duration-200">
+            <Link
+              to="/careers-tree"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-white border border-stone-200 text-stone-800 shadow-2xs hover:bg-stone-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <Compass className="w-4 h-4 text-stone-500" />
+                Careers Tree
+              </span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </Link>
             <Link
               to="/roadmap"
               onClick={() => setMobileMenuOpen(false)}
@@ -184,6 +202,17 @@ const Index = () => {
                   <Map className="w-4 h-4" />
                   Explore Career Roadmaps
                   <ArrowRight className="w-4 h-4 ml-1" />
+                </button>
+
+                <button
+                  onClick={() => navigate("/careers-tree")}
+                  className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all border border-stone-300/90 bg-white hover:bg-stone-50 text-stone-900 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group"
+                >
+                  <GitFork className="w-4 h-4 text-[#7C5C3E] group-hover:rotate-45 transition-transform" />
+                  <span>Careers Tree</span>
+                  <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                    Map
+                  </span>
                 </button>
               </div>
 
