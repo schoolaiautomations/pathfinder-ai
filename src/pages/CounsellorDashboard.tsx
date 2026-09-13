@@ -35,6 +35,7 @@ import {
   FlaskConical,
   Printer,
   GitFork,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -74,7 +75,7 @@ export interface ClassTeacherRosterItem {
   totalStrength: number;
 }
 
-export type SchoolRosterId = "lingamparthi" | "jeddangi" | "yeleswaram";
+export type SchoolRosterId = "lingamparthi" | "jeddangi" | "yeleswaram" | "ghs_yeleswaram";
 
 export interface SchoolRosterConfig {
   id: SchoolRosterId;
@@ -137,7 +138,11 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
     headmasterName: "CH. Rajasri",
     matchSchool: (sch: string, loc?: string) => {
       const s = `${sch || ""} ${loc || ""}`.toLowerCase();
+      if (s.includes("ghs") || s.includes("government high school") || s.includes("govt high school")) return false;
+      if (s.includes("lingamparthi") || s.includes("jeddangi")) return false;
       return (
+        s.includes("girl") ||
+        s.includes("zphs") ||
         s.includes("yeleswaram") ||
         s.includes("eleswaram") ||
         s.includes("yeleshwaram") ||
@@ -157,6 +162,35 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
       { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "M Indrani Devi", totalStrength: 32 },
       { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "S Krishnaveni", totalStrength: 36 },
       { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "B Satyaveni", totalStrength: 35 },
+    ],
+  },
+  ghs_yeleswaram: {
+    id: "ghs_yeleswaram",
+    schoolName: "GHS Yeleswaram",
+    badgeName: "GHS Yeleswaram",
+    headmasterName: "N Lakshmi Tulasi",
+    headmasterPhone: "8019226359",
+    matchSchool: (sch: string, loc?: string) => {
+      const s = `${sch || ""} ${loc || ""}`.toLowerCase();
+      if (s.includes("girl") || s.includes("lingamparthi") || s.includes("jeddangi")) return false;
+      return (
+        s.includes("ghs") ||
+        s.includes("government high school") ||
+        s.includes("govt high school") ||
+        s.includes("boys") ||
+        ((s.includes("yeleswaram") || s.includes("eleswaram") || s.includes("ఏలేశ్వరం")) && !s.includes("zphs"))
+      );
+    },
+    teachers: [
+      { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "S Rajya Lakshmi", totalStrength: 58 },
+      { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "K V S Raju", totalStrength: 55 },
+      { id: "8-C", gradeLabel: "8th", gradeNumber: 8, section: "C", teacherName: "P Lovaraju", totalStrength: 57 },
+      { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "Ch Dorababu", totalStrength: 56 },
+      { id: "9-B", gradeLabel: "9th", gradeNumber: 9, section: "B", teacherName: "K Sirisha", totalStrength: 59 },
+      { id: "9-C", gradeLabel: "9th", gradeNumber: 9, section: "C", teacherName: "Ch S S Kishore", totalStrength: 53 },
+      { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "M Anjaneyulu", totalStrength: 49 },
+      { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "V Sriram Murthy", totalStrength: 48 },
+      { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "B Ganga Raja Reddy", totalStrength: 47 },
     ],
   },
 };
@@ -967,17 +1001,32 @@ const CounsellorDashboard = () => {
                     const lingamparthiData = computeRosterStats(SCHOOL_ROSTERS.lingamparthi);
                     const jeddangiData = computeRosterStats(SCHOOL_ROSTERS.jeddangi);
                     const yeleswaramData = computeRosterStats(SCHOOL_ROSTERS.yeleswaram);
+                    const ghsYeleswaramData = computeRosterStats(SCHOOL_ROSTERS.ghs_yeleswaram);
 
-                    const combinedEnrolled = lingamparthiData.totalEnrolled + jeddangiData.totalEnrolled + yeleswaramData.totalEnrolled;
-                    const combinedReceived = lingamparthiData.totalRosterReceived + jeddangiData.totalRosterReceived + yeleswaramData.totalRosterReceived;
+                    const combinedEnrolled =
+                      lingamparthiData.totalEnrolled +
+                      jeddangiData.totalEnrolled +
+                      yeleswaramData.totalEnrolled +
+                      ghsYeleswaramData.totalEnrolled;
+                    const combinedReceived =
+                      lingamparthiData.totalRosterReceived +
+                      jeddangiData.totalRosterReceived +
+                      yeleswaramData.totalRosterReceived +
+                      ghsYeleswaramData.totalRosterReceived;
                     const combinedOverallPct = combinedEnrolled > 0 ? Math.round((combinedReceived / combinedEnrolled) * 100) : 0;
-                    const combinedBelowThreshold = lingamparthiData.belowThresholdCount + jeddangiData.belowThresholdCount + yeleswaramData.belowThresholdCount;
+                    const combinedBelowThreshold =
+                      lingamparthiData.belowThresholdCount +
+                      jeddangiData.belowThresholdCount +
+                      yeleswaramData.belowThresholdCount +
+                      ghsYeleswaramData.belowThresholdCount;
 
                     const currentRosterData =
                       activeRosterSchoolId === "jeddangi"
                         ? jeddangiData
                         : activeRosterSchoolId === "yeleswaram"
                         ? yeleswaramData
+                        : activeRosterSchoolId === "ghs_yeleswaram"
+                        ? ghsYeleswaramData
                         : lingamparthiData;
 
                     const handlePrintRosterPDF = (rosterData: typeof currentRosterData) => {
@@ -1190,7 +1239,7 @@ const CounsellorDashboard = () => {
                                   Class Teachers &amp; School Rosters
                                 </div>
                                 <p className="text-xs text-stone-500 font-medium mt-0.5 truncate">
-                                  Lingamparthi &bull; Jeddangi &bull; Yeleswaram (Girls) &bull; Received: <strong>{combinedReceived}</strong> / {combinedEnrolled} ({combinedOverallPct}%)
+                                  Lingamparthi &bull; Jeddangi &bull; Yeleswaram (Girls) &bull; GHS Yeleswaram &bull; Received: <strong>{combinedReceived}</strong> / {combinedEnrolled} ({combinedOverallPct}%)
                                 </p>
                               </div>
                             </div>
@@ -1240,58 +1289,65 @@ const CounsellorDashboard = () => {
                         {/* ── DIALOG POPUP: VERTICALLY ALIGNED FOR MOBILE ── */}
                         <Dialog open={isRosterModalOpen} onOpenChange={setIsRosterModalOpen}>
                           <DialogContent
+                            showCloseButton={false}
                             className="max-w-xl max-h-[90vh] flex flex-col p-0 rounded-3xl overflow-hidden border shadow-2xl bg-[#FAF8F5]"
                             style={{ borderColor: "#E0D6CA" }}
                           >
-                            {/* School Switcher Tabs */}
-                            <div className="px-4 sm:px-5 pt-3 pb-2 bg-[#F0EBE1] border-b border-[#DDD3C5] flex items-center gap-2 overflow-x-auto shrink-0">
-                              <button
-                                type="button"
-                                onClick={() => setActiveRosterSchoolId("lingamparthi")}
-                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                                  activeRosterSchoolId === "lingamparthi"
-                                    ? "bg-stone-900 text-white shadow-xs"
-                                    : "bg-white/80 border border-stone-200 text-stone-700 hover:bg-white hover:text-stone-900"
-                                }`}
-                              >
-                                <School className="w-3.5 h-3.5" />
-                                <span>ZPHS Lingamparthi</span>
-                                <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-full ${activeRosterSchoolId === "lingamparthi" ? "bg-stone-700 text-white" : "bg-stone-100 text-stone-600"}`}>
-                                  {lingamparthiData.totalRosterReceived}/{lingamparthiData.totalEnrolled}
-                                </span>
-                              </button>
+                            {/* School Switcher Dropdown Bar */}
+                            <div className="px-4 sm:px-5 py-3 bg-[#F0EBE1] border-b border-[#DDD3C5] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0">
+                              <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                                <div className="w-8 h-8 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-2xs">
+                                  <School className="w-4 h-4" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <label htmlFor="school-roster-select" className="text-[10px] font-black uppercase tracking-wider text-stone-500 block mb-0.5">
+                                    Select School Roster
+                                  </label>
+                                  <div className="relative">
+                                    <select
+                                      id="school-roster-select"
+                                      value={activeRosterSchoolId}
+                                      onChange={(e) => setActiveRosterSchoolId(e.target.value as SchoolRosterId)}
+                                      className="w-full bg-white border border-[#DDD3C5] rounded-xl px-3 py-1.5 text-xs sm:text-sm font-extrabold text-stone-900 shadow-2xs focus:outline-none focus:ring-2 focus:ring-stone-900 cursor-pointer appearance-none pr-8"
+                                    >
+                                      <option value="lingamparthi">
+                                        ZPHS Lingamparthi ({lingamparthiData.totalRosterReceived}/{lingamparthiData.totalEnrolled})
+                                      </option>
+                                      <option value="jeddangi">
+                                        ZPHS Jeddangi Annavaram ({jeddangiData.totalRosterReceived}/{jeddangiData.totalEnrolled})
+                                      </option>
+                                      <option value="yeleswaram">
+                                        ZPHS (Girls) Yeleswaram ({yeleswaramData.totalRosterReceived}/{yeleswaramData.totalEnrolled})
+                                      </option>
+                                      <option value="ghs_yeleswaram">
+                                        GHS Yeleswaram ({ghsYeleswaramData.totalRosterReceived}/{ghsYeleswaramData.totalEnrolled})
+                                      </option>
+                                    </select>
+                                    <ChevronDown className="w-4 h-4 text-stone-600 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                                  </div>
+                                </div>
+                              </div>
 
-                              <button
-                                type="button"
-                                onClick={() => setActiveRosterSchoolId("jeddangi")}
-                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                                  activeRosterSchoolId === "jeddangi"
-                                    ? "bg-[#7C5C3E] text-white shadow-xs"
-                                    : "bg-white/80 border border-stone-200 text-stone-700 hover:bg-white hover:text-stone-900"
-                                }`}
-                              >
-                                <School className="w-3.5 h-3.5" />
-                                <span>ZPHS Jeddangi Annavaram</span>
-                                <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-full ${activeRosterSchoolId === "jeddangi" ? "bg-[#5e442c] text-white" : "bg-stone-100 text-stone-600"}`}>
-                                  {jeddangiData.totalRosterReceived}/{jeddangiData.totalEnrolled}
+                              <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                                <span
+                                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black shadow-2xs border ${
+                                    currentRosterData.overallTier === "red"
+                                      ? "bg-rose-100 text-rose-800 border-rose-300"
+                                      : currentRosterData.overallTier === "orange"
+                                      ? "bg-amber-100 text-amber-800 border-amber-300"
+                                      : "bg-emerald-100 text-emerald-800 border-emerald-300"
+                                  }`}
+                                >
+                                  {currentRosterData.overallTier === "red" ? (
+                                    <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+                                  ) : currentRosterData.overallTier === "orange" ? (
+                                    <TrendingUp className="w-3.5 h-3.5 text-amber-600" />
+                                  ) : (
+                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                  )}
+                                  <span>{currentRosterData.totalRosterReceived} / {currentRosterData.totalEnrolled} ({currentRosterData.overallPercentage}%)</span>
                                 </span>
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() => setActiveRosterSchoolId("yeleswaram")}
-                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                                  activeRosterSchoolId === "yeleswaram"
-                                    ? "bg-[#5A3825] text-white shadow-xs"
-                                    : "bg-white/80 border border-stone-200 text-stone-700 hover:bg-white hover:text-stone-900"
-                                }`}
-                              >
-                                <School className="w-3.5 h-3.5" />
-                                <span>ZPHS (Girls) Yeleswaram</span>
-                                <span className={`text-[10px] font-black px-1.5 py-0.2 rounded-full ${activeRosterSchoolId === "yeleswaram" ? "bg-[#3D2518] text-white" : "bg-stone-100 text-stone-600"}`}>
-                                  {yeleswaramData.totalRosterReceived}/{yeleswaramData.totalEnrolled}
-                                </span>
-                              </button>
+                              </div>
                             </div>
 
                             {/* Top Header with Close/Cancel button and Print PDF option */}

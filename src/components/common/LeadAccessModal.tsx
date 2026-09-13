@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { User, School, Phone, Lock, ArrowRight, Sparkles, AlertCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { User, School, Phone, Lock, ArrowRight, ArrowLeft, Sparkles, AlertCircle } from "lucide-react";
 import { saveVisitorLeadToSupabase } from "@/lib/supabase";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
@@ -9,6 +10,7 @@ interface LeadAccessModalProps {
 }
 
 export const LeadAccessModal: React.FC<LeadAccessModalProps> = ({ sourcePage, onUnlocked }) => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [schoolName, setSchoolName] = useState<string>("");
@@ -88,6 +90,14 @@ export const LeadAccessModal: React.FC<LeadAccessModalProps> = ({ sourcePage, on
     }
   };
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/");
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -96,13 +106,25 @@ export const LeadAccessModal: React.FC<LeadAccessModalProps> = ({ sourcePage, on
         className="w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border relative overflow-hidden animate-in zoom-in-95 duration-200"
         style={{ background: "#FAF8F5", borderColor: "#E0D6CA" }}
       >
+        {/* Top Controls: Back Button & Badge */}
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-100 text-xs font-bold text-stone-700 transition-colors shadow-2xs cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back</span>
+          </button>
+
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5] shadow-2xs">
+            <Sparkles className="w-3 h-3 text-[#C9A97A]" />
+            <span>Free Resource</span>
+          </div>
+        </div>
+
         {/* Top Header */}
         <div className="text-center space-y-2 mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5] mb-1 shadow-2xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#C9A97A]" />
-            Free Career Resource
-          </div>
-
           <div className="flex items-center justify-center gap-2.5 pt-1">
             <img
               src={wabiLogo}
@@ -199,6 +221,16 @@ export const LeadAccessModal: React.FC<LeadAccessModalProps> = ({ sourcePage, on
                 <ArrowRight className="w-4 h-4 text-[#C9A97A]" />
               </>
             )}
+          </button>
+
+          {/* Secondary Back Button */}
+          <button
+            type="button"
+            onClick={handleBack}
+            className="w-full h-10 rounded-xl font-bold text-xs text-stone-600 hover:text-stone-900 hover:bg-stone-200/50 transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Cancel &amp; Go Back</span>
           </button>
         </form>
 
