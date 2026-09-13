@@ -9,6 +9,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
+import { LeadAccessModal } from "@/components/common/LeadAccessModal";
 
 const PERSONAL_NOTE =
   "💡 Career choice is completely personal — many factors like your family situation, interests, strengths, and financial background affect your decision. To get personalised guidance tailored to your unique situation, book a 1-on-1 session with our counsellor.";
@@ -420,6 +421,9 @@ const FaqPage = () => {
           </div>
         </div>
       </footer>
+
+      {/* ─── LEAD ACCESS POPUP MODAL ─── */}
+      <LeadAccessModal sourcePage="FAQ" />
     </main>
   );
 };

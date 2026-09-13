@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CAREER_PROFILES } from "@/lib/career-comparison-data";
+import { CAREER_AI_IMPACT } from "@/lib/career-ai-impact-data";
 import {
   Clock,
   Building,
@@ -12,13 +13,29 @@ import {
   Sunset,
   Moon,
   Sparkles,
+  X,
+  Cpu,
 } from "lucide-react";
 
 export const DailyLifeView = () => {
   const [selectedCareerId, setSelectedCareerId] = useState<string>("ias");
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false);
 
   const career = CAREER_PROFILES.find((c) => c.id === selectedCareerId) || CAREER_PROFILES[0];
   const { dayInTheLife } = career;
+  const aiImpact = CAREER_AI_IMPACT[career.id];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsAiModalOpen(false);
+      }
+    };
+    if (isAiModalOpen) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isAiModalOpen]);
 
   return (
     <div className="space-y-6">
@@ -71,13 +88,26 @@ export const DailyLifeView = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
-            <div className="px-3.5 py-1.5 rounded-xl bg-stone-50 border border-stone-200 text-xs font-bold text-stone-800">
-              ⏱️ Shift: {dayInTheLife.workHours}
+          <div className="flex flex-wrap items-center gap-2 sm:flex-col sm:items-end">
+            <div className="flex flex-wrap gap-2">
+              <div className="px-3.5 py-1.5 rounded-xl bg-stone-50 border border-stone-200 text-xs font-bold text-stone-800">
+                ⏱️ Shift: {dayInTheLife.workHours}
+              </div>
+              <div className="px-3.5 py-1.5 rounded-xl bg-stone-50 border border-stone-200 text-xs font-bold text-stone-800">
+                🏢 Setting: {dayInTheLife.workEnvironment}
+              </div>
             </div>
-            <div className="px-3.5 py-1.5 rounded-xl bg-stone-50 border border-stone-200 text-xs font-bold text-stone-800">
-              🏢 Setting: {dayInTheLife.workEnvironment}
-            </div>
+
+            {aiImpact && (
+              <button
+                type="button"
+                onClick={() => setIsAiModalOpen(true)}
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-xs hover:scale-102 active:scale-98"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#C9A97A]" />
+                <span>AI Impact on this Career</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -173,6 +203,130 @@ export const DailyLifeView = () => {
           </div>
         </div>
       </div>
+
+      {/* ─── AI IMPACT POPUP MODAL ─── */}
+      {isAiModalOpen && aiImpact && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-150"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsAiModalOpen(false);
+          }}
+        >
+          <div className="bg-[#FAF8F5] w-full max-w-2xl max-h-[90vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-[#E0D6CA] animate-in zoom-in-95 duration-150">
+            {/* Modal Header */}
+            <div className="p-5 sm:p-6 border-b border-[#E0D6CA] bg-[#F5F1EC] flex items-start justify-between gap-4">
+              <div className="space-y-1.5 min-w-0">
+                <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10.5px] font-black uppercase tracking-wider bg-stone-900 text-[#FAF8F5]">
+                  <Sparkles className="w-3 h-3 text-[#C9A97A]" />
+                  Careers &amp; AI Impact
+                </div>
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 flex items-center gap-2">
+                    <span>{career.icon}</span>
+                    <span>{aiImpact.title}</span>
+                  </h3>
+                  <span
+                    className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
+                      aiImpact.badgeColor === "emerald"
+                        ? "bg-emerald-100 text-emerald-900 border-emerald-300"
+                        : aiImpact.badgeColor === "amber"
+                        ? "bg-amber-100 text-amber-900 border-amber-300"
+                        : aiImpact.badgeColor === "rose"
+                        ? "bg-rose-100 text-rose-900 border-rose-300"
+                        : "bg-blue-100 text-blue-900 border-blue-300"
+                    }`}
+                  >
+                    {aiImpact.badge}
+                  </span>
+                </div>
+                <p className="text-xs text-stone-600 font-medium leading-relaxed">
+                  {aiImpact.tagline}
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIsAiModalOpen(false)}
+                className="p-2 rounded-xl border border-stone-200 bg-white hover:bg-stone-100 text-stone-700 cursor-pointer shrink-0 transition-colors shadow-2xs"
+                title="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1">
+              {/* Executive Overview */}
+              <div className="p-4 rounded-2xl border bg-white space-y-1.5 shadow-2xs" style={{ borderColor: "#E5DDD2" }}>
+                <div className="text-[10.5px] font-extrabold uppercase tracking-wider text-stone-500">
+                  Overview &amp; Reality Check
+                </div>
+                <p className="text-xs sm:text-sm text-stone-800 leading-relaxed font-medium">
+                  {aiImpact.intro}
+                </p>
+              </div>
+
+              {/* Structured Key Shifts / Points */}
+              <div className="space-y-2.5">
+                <h4 className="text-xs font-bold text-stone-700 uppercase tracking-wider flex items-center gap-2 pt-1">
+                  <Cpu className="w-4 h-4 text-[#7C5C3E]" />
+                  What's Changing vs. What Stays Human
+                </h4>
+
+                <div className="grid gap-2.5">
+                  {aiImpact.points.map((pt, pIdx) => (
+                    <div
+                      key={pIdx}
+                      className="p-4 rounded-2xl border bg-white space-y-1 shadow-2xs"
+                      style={{ borderColor: "#E8DFD0" }}
+                    >
+                      <div className="text-xs font-extrabold text-stone-900 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#7C5C3E]" />
+                        <span>{pt.heading}</span>
+                      </div>
+                      <p className="text-xs text-stone-600 font-medium leading-relaxed pl-3">
+                        {pt.body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Net Effect Box */}
+              <div
+                className="p-5 rounded-2xl border space-y-2 shadow-xs"
+                style={{
+                  background: "#F2ECE3",
+                  borderColor: "#D9CCBB",
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-base">🎯</span>
+                  <h5 className="text-xs font-black uppercase tracking-wider text-stone-900">
+                    Net Takeaway &amp; Strategic Advice
+                  </h5>
+                </div>
+                <p className="text-xs sm:text-sm font-semibold text-stone-800 leading-relaxed">
+                  {aiImpact.netEffect}
+                </p>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="px-5 py-3.5 border-t border-[#E0D6CA] bg-[#F5F1EC] flex items-center justify-between gap-3">
+              <span className="text-[11px] font-semibold text-stone-500 truncate">
+                Wabi Career Guidance · Profession AI Impact Analysis
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsAiModalOpen(false)}
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-2xs shrink-0"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

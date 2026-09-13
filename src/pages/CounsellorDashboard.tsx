@@ -59,6 +59,7 @@ import { DailyLifeView } from "@/components/counsellor/DailyLifeView";
 import { CareerAnalyticsView } from "@/components/counsellor/CareerAnalyticsView";
 import { CourseCurriculumView } from "@/components/counsellor/CourseCurriculumView";
 import { CareersTreeView } from "@/components/counsellor/CareersTreeView";
+import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 
 const COUNSELLOR_PASSWORD = "wabi123";
@@ -586,7 +587,7 @@ const CounsellorDashboard = () => {
                             <FileText className="w-5 h-5" />
                           </div>
                           <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-stone-100 text-stone-700">
-                            19 Blueprints
+                            {DEFAULT_CAREER_OPTIONS.length} Blueprints
                           </span>
                         </div>
                         <div>

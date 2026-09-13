@@ -1365,6 +1365,105 @@ export const CAREER_PROFILES: CareerProfile[] = [
     }
   },
   {
+    id: "air-hostess",
+    name: "Air Hostess / Cabin Crew",
+    category: "Aviation & Hospitality",
+    icon: "🛫",
+    tagline: "Ensure passenger safety, comfort, and premium in-flight hospitality across domestic and international skies.",
+    stream: "Any Stream (MPC, BiPC, MEC, CEC, HEC in 10+2 / Intermediate)",
+    educationRoute: "Class 12 (min 18 yrs, fluent English) + Airline Direct Walk-in / Interview + DGCA In-house Airline Cabin Crew Training",
+    durationYears: "3-6 Months airline training after Class 12 / Degree",
+    estimatedCost: "Zero to minimal (Airlines train selected candidates directly)",
+    keyExams: "Direct Airline Selection (Grooming & Reach Test, English Fluency, GD, PI, DGCA Class 2 Medical)",
+    salaryStarting: "₹35,000 - ₹50,000/mo (Domestic) | ₹1,00,000 - ₹1,50,000/mo (International: Emirates/Qatar)",
+    salaryPeak: "₹1,80,000 - ₹2,50,000+/mo (Senior Cabin Crew / In-flight Manager / Base Supervisor)",
+    workLifeBalance: "Demanding",
+    jobDemand: "High",
+    fieldRatio: "10% Ground/Briefing, 90% In-Flight Aircraft Cabin",
+    keyPros: [
+      "Travel across domestic and international destinations with luxury layover allowances",
+      "Fast career start right after Class 12 without needing a 4-year expensive degree",
+      "High starting remuneration, duty allowances, and tax-free perks on international carriers"
+    ],
+    keyCons: [
+      "Irregular rosters with early morning report times, red-eye night flights, and jet lag",
+      "Physically demanding: continuous standing, turbulence balance, and emergency preparedness",
+      "Strict grooming, physical reach (212 cm), clear skin, and stringent DGCA medical checks"
+    ],
+    backupPlan: "Airport Ground Operations, Hotel Guest Relations Manager, Corporate Hospitality, Luxury Retail, Customer Experience",
+    dayInTheLife: {
+      workHours: "Shift-based flight rosters (capped by DGCA duty time limitations)",
+      workEnvironment: "Airport terminals, pre-flight briefing rooms, and commercial airliner passenger cabins at 35,000 feet",
+      mythsVsReality: [
+        { myth: "Cabin crew is purely a glamour and beverage-serving job.", reality: "Cabin crew are first and foremost certified safety officers trained in CPR, emergency door evacuations, fire fighting, and anti-hijack protocols." },
+        { myth: "You must pay lakhs of rupees to a private air hostess academy to get hired.", reality: "Major airlines (IndiGo, Air India, Emirates) recruit directly from Class 12 pass-outs through official career portals and conduct their own DGCA training." }
+      ],
+      timeline: [
+        { time: "04:30 AM", title: "Wake-up & Grooming Standard Check", desc: "Adheres to airline hair, uniform, and makeup grooming standards before leaving for airport crew center." },
+        { time: "06:00 AM", title: "Pre-Flight Crew Briefing", desc: "Meets Captain, First Officer, and Cabin Manager; reviews emergency protocols, passenger special requests, and weather turbulence reports." },
+        { time: "06:45 AM", title: "Cabin Security & Equipment Sweep", desc: "Inspects emergency oxygen cylinders, fire extinguishers, first-aid kits, and checks catering galley supplies." },
+        { time: "07:15 AM", title: "Passenger Boarding & Safety Briefing", desc: "Welcomes passengers, assists with overhead bin stowage, checks emergency exit row occupants, and conducts safety demo." },
+        { time: "08:45 AM", title: "In-Flight Hospitality & Passenger Vigilance", desc: "Serves meals and refreshments while monitoring cabin pressure comfort and medical well-being of travelers." },
+        { time: "11:30 AM", title: "Landing & Post-Flight Deplaning", desc: "Ensures all passengers safely exit, checks cabin for forgotten items, and hands over aircraft to ground turnaround crew." }
+      ],
+      dailyChallenges: [
+        "Handling anxious, aggressive, or difficult passengers in a confined aircraft cabin.",
+        "Remaining calm and reassuring during severe mid-air clear-air turbulence or medical emergencies.",
+        "Balancing disrupted sleep cycles, irregular meal hours, and frequent timezone transitions."
+      ],
+      toolsUsed: ["Aircraft Intercom & PA System", "AED Defibrillator & First Aid Kit", "Emergency Smoke Hood & Halon Extinguisher", "In-Flight POS Terminal", "Galley Ovens & Beverage Carts"]
+    }
+  },
+  {
+    id: "physiotherapy",
+    name: "Physiotherapy (BPT / MPT)",
+    category: "Healthcare & Rehabilitation",
+    icon: "🏃",
+    tagline: "Help patients reduce pain, restore natural mobility, and regain independent life after injury, stroke, or surgery.",
+    stream: "BiPC (Biology, Physics, Chemistry in 10+2 / Intermediate)",
+    educationRoute: "10+2 BiPC + BPT (Bachelor of Physiotherapy: 4 Years + 6 Months Rotatory Internship)",
+    durationYears: "4.5 Years (4 Academic Yrs + 6 Months Internship)",
+    estimatedCost: "₹1.5 Lakhs - ₹6 Lakhs (Govt vs Private Affiliated Colleges)",
+    keyExams: "AP EAPCET / State Paramedical Counselling / Institutional Merit",
+    salaryStarting: "₹25,000 - ₹40,000/mo (Hospital / Clinic Junior Physiotherapist)",
+    salaryPeak: "₹1,20,000 - ₹2,50,000+/mo (Senior Consultant, Sports Team Physio, or Independent Clinic Owner)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "85% Clinical/Gym/Rehab, 15% Documentation",
+    keyPros: [
+      "Direct, fulfilling patient impact seeing paralyzed or recovering individuals walk and resume active life",
+      "High autonomy: legal eligibility to set up independent private physiotherapy & rehabilitation clinics",
+      "Rapidly rising demand in sports academies, orthopaedic hospitals, neurological rehab, and corporate ergonomics"
+    ],
+    keyCons: [
+      "Physically demanding: spending long hours standing, manual joint mobilizations, and physically supporting patients",
+      "Initial starting salaries in smaller private hospitals can be modest before establishing clinical reputation",
+      "Requires immense patience and emotional resilience as neurological recovery takes weeks to months"
+    ],
+    backupPlan: "Occupational Therapy (BOT), Sports Science & Athletic Training, Hospital Administration (MHA), Clinical Ergonomics",
+    dayInTheLife: {
+      workHours: "9:00 AM – 6:00 PM (Regular OPD / Clinic schedule, predictable hours)",
+      workEnvironment: "Hospital In-Patient Wards, Physiotherapy OPD, Sports Rehabilitation Centers, and Home Rehab",
+      mythsVsReality: [
+        { myth: "Physiotherapy is basically massage therapy.", reality: "It is an evidence-based clinical discipline recognised under the NCAHP Act 2021 requiring expertise in neuro-anatomy, electrotherapy, biomechanics, and exercise physiology." },
+        { myth: "You must clear NEET with a top score to study Physiotherapy.", reality: "Admission in AP and most states is via EAPCET or paramedical merit, allowing students to enter clinical healthcare without extreme NEET cutoffs." }
+      ],
+      timeline: [
+        { time: "09:00 AM", title: "Hospital In-Patient Ward Rounds", desc: "Mobilizes post-operative knee replacement and fracture patients; initiates early bed-mobility and breathing exercises." },
+        { time: "11:00 AM", title: "Neuro-Rehabilitation Clinic", desc: "Conducts gait retraining, mirror therapy, and neuromuscular re-education for stroke and spinal cord rehabilitation patients." },
+        { time: "01:30 PM", title: "Lunch & Clinical Case Documentation", desc: "Reviews patient range-of-motion progress charts and coordinates discharge rehabilitation plans with surgeons." },
+        { time: "02:30 PM", title: "Sports & Orthopaedic OPD", desc: "Treats athletes with ACL rehabilitation, rotator cuff shoulder therapy, manual joint mobilizations, and dry needling." },
+        { time: "05:00 PM", title: "Geriatric Balance & Fall Prevention Session", desc: "Guides elderly patients through functional balance drills, core stability exercises, and home posture adaptations." }
+      ],
+      dailyChallenges: [
+        "Managing patient frustration and keeping motivation high during slow chronic recovery phases.",
+        "Physical exertion from continuous manual therapy, resistive muscle stretching, and body-weight transfers.",
+        "Ensuring patients consistently adhere to home exercise programs rather than relying solely on clinic visits."
+      ],
+      toolsUsed: ["Goniometer", "TENS & Ultrasound Therapy Units", "Resistance Bands & Dumbbells", "Balance Boards & Stability Balls", "Parallel Walking Bars & Treadmill"]
+    }
+  },
+  {
     id: "not-decided",
     name: "Career Explorer / General Guidance",
     category: "General Guidance",

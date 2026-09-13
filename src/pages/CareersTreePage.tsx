@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Map, Network } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { CareersTreeView } from "@/components/counsellor/CareersTreeView";
+import { LeadAccessModal } from "@/components/common/LeadAccessModal";
 
 export const CareersTreePage: React.FC = () => {
   const navigate = useNavigate();
@@ -58,6 +59,9 @@ export const CareersTreePage: React.FC = () => {
       <div className="flex-1 flex flex-col">
         <CareersTreeView />
       </div>
+
+      {/* ─── LEAD ACCESS POPUP MODAL ─── */}
+      <LeadAccessModal sourcePage="Careers Tree" />
     </main>
   );
 };

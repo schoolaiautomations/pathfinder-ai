@@ -1,0 +1,378 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Physiotherapy</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Physiotherapy</h2><p class="standfirst">Physiotherapists help people reduce pain, regain movement and return to daily life after injury, surgery, illness or disability. The career combines Biology, anatomy, exercise, hands-on assessment, rehabilitation and patient communication. It is not simply “massage” — it is a healthcare profession built around movement and function.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Physiotherapy &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Is it yours?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>How to qualify?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Careers</b><em>Many specialities</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Be realistic</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want physiotherapy?</h3><p class="lede">The work is very human. You may spend much of the day helping people who are in pain, weak, frustrated or afraid of moving again.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>Do you enjoy Biology and understanding how muscles, joints, nerves, heart and lungs work?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="1"><p>Can you patiently encourage someone to repeat exercises even when progress is slow?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="2"><p>Are you comfortable working closely and professionally with patients of different ages and health conditions?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="3"><p>Would you enjoy learning anatomy, biomechanics, exercise therapy and clinical assessment rather than only sports and gym exercises?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="4"><p>Can you stay careful and evidence-based instead of promising a “quick cure” to every patient?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q" data-i="5"><p>Would you still choose this career if your first salary were modest and you had to build experience before earning more?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">For students in Andhra Pradesh, the route is straightforward: BiPC is the safest school pathway into BPT.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Biology</div><div class="v">The strongest school foundation. Later you will study anatomy, physiology, pathology, neurology, exercise therapy and rehabilitation.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Physics</div><div class="v">Movement, force, balance, levers, gait and electro-physical modalities all depend on basic Physics and biomechanics.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>English &amp; Communication</div><div class="v">You must understand medical material, explain exercises clearly, take patient history and build trust. In Andhra Pradesh's current BPT eligibility, English is also a required Class 12 subject.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Intermediate BiPC — Biology, Physics and Chemistry — with English is the standard route.</b> In the latest Dr. NTR University of Health Sciences Andhra Pradesh BPT admission rules, students needed Class 12 / Intermediate with <b>Physics, Chemistry, Biology and English</b>. After Class 12, apply for BPT admission under the current university/college process.</div></div>
+
+<div class="row"><div class="k">Entrance / admission options</div><div class="v"><b>There is no single compulsory national entrance exam for BPT across India.</b><br><br>
+<b>CUET-UG</b> — some universities across India admit BPT students through CUET-UG. If targeting a CUET-participating university, check that university's exact subject combination and BPT eligibility.<br><br>
+<b>NEET-UG</b> — may be accepted or required by some institutions/authorities, but it is <b>not a compulsory BPT entrance exam across all of India</b>. Always check the exact college/state rule.<br><br>
+<b>University / state route</b> — other universities or states may use their own entrance test, counselling process or Class 12 merit.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh</div><div class="v"><b>In the latest completed Dr. NTR UHS 2025–26 competent-authority admission cycle, BPT admission was based on Class 12 science marks rather than a separate BPT entrance exam.</b> The merit list used the percentage of marks in <b>Botany, Zoology, Physics and Chemistry</b>, followed by web counselling.<br><span style="font-size:13px">Admission rules can change. Students applying in a later year should check that year's Dr. NTR UHS prospectus rather than assuming NEET, CUET or AP EAPCET is compulsory.</span></div></div>
+
+<div class="row"><div class="k">BPT course</div><div class="v"><b>Bachelor of Physiotherapy (BPT).</b> Under Dr. NTR UHS's latest 2025–26 prospectus, the course is <b>4 academic years + 6 months compulsory rotatory internship</b> — about 4½ years total.</div></div>
+
+<div class="row"><div class="k">What you study</div><div class="v"><div class="chips"><span class="chip">Anatomy</span><span class="chip">Physiology</span><span class="chip">Biomechanics</span><span class="chip">Exercise Therapy</span><span class="chip">Electrotherapy</span><span class="chip">Orthopaedics</span><span class="chip">Neurology</span><span class="chip">Cardiorespiratory</span></div></div></div>
+
+<div class="row"><div class="k">Professional status</div><div class="v">Physiotherapy is recognised under India's <b>National Commission for Allied and Healthcare Professions Act, 2021</b>. The Act specifically lists the <b>Physiotherapy Professional / Physiotherapist</b> and provides for professional standards and central/state registers. Because registration systems continue to evolve, verify the current registration requirement and recognised qualification when you graduate.</div></div>
+
+<div class="row"><div class="k">Higher study</div><div class="v"><b>MPT — Master of Physiotherapy</b> can be used to specialise further. Dr. NTR UHS currently lists MPT specialities including <b>Orthopaedics, Neurology, Cardiorespiratory and Sports</b>. Higher study is useful for specialist clinical work, teaching and research, but is not the only way to begin working after BPT.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → Intermediate BiPC + English → BPT admission through CUET-UG / NEET-UG / university-state merit or entrance route as applicable → 4 years BPT + compulsory clinical internship → required professional registration / institutional formalities → Physiotherapist.</b><br><span style="font-size:13px">For Andhra Pradesh, the latest Dr. NTR UHS competent-authority route used Intermediate science marks + counselling.</span></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Do not join an unrecognised “physiotherapy” certificate and assume it makes you a Physiotherapist.</b> Check the exact BPT qualification, university affiliation, hospital exposure and current recognition/registration requirements before admission.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · SPECIALITIES &amp; JOBS</div><h3>Where can a physiotherapist work?</h3><p class="lede">Physiotherapy is much broader than sports injuries. Different patients need very different rehabilitation.</p>
+
+<div class="card">
+<div class="row"><div class="k">Orthopaedic / Musculoskeletal</div><div class="v"><b>Back pain, neck pain, joint problems, fractures and post-surgery rehabilitation.</b><br><b>Work:</b> movement assessment, exercise, mobility, strength, posture and functional recovery.<div class="chips"><span class="chip">Back / Neck</span><span class="chip">Joints</span><span class="chip">Post-surgery</span></div></div></div>
+
+<div class="row"><div class="k">Sports Physiotherapy</div><div class="v"><b>Help athletes prevent and recover from injuries.</b> Work can involve return-to-sport testing, strength, mobility, taping, rehabilitation and collaboration with coaches/strength staff.<br><b>Reality:</b> getting into elite sports teams is competitive; general BPT does not automatically lead to IPL or national-team jobs.</div></div>
+
+<div class="row"><div class="k">Neurological Physiotherapy</div><div class="v">Help people regain movement and independence after <b>stroke, spinal-cord injury, traumatic brain injury, Parkinson's disease, multiple sclerosis and other neurological conditions.</b></div></div>
+
+<div class="row"><div class="k">Cardiorespiratory</div><div class="v">Work with people recovering from heart/lung illness, surgery or intensive care. Treatment can include breathing exercises, mobilisation, endurance and pulmonary/cardiac rehabilitation.</div></div>
+
+<div class="row"><div class="k">Paediatric Physiotherapy</div><div class="v">Work with children who have developmental, neurological, orthopaedic or movement difficulties. Family communication and playful, age-appropriate therapy are important.</div></div>
+
+<div class="row"><div class="k">Geriatric Physiotherapy</div><div class="v">Help older adults maintain strength, balance, walking ability and independence, including fall prevention and rehabilitation after illness or surgery.</div></div>
+
+<div class="row"><div class="k">Women's Health / Pelvic Health</div><div class="v">Specialised rehabilitation related to pregnancy, postpartum recovery, pelvic-floor dysfunction and other women's-health conditions. Additional training and careful professional practice are important.</div></div>
+
+<div class="row"><div class="k">ICU / Hospital Rehabilitation</div><div class="v">Help hospitalised patients begin safe movement after major illness, surgery or prolonged bed rest. This can involve medically complex patients and close teamwork with doctors and nurses.</div></div>
+
+<div class="row"><div class="k">Community / Home Care</div><div class="v">Treat patients at home or in community settings — especially older adults, neurological patients and people who cannot travel easily to clinics.</div></div>
+
+<div class="row"><div class="k">Ergonomics / Workplace</div><div class="v">Help organisations reduce musculoskeletal problems through posture, work-station design, movement education and injury-prevention programmes.</div></div>
+
+<div class="row"><div class="k">Rehabilitation Technology</div><div class="v">Physiotherapists increasingly work alongside prosthetics/orthotics, gait labs, robotics, wearable sensors and digital-rehabilitation systems.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Physiotherapist vs Doctor</div><div class="v"><b>Physiotherapist:</b> specialises in movement, function, exercise and rehabilitation.<br><b>Medical Doctor:</b> follows MBBS and medical-specialty training to diagnose/treat disease using the medical scope of practice.<br>Physiotherapists are healthcare professionals, but <b>BPT is not MBBS</b>.</div></div>
+
+<div class="row"><div class="k">Physiotherapist vs Occupational Therapist</div><div class="v"><b>Physiotherapy:</b> focuses strongly on movement, mobility, strength, pain and physical function.<br><b>Occupational Therapy:</b> focuses strongly on helping people perform meaningful daily activities — dressing, school, work, self-care and participation — using activity, adaptation and rehabilitation.<br>The professions often work together.</div></div>
+
+<div class="row"><div class="k">Physiotherapist vs Fitness Trainer</div><div class="v"><b>Physiotherapist:</b> clinically trained to assess and rehabilitate patients with injury, disease or functional problems.<br><b>Fitness Trainer:</b> primarily helps generally healthy clients improve exercise and fitness.<br>A gym certification is not a substitute for BPT clinical training.</div></div>
+
+<div class="row"><div class="k">Who hires</div><div class="v">Hospitals, rehabilitation centres, physiotherapy clinics, sports academies/teams, orthopaedic centres, neurological rehabilitation centres, home-health companies, fitness/wellness organisations, schools/special-needs centres and community programmes.</div></div>
+
+<div class="row"><div class="k">Private practice</div><div class="v">With appropriate experience and current professional/legal requirements, physiotherapists may build their own clinic or home-care practice. Income can improve, but clinical reputation, referrals, patient outcomes, rent, equipment and business skills all matter.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">BPT can also support adjacent careers:
+<div class="chips"><span class="chip">Rehab Coordinator</span><span class="chip">Sports Rehab</span><span class="chip">Ergonomics</span><span class="chip">Healthcare Sales</span><span class="chip">Clinical Research</span><span class="chip">Teaching after higher study</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Reality</span><span><b>Physiotherapy is physically and emotionally demanding.</b> You may spend hours standing, demonstrating exercises, assisting movement and motivating patients whose recovery takes weeks or months.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Physiotherapy can become a strong long-term healthcare career, but starting salaries in India are often modest. Experience, specialisation and private practice can improve earnings.</p>
+
+<div class="card">
+<div class="row"><div class="k">Internship</div><div class="v"><span class="money">Often low / institute-dependent</span><br><span style="font-size:13px">BPT includes compulsory clinical internship. Stipend policies vary greatly between colleges/hospitals, so do not assume it will be paid well.</span></div></div>
+
+<div class="row"><div class="k">Starting Physiotherapist</div><div class="v"><span class="money">₹15,000 – ₹25,000/month</span><br><span style="font-size:13px">A realistic early-career range for many clinic/hospital roles. Indeed's 2026 India-wide Physiotherapist average is about <b>₹19,547/month</b>.</span></div></div>
+
+<div class="row"><div class="k">Andhra Pradesh benchmark</div><div class="v"><span class="money">≈ ₹16,800/month reported average</span><br><span style="font-size:13px">Indeed's Andhra Pradesh page reported about ₹16,817/month in January 2026, but it was based on only <b>2 reported salaries</b>, so treat it cautiously. Current local job listings span much wider ranges.</span></div></div>
+
+<div class="row"><div class="k">Experienced / specialised</div><div class="v"><span class="money">₹25,000 – ₹50,000+/month</span><br><span style="font-size:13px">Experience in orthopaedics, neuro, cardio-respiratory, sports, ICU, home care or a strong hospital/clinic can move income higher. Location and employer matter greatly.</span></div></div>
+
+<div class="row"><div class="k">Private practice / sports</div><div class="v"><span class="money">Highly variable</span><br><span style="font-size:13px">Established clinicians may earn more through clinic consultations, home visits, rehabilitation packages or sports clients. But patient volume, reputation, referrals and operating costs determine actual profit.</span></div></div>
+
+<div class="row"><div class="k">Course cost</div><div class="v">BPT tuition varies by college and quota. In the latest Dr. NTR UHS 2025–26 competent-authority prospectus, private-college tuition was to be collected at the <b>Government of Andhra Pradesh fixed rate</b>. The prospectus separately listed BPT special fees of <b>₹13,500 in Year 1 and ₹8,500 in Years 2–4</b>, plus a <b>₹5,600 university fee</b> at allotment. Always check the current year's fee order before admission.</div></div>
+
+<div class="flag red"><span class="mark">Ask at home</span><span>Before paying several lakhs for BPT, compare the college's <b>hospital attachment, patient exposure, faculty, internship quality, total fee and actual graduate jobs</b>. A fancy campus is far less important than strong clinical training.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Biology + people + rehabilitation</span> — Physiotherapy may be a strong fit.</p>
+<p><span class="hi">Love sports but not patient care</span> — compare Sports Science, Strength &amp; Conditioning or professional coaching.</p>
+<p><span class="hi">Want to prescribe medicines / become a medical specialist</span> — compare the MBBS pathway instead.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>a good physiotherapist does not simply treat pain — they help the patient regain function and independence.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">You can test whether healthcare rehabilitation suits you long before entering BPT.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen Biology and learn basic human anatomy — bones, major muscles, joints, heart, lungs and nervous system</li>
+<li>Play sport or exercise regularly and notice how movement, balance, strength and flexibility change performance</li>
+<li>Practise explaining a simple exercise safely and clearly to another person</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>BiPC with English</b> if BPT is one of your serious options</li>
+<li>Focus strongly on Biology, Physics and Chemistry because Andhra Pradesh's latest BPT merit process used the science-group marks</li>
+<li>Visit a physiotherapy department or clinic if possible and observe the difference between orthopaedic, neurological and post-surgery rehabilitation</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>Before choosing a BPT college</div><ul>
+<li>Check whether your target college uses <b>CUET-UG, NEET-UG, its own entrance process or Class 12 merit</b>; for Andhra Pradesh, verify the current <b>Dr. NTR UHS</b> prospectus</li>
+<li>Compare hospital attachment, daily patient load, internship locations, laboratories, faculty and total 4½-year cost</li>
+<li>Verify the current professional-recognition and registration framework before admission and again when graduating</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Choose a simple movement such as <b>squatting or walking upstairs</b>. Learn which major joints and muscles are involved, then explain how weakness, pain or limited range of motion could make that movement difficult. If connecting <b>anatomy → movement → recovery</b> genuinely interests you, Physiotherapy may suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not medical, admission or professional-registration advice. BPT eligibility, admission method, fees and registration requirements can change. National admission routes can include CUET-UG, NEET-UG where accepted, university/state entrance processes or Class 12 merit depending on the institution. Current Andhra Pradesh guidance is based on Dr. NTR University of Health Sciences' latest completed 2025–26 Allied & Healthcare admission prospectus and current BPT/MPT course information; professional context is based on the National Commission for Allied and Healthcare Professions Act, 2021. Always verify the exact university/college prospectus for the year in which you apply.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Physiotherapy fit</strong>You seem comfortable with Biology, patient care and long-term rehabilitation. Next, observe real physiotherapy work before choosing a college.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>Some parts fit you, but spend time observing real patients and clinical rehabilitation — not only sports-physio videos.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>The patient-facing rehabilitation lifestyle may not match what you enjoy. Compare Medicine, Nursing, Pharmacy, Sports Science, Psychology or other health careers.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

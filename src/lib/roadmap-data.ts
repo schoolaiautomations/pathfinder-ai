@@ -42,6 +42,8 @@ export const DEFAULT_CAREER_OPTIONS = [
   { id: "journalist", label: "Journalist", icon: "📰", file: "four-circles-journalist.html" },
   { id: "ias", label: "IAS", icon: "🏛️", file: "four-circles-ias.html" },
   { id: "ips", label: "IPS", icon: "🛡️", file: "four-circles-ips.html" },
+  { id: "air-hostess", label: "Air Hostess / Cabin Crew", icon: "🛫", file: "four-circles-air-hostess.html" },
+  { id: "physiotherapy", label: "Physiotherapy / Physiotherapist", icon: "🏃", file: "four-circles-physiotherapy.html" },
   { id: "not-decided", label: "Not Decided Yet", icon: "🧭", file: "four-circles-not-decided-yet.html" },
   { id: "other", label: "Other", icon: "✨", file: "four-circles-not-decided-yet.html" },
 ] as const;
@@ -61,6 +63,8 @@ export function findCareerFormatFile(careerGoal: string): string | null {
   if (normalized === "other" || normalized.includes("other")) return "four-circles-not-decided-yet.html";
   if (normalized === "ias" || normalized.includes("ias") || normalized.includes("civil services") || normalized.includes("administrative service")) return "four-circles-ias.html";
   if (normalized === "ips" || normalized.includes("ips") || normalized.includes("police service")) return "four-circles-ips.html";
+  if (normalized.includes("air hostess") || normalized.includes("airhostess") || normalized.includes("cabin crew") || normalized.includes("flight attendant") || normalized.includes("steward")) return "four-circles-air-hostess.html";
+  if (normalized.includes("physiotherapy") || normalized.includes("physiotherapist") || normalized.includes("bpt") || normalized.includes("mpt") || normalized.includes("physical therapy") || normalized.includes("physical therapist")) return "four-circles-physiotherapy.html";
   if (normalized.includes("not decided") || normalized.includes("undecided") || normalized.includes("not sure") || normalized.includes("confused") || normalized.includes("dont know") || normalized.includes("don't know")) return "four-circles-not-decided-yet.html";
   if (normalized.includes("doctor") || normalized.includes("mbbs")) return "four-circles-doctor-mbbs.html";
   if (normalized.includes("police")) return "four-circles-police-officer.html";

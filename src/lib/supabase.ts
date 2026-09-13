@@ -460,3 +460,54 @@ export async function fetchBookCouncellingByCounsellor(counsellorName?: string):
 export async function fetchBookCouncellingAll(): Promise<BookCouncellingRow[]> {
   return fetchBookCouncellingByCounsellor();
 }
+
+// ─── Visitor Lead Capture (Careers Tree & FAQ) ────────────────────────────────
+
+export interface VisitorLeadRecord {
+  name: string;
+  school_name: string;
+  phone: string;
+  source_page: string;
+  councellor_name?: string | null;
+}
+
+export async function saveVisitorLeadToSupabase(lead: VisitorLeadRecord): Promise<boolean> {
+  // Always save locally first as reliable backup
+  try {
+    const local = JSON.parse(localStorage.getItem("wabi_local_visitor_leads") || "[]");
+    local.push({ ...lead, created_at: new Date().toISOString() });
+    localStorage.setItem("wabi_local_visitor_leads", JSON.stringify(local));
+  } catch (e) {
+    console.warn("Local storage write error for visitor lead:", e);
+  }
+
+  // Save to Supabase table: visitor_leads
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/visitor_leads`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=representation",
+      },
+      body: JSON.stringify({
+        name: lead.name,
+        school_name: lead.school_name,
+        phone: lead.phone,
+        source_page: lead.source_page,
+        councellor_name: lead.councellor_name || null,
+      }),
+    });
+    if (res.ok) {
+      console.log("Successfully saved visitor lead to Supabase: visitor_leads");
+      return true;
+    } else {
+      const errorBody = await res.text();
+      console.warn("Supabase save visitor_leads error:", res.status, errorBody);
+    }
+  } catch (err) {
+    console.warn("Supabase visitor_leads network error (saved locally):", err);
+  }
+  return false;
+}
