@@ -53,6 +53,12 @@ const Index = () => {
               Careers Tree
             </Link>
             <Link
+              to="/career-reports"
+              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
+            >
+              Career Reports
+            </Link>
+            <Link
               to="/faq"
               className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
             >
@@ -97,6 +103,17 @@ const Index = () => {
               <span className="flex items-center gap-2">
                 <Compass className="w-4 h-4 text-stone-500" />
                 Careers Tree
+              </span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </Link>
+            <Link
+              to="/career-reports"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-white border border-stone-200 text-stone-800 shadow-2xs hover:bg-stone-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-stone-500" />
+                Career Reports
               </span>
               <ChevronRight className="w-4 h-4 opacity-50" />
             </Link>

@@ -18,6 +18,7 @@ import BlogPost from "./pages/BlogPost.tsx";
 import CounsellorDashboard from "./pages/CounsellorDashboard.tsx";
 import FaqPage from "./pages/FaqPage.tsx";
 import CareersTreePage from "./pages/CareersTreePage.tsx";
+import CareerReportsPage from "./pages/CareerReportsPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,11 @@ const App = () => (
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/tree" element={<CareersTreePage />} />
           <Route path="/careers-tree" element={<CareersTreePage />} />
+          <Route path="/careers" element={<CareerReportsPage />} />
+          <Route path="/career" element={<CareerReportsPage />} />
+          <Route path="/career-reports" element={<CareerReportsPage />} />
+          <Route path="/career-options" element={<CareerReportsPage />} />
+          <Route path="/reports-all" element={<CareerReportsPage />} />
           <Route path="/roadmap" element={<RoadmapForm />} />
           <Route path="/roadmap/generating" element={<RoadmapGenerating />} />
           <Route path="/roadmap/result" element={<RoadmapResult />} />
