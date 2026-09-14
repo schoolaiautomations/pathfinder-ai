@@ -28,6 +28,13 @@ const CAREER_AUDIO_MAP: Record<string, string> = {
   teacher: `${SUPABASE_AUDIO_BASE_URL}/Teacher.mp3`,
   agri: `${SUPABASE_AUDIO_BASE_URL}/agricultural_officer.mp3`,
   ias: `${SUPABASE_AUDIO_BASE_URL}/ias.mp3`,
+  pilot: `${SUPABASE_AUDIO_BASE_URL}/commercial_pilot.mp3`,
+  journalist: `${SUPABASE_AUDIO_BASE_URL}/journalist.mp3`,
+  ca: `${SUPABASE_AUDIO_BASE_URL}/ca.mp3`,
+  nurse: `${SUPABASE_AUDIO_BASE_URL}/nurse.mp3`,
+  engineer: `${SUPABASE_AUDIO_BASE_URL}/engineer.mp3`,
+  lawyer: `${SUPABASE_AUDIO_BASE_URL}/lawyer.mp3`,
+  bank: `${SUPABASE_AUDIO_BASE_URL}/bank_po.mp3`,
 };
 
 interface CareerItem {
