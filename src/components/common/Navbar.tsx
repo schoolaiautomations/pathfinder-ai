@@ -64,11 +64,11 @@ export const Navbar = ({
           </Link>
 
           <Link
-            to="/careers-tree"
+            to="/career-reports"
             className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-bold text-zinc-700 hover:text-black hover:bg-zinc-100 transition-colors"
           >
-            <GitFork className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Careers Tree</span>
+            <BookOpen className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Explore Careers</span>
           </Link>
 
           <Link

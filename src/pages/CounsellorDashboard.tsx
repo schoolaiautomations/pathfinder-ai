@@ -754,35 +754,6 @@ const CounsellorDashboard = () => {
                         <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>
-
-                    {/* Card 8: Careers Tree */}
-                    <div
-                      onClick={() => setActiveModule("tree")}
-                      className="p-5 rounded-3xl border bg-white text-stone-900 border-stone-200/90 hover:border-stone-400 hover:bg-stone-50/80 transition-all cursor-pointer shadow-xs hover:shadow-md hover:-translate-y-1 flex flex-col justify-between group min-h-[210px]"
-                    >
-                      <div className="space-y-3.5">
-                        <div className="flex items-center justify-between">
-                          <div className="w-11 h-11 rounded-2xl flex items-center justify-center bg-stone-100 text-[#7C5C3E] group-hover:bg-stone-900 group-hover:text-[#C9A97A] transition-colors">
-                            <GitFork className="w-5 h-5" />
-                          </div>
-                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
-                            Master Map
-                          </span>
-                        </div>
-                        <div>
-                          <h3 className="font-extrabold text-base text-stone-900 group-hover:text-[#7C5C3E] transition-colors leading-tight">
-                            Careers Tree
-                          </h3>
-                          <p className="text-xs mt-1.5 text-stone-500 line-clamp-2 leading-relaxed">
-                            Universal guidance tree covering all career streams, branches, degrees, and job outcomes.
-                          </p>
-                        </div>
-                      </div>
-                      <div className="pt-3.5 flex items-center justify-between text-xs font-bold text-stone-900 border-t border-stone-100">
-                        <span>Open Careers Tree</span>
-                        <ChevronRight className="w-4 h-4 text-stone-400 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </div>
                   </div>
                 </div>
               ) : (

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Search,
@@ -14,9 +14,28 @@ import {
   Headphones,
   Volume2,
   VolumeX,
+  Calendar,
+  X,
+  MessageSquare,
+  Lock,
+  GraduationCap,
+  Building2,
+  Clock,
+  IndianRupee,
+  Zap,
+  Phone,
 } from "lucide-react";
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
+import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
+import { StudentAuthGateModal } from "@/components/common/StudentAuthGateModal";
+import {
+  supabase,
+  getStudentExplorerProfile,
+  signOutStudent,
+  StudentExplorerProfile,
+} from "@/lib/supabase";
+import type { User } from "@supabase/supabase-js";
 
 // Supabase Storage Bucket audio files mapping
 const SUPABASE_AUDIO_BASE_URL = "https://jqerkjewmmpowiwwpifv.supabase.co/storage/v1/object/public/audio-files";
@@ -216,9 +235,109 @@ const STREAM_CATEGORIES = [
 ] as const;
 
 export default function CareerReportsPage() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [showBookingPopup, setShowBookingPopup] = useState(false);
+  const [popupCancelCount, setPopupCancelCount] = useState(0);
+  const popupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Student Auth Gate State (Google Sign-In & Profile Onboarding)
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [studentProfile, setStudentProfile] = useState<StudentExplorerProfile | null>(null);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
+
+  // Check auth session & profile on mount and on auth state change
+  useEffect(() => {
+    let mounted = true;
+
+    // 1. Check existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!mounted) return;
+      if (session?.user) {
+        setCurrentUser(session.user);
+        getStudentExplorerProfile({
+          email: session.user.email,
+          auth_user_id: session.user.id,
+        }).then((prof) => {
+          if (!mounted) return;
+          if (prof) setStudentProfile(prof);
+          setIsAuthChecking(false);
+        });
+      } else {
+        // Check if cached student profile exists locally
+        getStudentExplorerProfile().then((prof) => {
+          if (!mounted) return;
+          if (prof) setStudentProfile(prof);
+          setIsAuthChecking(false);
+        });
+      }
+    });
+
+    // 2. Listen to auth state changes (e.g. after Google redirect)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!mounted) return;
+      if (session?.user) {
+        setCurrentUser(session.user);
+        const prof = await getStudentExplorerProfile({
+          email: session.user.email,
+          auth_user_id: session.user.id,
+        });
+        if (mounted) {
+          if (prof) setStudentProfile(prof);
+          setIsAuthChecking(false);
+        }
+      } else {
+        setCurrentUser(null);
+      }
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const isAccessGranted = Boolean(currentUser && studentProfile);
+
+  const scheduleNextPopup = (delayMs: number) => {
+    if (popupTimerRef.current) {
+      clearTimeout(popupTimerRef.current);
+    }
+    popupTimerRef.current = setTimeout(() => {
+      setShowBookingPopup(true);
+    }, delayMs);
+  };
+
+  // Initial popup appears after 20 seconds
+  useEffect(() => {
+    scheduleNextPopup(20000); // 20 seconds
+    return () => {
+      if (popupTimerRef.current) clearTimeout(popupTimerRef.current);
+    };
+  }, []);
+
+  const handleDismissBookingPopup = () => {
+    setShowBookingPopup(false);
+    setPopupCancelCount((prev) => {
+      const nextCount = prev + 1;
+      // 1st cancel -> show after 1 minute (60,000 ms)
+      // 2nd cancel onwards -> show after 2 minutes (120,000 ms)
+      const nextDelay = nextCount === 1 ? 60000 : 120000;
+      scheduleNextPopup(nextDelay);
+      return nextCount;
+    });
+  };
+
+  const handleOpenBookingModal = () => {
+    setShowBookingPopup(false);
+    setIsBookingModalOpen(true);
+    scheduleNextPopup(120000);
+  };
 
   // Build full career items list
   const allCareers: CareerItem[] = DEFAULT_CAREER_OPTIONS.map((opt) => {
@@ -342,6 +461,18 @@ export default function CareerReportsPage() {
     return matchesSearch && matchesCategory;
   });
 
+  // Loading state while verifying Google session & student profile
+  if (isAuthChecking) {
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-[#FAF8F5] font-sans">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-3 border-stone-300 border-t-stone-900 rounded-full animate-spin" />
+          <span className="text-xs font-bold text-stone-500">Checking access...</span>
+        </div>
+      </main>
+    );
+  }
+
   // ══════════════════════════════════════════════════════════════════════════
   // VIEW 2: CLEAN REPORT READING VIEW (WITH BACK BUTTON & AUDIO PLAYER)
   // ══════════════════════════════════════════════════════════════════════════
@@ -349,7 +480,7 @@ export default function CareerReportsPage() {
     const audioUrl = CAREER_AUDIO_MAP[selectedCareer.id];
 
     return (
-      <main className="min-h-screen flex flex-col bg-white text-stone-900 font-sans">
+      <main className={`min-h-screen flex flex-col bg-white text-stone-900 font-sans ${!isAccessGranted ? "filter blur-sm pointer-events-none select-none max-h-screen overflow-hidden" : ""}`}>
         {/* Hidden HTML5 Audio Element */}
         {audioUrl && (
           <audio
@@ -439,6 +570,33 @@ export default function CareerReportsPage() {
                 <span>Audio coming soon</span>
               </div>
             )}
+
+            {/* Student Profile / Sign Out */}
+            {currentUser && studentProfile && (
+              <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-800">
+                {currentUser.user_metadata?.avatar_url ? (
+                  <img
+                    src={currentUser.user_metadata.avatar_url}
+                    alt="Avatar"
+                    className="w-5 h-5 rounded-full object-cover"
+                  />
+                ) : null}
+                <span className="max-w-[110px] truncate">{studentProfile.student_name}</span>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await signOutStudent();
+                    setCurrentUser(null);
+                    setStudentProfile(null);
+                    navigate("/");
+                  }}
+                  className="text-stone-400 hover:text-red-600 text-[10px] ml-0.5 underline cursor-pointer"
+                  title="Sign Out"
+                >
+                  Sign out
+                </button>
+              </div>
+            )}
           </div>
         </header>
 
@@ -450,6 +608,166 @@ export default function CareerReportsPage() {
             className="w-full h-full min-h-[calc(100vh-65px)] border-0"
           />
         </div>
+
+        {/* ── Advanced Career Pack · Locked ── */}
+        <section className="w-full border-t border-stone-200" style={{ background: "#F5F1EC" }}>
+          <div className="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+              <div className="space-y-2.5">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-200/70 border border-stone-300/60 text-stone-500 text-[10px] font-black uppercase tracking-widest w-fit">
+                  <Lock className="w-3 h-3" />
+                  Advanced Career Pack · Locked
+                </div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-stone-900 leading-tight">
+                  Want deeper insights on {selectedCareer.label}?
+                </h2>
+                <p className="text-xs sm:text-sm text-stone-500 font-medium leading-relaxed max-w-lg">
+                  Financial aid, entrance exam tips, top colleges, and daily life details — unlock everything with a 1-on-1 career guidance session.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsBookingModalOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-sm shrink-0 self-start"
+              >
+                <Calendar className="w-4 h-4 text-[#C9A97A]" />
+                Book a Guidance Session
+              </button>
+            </div>
+
+            {/* Locked Feature Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              {[
+                {
+                  icon: IndianRupee,
+                  title: "Financial Aid & Scholarships",
+                  subtitle: "Govt schemes, private trusts & waivers",
+                  preview: "National Scholarship Portal schemes, state fee reimbursements, AICTE PragatiSaksham grants, corporate sponsorships with deadline calendars and application templates.",
+                },
+                {
+                  icon: Zap,
+                  title: "Tips to Crack Entrance Exams",
+                  subtitle: "High-yield topics & rank strategy",
+                  preview: "Chapter weightage analysis, speed-building mock tests, negative marking elimination tactics, timetable planning, and recommended standard reference books.",
+                },
+                {
+                  icon: Building2,
+                  title: "Top Colleges & Institutes",
+                  subtitle: "Cut-offs, rankings, ROI & placements",
+                  preview: "Top government and accredited private institutes across Andhra Pradesh and India, realistic category cutoffs, hostel facilities, actual ROI and campus hiring records.",
+                },
+                {
+                  icon: Clock,
+                  title: `Daily Life of a ${selectedCareer.label}`,
+                  subtitle: "Real routine, hours & work culture",
+                  preview: "Realistic hour-by-hour day in the life, field or office duties, pressure points, career growth ladder, work-life balance realities and practitioner interview insights.",
+                },
+              ].map((card) => (
+                <div
+                  key={card.title}
+                  className="relative bg-white/70 border border-stone-200/80 rounded-2xl p-5 space-y-3 overflow-hidden"
+                >
+                  {/* Card Header */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-stone-100 border border-stone-200/60 flex items-center justify-center shrink-0">
+                        <card.icon className="w-4.5 h-4.5 text-stone-400" />
+                      </div>
+                      <div>
+                        <h4 className="text-sm font-extrabold text-stone-900 leading-tight">{card.title}</h4>
+                        <p className="text-[11px] font-medium text-stone-400 mt-0.5">{card.subtitle}</p>
+                      </div>
+                    </div>
+                    <Lock className="w-4 h-4 text-stone-300 shrink-0 mt-1" />
+                  </div>
+
+                  {/* Blurred Preview Text */}
+                  <p className="text-xs text-stone-400 leading-relaxed select-none" style={{ filter: "blur(4px)", WebkitUserSelect: "none" }}>
+                    {card.preview}
+                  </p>
+
+                  {/* Unlock Label */}
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-stone-400">
+                    <Lock className="w-3 h-3 text-[#C9A97A]" />
+                    Unlocked in 1-on-1 Guidance Session
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom CTA Bar */}
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-stone-200/80 pt-6">
+              <p className="text-xs text-stone-500 font-medium flex items-center gap-1.5">
+                <GraduationCap className="w-4 h-4 text-stone-400" />
+                Connect with certified counsellors for stream selection, college shortlisting, and entrance roadmap planning.
+              </p>
+              <button
+                type="button"
+                onClick={() => setIsBookingModalOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-white border border-stone-300 text-stone-900 hover:bg-stone-50 hover:border-stone-400 transition-all cursor-pointer shadow-xs shrink-0"
+              >
+                <Phone className="w-3.5 h-3.5 text-stone-500" />
+                Book Session Now
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Book Online Counselling Modal */}
+        <BookOnlineCounsellingModal
+          isOpen={isBookingModalOpen}
+          onClose={() => setIsBookingModalOpen(false)}
+          defaultCareer={selectedCareer.label}
+        />
+
+        {/* Bottom-Right Floating 1-Minute Booking Callout */}
+        {showBookingPopup && (
+          <aside
+            aria-label="Book Online Counselling Notification"
+            className="fixed bottom-5 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
+          >
+            <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#7C5C3E]">
+                  Need Career Guidance?
+                </span>
+                <button
+                  type="button"
+                  onClick={handleDismissBookingPopup}
+                  className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+                  aria-label="Dismiss popup"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <h4 className="text-xs sm:text-sm font-extrabold leading-tight text-stone-900 mt-0.5">
+                Book 1-on-1 Online Counselling
+              </h4>
+              <p className="text-[11px] text-stone-500 font-medium mt-1 leading-snug">
+                Speak directly with an expert career counsellor for personalized guidance.
+              </p>
+              <button
+                type="button"
+                onClick={handleOpenBookingModal}
+                className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-xs"
+              >
+                <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+                <span>Book Session Now</span>
+              </button>
+            </div>
+          </aside>
+        )}
+
+        {/* Student Auth & Mandatory Onboarding Gate Modal */}
+        <StudentAuthGateModal
+          isOpen={!isAuthChecking && !isAccessGranted}
+          user={currentUser}
+          onProfileSaved={(prof) => setStudentProfile(prof)}
+        />
       </main>
     );
   }
@@ -458,7 +776,12 @@ export default function CareerReportsPage() {
   // VIEW 1: FULL PAGE OF ALL CAREER CARDS
   // ══════════════════════════════════════════════════════════════════════════
   return (
-    <main className="min-h-screen font-sans text-stone-900 flex flex-col" style={{ background: "#FAF8F5" }}>
+    <main
+      className={`min-h-screen font-sans text-stone-900 flex flex-col ${
+        !isAccessGranted ? "filter blur-sm pointer-events-none select-none max-h-screen overflow-hidden" : ""
+      }`}
+      style={{ background: "#FAF8F5" }}
+    >
       {/* Navbar */}
       <header
         className="sticky top-0 z-40 border-b border-stone-200/70"
@@ -482,25 +805,48 @@ export default function CareerReportsPage() {
           </Link>
 
           <nav className="flex items-center gap-1.5 sm:gap-2">
+            {/* Student Profile / Sign Out */}
+            {currentUser && studentProfile && (
+              <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-800">
+                {currentUser.user_metadata?.avatar_url ? (
+                  <img
+                    src={currentUser.user_metadata.avatar_url}
+                    alt="Avatar"
+                    className="w-5 h-5 rounded-full object-cover"
+                  />
+                ) : null}
+                <span className="max-w-[110px] truncate">{studentProfile.student_name}</span>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await signOutStudent();
+                    setCurrentUser(null);
+                    setStudentProfile(null);
+                    navigate("/");
+                  }}
+                  className="text-stone-400 hover:text-red-600 text-[10px] ml-0.5 underline cursor-pointer"
+                  title="Sign Out"
+                >
+                  Sign out
+                </button>
+              </div>
+            )}
+
             <Link
-              to="/careers-tree"
+              to="/"
               className="hidden sm:inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
             >
-              Careers Tree
+              Home
             </Link>
-            <Link
-              to="/faq"
-              className="hidden sm:inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
+            <button
+              type="button"
+              onClick={() => setIsBookingModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 text-white"
+              style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
-              FAQ
-            </Link>
-            <Link
-              to="/roadmap"
-              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer text-white bg-stone-900 hover:bg-stone-800"
-            >
-              <Compass className="w-3.5 h-3.5 text-[#C9A97A]" />
-              <span>Career Roadmap</span>
-            </Link>
+              <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+              <span>Book Online Counselling</span>
+            </button>
           </nav>
         </div>
       </header>
@@ -653,12 +999,64 @@ export default function CareerReportsPage() {
           <p>© {new Date().getFullYear()} Wabi Career Guidance Portal. Free public career reports.</p>
           <div className="flex items-center gap-4 font-bold text-stone-700">
             <Link to="/" className="hover:underline">Home</Link>
-            <Link to="/careers-tree" className="hover:underline">Careers Tree</Link>
             <Link to="/faq" className="hover:underline">FAQ</Link>
             <Link to="/counsellor" className="hover:underline">Counsellor Login</Link>
           </div>
         </div>
       </footer>
+      {/* Book Online Counselling Modal */}
+      <BookOnlineCounsellingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+      />
+
+      {/* Bottom-Right Floating 1-Minute Booking Callout */}
+      {showBookingPopup && (
+        <aside
+          aria-label="Book Online Counselling Notification"
+          className="fixed bottom-5 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
+        >
+          <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
+            <Calendar className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between gap-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-[#7C5C3E]">
+                Need Career Guidance?
+              </span>
+              <button
+                type="button"
+                onClick={handleDismissBookingPopup}
+                className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+                aria-label="Dismiss popup"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+            <h4 className="text-xs sm:text-sm font-extrabold leading-tight text-stone-900 mt-0.5">
+              Book 1-on-1 Online Counselling
+            </h4>
+            <p className="text-[11px] text-stone-500 font-medium mt-1 leading-snug">
+              Speak directly with an expert career counsellor for personalized guidance.
+            </p>
+            <button
+              type="button"
+              onClick={handleOpenBookingModal}
+              className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-xs"
+            >
+              <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+              <span>Book Session Now</span>
+            </button>
+          </div>
+        </aside>
+      )}
+
+      {/* Student Auth & Mandatory Onboarding Gate Modal */}
+      <StudentAuthGateModal
+        isOpen={!isAuthChecking && !isAccessGranted}
+        user={currentUser}
+        onProfileSaved={(prof) => setStudentProfile(prof)}
+      />
     </main>
   );
 }

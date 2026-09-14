@@ -1,7 +1,16 @@
 import type { FormData, CareerReport } from "./career-data";
+import { createClient } from "@supabase/supabase-js";
 
 export const SUPABASE_URL = "https://jqerkjewmmpowiwwpifv.supabase.co";
 export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZXJramV3bW1wb3dpd3dwaWZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4OTc0NTMsImV4cCI6MjEwMTQ3MzQ1M30.z7TpLsSWGrq4bE1cRED-Pm1G2_hQaVI5vYDKBdcwFOs";
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+  },
+});
 
 export interface SubmissionRecord {
   id?: string;
@@ -511,3 +520,174 @@ export async function saveVisitorLeadToSupabase(lead: VisitorLeadRecord): Promis
   }
   return false;
 }
+
+// ─── Student Explorers (Google Sign-In & Onboarding) ──────────────────────────
+
+export interface StudentExplorerProfile {
+  id?: number;
+  created_at?: string;
+  auth_user_id?: string | null;
+  email?: string | null;
+  student_name: string;
+  student_class: string;
+  student_location: string;
+  student_phone: string;
+  google_avatar_url?: string | null;
+  last_active_at?: string;
+}
+
+const LOCAL_STORAGE_STUDENT_PROFILE_KEY = "wabi_student_explorer_profile";
+
+/**
+ * Initiates Google OAuth redirect flow via Supabase
+ */
+export async function signInWithGoogle(redirectTo?: string) {
+  const target = redirectTo || `${window.location.origin}/career-reports`;
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: target,
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
+      },
+    },
+  });
+  if (error) {
+    console.error("Google sign-in error:", error);
+    throw error;
+  }
+  return data;
+}
+
+/**
+ * Signs out current student and clears local profile
+ */
+export async function signOutStudent() {
+  try {
+    localStorage.removeItem(LOCAL_STORAGE_STUDENT_PROFILE_KEY);
+    await supabase.auth.signOut();
+  } catch (e) {
+    console.warn("Sign out error:", e);
+  }
+}
+
+/**
+ * Fetches the registered student explorer profile from Supabase or local cache
+ */
+export async function getStudentExplorerProfile(
+  identifier?: { email?: string | null; auth_user_id?: string | null } | string
+): Promise<StudentExplorerProfile | null> {
+  let email: string | null = null;
+  let authUserId: string | null = null;
+
+  if (typeof identifier === "string") {
+    if (identifier.includes("@")) {
+      email = identifier.trim().toLowerCase();
+    } else {
+      authUserId = identifier.trim();
+    }
+  } else if (identifier) {
+    email = identifier.email ? identifier.email.trim().toLowerCase() : null;
+    authUserId = identifier.auth_user_id ? identifier.auth_user_id.trim() : null;
+  }
+
+  // 1. Check local cache first
+  try {
+    const cached = localStorage.getItem(LOCAL_STORAGE_STUDENT_PROFILE_KEY);
+    if (cached) {
+      const parsed: StudentExplorerProfile = JSON.parse(cached);
+      const emailMatches = email && parsed.email?.toLowerCase() === email;
+      const idMatches = authUserId && parsed.auth_user_id === authUserId;
+      if (emailMatches || idMatches || (!email && !authUserId && parsed.student_name)) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn("Error reading cached student profile:", e);
+  }
+
+  // 2. Fetch from Supabase student_explorers table
+  try {
+    let query = supabase.from("student_explorers").select("*");
+
+    if (email && authUserId) {
+      query = query.or(`email.ilike.${email},auth_user_id.eq.${authUserId}`);
+    } else if (email) {
+      query = query.ilike("email", email);
+    } else if (authUserId) {
+      query = query.eq("auth_user_id", authUserId);
+    } else {
+      return null;
+    }
+
+    const { data, error } = await query
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) {
+      console.warn("Error fetching student explorer profile from Supabase:", error);
+    } else if (data) {
+      localStorage.setItem(LOCAL_STORAGE_STUDENT_PROFILE_KEY, JSON.stringify(data));
+      return data as StudentExplorerProfile;
+    }
+  } catch (err) {
+    console.warn("Failed to fetch student explorer profile from Supabase:", err);
+  }
+
+  return null;
+}
+
+/**
+ * Saves or updates student explorer details in Supabase
+ */
+export async function saveStudentExplorerProfile(profile: {
+  student_name: string;
+  student_class: string;
+  student_location: string;
+  student_phone: string;
+  email?: string | null;
+  auth_user_id?: string | null;
+  google_avatar_url?: string | null;
+}): Promise<{ success: boolean; data?: StudentExplorerProfile; error?: string }> {
+  // Always cache locally so student can immediately continue
+  try {
+    localStorage.setItem(LOCAL_STORAGE_STUDENT_PROFILE_KEY, JSON.stringify(profile));
+  } catch (e) {
+    console.warn("Failed to cache profile in local storage:", e);
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("student_explorers")
+      .insert({
+        student_name: profile.student_name,
+        student_class: profile.student_class,
+        student_location: profile.student_location,
+        student_phone: profile.student_phone,
+        email: profile.email || null,
+        auth_user_id: profile.auth_user_id || null,
+        google_avatar_url: profile.google_avatar_url || null,
+        last_active_at: new Date().toISOString(),
+      })
+      .select()
+      .maybeSingle();
+
+    if (error) {
+      console.warn("Supabase student_explorers insert error (proceeding with local profile):", error);
+      return { success: true, data: profile as any };
+    }
+
+    if (data) {
+      localStorage.setItem(LOCAL_STORAGE_STUDENT_PROFILE_KEY, JSON.stringify(data));
+      return { success: true, data: data as StudentExplorerProfile };
+    }
+  } catch (err: any) {
+    console.warn("Network error saving student_explorers (proceeding with local profile):", err);
+    return { success: true, data: profile as any };
+  }
+
+  return { success: true, data: profile as any };
+}
+

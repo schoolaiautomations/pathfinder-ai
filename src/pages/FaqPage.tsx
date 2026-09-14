@@ -9,7 +9,6 @@ import {
   MessageCircle,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
-import { LeadAccessModal } from "@/components/common/LeadAccessModal";
 
 const PERSONAL_NOTE =
   "💡 Career choice is completely personal — many factors like your family situation, interests, strengths, and financial background affect your decision. To get personalised guidance tailored to your unique situation, book a 1-on-1 session with our counsellor.";
@@ -384,12 +383,12 @@ const FaqPage = () => {
               counsellor for personalised guidance.
             </p>
             <button
-              onClick={() => navigate("/roadmap")}
+              onClick={() => navigate("/career-reports")}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
               <Map className="w-4 h-4" />
-              Explore Career Roadmaps
+              Explore Careers
             </button>
           </div>
         </div>
@@ -412,8 +411,8 @@ const FaqPage = () => {
             className="flex items-center gap-5 text-xs font-semibold"
             style={{ color: "#9B8B7E" }}
           >
-            <Link to="/roadmap" className="hover:text-stone-900 transition-colors">
-              Roadmap
+            <Link to="/career-reports" className="hover:text-stone-900 transition-colors">
+              Explore Careers
             </Link>
             <Link to="/faq" className="hover:text-stone-900 transition-colors">
               FAQ
@@ -421,9 +420,6 @@ const FaqPage = () => {
           </div>
         </div>
       </footer>
-
-      {/* ─── LEAD ACCESS POPUP MODAL ─── */}
-      <LeadAccessModal sourcePage="FAQ" />
     </main>
   );
 };

@@ -14,13 +14,16 @@ import {
   X,
   Lock,
   GitFork,
+  Calendar,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import councellingImg from "@/lib/councelling.png";
+import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 
 const Index = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
 
   return (
     <main className="min-h-screen font-sans text-stone-900" style={{ background: "#FAF8F5" }}>
@@ -47,18 +50,6 @@ const Index = () => {
           {/* Desktop Nav */}
           <nav className="hidden sm:flex items-center gap-1 sm:gap-2">
             <Link
-              to="/careers-tree"
-              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
-            >
-              Careers Tree
-            </Link>
-            <Link
-              to="/career-reports"
-              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
-            >
-              Career Reports
-            </Link>
-            <Link
               to="/faq"
               className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
             >
@@ -71,13 +62,20 @@ const Index = () => {
               Counsellor Login
             </Link>
             <Link
-              to="/roadmap"
-              className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+              to="/career-reports"
+              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
+            >
+              Explore Careers
+            </Link>
+            <button
+              type="button"
+              onClick={() => setIsBookingModalOpen(true)}
+              className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 text-white"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
-              <Map className="w-3.5 h-3.5" />
-              Explore Roadmaps
-            </Link>
+              <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+              Book Online Counselling
+            </button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -95,17 +93,21 @@ const Index = () => {
         {/* Mobile Dropdown Panel */}
         {mobileMenuOpen && (
           <div className="sm:hidden border-t border-stone-200/80 px-4 py-3 space-y-2 bg-[#FAF8F5]/98 backdrop-blur-lg animate-in slide-in-from-top-2 duration-200">
-            <Link
-              to="/careers-tree"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-white border border-stone-200 text-stone-800 shadow-2xs hover:bg-stone-50 transition-colors"
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setIsBookingModalOpen(true);
+              }}
+              className="w-full flex items-center justify-between p-3 rounded-xl font-bold text-xs shadow-sm cursor-pointer"
+              style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
               <span className="flex items-center gap-2">
-                <Compass className="w-4 h-4 text-stone-500" />
-                Careers Tree
+                <Calendar className="w-4 h-4 text-[#C9A97A]" />
+                Book Online Counselling
               </span>
               <ChevronRight className="w-4 h-4 opacity-50" />
-            </Link>
+            </button>
             <Link
               to="/career-reports"
               onClick={() => setMobileMenuOpen(false)}
@@ -113,19 +115,7 @@ const Index = () => {
             >
               <span className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-stone-500" />
-                Career Reports
-              </span>
-              <ChevronRight className="w-4 h-4 opacity-50" />
-            </Link>
-            <Link
-              to="/roadmap"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs shadow-sm cursor-pointer"
-              style={{ background: "#1C1917", color: "#FAF8F5" }}
-            >
-              <span className="flex items-center gap-2">
-                <Map className="w-4 h-4 text-[#C9A97A]" />
-                Explore Roadmaps
+                Explore Careers
               </span>
               <ChevronRight className="w-4 h-4 opacity-50" />
             </Link>
@@ -209,27 +199,16 @@ const Index = () => {
                 We sit with you — honestly, patiently — and help you find a direction that genuinely matches who you are.
               </p>
 
-              {/* Primary CTAs */}
+              {/* Primary CTA */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <button
-                  onClick={() => navigate("/roadmap")}
+                  onClick={() => navigate("/career-reports")}
                   className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
                   style={{ background: "#1C1917", color: "#FAF8F5" }}
                 >
-                  <Map className="w-4 h-4" />
-                  Explore Career Roadmaps
+                  <BookOpen className="w-4 h-4" />
+                  Explore Careers
                   <ArrowRight className="w-4 h-4 ml-1" />
-                </button>
-
-                <button
-                  onClick={() => navigate("/careers-tree")}
-                  className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all border border-stone-300/90 bg-white hover:bg-stone-50 text-stone-900 shadow-xs hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 group"
-                >
-                  <GitFork className="w-4 h-4 text-[#7C5C3E] group-hover:rotate-45 transition-transform" />
-                  <span>Careers Tree</span>
-                  <span className="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
-                    Map
-                  </span>
                 </button>
               </div>
 
@@ -333,12 +312,12 @@ const Index = () => {
           </p>
           <div className="flex justify-center pt-3">
             <button
-              onClick={() => navigate("/roadmap")}
+              onClick={() => navigate("/career-reports")}
               className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
-              <Map className="w-4 h-4" />
-              Explore Career Roadmaps
+              <BookOpen className="w-4 h-4" />
+              Explore Careers
             </button>
           </div>
         </div>
@@ -364,11 +343,11 @@ const Index = () => {
               must work across all of them.
             </p>
             <button
-              onClick={() => navigate("/roadmap")}
+              onClick={() => navigate("/career-reports")}
               className="flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm cursor-pointer transition-all hover:-translate-y-0.5"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
-              See it in Action <ArrowRight className="w-4 h-4" />
+              Explore Careers <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 
@@ -428,12 +407,18 @@ const Index = () => {
             </span>
           </div>
           <div className="flex items-center gap-5 text-xs font-semibold" style={{ color: "#9B8B7E" }}>
-            <Link to="/roadmap" className="hover:text-stone-900 transition-colors">Roadmap</Link>
+            <Link to="/career-reports" className="hover:text-stone-900 transition-colors">Explore Careers</Link>
             <Link to="/faq" className="hover:text-stone-900 transition-colors">FAQ</Link>
             <Link to="/counsellor" className="hover:text-stone-900 transition-colors">Counsellor Login</Link>
           </div>
         </div>
       </footer>
+
+      {/* Book Online Counselling Modal */}
+      <BookOnlineCounsellingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+      />
 
     </main>
   );
