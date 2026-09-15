@@ -93,9 +93,14 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
     schoolName: "ZPHS Lingamparthi",
     badgeName: "ZPHS Lingamparthi",
     headmasterName: "D Ravikumar",
-    matchSchool: (sch: string, loc?: string) => {
-      const s = `${sch || ""} ${loc || ""}`.toLowerCase();
-      return s.includes("lingamparthi") || s.includes("lingam parthi") || s.includes("lingamparti") || s.includes("లింగంపర్తి");
+    matchSchool: (sch: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      return (
+        s.includes("lingamparthi") ||
+        s.includes("lingam parthi") ||
+        s.includes("lingamparti") ||
+        s.includes("లింగంపర్తి")
+      );
     },
     teachers: [
       { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "Vijay Stalin", totalStrength: 39 },
@@ -115,13 +120,22 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
     badgeName: "ZPHS Jeddangi Annavaram",
     headmasterName: "J Venkata Ramana",
     headmasterPhone: "8500460885",
-    matchSchool: (sch: string, loc?: string) => {
-      const s = `${sch || ""} ${loc || ""}`.toLowerCase();
+    matchSchool: (sch: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("siripuram") ||
+        s.includes("tirumali") ||
+        s.includes("peddanapalli")
+      ) return false;
       return (
         s.includes("jeddangi") ||
         s.includes("zeddangi") ||
         s.includes("jaddangi") ||
         s.includes("jedding") ||
+        s.includes("j annavaram") ||
+        s.includes("j. annavaram") ||
+        s.includes("j.annavaram") ||
         (s.includes("annavaram") && !s.includes("tirumali"))
       );
     },
@@ -136,20 +150,38 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
     schoolName: "ZPHS (Girls) Yeleswaram",
     badgeName: "ZPHS Girls Yeleswaram",
     headmasterName: "CH. Rajasri",
-    matchSchool: (sch: string, loc?: string) => {
-      const s = `${sch || ""} ${loc || ""}`.toLowerCase();
-      if (s.includes("ghs") || s.includes("government high school") || s.includes("govt high school")) return false;
-      if (s.includes("lingamparthi") || s.includes("jeddangi")) return false;
-      return (
-        s.includes("girl") ||
-        s.includes("zphs") ||
+    matchSchool: (sch: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      if (
+        s.includes("ghs") ||
+        s.includes("g.h.s") ||
+        s.includes("government high school") ||
+        s.includes("govt high school") ||
+        s.includes("boys")
+      ) return false;
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("siripuram") ||
+        s.includes("tirumali") ||
+        s.includes("peddanapalli")
+      ) return false;
+
+      const isYeleswaram =
         s.includes("yeleswaram") ||
         s.includes("eleswaram") ||
         s.includes("yeleshwaram") ||
         s.includes("yeleswram") ||
         s.includes("eleshwram") ||
         s.includes("yeleswarm") ||
-        s.includes("ఏలేశ్వరం")
+        s.includes("ఏలేశ్వరం");
+
+      const isGirls = s.includes("girl");
+
+      return (
+        (isYeleswaram && isGirls) ||
+        (isYeleswaram && s.includes("zphs")) ||
+        (isGirls && !s.includes("kakinada") && !s.includes("rajahmundry"))
       );
     },
     teachers: [
@@ -170,11 +202,19 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
     badgeName: "GHS Yeleswaram",
     headmasterName: "N Lakshmi Tulasi",
     headmasterPhone: "8019226359",
-    matchSchool: (sch: string, loc?: string) => {
-      const s = `${sch || ""} ${loc || ""}`.toLowerCase();
-      if (s.includes("girl") || s.includes("lingamparthi") || s.includes("jeddangi")) return false;
+    matchSchool: (sch: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      if (
+        s.includes("girl") ||
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("siripuram") ||
+        s.includes("tirumali") ||
+        s.includes("peddanapalli")
+      ) return false;
       return (
         s.includes("ghs") ||
+        s.includes("g.h.s") ||
         s.includes("government high school") ||
         s.includes("govt high school") ||
         s.includes("boys") ||
@@ -904,19 +944,21 @@ const CounsellorDashboard = () => {
                     const currentDisplayed = activeTab === "submissions" ? displayedSubmissions : displayedBookings;
                     const hasActiveFilters = schoolFilter !== "ALL" || classFilter !== "ALL" || sectionFilter !== "ALL" || searchQuery.trim() !== "";
 
-                    // Class Teachers Roster Analytics (Multi-school: Lingamparthi, Jeddangi Annavaram, Yeleswaram)
-                    // In Roster: compute unique submissions based on student_name only
-                    const uniqueSubmissionsForRoster = deduplicateSubmissions(submissions);
-
+                    // Class Teachers Roster Analytics (Multi-school: Lingamparthi, Jeddangi Annavaram, Yeleswaram, GHS Yeleswaram)
                     const computeRosterStats = (config: SchoolRosterConfig) => {
+                      // Filter submissions belonging strictly to this school
+                      const schoolSubmissions = submissions.filter((row) => {
+                        const sch = (row.student_school || "").trim();
+                        return config.matchSchool(sch);
+                      });
+
+                      // Uniquely identify each student within this school
+                      const uniqueSchoolSubs = deduplicateSubmissions(schoolSubmissions);
+
                       const stats = config.teachers.map((item) => {
-                        const matchingSubs = uniqueSubmissionsForRoster.filter((row) => {
-                          const sch = (row.student_school || "").toLowerCase().trim();
-                          const loc = (row.student_location || "").toLowerCase().trim();
+                        const matchingSubs = uniqueSchoolSubs.filter((row) => {
                           const cls = (row.student_class || "").toLowerCase().trim();
                           const sec = (row.student_section || "").trim().toUpperCase();
-
-                          const matchesSchool = config.matchSchool(sch, loc);
 
                           const matchesGrade =
                             (item.gradeNumber === 8 && (cls.includes("8") || cls.includes("eighth") || cls.includes("viii"))) ||
@@ -928,7 +970,7 @@ const CounsellorDashboard = () => {
                             ? (!sec || sec === item.section || sec.startsWith(item.section) || sec === "—" || sec === "-")
                             : (sec === item.section || sec.startsWith(item.section));
 
-                          return matchesSchool && matchesGrade && matchesSection;
+                          return matchesGrade && matchesSection;
                         });
 
                         const receivedCount = matchingSubs.length;
@@ -1404,7 +1446,11 @@ const CounsellorDashboard = () => {
                                 <div
                                   key={item.id}
                                   onClick={() => {
-                                    const matchingSchoolOption = uniqueSchools.find((s) => currentRosterData.config.matchSchool(s)) || "ALL";
+                                    const matchingSchoolOption =
+                                      uniqueSchools.find((s) => s.toLowerCase() === currentRosterData.config.schoolName.toLowerCase()) ||
+                                      uniqueSchools.find((s) => s.toLowerCase() === currentRosterData.config.badgeName.toLowerCase()) ||
+                                      uniqueSchools.find((s) => currentRosterData.config.matchSchool(s)) ||
+                                      "ALL";
                                     const matchingClass = uniqueClasses.find((c) => c.toLowerCase().includes(String(item.gradeNumber))) || `Class ${item.gradeNumber}`;
                                     setSchoolFilter(matchingSchoolOption);
                                     setClassFilter(matchingClass);

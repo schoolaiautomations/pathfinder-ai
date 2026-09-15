@@ -17,8 +17,8 @@ import {
   Calendar,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
-import councellingImg from "@/lib/councelling.png";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -155,6 +155,7 @@ const Index = () => {
           }}
         />
 
+
         <div className="max-w-7xl mx-auto px-5 sm:px-8 pt-10 sm:pt-16 pb-14 sm:pb-20">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
@@ -231,18 +232,21 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Right Column: Hero Illustration Image */}
+            {/* Right Column: Hero Rocket Animation Card */}
             <div className="lg:col-span-5 flex items-center justify-center lg:justify-end">
-              <div className="relative max-w-sm sm:max-w-md w-full">
+              <div className="relative max-w-sm sm:max-w-md w-full bg-[#FAF8F5]/80 border border-[#E8DFD0] rounded-3xl p-3 sm:p-4 shadow-xs flex items-center justify-center aspect-[4/3] overflow-hidden">
                 <div
                   className="absolute -inset-2 rounded-3xl blur-2xl opacity-40 -z-10"
                   style={{ background: "#E8DFD0" }}
                 />
-                <img
-                  src={councellingImg}
-                  alt="Career Counselling Session"
-                  className="w-full h-auto object-contain rounded-3xl drop-shadow-md hover:scale-[1.02] transition-transform duration-300"
-                />
+                <div className="w-full h-full flex items-center justify-center scale-[1.45] sm:scale-[1.65]">
+                  <DotLottieReact
+                    src="/rocket-animation.lottie"
+                    loop
+                    autoplay
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
             </div>
 
