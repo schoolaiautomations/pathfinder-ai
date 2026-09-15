@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
+  ArrowRight,
   Search,
   BookOpen,
   Filter,
@@ -29,6 +30,7 @@ import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import { StudentAuthGateModal } from "@/components/common/StudentAuthGateModal";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import {
   supabase,
   getStudentExplorerProfile,
@@ -234,6 +236,69 @@ const STREAM_CATEGORIES = [
   "Aviation & Hospitality",
 ] as const;
 
+function MascotBackgroundAnimation({ onFinished }: { onFinished?: () => void }) {
+  const [mounted, setMounted] = useState(true);
+  const onFinishedRef = useRef(onFinished);
+  onFinishedRef.current = onFinished;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(false);
+      onFinishedRef.current?.();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-40 pointer-events-none select-none flex items-center justify-center"
+      style={{
+        animation: "mascotPopupAndFade 2000ms cubic-bezier(0.16, 1, 0.3, 1) forwards",
+      }}
+    >
+      <style>{`
+        @keyframes mascotPopupAndFade {
+          0% {
+            opacity: 0;
+            transform: scale(0.65) translateY(16px);
+          }
+          15% {
+            opacity: 1;
+            transform: scale(1.05) translateY(0);
+          }
+          25% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+          75% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+          95% {
+            opacity: 0;
+            transform: scale(0.9) translateY(-10px);
+          }
+          100% {
+            opacity: 0;
+            transform: scale(0.85) translateY(-16px);
+            visibility: hidden;
+          }
+        }
+      `}</style>
+      <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 flex items-center justify-center">
+        <DotLottieReact
+          src="/mascot.lottie"
+          loop={false}
+          autoplay
+          className="w-full h-full object-contain drop-shadow-2xl"
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function CareerReportsPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -408,7 +473,7 @@ export default function CareerReportsPage() {
   const handleOpenCareer = (career: CareerItem) => {
     setSelectedCareer(career);
     setSearchParams({ career: career.id });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   const handleBackToCards = () => {
@@ -418,8 +483,27 @@ export default function CareerReportsPage() {
     setIsPlaying(false);
     setSelectedCareer(null);
     setSearchParams({});
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
+
+  // Mascot Background Animation (shows for 2s on career page background, then disappears)
+  const [shouldShowMascot, setShouldShowMascot] = useState(false);
+
+  useEffect(() => {
+    if (selectedCareer) {
+      // Clean up previous test keys so they never block
+      try {
+        localStorage.removeItem("wabi_career_mascot_shown");
+        localStorage.removeItem("wabi_mascot_shown_once");
+        localStorage.removeItem("wabi_mascot_celebration_done");
+      } catch {}
+
+      setShouldShowMascot(true);
+      window.scrollTo({ top: 0, behavior: "instant" });
+    } else {
+      setShouldShowMascot(false);
+    }
+  }, [selectedCareer?.id]);
 
   const togglePlayAudio = () => {
     if (!audioRef.current) return;
@@ -481,6 +565,14 @@ export default function CareerReportsPage() {
 
     return (
       <main className={`min-h-screen flex flex-col bg-white text-stone-900 font-sans ${!isAccessGranted ? "filter blur-sm pointer-events-none select-none max-h-screen overflow-hidden" : ""}`}>
+        {/* Background Mascot Animation (Plays for 2 seconds on respective career page, non-blocking, no dialog) */}
+        {shouldShowMascot && (
+          <MascotBackgroundAnimation
+            key={selectedCareer.id}
+            onFinished={() => setShouldShowMascot(false)}
+          />
+        )}
+
         {/* Hidden HTML5 Audio Element */}
         {audioUrl && (
           <audio
@@ -852,20 +944,35 @@ export default function CareerReportsPage() {
       </header>
 
       {/* Hero Header */}
-      <section className="py-8 sm:py-12 px-4 sm:px-6 border-b border-stone-200/80 bg-[#F5F1EC]">
-        <div className="max-w-5xl mx-auto text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5]">
-            <Sparkles className="w-3.5 h-3.5 text-[#C9A97A]" />
-            Free Public Access &bull; {allCareers.length} Career Options
+      <section className="border-b border-stone-200/80 bg-[#F5F1EC]">
+        <div className="max-w-7xl w-full mx-auto py-8 sm:py-10 px-4 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          {/* Left-aligned Content */}
+          <div className="space-y-3 max-w-2xl text-left">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5]">
+              <Sparkles className="w-3.5 h-3.5 text-[#C9A97A]" />
+              Free Public Access &bull; {allCareers.length} Career Options
+            </div>
+
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
+              Explore All Career Options &amp; Reports
+            </h1>
+
+            <p className="text-xs sm:text-base text-stone-600 font-medium leading-relaxed">
+              Click any career card below to open and read its complete, full-length blueprint report. You can come back anytime with the Back button.
+            </p>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
-            Explore All Career Options &amp; Reports
-          </h1>
-
-          <p className="text-xs sm:text-base text-stone-600 font-medium max-w-2xl mx-auto leading-relaxed">
-            Click any career card below to open and read its complete, full-length blueprint report. You can come back anytime with the Back button.
-          </p>
+          {/* Top Right: Snail Dance Lottie Animation */}
+          <div className="shrink-0 flex items-center justify-start md:justify-end">
+            <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center">
+              <DotLottieReact
+                src="/snail-dance.lottie"
+                loop
+                autoplay
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
