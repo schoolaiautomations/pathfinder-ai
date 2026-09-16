@@ -44,6 +44,13 @@ export const DEFAULT_CAREER_OPTIONS = [
   { id: "ips", label: "IPS", icon: "🛡️", file: "four-circles-ips.html" },
   { id: "air-hostess", label: "Air Hostess / Cabin Crew", icon: "🛫", file: "four-circles-air-hostess.html" },
   { id: "physiotherapy", label: "Physiotherapy / Physiotherapist", icon: "🏃", file: "four-circles-physiotherapy.html" },
+  { id: "chef", label: "Chef / Culinary Professional", icon: "👨‍🍳", file: "four-circles-chef.html" },
+  { id: "psychologist", label: "Psychologist", icon: "🧠", file: "four-circles-psychologist.html" },
+  { id: "environmental-consultant", label: "Environmental Consultant", icon: "🌱", file: "four-circles-environmental-consultant.html" },
+  { id: "archaeologist", label: "Archaeologist", icon: "🏺", file: "four-circles-archaeologist.html" },
+  { id: "nutritionist", label: "Nutritionist / Dietitian", icon: "🥗", file: "four-circles-nutritionist.html" },
+  { id: "veterinarian", label: "Veterinarian / Veterinary Doctor", icon: "🐾", file: "four-circles-veterinarian.html" },
+  { id: "beautician", label: "Beautician / Beauty Professional", icon: "💄", file: "four-circles-beautician.html" },
   { id: "not-decided", label: "Not Decided Yet", icon: "🧭", file: "four-circles-not-decided-yet.html" },
   { id: "other", label: "Other", icon: "✨", file: "four-circles-not-decided-yet.html" },
 ] as const;
@@ -76,8 +83,14 @@ export function findCareerFormatFile(careerGoal: string): string | null {
   if (normalized.includes("agriculture") || normalized.includes("agricultural")) return "four-circles-agriculture-officer.html";
   if (normalized.includes("bank") || normalized.includes("po")) return "four-circles-bank-po-probationary-officer.html";
   if (normalized.includes("chartered") || normalized.includes("ca")) return "four-circles-chartered-accountant-ca.html";
-  if (normalized.includes("architect") || normalized.includes("architecture") || normalized.includes("b.arch") || normalized.includes("barch") || normalized.includes("nata")) return "four-circles-architect.html";
-  if (normalized.includes("hotel") || normalized.includes("hospitality") || normalized.includes("nchm") || normalized.includes("culinary") || normalized.includes("catering") || normalized.includes("chef")) return "four-circles-hotel-management.html";
+  if (normalized.includes("chef") || normalized.includes("culinary") || normalized.includes("cooking") || normalized.includes("bakery") || normalized.includes("pastry")) return "four-circles-chef.html";
+  if (normalized.includes("hotel") || normalized.includes("hospitality") || normalized.includes("nchm") || normalized.includes("catering")) return "four-circles-hotel-management.html";
+  if (normalized.includes("psycholog") || normalized.includes("counsellor") || normalized.includes("counselor") || normalized.includes("counseling") || normalized.includes("mental health")) return "four-circles-psychologist.html";
+  if (normalized.includes("environment") || normalized.includes("ecology") || normalized.includes("eia") || normalized.includes("pollution control")) return "four-circles-environmental-consultant.html";
+  if (normalized.includes("archaeolog") || normalized.includes("excavation") || normalized.includes("ancient history") || normalized.includes("asi")) return "four-circles-archaeologist.html";
+  if (normalized.includes("nutrition") || normalized.includes("dietitian") || normalized.includes("dietician") || normalized.includes("dietetics")) return "four-circles-nutritionist.html";
+  if (normalized.includes("veterinar") || normalized.includes("vet doctor") || normalized.includes("animal doctor") || normalized.includes("bvsc") || normalized.includes("b.v.sc")) return "four-circles-veterinarian.html";
+  if (normalized.includes("beautician") || normalized.includes("beauty") || normalized.includes("cosmetolog") || normalized.includes("makeup artist") || normalized.includes("make up") || normalized.includes("hair stylist") || normalized.includes("salon")) return "four-circles-beautician.html";
   if (normalized.includes("sport") || normalized.includes("athlete") || normalized.includes("athletics") || normalized.includes("cricket") || normalized.includes("football") || normalized.includes("badminton") || normalized.includes("khelo india") || normalized.includes("sportsman") || normalized.includes("sportswoman")) return "four-circles-sports-professional-athlete.html";
   if (normalized.includes("interior") || normalized.includes("furniture design") || normalized.includes("home decor") || normalized.includes("spatial design")) return "four-circles-interior-designer.html";
   if (normalized.includes("graphic")) return "four-circles-graphic-designer.html";

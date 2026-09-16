@@ -455,7 +455,7 @@ const CounsellorDashboard = () => {
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
             <img src={wabiLogo} alt="Wabi" className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm shrink-0" />
             <div className="min-w-0">
-              <span className="font-extrabold text-xs sm:text-base text-stone-900 tracking-tight block leading-none truncate">
+              <span className="font-normal uppercase tracking-wider text-xs sm:text-base text-stone-900 block leading-none truncate">
                 Wabi Career Guidance
               </span>
               <span className="text-[9px] sm:text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5 truncate">

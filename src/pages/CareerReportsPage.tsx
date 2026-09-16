@@ -56,6 +56,16 @@ const CAREER_AUDIO_MAP: Record<string, string> = {
   engineer: `${SUPABASE_AUDIO_BASE_URL}/engineer.mp3`,
   lawyer: `${SUPABASE_AUDIO_BASE_URL}/lawyer.mp3`,
   bank: `${SUPABASE_AUDIO_BASE_URL}/bank_po.mp3`,
+  archaeologist: `${SUPABASE_AUDIO_BASE_URL}/archaeologist.mp3`,
+  "environmental-consultant": `${SUPABASE_AUDIO_BASE_URL}/environmental_consultant.mp3`,
+  psychologist: `${SUPABASE_AUDIO_BASE_URL}/psychologist.mp3`,
+  entrepreneur: `${SUPABASE_AUDIO_BASE_URL}/entrepreneur.mp3`,
+  fashion: `${SUPABASE_AUDIO_BASE_URL}/fashion_desinger.mp3`,
+  pharmacist: `${SUPABASE_AUDIO_BASE_URL}/pharmacist.mp3`,
+  ips: `${SUPABASE_AUDIO_BASE_URL}/ips.mp3`,
+  mba: `${SUPABASE_AUDIO_BASE_URL}/mba.mp3`,
+  physiotherapy: `${SUPABASE_AUDIO_BASE_URL}/physiotherapist.mp3`,
+  "air-hostess": `${SUPABASE_AUDIO_BASE_URL}/air_hostess.mp3`,
 };
 
 interface CareerItem {
@@ -213,6 +223,41 @@ const CATEGORY_MAP: Record<string, { category: string; streamBadge: string; desc
     category: "Aviation & Hospitality",
     streamBadge: "Physical Education / Sports",
     description: "National tournaments, SAI coaching centers, sports quota public jobs, fitness training, and athletic management.",
+  },
+  chef: {
+    category: "Aviation & Hospitality",
+    streamBadge: "Any Stream / Culinary Arts",
+    description: "Professional kitchen operations, culinary arts degrees, bakery & pastry specialization, food production, and executive chef progression.",
+  },
+  psychologist: {
+    category: "Arts, Design & Media",
+    streamBadge: "Any Stream / B.A / B.Sc Psychology",
+    description: "Cognitive science, counselling, school & clinical psychology, research methodology, RCI regulations, and mental wellbeing pathways.",
+  },
+  "environmental-consultant": {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "MPC / BiPC / Environmental Science",
+    description: "Environmental Impact Assessment (EIA), pollution control, sustainability audits, biodiversity surveys, and environmental compliance roles.",
+  },
+  archaeologist: {
+    category: "Arts, Design & Media",
+    streamBadge: "Humanities / B.A Archaeology",
+    description: "Historical excavation, material culture analysis, Archaeological Survey of India (ASI) positions, museum curation, and heritage preservation.",
+  },
+  nutritionist: {
+    category: "Medical & Healthcare (BiPC)",
+    streamBadge: "BiPC / B.Sc Nutrition & Dietetics",
+    description: "Clinical nutrition, hospital dietetics, sports nutrition, community public health programs, and certified dietitian credentials.",
+  },
+  veterinarian: {
+    category: "Medical & Healthcare (BiPC)",
+    streamBadge: "BiPC / B.V.Sc & AH",
+    description: "Animal healthcare, surgery, veterinary clinics, livestock & poultry farms, wildlife conservation, and government veterinary officer posts.",
+  },
+  beautician: {
+    category: "Arts, Design & Media",
+    streamBadge: "Any Stream / Cosmetology",
+    description: "Skincare treatments, professional hair styling, bridal & event makeup artistry, salon management, and aesthetic studio ownership.",
   },
   "not-decided": {
     category: "Self-Discovery & Exploration",
@@ -887,7 +932,7 @@ export default function CareerReportsPage() {
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm shrink-0"
             />
             <div className="min-w-0">
-              <span className="font-extrabold text-xs sm:text-base text-stone-900 tracking-tight block leading-none truncate">
+              <span className="font-normal uppercase tracking-wider text-xs sm:text-base text-stone-900 block leading-none truncate">
                 Wabi Career Guidance
               </span>
               <span className="text-[9px] sm:text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5 truncate">
@@ -958,7 +1003,7 @@ export default function CareerReportsPage() {
             </h1>
 
             <p className="text-xs sm:text-base text-stone-600 font-medium leading-relaxed">
-              Click any career card below to open and read its complete, full-length blueprint report. You can come back anytime with the Back button.
+              Click any career card below to open and read its complete, full-length blueprint report. We listed few here but there are 300+ broad recognizable career options in india. 
             </p>
           </div>
 

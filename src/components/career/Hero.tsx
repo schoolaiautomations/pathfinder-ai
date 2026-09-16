@@ -17,7 +17,7 @@ export const Hero = () => {
             alt="Wabi Resolutions Logo" 
             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border border-zinc-200 shadow-sm" 
           />
-          <span className="font-extrabold text-base sm:text-xl text-zinc-950 tracking-tight">Wabi Career Guidance</span>
+          <span className="font-normal uppercase tracking-wider text-base sm:text-xl text-zinc-950">Wabi Career Guidance</span>
         </div>
         <div className="flex items-center gap-2 sm:gap-3">
           <Link

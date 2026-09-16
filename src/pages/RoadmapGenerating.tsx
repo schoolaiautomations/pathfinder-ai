@@ -107,7 +107,7 @@ const RoadmapGenerating = () => {
               className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm"
             />
             <div>
-              <span className="font-extrabold text-sm sm:text-base text-stone-900 tracking-tight block leading-none">
+              <span className="font-normal uppercase tracking-wider text-sm sm:text-base text-stone-900 block leading-none">
                 Wabi Career Guidance
               </span>
               <span className="text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5">

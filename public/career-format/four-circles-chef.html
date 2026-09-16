@@ -1,0 +1,376 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Chef / Culinary Professional</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Chef / Culinary Professional</h2><p class="standfirst">Chefs turn ingredients into safe, consistent and enjoyable food — but the career is much more than “loving to cook.” Professional kitchens are fast, hot, physically demanding and highly disciplined. A chef must control taste, hygiene, timing, cost, teamwork and consistency every single day.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Chef / Culinary Professional &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Do you like the real kitchen?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>How to learn?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Careers</b><em>Many kitchen roles</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Skill + experience</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want to become a chef?</h3><p class="lede">Cooking at home and working in a professional kitchen are very different experiences.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy cooking enough to repeat the same dish many times until it tastes and looks consistent?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you work quickly and accurately when several orders arrive at the same time?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you comfortable standing for long hours in a hot, noisy kitchen?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you follow strict hygiene, food-safety and cleaning procedures every day?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you accept correction from a senior chef and improve your technique without taking it personally?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you still choose this career if you had to work nights, weekends, festivals and holidays when restaurants are busiest?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Skills &amp; pathway</h3><p class="lede">There is no single compulsory degree or national entrance exam to become a chef. You can enter through a full hospitality degree, a culinary degree, a food-production diploma or a shorter craftsmanship route.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Food Production</div><div class="v">Knife skills, cooking methods, seasoning, sauces, stocks, Indian and international cuisines, bakery basics, plating and kitchen organisation.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Food Safety &amp; Hygiene</div><div class="v">Temperature control, storage, cross-contamination, personal hygiene, cleaning and safe handling are professional essentials.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Cost &amp; Teamwork</div><div class="v">Professional cooking is also about portions, wastage, inventory, food cost, speed and working as part of a kitchen brigade.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>You have two broad choices.</b><br><br><b>Option 1 — Continue Class 11–12 in any stream</b>, ideally with English, then choose a culinary / hotel-management course.<br><br><b>Option 2 — Skill route after Class 10:</b> NCHMCT currently lists a <b>Craftsmanship Certificate Course in Food Production</b> of about <b>1½ years</b> for Class 10-pass students under its current eligibility framework.</div></div>
+
+<div class="row"><div class="k">After Class 12</div><div class="v">Common routes include:<br><br><b>Diploma in Food Production</b> — NCHMCT currently lists this as a <b>1½-year</b> programme for Class 12 students.<br><br><b>B.Sc. Hospitality &amp; Hotel Administration</b> — a broader <b>3-year</b> degree covering Food Production, F&amp;B Service, Front Office and Housekeeping, with management subjects.<br><br><b>BBA / Bachelor's in Culinary Arts</b> — available at selected institutions for students who want a more chef-focused degree.</div></div>
+
+<div class="row"><div class="k">Entrance exams</div><div class="v"><b>NCHM JEE</b> — the main national entrance for the <b>3-year B.Sc. Hospitality &amp; Hotel Administration</b> route through NCHMCT-affiliated IHMs. Current eligibility requires Class 12 with English as one of the subjects.<br><br><b>Diploma / Culinary programmes</b> — many are admitted directly by the institute through merit, application or their own selection process. There is <b>no single chef entrance exam for all colleges.</b></div></div>
+
+<div class="row"><div class="k">Which route is best?</div><div class="v"><b>If your main goal is the kitchen:</b> Food Production / Culinary Arts gives more direct chef training.<br><b>If you want wider hotel-management options:</b> B.Sc. HHA gives broader hospitality exposure.<br><b>If family budget/time is limited:</b> a recognised shorter food-production course + strong kitchen experience can be a practical route.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → Class 12 in any stream → NCHM JEE / college admission if required → Culinary Arts / Food Production / Hotel Management training → industrial training / kitchen internship → Commis / Junior Chef → Chef.</b><br><br><b>Shorter route:</b> Class 10 → recognised Craftsmanship Food Production course → practical training → entry-level kitchen role → experience + specialisation.</div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>You do not become a strong chef just by getting a certificate.</b> Employers care about practical speed, taste, hygiene, consistency, discipline and whether you can work in a real kitchen under pressure.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · KITCHEN CAREERS</div><h3>What kind of chef could you become?</h3><p class="lede">Professional kitchens have different sections and specialisations. Most chefs become strong in one area before moving into leadership.</p>
+
+<div class="card">
+<div class="row"><div class="k">Commis Chef</div><div class="v"><b>Entry-level professional kitchen role.</b> Prepare ingredients, cook assigned items, maintain hygiene and learn one station under senior chefs.<div class="chips"><span class="chip">Learning</span><span class="chip">Prep</span><span class="chip">Kitchen basics</span></div></div></div>
+
+<div class="row"><div class="k">Chef de Partie</div><div class="v"><b>Runs one kitchen station or section.</b> Examples include grill, curry, sauce, cold kitchen or bakery sections depending on the property.</div></div>
+
+<div class="row"><div class="k">Sous Chef</div><div class="v"><b>Second-in-command in many kitchens.</b> Supervises staff, service, quality, prep, wastage and kitchen coordination.</div></div>
+
+<div class="row"><div class="k">Executive / Head Chef</div><div class="v">Leads the kitchen operation: menu planning, food cost, staffing, suppliers, quality, hygiene, training and overall culinary standards.</div></div>
+
+<div class="row"><div class="k">Indian Cuisine Chef</div><div class="v">Specialise in regional Indian cuisines, curries, tandoor, biryani, kebabs, South Indian food or other regional styles. Strong specialists can be highly valued.</div></div>
+
+<div class="row"><div class="k">Continental / Western Chef</div><div class="v">Work with European/Western cooking methods, sauces, grills, pastas, breakfast, meat/fish preparation and plated dishes.</div></div>
+
+<div class="row"><div class="k">Asian Cuisine Chef</div><div class="v">Chinese, Thai, Japanese, Korean and other Asian cuisines. Authentic technique and ingredient knowledge matter.</div></div>
+
+<div class="row"><div class="k">Pastry Chef</div><div class="v"><b>Desserts, pastry, chocolate and plated sweets.</b> Requires precision, temperature control and strong presentation skills.</div></div>
+
+<div class="row"><div class="k">Baker</div><div class="v">Bread, cakes, pastries and baked products. NCHMCT currently also offers a separate <b>1½-year Diploma in Bakery &amp; Confectionery</b> after Class 12.</div></div>
+
+<div class="row"><div class="k">Tandoor Chef</div><div class="v">Specialise in tandoor cooking, breads, kebabs and high-heat techniques. This is a practical speciality with strong demand in Indian hospitality.</div></div>
+
+<div class="row"><div class="k">Banquet / Bulk Production</div><div class="v">Prepare large quantities for weddings, conferences and hotel events while maintaining timing and consistency for hundreds or thousands of guests.</div></div>
+
+<div class="row"><div class="k">Cruise / Airline Catering</div><div class="v">Large-scale food production under strict hygiene, timing and logistics requirements. Cruise roles may involve long contracts away from home.</div></div>
+
+<div class="row"><div class="k">Personal / Private Chef</div><div class="v">Cook for individuals, families, executives or private events. Requires discretion, menu flexibility and direct client management.</div></div>
+
+<div class="row"><div class="k">Food Entrepreneur</div><div class="v">Cloud kitchen, restaurant, bakery, catering or packaged-food business. Cooking skill helps, but business success also needs pricing, marketing, staff, purchasing, licences and cash-flow control.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Chef vs Cook</div><div class="v"><b>Cook:</b> prepares food, often following established recipes and instructions.<br><b>Chef:</b> usually has broader professional responsibility for technique, quality, menu, team, costing or a kitchen section.<br>In real workplaces the titles can overlap, especially in smaller restaurants.</div></div>
+
+<div class="row"><div class="k">Chef vs Hotel Manager</div><div class="v"><b>Chef:</b> kitchen and culinary production.<br><b>Hotel Manager:</b> coordinates the wider hotel business — rooms, front office, F&amp;B, staff, operations and finances.<br>B.Sc. HHA exposes students to both, but kitchen-focused students need strong Food Production experience.</div></div>
+
+<div class="row"><div class="k">Where chefs work</div><div class="v">Hotels, restaurants, resorts, cafés, bakeries, catering companies, cloud kitchens, hospitals/institutions, airline kitchens, cruise ships, clubs and private homes.</div></div>
+
+<div class="row"><div class="k">Career ladder</div><div class="v"><b>Trainee / Apprentice → Commis → Demi Chef de Partie → Chef de Partie → Sous Chef → Executive Sous Chef → Executive / Head Chef.</b><br><span style="font-size:13px">Titles vary by hotel and restaurant, but experience and responsibility usually increase step by step.</span></div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Culinary skills can also lead into:
+<div class="chips"><span class="chip">Food Production</span><span class="chip">Bakery</span><span class="chip">Catering</span><span class="chip">Food Styling</span><span class="chip">Hospitality Training</span><span class="chip">Food Business</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Kitchen reality</span><span><b>Professional kitchens are intense.</b> Expect heat, standing, cuts/burn risks, repetitive prep, pressure during service and late/weekend shifts. If you enjoy only relaxed home cooking, test a real commercial kitchen before choosing the career.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Chef salaries grow with experience, cuisine, city, hotel/restaurant brand and how much responsibility you can handle.</p>
+
+<div class="card">
+<div class="row"><div class="k">Intern / Trainee</div><div class="v"><span class="money">₹5,000 – ₹12,000/month</span><br><span style="font-size:13px">Hotel and culinary internships can be modestly paid. The main value is real kitchen speed, discipline and exposure.</span></div></div>
+
+<div class="row"><div class="k">Commis / Junior Chef</div><div class="v"><span class="money">₹12,000 – ₹22,000/month</span><br><span style="font-size:13px">Entry-level pay varies widely by city and employer. Current Indeed benchmarks show junior-chef pay around the mid-₹16,000s per month nationally.</span></div></div>
+
+<div class="row"><div class="k">Chef — India benchmark</div><div class="v"><span class="money">≈ ₹20,000/month average</span><br><span style="font-size:13px">Indeed's May 2026 India-wide Chef average is about <b>₹19,972/month</b>, based on hundreds of reported salaries.</span></div></div>
+
+<div class="row"><div class="k">Chef de Partie / Specialist</div><div class="v"><span class="money">₹22,000 – ₹40,000+/month</span><br><span style="font-size:13px">Strong cuisine specialists, CDPs and experienced production chefs can earn more, especially in premium hotels/restaurants.</span></div></div>
+
+<div class="row"><div class="k">Sous Chef</div><div class="v"><span class="money">₹30,000 – ₹60,000+/month</span><br><span style="font-size:13px">Indeed's current national benchmark is around <b>₹35,000/month</b>, with large variation by property and experience.</span></div></div>
+
+<div class="row"><div class="k">Head / Executive Chef</div><div class="v"><span class="money">₹40,000 – ₹1,00,000+/month</span><br><span style="font-size:13px">Leadership positions in premium hotels, restaurant groups, resorts or overseas markets can go substantially higher.</span></div></div>
+
+<div class="row"><div class="k">Course cost</div><div class="v"><b>NCHMCT's 3-year B.Sc. HHA currently estimates tuition at roughly ₹3–5 lakh total across institutes</b>, with additional admission, examination, hostel and living costs. Shorter Food Production / Craftsmanship programmes can cost much less depending on institute.</div></div>
+
+<div class="flag red"><span class="mark">Ask at home</span><span>If a private culinary school costs ₹8–15 lakh or more, compare that cost with the likely first salary. <b>A prestigious-looking kitchen classroom does not guarantee a chef job.</b> Check internships, hotel partnerships, practical hours and real graduate placements.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Cooking + pressure + discipline</span> — Chef may be a strong fit.</p>
+<p><span class="hi">Love baking more than restaurant cooking</span> — compare Bakery &amp; Pastry.</p>
+<p><span class="hi">Love food but dislike kitchen pressure</span> — explore Food Technology, Nutrition, Hospitality Management or food business roles.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>a professional chef is judged by consistency — not by making one excellent dish once.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">You can test this career at home before paying for culinary school.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Learn 10 basic dishes and repeat each until the result is consistent</li>
+<li>Learn knife safety, kitchen hygiene, food storage and basic nutrition</li>
+<li>Cook one complete meal within a fixed time and budget</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Continue Class 12 if possible; any stream can lead to culinary careers</li>
+<li>If you want a shorter vocational route, compare recognised <b>Craftsmanship Food Production</b> programmes</li>
+<li>Visit an IHM, hotel kitchen, bakery or restaurant and ask what the first two years of chef work actually look like</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>After Class 12</div><ul>
+<li>Compare <b>NCHM JEE + B.Sc. HHA</b>, Diploma in Food Production and dedicated Culinary Arts programmes</li>
+<li>Choose programmes with strong practical kitchens and industrial training</li>
+<li>Before admission, check where recent graduates actually started: Commis? Management Trainee? Bakery? F&amp;B?</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Cook the <b>same dish for 10 people</b> at the same time. Keep portions, taste, temperature and presentation consistent, finish on time and clean the kitchen afterward. If you enjoy the pressure as much as the cooking, a professional kitchen may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission or salary notice. Culinary/hospitality programme eligibility, entrance routes, fees and job titles vary by institution and employer. Current route examples were checked against National Council for Hotel Management &amp; Catering Technology (NCHMCT) 2026 eligibility and admission information, including B.Sc. HHA, Diploma in Food Production, Bakery &amp; Confectionery and Craftsmanship Food Production routes. Salary figures are broad guidance and should not be treated as guaranteed income.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Chef fit</strong>You seem comfortable with cooking, repetition, pressure and discipline. Test yourself in a real commercial kitchen before choosing a course.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>You enjoy food, but test long hours, repetition and service pressure — not only creative cooking.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>You may love food without enjoying professional kitchen life. Compare Bakery, Food Technology, Nutrition, Hotel Management or Food Entrepreneurship.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

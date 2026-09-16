@@ -19,6 +19,8 @@ import {
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import archerAnimation from "@/lib/Archer.lottie";
+import questionAnimation from "@/lib/question.lottie";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -38,7 +40,7 @@ const Index = () => {
               className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm shrink-0"
             />
             <div className="min-w-0">
-              <span className="font-extrabold text-xs sm:text-base text-stone-900 tracking-tight block leading-none truncate">
+              <span className="font-normal uppercase tracking-wider text-xs sm:text-base text-stone-900 block leading-none truncate">
                 Wabi Career Guidance
               </span>
               <span className="text-[9px] sm:text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5 truncate">
@@ -177,18 +179,7 @@ const Index = () => {
                 className="font-extrabold leading-[1.12] tracking-tight"
                 style={{ fontSize: "clamp(2rem, 5vw, 3.6rem)", color: "#1C1917" }}
               >
-                Your child's future is{" "}
-                <span
-                  style={{
-                    background: "linear-gradient(135deg, #B5956A 0%, #7C5C3E 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  too important
-                </span>{" "}
-                to leave to chance.
+                Every Career Decision Needs the Right Guidance!
               </h1>
 
               {/* Subtext */}
@@ -196,8 +187,9 @@ const Index = () => {
                 className="leading-relaxed text-sm sm:text-base font-medium max-w-xl"
                 style={{ color: "#6B5E53" }}
               >
-                Most students in India choose careers based on what their neighbours chose, not what truly fits them.
-                We sit with you — honestly, patiently — and help you find a direction that genuinely matches who you are.
+                Between parental expectations, peer pressure, and endless advice,
+                feeling overwhelmed is only natural. We listen with patience, understand
+                who you truly are, and guide you to a career path that genuinely fits you.
               </p>
 
               {/* Primary CTA */}
@@ -232,16 +224,12 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Right Column: Hero Rocket Animation Card */}
+            {/* Right Column: Hero Question Animation */}
             <div className="lg:col-span-5 flex items-center justify-center lg:justify-end">
-              <div className="relative max-w-sm sm:max-w-md w-full bg-[#FAF8F5]/80 border border-[#E8DFD0] rounded-3xl p-3 sm:p-4 shadow-xs flex items-center justify-center aspect-[4/3] overflow-hidden">
-                <div
-                  className="absolute -inset-2 rounded-3xl blur-2xl opacity-40 -z-10"
-                  style={{ background: "#E8DFD0" }}
-                />
-                <div className="w-full h-full flex items-center justify-center scale-[1.45] sm:scale-[1.65]">
+              <div className="relative max-w-sm sm:max-w-md w-full flex items-center justify-center aspect-[4/3]">
+                <div className="w-full h-full flex items-center justify-center">
                   <DotLottieReact
-                    src="/rocket-animation.lottie"
+                    src={questionAnimation || "/question.lottie"}
                     loop
                     autoplay
                     className="w-full h-full object-contain"
@@ -353,6 +341,18 @@ const Index = () => {
             >
               Explore Careers <ArrowRight className="w-4 h-4" />
             </button>
+
+            {/* Archer animation under explore careers button */}
+            <div className="pt-2 sm:pt-4 flex items-center justify-center lg:justify-start">
+              <div className="w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 flex items-center justify-center">
+                <DotLottieReact
+                  src={archerAnimation || "/Archer.lottie"}
+                  loop
+                  autoplay
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Right: 4 dimensions */}

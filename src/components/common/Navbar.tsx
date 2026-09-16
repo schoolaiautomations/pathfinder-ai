@@ -47,7 +47,7 @@ export const Navbar = ({
               alt="Wabi Career Guidance"
               className="w-8 h-8 rounded-full object-cover border border-zinc-200 shadow-2xs"
             />
-            <span className="font-extrabold text-sm sm:text-base text-zinc-950 tracking-tight group-hover:text-zinc-700 transition-colors">
+            <span className="font-normal uppercase tracking-wider text-sm sm:text-base text-zinc-950 group-hover:text-zinc-700 transition-colors">
               Wabi Career Guidance
             </span>
           </Link>

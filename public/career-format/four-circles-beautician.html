@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Beautician / Beauty Professional</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Beautician / Beauty Professional</h2><p class="standfirst">Beauticians help clients with basic skin care, hair removal, simple makeup, hair dressing, manicure, pedicure, nail art and other salon services. The career is practical, people-facing and skill-based. You can work in a salon, become a specialist, freelance for weddings/events or eventually run your own beauty business.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Beautician / Beauty Professional &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Do you enjoy this work?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>How to learn?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Careers</b><em>Many specialities</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Skill matters</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want to become a beautician?</h3><p class="lede">Liking makeup or hairstyles is a good start, but professional beauty work also needs hygiene, patience, client service and consistent hands-on skill.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy working carefully with skin, hair, makeup or nails?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you comfortable working closely with clients and listening to what they actually want?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you keep tools, towels, products and the work area clean and hygienic every time?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you practise the same technique many times until your result becomes neat and consistent?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be comfortable standing for long periods and working during weekends, weddings or festival seasons?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you stay honest about what you are trained to do and avoid unsafe or medical procedures outside your training?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Skills &amp; pathway</h3><p class="lede">This is one of the careers where you can begin learning practical skills relatively early. There is no single national entrance exam.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Hygiene &amp; Safety</div><div class="v">Professional beauty work requires clean tools, safe product use, disinfection, client privacy and good workplace hygiene.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Hands-on Skill</div><div class="v">Threading, waxing, facial steps, manicure, pedicure, basic makeup, hair dressing and other techniques improve only through supervised practice.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Communication &amp; Service</div><div class="v">Understand the client's needs, explain services honestly, manage appointments and handle complaints professionally.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>You can continue Intermediate in any stream and learn beauty skills alongside it, or choose a recognised vocational/skill-training route.</b> The current Beauty &amp; Wellness Sector Skill Council (B&amp;WSSC) <b>Beautician</b> qualification is an <b>NSQF Level 3</b> job role with <b>420 notional training hours</b>. Its qualification pack allows entry from <b>Class 10</b> under the standard route.</div></div>
+
+<div class="row"><div class="k">Entrance exam</div><div class="v"><b>There is no national entrance exam to become a beautician.</b> Admission depends on the training institute or skill programme. Before joining, check whether the course maps to a recognised B&amp;WSSC / NSQF qualification, what practical training is included and whether assessment/certification is genuine.</div></div>
+
+<div class="row"><div class="k">What a Beautician learns</div><div class="v">The current national Beautician qualification includes <b>basic hair removal, simple makeup, simple hair dressing/root touch-up, manicure, pedicure, basic mehndi and nail art, basic skin care, workplace hygiene/safety and employability skills.</b></div></div>
+
+<div class="row"><div class="k">Broader route</div><div class="v"><b>Beautician → Beauty Therapist / Hair Stylist / Makeup Artist / Nail Technician → Senior specialist or Cosmetologist.</b><br><br>B&amp;WSSC currently recognises separate job roles such as <b>Beauty Therapist, Senior Beauty Therapist, Hair Dresser &amp; Stylist, Professional Makeup Artist, Bridal/Fashion/Portfolio Makeup Artist, Nail Technician and Cosmetologist.</b></div></div>
+
+<div class="row"><div class="k">Cosmetologist route</div><div class="v">A <b>Cosmetologist</b> is broader than a basic Beautician. The current B&amp;WSSC Cosmetologist qualification covers hair, skin, makeup and nails at <b>NSQF Level 4</b>. One current standard entry route is <b>Class 12 pass</b>; other experience/technical pathways are also recognised.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → recognised practical Beautician / Beauty &amp; Wellness training → assessment/certification where applicable → salon internship / supervised practice → Beautician / Junior Beauty Professional → specialise and build experience.</b></div></div>
+
+<div class="flag red"><span class="mark">Check before joining</span><span><b>Do not choose a course only because it says “100% placement” or “international certificate.”</b> Ask exactly who awards the certificate, how many hours are practical, whether students work on real clients and where recent graduates actually work.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · CAREER AREAS</div><h3>What can you specialise in?</h3><p class="lede">“Beautician” can be the starting point. Over time, most people become stronger in one or two specific areas.</p>
+
+<div class="card">
+<div class="row"><div class="k">Beauty Therapist</div><div class="v"><b>Skin care, hair removal, facials and general beauty services.</b> This is one of the closest professional progressions from entry-level beautician work.<div class="chips"><span class="chip">Facials</span><span class="chip">Skin care</span><span class="chip">Waxing / Threading</span></div></div></div>
+
+<div class="row"><div class="k">Hair Dresser &amp; Stylist</div><div class="v">Hair cutting, styling, blow-drying, hair spa, colouring and related salon services. Advanced chemical services require proper training and product knowledge.</div></div>
+
+<div class="row"><div class="k">Makeup Artist</div><div class="v">Party, bridal, fashion, portfolio and event makeup. Income can become strong during wedding/festival seasons, but portfolio quality and referrals matter greatly.</div></div>
+
+<div class="row"><div class="k">Bridal Makeup Artist</div><div class="v"><b>One of the strongest freelance routes in India.</b> Work can include bridal makeup, hairstyling, saree/dupatta draping and complete event preparation. Timing, hygiene and reliability are as important as makeup technique.</div></div>
+
+<div class="row"><div class="k">Nail Technician</div><div class="v">Manicure, pedicure, nail art and specialised nail services after suitable training. This can work inside salons or as an independent niche service.</div></div>
+
+<div class="row"><div class="k">Mehndi Artist</div><div class="v">Bridal and event mehndi can be a separate freelance business or an additional skill combined with beauty services.</div></div>
+
+<div class="row"><div class="k">Cosmetologist</div><div class="v">A broader beauty professional trained across <b>hair, skin, makeup and nails</b>. The current B&amp;WSSC qualification describes cosmetologists as professionals who may work in salons or freelance.</div></div>
+
+<div class="row"><div class="k">Aesthetic Skin Services</div><div class="v">Advanced non-invasive aesthetic work is a <b>separate higher-skill pathway</b>. B&amp;WSSC has an <b>Aesthetic Skin Technician</b> qualification. Do not assume a basic Beautician certificate qualifies you to use lasers, invasive procedures or medical devices.</div></div>
+
+<div class="row"><div class="k">Salon Manager</div><div class="v">Manage appointments, staff, products, inventory, customer service, sales and daily salon operations. Strong beauticians can move into supervision and management.</div></div>
+
+<div class="row"><div class="k">Freelancer / Home Service</div><div class="v">Provide services at clients' homes or events. Lower fixed costs can make this attractive, but transport, safety, scheduling, hygiene and customer acquisition become your responsibility.</div></div>
+
+<div class="row"><div class="k">Own Salon / Studio</div><div class="v">Experienced professionals can start a salon, bridal studio or specialist beauty business. This requires much more than technical skill: <b>pricing, rent, staff, inventory, marketing, hygiene, taxes and repeat customers.</b></div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Beautician vs Cosmetologist</div><div class="v"><b>Beautician:</b> usually entry-level/general beauty services such as basic skin care, hair removal, simple makeup, manicure/pedicure and basic hair services.<br><b>Cosmetologist:</b> broader integrated training across hair, skin, makeup and nails, usually at a higher qualification level.</div></div>
+
+<div class="row"><div class="k">Beautician vs Dermatologist</div><div class="v"><b>Beautician:</b> beauty and grooming services within training and product safety limits.<br><b>Dermatologist:</b> a medical doctor specialising in skin, hair and nail diseases after MBBS + specialist medical training.<br><b>A beautician should not diagnose or medically treat skin disease.</b></div></div>
+
+<div class="row"><div class="k">What employers value</div><div class="v"><div class="chips"><span class="chip">Clean work</span><span class="chip">Client handling</span><span class="chip">Speed + accuracy</span><span class="chip">Hygiene</span><span class="chip">Portfolio</span><span class="chip">Product knowledge</span></div></div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v">Local salons, premium salon chains, bridal studios, spas, beauty clinics for non-medical services, hotels/resorts, home-service platforms, fashion/events and freelance work.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Beauty skills can also lead into:
+<div class="chips"><span class="chip">Salon Sales</span><span class="chip">Beauty Trainer</span><span class="chip">Retail Cosmetics</span><span class="chip">Salon Manager</span><span class="chip">Freelance Makeup</span><span class="chip">Entrepreneurship</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Safety rule</span><span><b>Do not perform medical procedures just because a customer asks.</b> Skin infections, severe acne, allergic reactions, unusual hair loss or other medical problems should be referred to an appropriate healthcare professional.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Beautician income depends heavily on skill, city, salon type, commission/tips, repeat clients and whether you freelance or own a business.</p>
+
+<div class="card">
+<div class="row"><div class="k">Trainee / Assistant</div><div class="v"><span class="money">₹8,000 – ₹15,000/month</span><br><span style="font-size:13px">Small salons and training-stage jobs may start around this level. Some internships are lower, especially when the focus is supervised practice.</span></div></div>
+
+<div class="row"><div class="k">Beautician</div><div class="v"><span class="money">₹12,000 – ₹25,000/month</span><br><span style="font-size:13px">A broad realistic range for many employed roles. Indeed's 2026 India-wide Beautician benchmark is about <b>₹17,268/month</b>.</span></div></div>
+
+<div class="row"><div class="k">Experienced / Specialist</div><div class="v"><span class="money">₹20,000 – ₹40,000+/month</span><br><span style="font-size:13px">Hair colouring, bridal makeup, advanced skin services, premium salon experience and strong client retention can increase earning power.</span></div></div>
+
+<div class="row"><div class="k">Freelance Bridal / Makeup</div><div class="v"><span class="money">Highly variable</span><br><span style="font-size:13px">A freelancer may earn much more per booking than a salon employee, but bookings are seasonal and you must pay for products, travel, marketing and assistants.</span></div></div>
+
+<div class="row"><div class="k">Salon Owner</div><div class="v"><span class="money">Revenue can be high — profit may not be</span><br><span style="font-size:13px">Rent, salaries, products, electricity, equipment, discounts and marketing all reduce profit. Build a loyal client base before taking on large fixed costs.</span></div></div>
+
+<div class="row"><div class="k">Training cost</div><div class="v">Beauty-course fees vary enormously — from low-cost skill programmes to expensive private academies. <b>Do not judge course quality by price.</b> Compare recognised qualification, practical hours, trainer experience, products/equipment, live-client practice and placement evidence.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span>Do not borrow a large amount for a short private beauty course without checking the likely starting salary and actual placement record. <b>Skill + portfolio + repeat customers usually matter more than an expensive certificate.</b></span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Hands-on + creative + people-oriented</span> — Beautician may suit you.</p>
+<p><span class="hi">Love makeup only</span> — consider specialising as a Professional / Bridal Makeup Artist.</p>
+<p><span class="hi">Love skin science and medical treatment</span> — compare Dermatology or other healthcare routes rather than assuming beautician training is medical training.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>clients come back because you are skilled, hygienic, trustworthy and consistent — not because your salon looks expensive.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">A student can explore beauty careers cheaply before paying for a long private course.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Learn basic hygiene, skin/hair safety and professional grooming</li>
+<li>Practise simple, safe skills such as basic hair styling, nail art or mehndi on willing family/friends</li>
+<li>Take clear before/after photos with permission and start learning how a professional portfolio works</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Continue Class 11–12 if possible while learning practical beauty skills</li>
+<li>Compare recognised <b>B&amp;WSSC / NSQF</b> job roles instead of choosing a random “beauty diploma”</li>
+<li>Visit at least two real salons and ask what skills they expect from a fresher</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>Before paying for training</div><ul>
+<li>Ask how many <b>practical hours</b> you get and whether you practise on real clients</li>
+<li>Check the exact certificate-awarding body and whether the qualification is currently valid</li>
+<li>Ask to see recent student work and independently verify placements</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Choose one safe skill — for example <b>basic hairstyling, nail art or simple makeup</b> — and practise it on 10 different people with their permission. Take feedback on <b>cleanliness, comfort, finish, time and communication</b>. If you enjoy improving after every client, this career may genuinely fit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not medical or legal advice. Course names, qualification versions, institute fees and job requirements can change. Current national skill examples were checked against the Beauty &amp; Wellness Sector Skill Council's 2025–28 qualification packs, including Beautician BWS/Q0113, Beauty Therapist, Hair Dresser &amp; Stylist, Makeup Artist and Cosmetologist pathways. Salary figures are broad guidance and should not be treated as guaranteed income.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Beauty career fit</strong>You seem comfortable with hands-on work, hygiene, clients and practice. Start with one skill, build a small portfolio and choose recognised training carefully.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>You like some parts of the field. Try real hands-on practice and observe a working salon before paying for a course.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>The client-facing, repetitive and hygiene-heavy nature of salon work may not match you. Compare Fashion, Interior Design, Graphic Design, Retail or other creative careers.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

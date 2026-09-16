@@ -1464,6 +1464,342 @@ export const CAREER_PROFILES: CareerProfile[] = [
     }
   },
   {
+    id: "chef",
+    name: "Chef / Culinary Professional",
+    category: "Hospitality & Arts",
+    icon: "👨‍🍳",
+    tagline: "Master commercial culinary techniques, menu innovation, and executive kitchen brigade management.",
+    stream: "Any Stream (MPC, BiPC, MEC, CEC, HEC in 10+2)",
+    educationRoute: "B.Sc Culinary Arts / BHM / Diploma in Food Production & Culinary Arts",
+    durationYears: "3-4 Yrs Degree / 1-2 Yrs Diploma + Kitchen Apprenticeship",
+    estimatedCost: "₹2.5 Lakhs - ₹10 Lakhs (Hotel School & Culinary Academies)",
+    keyExams: "NCHMCT JEE, IHM Entrances, Private Culinary Academy Tests",
+    salaryStarting: "₹20,000 - ₹35,000/mo (Commis Chef / Trainee)",
+    salaryPeak: "₹1,50,000 - ₹4,00,000+/mo (Executive Chef / Food Entrepreneur)",
+    workLifeBalance: "Demanding",
+    jobDemand: "High",
+    fieldRatio: "100% Commercial Kitchen / Food Prep",
+    keyPros: [
+      "Creative expression and immediate visual & sensory satisfaction from craft",
+      "Global mobility with international cruise lines, 5-star chains, and overseas restaurants",
+      "Direct pathway to food entrepreneurship, catering businesses, and cloud kitchens"
+    ],
+    keyCons: [
+      "Physically demanding: standing 10-14 hours in hot, fast-paced kitchen lines",
+      "Weekend, holiday, and late-night shifts during peak service times",
+      "Starting entry wages can be modest despite intense physical effort"
+    ],
+    backupPlan: "Food Stylist, Menu Consultant, Catering Manager, F&B Operations, Cloud Kitchen Owner",
+    dayInTheLife: {
+      workHours: "10:00 AM – 11:00 PM (Split shift or long evening service)",
+      workEnvironment: "Commercial hotel kitchens, fine dining prep stations, bakery & pastry sections",
+      mythsVsReality: [
+        { myth: "Being a chef is just like celebrity cooking shows.", reality: "It requires relentless mise en place, kitchen discipline, inventory tracking, and deep stamina." },
+        { myth: "You only cook what you personally like.", reality: "You execute standard recipes consistently for hundreds of guests to strict food safety protocols." }
+      ],
+      timeline: [
+        { time: "10:00 AM", title: "Ingredient Delivery & Quality Inspection", desc: "Checks freshness of produce, dairy, and butchery supplies against inventory orders." },
+        { time: "11:30 AM", title: "Mise en Place & Station Setup", desc: "Preps stocks, sauces, garnishes, and marinades ahead of lunch service rush." },
+        { time: "01:00 PM", title: "Peak Lunch Service Command", desc: "Calls orders, monitors cooking temperatures, and expedites finished plates to the dining room." },
+        { time: "04:30 PM", title: "Menu Experimentation & Evening Prep", desc: "Tests seasonal recipes with the culinary team and preps dinner service components." }
+      ],
+      dailyChallenges: [
+        "Maintaining high speed and precision during packed multi-table dinner rushes.",
+        "Strict adherence to food hygiene, refrigeration logs, and allergen safety.",
+        "Managing heat, sharp knives, and high physical coordination."
+      ],
+      toolsUsed: ["Chef's Knives & Honing Steel", "Combi Ovens & Salamanders", "Immersion Circulator (Sous Vide)", "Infrared Thermometers", "Recipe Costing Software"]
+    }
+  },
+  {
+    id: "psychologist",
+    name: "Psychologist",
+    category: "Healthcare & Social Sciences",
+    icon: "🧠",
+    tagline: "Understand human cognition, mental health, and behavioural dynamics to provide therapeutic guidance and counselling.",
+    stream: "Any Stream (Humanities / CEC / BiPC / MPC in 10+2)",
+    educationRoute: "BA / B.Sc Psychology ➔ MA / M.Sc Psychology ➔ M.Phil / Psy.D (for RCI Clinical Psychologist)",
+    durationYears: "3 Yrs UG + 2 Yrs PG (+ 2 Yrs RCI for Clinical)",
+    estimatedCost: "₹1.5 Lakhs - ₹5 Lakhs (University Education)",
+    keyExams: "CUET-UG, CUET-PG, Institute Entrance Tests, RCI Licensure",
+    salaryStarting: "₹25,000 - ₹45,000/mo (Counsellor / Associate Psychologist)",
+    salaryPeak: "₹1,00,000 - ₹2,50,000+/mo (Private Practice / Senior Consultant)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "90% Clinical / Consultation Room, 10% Community",
+    keyPros: [
+      "Deep personal fulfillment helping individuals heal, overcome trauma, and grow",
+      "Rapidly expanding societal awareness and corporate wellbeing demand across India",
+      "Great flexibility for private practice, telehealth counselling, and academic research"
+    ],
+    keyCons: [
+      "Requires advanced degrees (Master's minimum, RCI for clinical) before independent practice",
+      "Emotional fatigue and risk of vicarious trauma if personal boundaries are weak",
+      "Takes time to build consistent client base and strong professional reputation"
+    ],
+    backupPlan: "School Counsellor, HR Talent Specialist, Behavioural Researcher, Corporate Wellness Coach",
+    dayInTheLife: {
+      workHours: "9:30 AM – 5:30 PM (Flexible client appointment schedules)",
+      workEnvironment: "Private therapy clinics, hospital departments, school guidance offices, corporate centers",
+      mythsVsReality: [
+        { myth: "Psychologists can read minds and judge people instantly.", reality: "They use evidence-based assessments, scientific listening, and therapeutic frameworks." },
+        { myth: "Psychologists prescribe psychiatric medication.", reality: "Only medical doctors (Psychiatrists / MBBS) prescribe medicines; psychologists use psychotherapy and behavioural interventions." }
+      ],
+      timeline: [
+        { time: "09:30 AM", title: "Case Notes Review & Session Preparation", desc: "Reads previous notes and therapeutic goals before morning client consultations." },
+        { time: "10:30 AM", title: "Individual Therapy Sessions", desc: "Conducts cognitive behavioural therapy (CBT) and active listening for anxiety and stress cases." },
+        { time: "02:00 PM", title: "Psychometric Assessment & Scoring", desc: "Administers standard aptitude, personality, and diagnostic psychological test batteries." },
+        { time: "04:00 PM", title: "School / Corporate Wellness Workshop", desc: "Facilitates group session on emotional resilience and study stress management." }
+      ],
+      dailyChallenges: [
+        "Maintaining strict patient confidentiality and ethical neutrality.",
+        "Managing emotional burnout through self-care and professional peer supervision.",
+        "Helping clients navigate family and social stigmas around mental health."
+      ],
+      toolsUsed: ["Psychological Assessment Batteries", "Cognitive Behavioral Worksheets", "DSM-5 / ICD Diagnostic Manuals", "Therapy Tracking Software", "Biofeedback Devices"]
+    }
+  },
+  {
+    id: "environmental-consultant",
+    name: "Environmental Consultant",
+    category: "Engineering & Environment",
+    icon: "🌱",
+    tagline: "Assess ecological impacts, resolve industrial pollution issues, and ensure regulatory environmental compliance.",
+    stream: "Science (MPC or BiPC in 10+2)",
+    educationRoute: "B.Sc Environmental Science / B.Tech Environmental / Civil Engineering ➔ M.Sc / M.Tech",
+    durationYears: "3-4 Yrs UG (+ 2 Yrs PG recommended for EIA)",
+    estimatedCost: "₹1 Lakh - ₹4.5 Lakhs",
+    keyExams: "State EAPCET, JEE Main, CUET, GATE",
+    salaryStarting: "₹25,000 - ₹45,000/mo (Environmental Analyst / Junior Consultant)",
+    salaryPeak: "₹1,20,000 - ₹2,80,000/mo (Principal EIA Consultant / Sustainability Director)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "60% Office & Reporting, 40% Field Surveys & Audits",
+    keyPros: [
+      "Meaningful contribution to planetary health, clean water, and sustainable industry",
+      "Mandatory regulatory requirement for major highway, energy, and infrastructure projects",
+      "Expanding global ESG (Environmental, Social, Governance) corporate careers"
+    ],
+    keyCons: [
+      "Navigating conflicting pressures between industrial project deadlines and environmental rules",
+      "Extensive travel to remote industrial zones, mines, effluent sites, and ports",
+      "Requires dense technical documentation, GIS modeling, and statutory tribunal hearings"
+    ],
+    backupPlan: "Pollution Control Board Officer, ESG Corporate Analyst, Sustainability Specialist, GIS Analyst",
+    dayInTheLife: {
+      workHours: "9:00 AM – 6:00 PM (Field days involve outdoor travel)",
+      workEnvironment: "Consulting offices, industrial factories, ecological wetlands, government labs",
+      mythsVsReality: [
+        { myth: "Environmental consultants only plant trees and protest.", reality: "They conduct rigorous chemistry sampling, GIS mapping, statutory compliance, and engineering reviews." },
+        { myth: "Environmental clearances are simple rubber stamps.", reality: "EIA requires multi-season baseline data, public hearings, and state/national committee approvals." }
+      ],
+      timeline: [
+        { time: "09:00 AM", title: "Air & Water Baseline Data Review", desc: "Analyzes lab test results from stack emission and effluent monitoring points." },
+        { time: "11:00 AM", title: "Industrial Site Field Inspection", desc: "Surveys wastewater treatment plant (ETP/STP) efficiency and hazardous waste storage." },
+        { time: "02:30 PM", title: "GIS & Environmental Impact Modeling", desc: "Plots spatial maps and noise/air dispersion models for a new highway project." },
+        { time: "04:30 PM", title: "PARIVESH Clearance Documentation", desc: "Drafts Environmental Management Plan (EMP) chapter for statutory state appraisal." }
+      ],
+      dailyChallenges: [
+        "Ensuring industrial clients strictly meet Zero Liquid Discharge (ZLD) norms.",
+        "Calibrating complex field sensors under challenging weather conditions.",
+        "Interpreting fast-changing pollution control board notifications and tribunal judgments."
+      ],
+      toolsUsed: ["GIS / QGIS Mapping Software", "Air Sampling Sensors & PM Monitors", "Water Quality Multiparameter Probes", "Noise Level Meters", "PARIVESH Clearance Portal"]
+    }
+  },
+  {
+    id: "archaeologist",
+    name: "Archaeologist",
+    category: "Humanities & Research",
+    icon: "🏺",
+    tagline: "Investigate human history and ancient civilisations through systematic excavation, artifact analysis, and scientific dating.",
+    stream: "Any Stream (Humanities / Arts / Science in 10+2)",
+    educationRoute: "BA History / Ancient History ➔ MA Archaeology ➔ PG Diploma in Archaeology (ASI)",
+    durationYears: "3 Yrs UG + 2 Yrs PG + 2 Yrs ASI Training",
+    estimatedCost: "₹50,000 - ₹2 Lakhs (Government Central Universities)",
+    keyExams: "CUET-UG, CUET-PG, UGC-NET, ASI Recruitment Exams",
+    salaryStarting: "₹35,000 - ₹55,000/mo (Assistant Archaeologist / Research Fellow)",
+    salaryPeak: "₹1,20,000 - ₹2,00,000/mo (Superintending Archaeologist / Museum Director)",
+    workLifeBalance: "Moderate",
+    jobDemand: "Niche / Competitive",
+    fieldRatio: "50% Field Excavations, 50% Lab Research & Museum Analysis",
+    keyPros: [
+      "Thrilling discovery of tangible human history and lost cultural heritage",
+      "Strong job security in government organizations like Archaeological Survey of India (ASI)",
+      "Interdisciplinary fusion of history, geology, chemistry, and digital 3D modeling"
+    ],
+    keyCons: [
+      "Rigorous physical camp life in remote excavation sites under sun, dust, and tent conditions",
+      "Limited private sector openings compared to corporate career tracks",
+      "Slow, painstaking documentation requiring months of recording for small artifact fragments"
+    ],
+    backupPlan: "Museum Curator, Heritage Tourism Specialist, University Professor, Numismatist, Archivist",
+    dayInTheLife: {
+      workHours: "6:00 AM – 3:00 PM (Field excavations run early to beat the heat)",
+      workEnvironment: "Active excavation trenches, archaeological camps, museum research laboratories",
+      mythsVsReality: [
+        { myth: "Archaeologists are treasure hunters like Indiana Jones.", reality: "It is meticulous, slow scientific research where a pottery shard is more valuable than gold." },
+        { myth: "Archaeology is purely reading ancient Sanskrit or Persian books.", reality: "Field stratigraphy, soil sampling, surveying, and scientific carbon dating form the real core." }
+      ],
+      timeline: [
+        { time: "06:30 AM", title: "Excavation Trench Layout & Digging", desc: "Supervises systematic layer-by-layer scraping with trowels to record stratigraphic levels." },
+        { time: "10:30 AM", title: "Artifact Registration & Photography", desc: "Catalogs, measures, and records 3D coordinates of discovered pottery, coins, and beads." },
+        { time: "01:30 PM", title: "Pottery Washing & Typology Sorting", desc: "Classifies ceramic rims, fabrics, and slips in the camp laboratory tent." },
+        { time: "04:00 PM", title: "Section Drawing & Daily Site Journal", desc: "Draws exact scaled elevation diagrams of trench stratigraphy before sunset." }
+      ],
+      dailyChallenges: [
+        "Preserving fragile unearthed antiquities against rapid exposure to air and moisture.",
+        "Preventing accidental damage to delicate archaeological structural layers.",
+        "Deciphering eroded inscriptions and ancient scripts (Brahmi, Kharosthi)."
+      ],
+      toolsUsed: ["Archaeological Trowels & Brushes", "Total Station & Theodolite", "Carbon-14 / OSL Dating Protocols", "Digital Stratigraphy Software", "Calipers & Scaled Drawing Boards"]
+    }
+  },
+  {
+    id: "nutritionist",
+    name: "Nutritionist / Dietitian",
+    category: "Healthcare & Nutrition",
+    icon: "🥗",
+    tagline: "Design medical nutrition therapy, wellness diets, and sports nutritional plans grounded in human biology and metabolism.",
+    stream: "Medical (BiPC / Home Science in 10+2)",
+    educationRoute: "B.Sc Clinical Nutrition / Food & Nutrition ➔ M.Sc / PG Diploma in Dietetics ➔ Registered Dietitian (RD) Exam",
+    durationYears: "3 Yrs B.Sc + 1-2 Yrs PG / RD Internship",
+    estimatedCost: "₹1 Lakh - ₹3.5 Lakhs",
+    keyExams: "University Entrances, IDA Registered Dietitian (RD) Examination",
+    salaryStarting: "₹20,000 - ₹35,000/mo (Hospital Dietitian / Nutrition Associate)",
+    salaryPeak: "₹80,000 - ₹2,00,000+/mo (Celebrity / Sports Nutritionist / Private Clinic)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "85% Clinical Consultations & Meal Planning, 15% Kitchen Inspection",
+    keyPros: [
+      "Direct positive impact on reversing lifestyle diseases (diabetes, hypertension, obesity)",
+      "Booming demand in preventive health, fitness academies, corporate wellness, and sports",
+      "Excellent opportunities for independent consultancy and online remote consultations"
+    ],
+    keyCons: [
+      "Misinformation from social media 'influencers' complicating client education",
+      "Client non-compliance with diet charts requires persistent behavioural counseling",
+      "Hospital starting salaries require patience and credentialing (RD certification)"
+    ],
+    backupPlan: "Sports Nutritionist, Food Quality Controller, Health Coach, Public Health Nutritionist",
+    dayInTheLife: {
+      workHours: "9:00 AM – 5:00 PM",
+      workEnvironment: "Multispeciality hospital wards, outpatient diet clinics, sports fitness academies",
+      mythsVsReality: [
+        { myth: "Nutritionists only tell people to stop eating and starve.", reality: "They calculate precise macronutrient and micronutrient balance to fuel metabolism and heal disease." },
+        { myth: "Any fitness gym trainer is a qualified Dietitian.", reality: "Clinical dietetics requires accredited degrees in human physiology, biochemistry, and hospital internship." }
+      ],
+      timeline: [
+        { time: "09:00 AM", title: "Hospital Inpatient Ward Rounds", desc: "Evaluates ICU and post-surgery patients needing enteral / parenteral therapeutic feeding." },
+        { time: "11:30 AM", title: "Outpatient Diet Consultations", desc: "Counsels patients on customized meal plans for diabetes, renal disease, and PCOD management." },
+        { time: "02:30 PM", title: "Nutritional Assessment & Body Composition", desc: "Analyzes BMI, visceral fat, muscle mass, and dietary recall sheets." },
+        { time: "04:00 PM", title: "Dietary Kitchen Audit", desc: "Inspects hospital food preparation to ensure therapeutic sodium and hygiene compliance." }
+      ],
+      dailyChallenges: [
+        "Designing culturally acceptable and affordable meal plans for low-income patients.",
+        "Dispelling dangerous crash diet fads and unverified nutritional supplements.",
+        "Managing complex drug-nutrient interactions in hospital settings."
+      ],
+      toolsUsed: ["Body Composition Analyzers (BIA)", "Dietary Analysis Software", "Glycemic Index / Food Exchange Charts", "Skinfold Calipers", "Calorie Tracking Portals"]
+    }
+  },
+  {
+    id: "veterinarian",
+    name: "Veterinarian (Veterinary Doctor)",
+    category: "Medical & Healthcare",
+    icon: "🐾",
+    tagline: "Diagnose, medically treat, and perform surgical procedures on domestic pets, livestock, poultry, and wildlife.",
+    stream: "Medical (BiPC in 10+2 with Physics, Chemistry & Biology)",
+    educationRoute: "B.V.Sc & AH (Bachelor of Veterinary Science & Animal Husbandry) — 5.5 Years",
+    durationYears: "5.5 Years (including mandatory 1-year internship)",
+    estimatedCost: "₹1.5 Lakhs - ₹6 Lakhs (Govt State Veterinary Colleges)",
+    keyExams: "NEET UG / State EAPCET Veterinary Stream / VCI Counseling",
+    salaryStarting: "₹45,000 - ₹70,000/mo (Veterinary Assistant Surgeon / Clinic Vet)",
+    salaryPeak: "₹1,50,000 - ₹3,00,000+/mo (Chief Veterinary Officer / Specialized Pet Hospital Owner)",
+    workLifeBalance: "Demanding",
+    jobDemand: "High",
+    fieldRatio: "60% Clinic & Hospital, 40% Farm / Field Calls",
+    keyPros: [
+      "Deep personal bond giving voice and healing to vulnerable animals who cannot speak",
+      "Diverse career avenues: small pet clinics, dairy/poultry farm consulting, zoos, and pharma",
+      "Respected medical gazetted posts through state animal husbandry recruitment"
+    ],
+    keyCons: [
+      "Physical risk of animal bites, scratches, and handling heavy restless livestock (cattle/horses)",
+      "Emergency night calls for dystocia (difficult calving), road accident trauma, and poisonings",
+      "Emotional toll of euthanasia and dealing with distressed pet parents"
+    ],
+    backupPlan: "Veterinary Officer, Animal Nutrition Consultant, Zoo Veterinarian, Pharma R&D, Meat Hygiene Inspector",
+    dayInTheLife: {
+      workHours: "8:30 AM – 6:00 PM (Emergency on-call duties for trauma and deliveries)",
+      workEnvironment: "Veterinary polyclinics, surgical suites, dairy farms, wildlife reserves",
+      mythsVsReality: [
+        { myth: "Veterinary medicine is easier than human MBBS.", reality: "Vets must master anatomy, pathology, and surgery across multiple species (canine, feline, bovine, equine, avian)." },
+        { myth: "Veterinarians only vaccinate puppies.", reality: "They conduct complex orthopaedic surgeries, artificial insemination, epidemiology, and zoonotic disease control." }
+      ],
+      timeline: [
+        { time: "08:30 AM", title: "Morning Surgery & Anesthesia Induction", desc: "Performs scheduled pet sterilizations, dental cleanings, and soft tissue wound repairs." },
+        { time: "11:00 AM", title: "Outpatient Diagnostics & Vaccinations", desc: "Examines sick dogs and cats for parvo, tick fever, skin dermatitis, and fractures." },
+        { time: "02:30 PM", title: "Rural Livestock & Dairy Farm Visit", desc: "Conducts cattle pregnancy diagnostics, mastitis treatment, and herd vaccination drives." },
+        { time: "04:30 PM", title: "Diagnostic Ultrasound & Blood Smears", desc: "Interprets animal hematology reports and radiographs to plan internal medicine therapy." }
+      ],
+      dailyChallenges: [
+        "Diagnosing complex internal illnesses without verbal cues from the animal patient.",
+        "Calmly restraining aggressive or frightened animals safely without hurting them.",
+        "Preventing zoonotic diseases (rabies, brucellosis) from transmitting to humans."
+      ],
+      toolsUsed: ["Veterinary Surgical Instruments", "Veterinary Digital X-Ray & Ultrasound", "Anesthesia Vaporizer & Vital Monitors", "Otoscope & Ophthalmoscope", "Livestock Restraint Chutes"]
+    }
+  },
+  {
+    id: "beautician",
+    name: "Beautician / Beauty Professional",
+    category: "Lifestyle & Personal Care",
+    icon: "💄",
+    tagline: "Deliver aesthetic skincare, bridal makeup artistry, cosmetology therapies, and professional salon styling.",
+    stream: "Any Stream (10th / 10+2 in any discipline)",
+    educationRoute: "Diploma / Advanced Certification in Cosmetology, Hair Dressing & Makeup Artistry (CIDESCO / CIBTAC / NSDC)",
+    durationYears: "6 Months to 2 Years Intensive Training + Apprenticeship",
+    estimatedCost: "₹50,000 - ₹3 Lakhs (Academy Dependent)",
+    keyExams: "NSDC Skill Assessment, CIDESCO / CIBTAC International Certifications",
+    salaryStarting: "₹18,000 - ₹30,000/mo (Salon Beautician / Makeup Artist)",
+    salaryPeak: "₹1,00,000 - ₹3,00,000+/mo (Celebrity MUA / Salon & Aesthetic Clinic Owner)",
+    workLifeBalance: "Moderate",
+    jobDemand: "High",
+    fieldRatio: "100% Studio, Salon & Event Locations",
+    keyPros: [
+      "Rapid route to earning and financial independence without needing 4-5 year formal degrees",
+      "Huge bridal and festive wedding market in India creating high-ticket freelance income",
+      "Direct entrepreneurship: opening your own salon, aesthetic spa, or makeup academy"
+    ],
+    keyCons: [
+      "Long hours standing on your feet and working under bright studio lights",
+      "Intense seasonal peaks during Indian wedding muhurthams with early morning 3:00 AM calls",
+      "Chemical exposures to bleaches, hair dyes, and fumes requiring proper ventilation"
+    ],
+    backupPlan: "Freelance Bridal Artist, Hair Stylist, Skin Aesthetician, Beauty Academy Educator, Salon Manager",
+    dayInTheLife: {
+      workHours: "10:00 AM – 8:00 PM (Bridal schedules vary by wedding muhurtham)",
+      workEnvironment: "Air-conditioned salons, bridal dressing green rooms, vanity vans, photo studios",
+      mythsVsReality: [
+        { myth: "Anyone with a makeup kit is a professional beautician.", reality: "It requires deep mastery of skin undertones, facial anatomy, chemical safety, and hygiene standards." },
+        { myth: "Beauty work has low career growth.", reality: "Top bridal makeup artists and salon chain owners earn higher monthly net profits than many corporate executives." }
+      ],
+      timeline: [
+        { time: "10:00 AM", title: "Salon Sterilization & Station Setup", desc: "Disinfects makeup brushes, hair shears, skincare tools, and autoclave sterilizer." },
+        { time: "11:30 AM", title: "Advanced Facial & Skin Treatments", desc: "Administers hydra-facials, chemical peel applications, and skin rejuvenation treatments." },
+        { time: "03:00 PM", title: "Hair Styling & Colour Transformation", desc: "Executes precision haircutting, balayage hair colouring, and keratin smoothing." },
+        { time: "06:00 PM", title: "Bridal Makeup & Saree Draping Trial", desc: "Conducts trial HD airbrush makeup and hairstyle consultation for an upcoming bride." }
+      ],
+      dailyChallenges: [
+        "Managing demanding client expectations and matching desired reference photo looks.",
+        "Ensuring zero skin irritation, patch tests, and highest hygiene for sensitive skin.",
+        "Keeping pace with viral cosmetic trends, airbrush tech, and new aesthetic products."
+      ],
+      toolsUsed: ["Airbrush Makeup Machine & HD Cosmetics", "Hydra-Facial & Ultrasonic Skin Scrubbers", "Professional Hair Styling Heat Tools & Shears", "UV Sterilizers & Autoclaves", "Ring Lights & Vanity Stations"]
+    }
+  },
+  {
     id: "not-decided",
     name: "Career Explorer / General Guidance",
     category: "General Guidance",

@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Archaeologist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Archaeologist</h2><p class="standfirst">Archaeologists study the human past through physical evidence — settlements, pottery, tools, inscriptions, coins, monuments, burials and other material remains. The career combines History with fieldwork, scientific methods, careful documentation and research. It is not treasure hunting: most archaeological work is slow, systematic and evidence-based.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Archaeologist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Do you love evidence?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>How to qualify?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Careers</b><em>Many specialities</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Niche career</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want archaeology?</h3><p class="lede">Do not choose it only because ancient temples, lost cities or excavation videos look exciting. Real archaeology requires patience, accuracy and a lot of reading and recording.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy History enough to ask <b>“What evidence proves this?”</b> rather than simply memorising dates?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy carefully examining pottery, coins, inscriptions, bones or soil layers even when there is no dramatic discovery?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you work outdoors in heat, dust and remote places during surveys or excavations?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you patient enough to record measurements, photographs, drawings and notes very accurately?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy learning some science, mapping, GIS, dating methods or laboratory analysis alongside History?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you still choose this career knowing that many serious archaeology jobs require a Master's degree and the number of openings is much smaller than in mass-market careers?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">Archaeology usually becomes specialised at university level. You do not need one fixed Class 11–12 stream, but History is the most useful foundation.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>History</div><div class="v">The most direct foundation. Learn ancient and medieval societies, sources, chronology and how historians evaluate evidence.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Geography &amp; Science</div><div class="v">Archaeologists study landscapes, soils, climate, human remains, materials and dating evidence. Geography, Biology, Chemistry and Earth Science can all become useful depending on speciality.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Writing &amp; Languages</div><div class="v">Archaeologists write field reports and research papers. Ancient languages, scripts, Sanskrit, Telugu, Prakrit or other languages can be valuable for epigraphy and historical research.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Humanities / CEC with History is the most directly related route.</b> However, students from Science or Commerce can also enter many B.A. History / Archaeology programmes if the university's eligibility allows it. Choose History if you already know archaeology is a serious interest.</div></div>
+
+<div class="row"><div class="k">After Class 12</div><div class="v">Common routes include <b>B.A. Archaeology, B.A. Ancient History &amp; Archaeology, B.A. History, Anthropology or related humanities/social-science degrees</b>. In Andhra Pradesh, the current undergraduate History major syllabus itself includes <b>Introduction to Archaeology</b>, covering excavation, epigraphy, numismatics and important Indian archaeological sites.</div></div>
+
+<div class="row"><div class="k">Entrance / admission</div><div class="v"><b>There is no single national archaeology entrance exam.</b><br><br><b>CUET-UG</b> — some participating universities admit History / Anthropology / related programmes through CUET-UG; History is currently a CUET domain subject.<br><br><b>University / state admission</b> — other colleges use Class 12 merit or their own process. Shortlist the degree first, then check its entrance requirement.</div></div>
+
+<div class="row"><div class="k">Master's — important</div><div class="v">For serious field archaeology, research and many government archaeology roles, a <b>Master's degree is highly valuable and often expected</b>.<br><br>Andhra University currently offers <b>M.A. Ancient History &amp; Archaeology</b>.<br>Sri Venkateswara University, Tirupati currently offers a <b>2-year M.A. in Ancient Indian History, Culture &amp; Archaeology</b>, a <b>PG Diploma in Epigraphy</b> and PhD research.</div></div>
+
+<div class="row"><div class="k">ASI specialist training</div><div class="v">The Archaeological Survey of India's <b>Pt. Deendayal Upadhyaya Institute of Archaeology</b> runs specialist postgraduate archaeology training. Its 2025 one-year PG Diploma admission required a <b>Master's in Ancient or Medieval Indian History / Archaeology</b> with the specified marks and other eligibility. Treat this as an advanced route after postgraduate study, not something directly after Class 12.</div></div>
+
+<div class="row"><div class="k">Useful modern skills</div><div class="v"><div class="chips"><span class="chip">Excavation</span><span class="chip">GIS</span><span class="chip">Remote Sensing</span><span class="chip">Photography</span><span class="chip">Surveying</span><span class="chip">3D Documentation</span><span class="chip">Epigraphy</span><span class="chip">Research Writing</span></div></div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → Humanities/CEC with History recommended → B.A. History / Archaeology / related field → M.A. Archaeology / Ancient History &amp; Archaeology for many professional roles → field training / excavation experience → Archaeologist / heritage / museum / research role.</b></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>A B.A. in History alone does not automatically make someone a professional field archaeologist.</b> Serious archaeological work usually needs archaeology methods, field experience, documentation skills and often postgraduate specialisation.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · SPECIALITIES</div><h3>What kind of archaeologist could you become?</h3><p class="lede">Archaeology has many branches. Some involve excavation; others focus on inscriptions, laboratories, museums, landscapes or digital technology.</p>
+
+<div class="card">
+<div class="row"><div class="k">Field Archaeology</div><div class="v"><b>Survey and excavate archaeological sites.</b> Record soil layers, structures, artefacts and contexts carefully so that the evidence can later be interpreted.<div class="chips"><span class="chip">Survey</span><span class="chip">Excavation</span><span class="chip">Documentation</span></div></div></div>
+
+<div class="row"><div class="k">Prehistoric Archaeology</div><div class="v">Study human life before written records using stone tools, settlements, animal remains, landscapes and scientific dating methods.</div></div>
+
+<div class="row"><div class="k">Historical Archaeology</div><div class="v">Study societies for which archaeological evidence can be compared with inscriptions, texts, coins and other written records.</div></div>
+
+<div class="row"><div class="k">Epigraphy</div><div class="v"><b>Study inscriptions on stone, metal and other materials.</b> Knowledge of ancient scripts and languages can be crucial. Sri Venkateswara University currently offers a PG Diploma in Epigraphy.</div></div>
+
+<div class="row"><div class="k">Numismatics</div><div class="v"><b>Study coins and currency.</b> Coins can reveal rulers, trade, economy, language, religion, chronology and political change.</div></div>
+
+<div class="row"><div class="k">Underwater / Maritime Archaeology</div><div class="v">Study submerged settlements, shipwrecks, ports and maritime trade. This is highly specialised and can require diving, marine survey and technical training.</div></div>
+
+<div class="row"><div class="k">Bioarchaeology</div><div class="v">Study human skeletal remains to understand health, diet, disease, trauma, migration and past populations. This overlaps with biological anthropology and laboratory science.</div></div>
+
+<div class="row"><div class="k">Environmental Archaeology</div><div class="v">Use plant, animal, soil and environmental evidence to understand how past societies interacted with climate and landscapes.</div></div>
+
+<div class="row"><div class="k">Archaeometry / Scientific Archaeology</div><div class="v">Apply scientific methods such as dating, material analysis, chemistry, microscopy and other laboratory techniques to archaeological questions.</div></div>
+
+<div class="row"><div class="k">GIS / Digital Archaeology</div><div class="v">Use <b>GIS, satellite imagery, remote sensing, drones, databases, photogrammetry and 3D modelling</b> to map, analyse and document sites. These are increasingly valuable transferable skills.</div></div>
+
+<div class="row"><div class="k">Museum / Collections</div><div class="v">Document, research, catalogue and interpret archaeological objects in museums and repositories. This can overlap with museology and curatorial work.</div></div>
+
+<div class="row"><div class="k">Heritage Conservation</div><div class="v">Work on the documentation and protection of monuments, sites and cultural heritage. Conservation can also involve architects, engineers, chemists and conservators — archaeology is one part of the wider heritage team.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Archaeologist vs Historian</div><div class="v"><b>Archaeologist:</b> studies the past mainly through material remains and archaeological contexts.<br><b>Historian:</b> often works more heavily with written records, archives and texts.<br>Both overlap and frequently use each other's evidence.</div></div>
+
+<div class="row"><div class="k">Archaeologist vs Paleontologist</div><div class="v"><b>Archaeologist:</b> studies human societies and the material evidence humans left behind.<br><b>Paleontologist:</b> studies ancient life through fossils — including organisms that lived long before humans.<br><b>Dinosaur fossils are palaeontology, not archaeology.</b></div></div>
+
+<div class="row"><div class="k">Where archaeologists work</div><div class="v">Archaeological Survey of India (ASI), State Archaeology &amp; Museums departments, universities, museums, heritage organisations, research projects, cultural-resource/heritage consultancies and specialised conservation/documentation teams.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh opportunities</div><div class="v">Andhra Pradesh has university archaeology departments, museums, heritage sites and a state Archaeology &amp; Museums service. APPSC has previously recruited <b>Technical Assistants in the A.P. Archaeology &amp; Museums Sub-Service</b>. Such vacancies are not annual, so students should not depend on one government post alone.</div></div>
+
+<div class="row"><div class="k">Academic route</div><div class="v"><b>M.A. → UGC-NET / PhD as applicable → research / university teaching.</b> Academic archaeology usually requires postgraduate study, publications, fieldwork and research experience.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Archaeology training can also support:
+<div class="chips"><span class="chip">Museums</span><span class="chip">Heritage Tourism</span><span class="chip">GIS</span><span class="chip">Archives</span><span class="chip">Research</span><span class="chip">Teaching</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>This is a niche career.</b> There are far fewer permanent archaeology vacancies than software, banking or general business jobs. Build transferable skills such as GIS, documentation, languages, research, museums or digital heritage so that your career does not depend on one ASI vacancy.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Archaeology salaries differ greatly between temporary research projects, museums, universities, private heritage work and permanent government posts.</p>
+
+<div class="card">
+<div class="row"><div class="k">Intern / project assistant</div><div class="v"><span class="money">₹10,000 – ₹25,000/month</span><br><span style="font-size:13px">Short-term excavation, documentation, museum or research projects can be modestly paid, stipend-based or sometimes unpaid. Field experience is valuable, but check the project conditions carefully.</span></div></div>
+
+<div class="row"><div class="k">Early-career archaeology</div><div class="v"><span class="money">₹18,000 – ₹35,000/month</span><br><span style="font-size:13px">A broad practical range for entry-level project, heritage, museum or research work. Jobs are limited and qualification matters strongly.</span></div></div>
+
+<div class="row"><div class="k">India benchmark</div><div class="v"><span class="money">≈ ₹25,751/month</span><br><span style="font-size:13px">Indeed's current Archaeologist benchmark is about <b>₹25,751/month</b>, but it is based on only <b>2 reported salaries</b>, so it should be treated as a very rough reference.</span></div></div>
+
+<div class="row"><div class="k">ASI Assistant Archaeologist</div><div class="v"><span class="money">₹35,400 basic/month</span><br><span style="font-size:13px">ASI's current Assistant Archaeologist cadre is listed at <b>Pay Level 6: ₹35,400–₹1,12,400</b>. This is an official government pay level for that post, not a guarantee that every archaeology graduate will obtain it.</span></div></div>
+
+<div class="row"><div class="k">Deputy Superintending Archaeologist</div><div class="v"><span class="money">₹56,100 basic/month</span><br><span style="font-size:13px">ASI's current Deputy Superintending Archaeologist cadre is listed at <b>Pay Level 10: ₹56,100–₹1,77,500</b>. This is a higher government archaeological grade and requires the relevant recruitment/promotion qualifications.</span></div></div>
+
+<div class="row"><div class="k">Experienced / academic</div><div class="v"><span class="money">₹40,000 – ₹1,00,000+/month</span><br><span style="font-size:13px">Experienced government officers, university faculty, project leaders, GIS/heritage specialists and consultants can earn more depending on role and seniority.</span></div></div>
+
+<div class="row"><div class="k">Study cost</div><div class="v">Public-university History/Archaeology degrees can be relatively affordable, but the pathway may involve <b>B.A. + M.A. + field training</b> before strong professional opportunities appear. Budget for travel, field schools, hostel/living expenses and potentially several years of postgraduate study.</div></div>
+
+<div class="flag red"><span class="mark">Think long-term</span><span>Do not spend heavily on a private “archaeology course” merely because it promises excavation jobs. <b>Check university recognition, faculty, fieldwork, museum/lab facilities, excavation opportunities and what graduates actually do.</b></span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">History + evidence + fieldwork</span> — Archaeology may be a strong fit.</p>
+<p><span class="hi">Love History but dislike outdoor/technical work</span> — compare History, Archives, Museum Studies or teaching.</p>
+<p><span class="hi">Love fossils and dinosaurs</span> — compare Geology / Palaeontology instead.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>archaeologists do not dig to find treasure. They excavate to preserve information about the past before that information is destroyed.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">A school student does not need excavation training yet. Start by learning to observe evidence carefully.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen History and Geography, but also stay curious about Science</li>
+<li>Visit a museum, fort, ancient temple or protected site and write what physical evidence tells you about the people who used it</li>
+<li>Learn to distinguish a <b>fact, interpretation and guess</b></li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>Humanities / CEC with History</b> if archaeology is already a serious goal; other streams can still work depending on university eligibility</li>
+<li>After Class 12, shortlist <b>B.A. History / Archaeology / Ancient History / Anthropology</b> programmes</li>
+<li>If applying to CUET-participating institutions, check their current subject combination and programme eligibility</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Join real field schools, surveys, excavations, museum internships or epigraphy/heritage projects when available</li>
+<li>Learn <b>GIS, photography, mapping, database management or an ancient/regional language</b> to make yourself more employable</li>
+<li>For professional archaeology, seriously compare M.A. programmes such as those at <b>Andhra University and Sri Venkateswara University</b></li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Visit one historical site near you. Spend 30 minutes without reading the information board first. Record <b>five physical observations</b> — material, layout, inscriptions, damage, objects or construction — and then explain what each observation might tell you. Afterward, compare your interpretation with reliable historical information. If this process excites you, archaeology may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission or recruitment notice. Course eligibility, CUET participation, ASI training admissions and government recruitment rules change. Current examples were checked against Archaeological Survey of India information, CUET-UG 2026, Andhra University, Sri Venkateswara University and APPSC sources available in 2026. Salary figures outside official government pay levels are broad market guidance only. Always verify the current university or recruitment notification before applying.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Archaeology fit</strong>You seem comfortable with evidence, patience, fieldwork and long-term study. Start building History plus practical research and digital skills.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>You like the past, but test real fieldwork, documentation and research — not only documentaries and ancient mysteries.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>You may enjoy History without enjoying archaeological work. Compare History, Museum Studies, Tourism, Archives, Geology or other heritage careers.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>
