@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Stenographer</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Stenographer</h2><p class="standfirst">Stenographers listen to spoken words at high speed, write them in shorthand and then accurately transcribe them on a computer. They work in government departments, courts, tribunals, legislative offices and senior administrative offices. The career rewards speed, concentration, language accuracy, confidentiality and computer skills.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Stenographer &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Speed + accuracy</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>12th + shorthand</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Government + courts</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Government pay</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want to become a Stenographer?</h3><p class="lede">This is a skill-based office career. You need to listen, write and type quickly without losing accuracy.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Can you concentrate carefully while someone is speaking quickly?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be willing to practise shorthand every day until you reach 80–100 words per minute?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Do you enjoy English language, spelling, grammar and typing?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you keep official or confidential information private?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be comfortable doing detailed office work such as transcription, letters, meeting notes and documents?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you remain calm when accuracy and speed are tested together under time pressure?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Skills &amp; pathway</h3><p class="lede">Stenography is unusual because a short qualification can be enough for some central-government posts, but the shorthand skill test is essential.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Shorthand</div><div class="v">A system of symbols/short forms used to capture speech quickly. Competitive stenography exams measure your dictation speed and transcription accuracy.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Typing</div><div class="v">After taking dictation in shorthand, you must transcribe it accurately on a computer. Good typing speed, spelling and formatting are important.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>English / Hindi</div><div class="v">SSC tests stenography in <b>English or Hindi</b>. Strong grammar and comprehension also help in the written exam and daily office work.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Continue Intermediate / Class 12 in any recognised stream.</b> CEC/Humanities can be comfortable for students who like office/government work, but MPC or BiPC students are also fully eligible for the main SSC stenographer route.<br><br>You can begin learning <b>English shorthand and computer typing</b> alongside Class 11–12.</div></div>
+
+<div class="row"><div class="k">Main national route</div><div class="v"><b>SSC Stenographer Grade C &amp; D Examination.</b><br><br>The 2026 SSC notification requires candidates to have passed <b>12th standard or equivalent</b>. SSC recruits Grade C and Grade D stenographers for various Central Government Ministries, Departments and Organisations.</div></div>
+
+<div class="row"><div class="k">SSC written exam</div><div class="v">The 2026 Computer Based Examination has:<br><b>General Intelligence &amp; Reasoning — 50 questions</b><br><b>General Awareness — 50 questions</b><br><b>English Language &amp; Comprehension — 100 questions</b><br><br>There is negative marking under the current notification.</div></div>
+
+<div class="row"><div class="k">SSC shorthand skill test</div><div class="v"><b>Grade C:</b> 10-minute dictation at <b>100 words per minute</b>.<br><b>Grade D:</b> 10-minute dictation at <b>80 words per minute</b>.<br><br>The dictated passage is then transcribed on a computer. Under the 2026 SSC notification, the skill test is <b>mandatory but qualifying in nature</b>; final merit is based on the Computer Based Examination after qualifying the skill test.</div></div>
+
+<div class="row"><div class="k">Current SSC age example</div><div class="v">For the 2026 SSC examination, the basic age limits are <b>18–30 years for Grade C</b> and <b>18–27 years for Grade D</b>, with applicable category relaxations under the notification. These limits can change, so always check the exam year.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh court route</div><div class="v"><b>AP High Court / District Judiciary Stenographer Grade-III</b> is a separate recruitment route.<br><br>The 2025 A.P. District Judiciary recruitment carried a pay scale of <b>₹34,580–₹1,07,210</b> and completed its stenography skill-test/selection process during 2026. Court recruitments may require <b>graduation plus prescribed shorthand/typing qualifications</b>, so do not assume SSC's Class 12 eligibility applies to court posts.</div></div>
+
+<div class="row"><div class="k">Technical training</div><div class="v">Students commonly train for <b>English shorthand, typewriting and computer applications</b> through recognised technical/vocational institutes or coaching centres. The value of the course comes from reaching the required speed and accuracy, not just obtaining a certificate.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>SSC route:</b> Class 10 → Class 12 + shorthand practice → SSC Stenographer C/D Computer Based Exam → stenography skill test → document verification/allocation → Stenographer.<br><br><b>AP Court route:</b> Class 12 → degree where required + prescribed English shorthand/typewriting qualification → court recruitment examination/skill test → Stenographer Grade-III.</div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Do not wait until the notification arrives to learn shorthand.</b> Reaching 80–100 w.p.m. with low error rates usually requires months of regular practice.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · JOB AREAS</div><h3>Where can a Stenographer work?</h3><p class="lede">Stenographers are most strongly associated with government and legal offices, but the underlying skills also support executive and administrative careers.</p>
+
+<div class="card">
+<div class="row"><div class="k">SSC Stenographer Grade D</div><div class="v"><b>Entry central-government stenography route after Class 12.</b> Work can include dictation, transcription, correspondence, files, meeting notes and assistance to officers in ministries/departments.<div class="chips"><span class="chip">Central Govt.</span><span class="chip">80 w.p.m.</span><span class="chip">Group C</span></div></div></div>
+
+<div class="row"><div class="k">SSC Stenographer Grade C</div><div class="v">Higher stenography grade under SSC recruitment, classified in the current 2026 notice as a <b>Group B, Non-Gazetted</b> post. The skill-test speed is 100 w.p.m.</div></div>
+
+<div class="row"><div class="k">Court Stenographer</div><div class="v">Work with judges and court administration, prepare dictated material and handle sensitive legal documentation. Accuracy, confidentiality and legal terminology become especially important.</div></div>
+
+<div class="row"><div class="k">Personal Assistant / PA</div><div class="v">Experienced stenographers may progress into Personal Assistant roles supporting senior officers with correspondence, scheduling, meetings and confidential documents.</div></div>
+
+<div class="row"><div class="k">Private Secretary / PS</div><div class="v">Senior secretarial role supporting high-level officers, executives or government officials. Requires excellent office management, confidentiality and communication in addition to stenography.</div></div>
+
+<div class="row"><div class="k">Court Master</div><div class="v">Some High Courts recruit specialised Court Master / Personal Secretary-type roles with higher qualification and stenography requirements. These are separate recruitments, not automatic promotions from every stenographer post.</div></div>
+
+<div class="row"><div class="k">Legislative / Parliamentary Work</div><div class="v">Stenography and reporting skills may be used in legislative secretariats, assemblies, parliamentary offices and similar institutions when vacancies are notified.</div></div>
+
+<div class="row"><div class="k">Legal / Corporate Stenography</div><div class="v">Law firms, tribunals, senior advocates and some private organisations may employ stenographers, transcription specialists or executive assistants, although private demand varies.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Stenographer vs Typist</div><div class="v"><b>Typist:</b> types written or supplied material quickly and accurately.<br><b>Stenographer:</b> can first capture spoken dictation in shorthand at high speed and then transcribe it.<br>Stenography is a more specialised skill.</div></div>
+
+<div class="row"><div class="k">Stenographer vs Secretary</div><div class="v"><b>Stenographer:</b> specialised in shorthand, transcription and official documentation.<br><b>Secretary / Executive Assistant:</b> may focus more broadly on schedules, meetings, communication and office coordination.<br>Senior stenographers often develop both skill sets.</div></div>
+
+<div class="row"><div class="k">Where SSC recruits</div><div class="v">The current SSC Stenographer examination fills posts across <b>Central Government Ministries, Departments, attached/subordinate offices and statutory bodies</b> located across India.</div></div>
+
+<div class="row"><div class="k">AI-era reality</div><div class="v"><b>Speech-to-text and AI transcription will reduce some routine transcription work.</b> However, government/court roles still require accuracy, confidentiality, official responsibility and human checking. Future-ready stenographers should add <b>fast computer work, document formatting, digital filing, transcription software, office tools and strong language skills</b> rather than depending on shorthand alone.</div></div>
+
+<div class="row"><div class="k">What employers value</div><div class="v"><div class="chips"><span class="chip">Shorthand speed</span><span class="chip">Accuracy</span><span class="chip">Typing</span><span class="chip">English</span><span class="chip">MS Office</span><span class="chip">Confidentiality</span></div></div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Stenography skills can also support:
+<div class="chips"><span class="chip">Personal Assistant</span><span class="chip">Executive Assistant</span><span class="chip">Typist</span><span class="chip">Court Administration</span><span class="chip">Office Administration</span><span class="chip">Legal Support</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>Speed without accuracy is not enough.</b> A stenographer is trusted with official words, names, numbers and decisions, so mistakes can matter.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Government stenographer salaries are determined by the specific department, grade and pay level. The same title can carry different scales in different services.</p>
+
+<div class="card">
+<div class="row"><div class="k">Central Grade D — common example</div><div class="v"><span class="money">Pay Level 4 · ₹25,500 basic at entry</span><br><span style="font-size:13px">Many Central Government Stenographer Grade D posts use <b>Level 4: ₹25,500–₹81,100</b>, plus applicable allowances. Always check the department allocated through the SSC examination because pay structure can vary by cadre.</span></div></div>
+
+<div class="row"><div class="k">Central Grade C</div><div class="v"><span class="money">Often Level 6 / Level 7 depending on cadre</span><br><span style="font-size:13px">Central-government rules are not identical across every department. Official examples show Grade C stenographer cadres at <b>Level 6</b> and some at <b>Level 7</b>. Use the actual post/department notification for the final pay level.</span></div></div>
+
+<div class="row"><div class="k">AP District Court Steno Grade-III</div><div class="v"><span class="money">₹34,580 – ₹1,07,210 pay scale</span><br><span style="font-size:13px">The Andhra Pradesh High Court's 2025 direct recruitment notification for District Judiciary Stenographer Grade-III listed this official scale.</span></div></div>
+
+<div class="row"><div class="k">Allowances</div><div class="v">Government posts may include applicable <b>DA, HRA, transport and other allowances</b> according to the service and posting. Basic pay is not the same as final take-home salary.</div></div>
+
+<div class="row"><div class="k">Training cost</div><div class="v">Stenography can be one of the lower-cost career-preparation routes compared with a professional degree. Costs mainly involve <b>shorthand/typewriting training, books, computer practice and exam preparation</b>. Expensive coaching is not compulsory.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not pay a large amount to an institute that promises a guaranteed government stenographer job.</b> Training can teach the skill; selection still depends on the official competitive examination and skill test.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Language + speed + accuracy</span> — Stenography may suit you.</p>
+<p><span class="hi">Like office work but dislike shorthand practice</span> — compare Junior Assistant / Clerk / Bank Clerk / Office Administration.</p>
+<p><span class="hi">Love legal environments</span> — Court Stenographer can be a particularly relevant route.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>stenography is a performance skill — you become employable by reaching the required speed accurately, not by memorising theory alone.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, there is no need to begin competitive-exam coaching yet. First test whether you enjoy language, typing and speed practice.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Improve <b>English grammar, spelling and listening</b></li>
+<li>Learn proper computer keyboard typing rather than two-finger typing</li>
+<li>Practise listening to one-minute audio and writing the key information accurately</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Continue <b>Class 11–12 in any stream</b></li>
+<li>Start a recognised or well-taught <b>English shorthand + typewriting</b> programme</li>
+<li>Gradually target <b>80 w.p.m.</b>, then <b>100 w.p.m.</b>, while keeping error rates low</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>After Class 12</div><ul>
+<li>For central jobs, track <b>SSC Stenographer Grade C &amp; D</b> notifications</li>
+<li>Consider completing a bachelor's degree alongside preparation because it opens court, PA and higher administrative routes</li>
+<li>Track <b>Andhra Pradesh High Court / District Judiciary</b> stenographer notifications separately because their qualifications differ from SSC</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Take a 5-minute English speech. Try to capture as much as possible while listening, then type a clean version afterward. Next, learn basic shorthand and repeat the same exercise for a month. If improving your <b>speed + accuracy</b> feels satisfying, Stenography may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official recruitment notice. Eligibility, age limits, vacancies, pay levels, skill-test standards and recruitment stages can change. Current SSC details are based on the Stenographer Grade C &amp; D Examination 2026 notice: Class 12 eligibility, Grade C age 18–30, Grade D age 18–27, and stenography speeds of 100 w.p.m. and 80 w.p.m. respectively. Andhra Pradesh court information uses the A.P. High Court District Judiciary Stenographer Grade-III recruitment notified in 2025 and completed through skill-test/selection stages in 2026. Always verify the current notification before applying.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Stenography fit</strong>You seem comfortable with language, speed, accuracy and confidential office work. Begin typing practice and test shorthand before committing.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of the job. Try one month of typing and shorthand practice and see whether you enjoy improving your speed.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may prefer other office careers. Compare Junior Assistant, Bank Clerk, Office Administration, Legal Assistant or other government-job routes.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

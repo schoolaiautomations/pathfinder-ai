@@ -1,0 +1,374 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Horticulturist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Horticulturist</h2><p class="standfirst">Horticulturists work with fruits, vegetables, flowers, spices, plantation crops, nurseries, landscaping and protected cultivation. They improve crop quality, yield, plant health, propagation, irrigation, post-harvest handling and farm profitability. The career combines plant science with practical fieldwork and can lead to government, research, agribusiness or entrepreneurship.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Horticulturist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Plants + fieldwork</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Diploma or B.Sc.</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Careers</b><em>Many specialities</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Job + business routes</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want Horticulture?</h3><p class="lede">Liking plants is a good start, but professional horticulture also involves pests, weather, soil, labour, market prices and repeated field observation.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy plants enough to learn why some grow well and others fail?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy working outdoors in farms, orchards, nurseries or polyhouses?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you interested in Biology, plant diseases, soil, irrigation and crop nutrition?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you patiently monitor a crop for weeks or months before seeing the final result?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy solving practical problems such as pests, poor flowering, low yield or post-harvest losses?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you combine science with business decisions such as crop choice, labour cost, quality and market demand?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">Andhra Pradesh students have both a regular Intermediate-to-degree route and a practical Diploma route after Class 10.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Biology</div><div class="v">Plant anatomy, physiology, breeding, pests and diseases are central to horticulture.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Chemistry</div><div class="v">Useful for soil fertility, plant nutrition, fertilisers, pesticides, post-harvest chemistry and laboratory work.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Business &amp; Data</div><div class="v">Modern horticulture also needs costing, market awareness, farm records, yield data and basic digital skills.</div></div>
+
+<div class="row"><div class="k">Route A — after Class 10</div><div class="v"><b>Choose BiPC / Intermediate with Physical Sciences and Biological or Natural Sciences.</b> This is the most direct Andhra Pradesh route into <b>B.Sc. (Hons.) Horticulture</b>.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh degree entrance</div><div class="v"><b>AP EAPCET</b> is the main state-quota route for B.Sc. (Hons.) Horticulture at Dr. Y.S.R. Horticultural University and participating colleges. Dr.YSRHU's current eligibility requires Intermediate/equivalent with <b>Physical Sciences + Biological or Natural Sciences</b>.</div></div>
+
+<div class="row"><div class="k">The degree</div><div class="v"><b>B.Sc. (Hons.) Horticulture — 4 years.</b> The programme combines classroom science with practical horticulture, field exposure and hands-on training. Dr.YSRHU currently runs the degree through its constituent and affiliated horticultural colleges in Andhra Pradesh.</div></div>
+
+<div class="row"><div class="k">National ICAR route</div><div class="v"><b>CUET (ICAR-UG)</b> is the national route for ICAR-quota seats in Agriculture &amp; Allied Sciences, including <b>B.Sc. (Hons.) Horticulture</b>. For 2026, ICAR uses CUET for 20% of seats at participating Agricultural Universities, subject to each university's eligibility conditions.</div></div>
+
+<div class="row"><div class="k">Route B — Diploma after Class 10</div><div class="v"><b>Class 10 → 2-year Diploma in Horticulture at Dr.YSRHU / affiliated polytechnic.</b><br><br>This is a practical skill-first option for eligible students. Under the current 2026-27 Dr.YSRHU rules, students who have already passed Intermediate / are pursuing higher studies are not eligible for this Diploma route.</div></div>
+
+<div class="row"><div class="k">HORTICET</div><div class="v"><b>Diploma in Horticulture → HORTICET → B.Sc. (Hons.) Horticulture.</b><br><br>Dr.YSRHU currently reserves <b>15% of B.Sc. Horticulture intake</b> for eligible Diploma holders through HORTICET. Important: Diploma holders enter <b>first year</b> of the 4-year B.Sc.; this is not automatic second-year lateral entry.</div></div>
+
+<div class="row"><div class="k">Higher study</div><div class="v"><b>M.Sc. Horticulture</b> can lead to specialist work in Fruit Science, Vegetable Science, Floriculture &amp; Landscape Architecture, Plantation/Spices/Medicinal crops, Post-Harvest Technology and related areas. PhD routes lead further into research and university careers.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Main AP route:</b> Class 10 → BiPC → AP EAPCET → B.Sc. (Hons.) Horticulture (4 years) → Horticulturist / Horticulture Officer / private-sector role.<br><br><b>Diploma route:</b> Class 10 → 2-year Diploma in Horticulture → HORTICET → B.Sc. (Hons.) Horticulture → professional horticulture roles.</div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Diploma in Horticulture and B.Sc. (Hons.) Horticulture are not the same qualification.</b> Diploma can lead to practical/field roles and can provide a route to the B.Sc., but graduate-level government officer and specialist jobs may specifically require the degree named in the recruitment notification.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · CAREER AREAS</div><h3>What kind of Horticulturist could you become?</h3><p class="lede">Horticulture is much broader than gardening. It covers commercial food crops, nurseries, flowers, landscapes, protected cultivation and post-harvest systems.</p>
+
+<div class="card">
+<div class="row"><div class="k">Fruit Scientist / Orchard Specialist</div><div class="v"><b>Mango, banana, citrus, guava, papaya, grapes and other fruit crops.</b> Work on varieties, planting, pruning, irrigation, nutrition, pest management and yield.<div class="chips"><span class="chip">Fruit Crops</span><span class="chip">Orchards</span><span class="chip">Production</span></div></div></div>
+
+<div class="row"><div class="k">Vegetable Horticulturist</div><div class="v">Work with tomato, chilli, brinjal, okra, gourds, onion and other vegetable crops, including nursery management and protected cultivation.</div></div>
+
+<div class="row"><div class="k">Floriculturist</div><div class="v">Grow flowers and ornamental plants for cut flowers, loose flowers, landscaping, events and commercial markets.</div></div>
+
+<div class="row"><div class="k">Nursery Manager</div><div class="v">Propagate seedlings, grafted plants, ornamental plants and fruit plants; manage potting media, irrigation, stock, plant health and customer supply.</div></div>
+
+<div class="row"><div class="k">Landscape Horticulturist</div><div class="v">Select and manage plants for gardens, campuses, resorts, housing projects, parks and commercial landscapes. This overlaps with landscape design and maintenance.</div></div>
+
+<div class="row"><div class="k">Protected Cultivation Specialist</div><div class="v">Work with <b>polyhouses, shade nets, fertigation, drip irrigation and controlled-environment production</b> for high-value vegetables, flowers and nurseries.</div></div>
+
+<div class="row"><div class="k">Plantation / Spice Crops</div><div class="v">Work with crops such as coconut, cashew, cocoa, black pepper, turmeric and other plantation/spice/medicinal crops depending on region.</div></div>
+
+<div class="row"><div class="k">Post-Harvest Specialist</div><div class="v">Reduce losses after harvest through grading, packaging, storage, cold chain, ripening, processing and quality management.</div></div>
+
+<div class="row"><div class="k">Horticulture Officer</div><div class="v"><b>Government field and development role.</b> Work can include farmer programmes, crop development, schemes, technical guidance, inspections and departmental implementation. Recruitment is through the relevant state notification when vacancies arise.</div></div>
+
+<div class="row"><div class="k">Research Scientist</div><div class="v">Develop better varieties, production systems, pest-management methods and post-harvest technologies through M.Sc./PhD and research institutions/universities.</div></div>
+
+<div class="row"><div class="k">Seed / Planting Material Industry</div><div class="v">Work in seed companies, nurseries, tissue-culture firms and planting-material businesses in production, quality, trials, technical services and sales.</div></div>
+
+<div class="row"><div class="k">Precision Horticulture</div><div class="v">Use sensors, drones, weather data, fertigation, GIS and AI-supported crop monitoring to improve efficiency and detect problems earlier.</div></div>
+
+<div class="row"><div class="k">Horticulture Entrepreneur</div><div class="v">Start a nursery, fruit/vegetable farm, floriculture unit, landscaping business, protected-cultivation unit, plant shop or value-added horticulture business.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Horticulturist vs Agriculturist</div><div class="v"><b>Horticulture:</b> mainly fruits, vegetables, flowers, spices, plantation crops, ornamentals and related post-harvest systems.<br><b>Agriculture:</b> broader field including cereals, pulses, oilseeds, soil science, agronomy and many other agricultural systems.<br>There is substantial overlap, but they are not identical degrees.</div></div>
+
+<div class="row"><div class="k">Horticulturist vs Gardener</div><div class="v"><b>Gardener:</b> usually focuses on practical plant maintenance, planting, pruning and garden care.<br><b>Horticulturist:</b> applies higher-level plant science, crop production, nursery, pest/nutrition, research or commercial management knowledge.<br>Skilled gardeners are valuable professionals, but the titles should not be treated as the same qualification.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh relevance</div><div class="v">Andhra Pradesh has strong commercial horticulture in <b>mango, banana, chilli, citrus, vegetables, coconut, flowers and other high-value crops</b>. The state also has a dedicated <b>Dr. Y.S.R. Horticultural University</b>, giving students a direct local education and research pathway.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v">Government Horticulture Department, horticultural universities, research stations, nurseries, seed companies, fertiliser/agri-input firms, food-processing companies, landscaping firms, farms, protected-cultivation companies, exporters and NGOs.</div></div>
+
+<div class="row"><div class="k">What employers value</div><div class="v"><div class="chips"><span class="chip">Plant ID</span><span class="chip">Crop Production</span><span class="chip">Pest / Disease</span><span class="chip">Irrigation</span><span class="chip">Nursery Skills</span><span class="chip">Field Records</span></div></div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Horticulture skills can also support:
+<div class="chips"><span class="chip">Agriculture Officer</span><span class="chip">Nursery Business</span><span class="chip">Landscaping</span><span class="chip">Agri Sales</span><span class="chip">Food Processing</span><span class="chip">Research</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>Horticulture is science plus field execution.</b> Knowing the textbook is not enough — you must learn to identify crop problems, observe plants, work with growers and make practical decisions.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Income varies significantly between field jobs, landscaping/nursery roles, agri companies, government service, research and entrepreneurship.</p>
+
+<div class="card">
+<div class="row"><div class="k">Diploma / field trainee</div><div class="v"><span class="money">₹12,000 – ₹20,000/month</span><br><span style="font-size:13px">Entry-level nursery, field-supervision and practical horticulture jobs can start around this range depending on employer and location.</span></div></div>
+
+<div class="row"><div class="k">Graduate Horticulturist</div><div class="v"><span class="money">₹15,000 – ₹30,000/month</span><br><span style="font-size:13px">A broad early-career range for private horticulture, nursery, landscape, farm and agri-business roles.</span></div></div>
+
+<div class="row"><div class="k">India benchmark</div><div class="v"><span class="money">≈ ₹18,980/month</span><br><span style="font-size:13px">Indeed's January 2026 India Horticulturist benchmark is about <b>₹18,980/month</b>, based on only <b>8 reported salaries</b>, so treat it as a rough reference rather than a guaranteed salary.</span></div></div>
+
+<div class="row"><div class="k">Experienced / specialist</div><div class="v"><span class="money">₹25,000 – ₹50,000+/month</span><br><span style="font-size:13px">Protected cultivation, nursery management, landscaping, production management, technical sales and specialist crop experience can raise earning potential.</span></div></div>
+
+<div class="row"><div class="k">AP Horticulture Officer</div><div class="v"><span class="money">₹54,060 – ₹1,40,540 pay scale</span><br><span style="font-size:13px">APPSC Notification No.18/2025 for Horticulture Officer in the A.P. Horticulture Service used this official pay scale. The recruitment had only a small number of vacancies, showing why students should not depend on one government exam alone.</span></div></div>
+
+<div class="row"><div class="k">Own nursery / farm / landscape business</div><div class="v"><span class="money">Highly variable</span><br><span style="font-size:13px">A successful business can earn more than a salaried job, but land, labour, plants, water, inputs, wastage, market prices and customer acquisition all affect profit.</span></div></div>
+
+<div class="row"><div class="k">Course cost</div><div class="v">Dr.YSRHU publishes separate fee structures for its B.Sc. (Hons.) Horticulture / Forestry programmes each academic year. Government/university seats are generally more affordable than high-fee private or sponsored quotas. <b>Always compare the current official fee structure before admission.</b></div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not assume a Horticulture degree guarantees a government Horticulture Officer job.</b> Government vacancies can be few and irregular. Build practical production, nursery, protected-cultivation, landscaping, sales or business skills alongside exam preparation.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Plants + science + fieldwork</span> — Horticulture may be a strong fit.</p>
+<p><span class="hi">Love garden maintenance more than science</span> — compare Gardener / Nursery Technician / Landscape Technician.</p>
+<p><span class="hi">Want broad crop and farm management</span> — compare B.Sc. Agriculture.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>a good Horticulturist does not just grow plants — they understand how to grow the right plant, at the right quality, with the right cost and market.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">Horticulture is one career you can test practically while you are still in school.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Grow 3–5 plants yourself and record watering, growth, pests and flowering/fruiting</li>
+<li>Learn basic plant identification, propagation, composting and soil care</li>
+<li>Visit a nursery, orchard, vegetable farm or polyhouse and observe how commercial growing differs from a home garden</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li><b>Degree route:</b> choose BiPC and prepare for AP EAPCET</li>
+<li><b>Practical route:</b> if eligible and sure about horticulture, compare Dr.YSRHU's 2-year Diploma in Horticulture</li>
+<li>Do not choose the Diploma merely because it looks easier — understand that many officer/research jobs need the B.Sc. degree</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college / diploma</div><ul>
+<li>Get real experience in nurseries, orchards, protected cultivation and crop diagnosis</li>
+<li>Learn drip irrigation, fertigation, basic farm economics and digital record keeping</li>
+<li>For degree students, explore internships in government horticulture, research stations, seed/nursery firms and agri companies</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Grow the <b>same plant using two different methods</b> — for example different potting mixes, fertiliser levels or irrigation schedules — while keeping other conditions similar. Record growth every week. If you enjoy observing, comparing and improving plant performance, Horticulture may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission or recruitment notice. Current Andhra Pradesh examples were checked against Dr. Y.S.R. Horticultural University 2026-27 admissions: B.Sc. (Hons.) Horticulture, 2-year Diploma in Horticulture and HORTICET. Current national information uses CUET (ICAR-UG) 2026, which includes B.Sc. (Hons.) Horticulture among Agriculture &amp; Allied Sciences programmes. APPSC's most recent Horticulture Officer recruitment referenced here is Notification No.18/2025, whose selection was completed in 2026. Eligibility, seat quotas, fees, exams and government vacancies can change; always verify the current official notification.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Horticulture fit</strong>You seem comfortable with plants, science and field problem-solving. Try real growing work and compare the Diploma and B.Sc. routes carefully.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of horticulture. Spend time in a nursery or farm and test whether you enjoy crop problems as much as healthy plants.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may like plants without enjoying commercial horticulture. Compare Landscaping, Environmental Science, Agriculture, Floristry or other nature-related careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

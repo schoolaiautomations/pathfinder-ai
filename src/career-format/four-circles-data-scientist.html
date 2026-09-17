@@ -1,0 +1,369 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Data Scientist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Data Scientist</h2><p class="standfirst">Data Scientists use mathematics, statistics, programming and domain knowledge to find useful patterns in data, make predictions and help organisations make better decisions. In the AI era, the role is moving beyond dashboards into machine learning, experimentation, forecasting, recommendation systems and AI-powered products.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Data Scientist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Do you like patterns?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Maths + coding</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Many data careers</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Strong upside</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want Data Science?</h3><p class="lede">Data Science is not just “using AI.” A lot of the work is cleaning messy data, checking assumptions, writing code and explaining what the numbers actually mean.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy Maths, especially probability, averages, graphs and patterns?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy learning programming and debugging code when it gives the wrong result?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Do you like asking “What does the data actually prove?” instead of accepting the first explanation?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you patiently clean and organise imperfect data before doing the interesting analysis?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy explaining a technical result in simple words to a non-technical person?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you comfortable being wrong sometimes and testing whether a model really works on new data?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">There is no single compulsory “Data Scientist degree.” Strong Data Scientists come from Computer Science, Statistics, Mathematics, Engineering and Data Science programmes.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Mathematics</div><div class="v">Probability, statistics, algebra, calculus and matrices are the foundation for understanding data and machine-learning models.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Programming</div><div class="v">Python is the most common first language. SQL is essential for working with databases. Later you may use libraries for statistics, machine learning and data visualisation.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Communication</div><div class="v">A Data Scientist must explain what the model found, how reliable it is and what action the organisation should take.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Choose MPC — Mathematics, Physics and Chemistry — if Data Science is a serious goal.</b> Maths keeps the widest options open for B.Tech CSE/AI/Data Science and B.Sc. Statistics/Mathematics/Data Science.</div></div>
+
+<div class="row"><div class="k">Engineering route</div><div class="v"><b>MPC → AP EAPCET / JEE / college admission → B.Tech/B.E. in CSE, Data Science, AI &amp; ML, IT, Mathematics &amp; Computing or related branch → projects/internship → Data Analyst / Junior Data Scientist / ML role.</b></div></div>
+
+<div class="row"><div class="k">Science route</div><div class="v"><b>Class 12 with Mathematics → B.Sc. Statistics / Mathematics / Computer Science / Data Science → M.Sc. or job depending skill level.</b><br><br>This route can be especially strong for students who enjoy statistics and modelling more than software engineering.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh entrance</div><div class="v"><b>AP EAPCET</b> is the main state engineering entrance route for participating Andhra Pradesh engineering colleges. Many colleges now offer CSE specialisations such as AI, Machine Learning and Data Science, but branch names and seat matrices change every year.</div></div>
+
+<div class="row"><div class="k">National route</div><div class="v"><b>JEE Main / JEE Advanced</b> are relevant for NITs, IIITs, IITs and other participating engineering institutes. For B.Sc./B.S. routes, some universities use <b>CUET-UG</b> while others use merit or their own admission process.</div></div>
+
+<div class="row"><div class="k">Higher study</div><div class="v">Useful advanced routes include <b>M.Sc. Data Science, Statistics, Mathematics, Computer Science, M.Tech AI/Data Science</b> or specialised master's programmes. A Master's can help for advanced modelling and research roles, but it is <b>not compulsory for every Data Scientist job.</b></div></div>
+
+<div class="row"><div class="k">Core skills to build</div><div class="v"><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Statistics</span><span class="chip">Excel</span><span class="chip">Machine Learning</span><span class="chip">Data Visualisation</span><span class="chip">Git</span></div></div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → MPC → B.Tech/B.Sc. in a strong quantitative field → Python + SQL + Statistics + Machine Learning projects → internship / entry-level data role → Data Scientist.</b></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Do not choose a weak college only because the branch name says “Data Science &amp; AI.”</b> Strong Maths, programming, projects and internships matter more than a fashionable course title.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · DATA CAREERS</div><h3>What kind of data professional could you become?</h3><p class="lede">“Data Science” is a family of careers. These roles overlap, but they are not the same.</p>
+
+<div class="card">
+<div class="row"><div class="k">Data Analyst</div><div class="v"><b>Study existing data and explain what happened.</b> Common tools: Excel, SQL, dashboards, statistics and business reporting.<div class="chips"><span class="chip">SQL</span><span class="chip">Excel</span><span class="chip">Dashboards</span></div></div></div>
+
+<div class="row"><div class="k">Data Scientist</div><div class="v"><b>Use statistics and machine learning to explain, predict or optimise outcomes.</b> Work can include forecasting, experimentation, classification, recommendation and decision models.</div></div>
+
+<div class="row"><div class="k">Machine Learning Engineer</div><div class="v">Turn ML models into reliable software systems used by real customers. Usually more software-engineering-heavy than a typical Data Scientist role.</div></div>
+
+<div class="row"><div class="k">Data Engineer</div><div class="v">Build pipelines, databases and platforms that collect and prepare data for analysts, scientists and AI systems. Strong SQL, cloud and software skills are important.</div></div>
+
+<div class="row"><div class="k">Business Intelligence Analyst</div><div class="v">Build dashboards and decision-support reporting for finance, sales, operations, supply chain and management teams.</div></div>
+
+<div class="row"><div class="k">Product Data Scientist</div><div class="v">Analyse how people use apps/products, run experiments and help product teams decide what to build or change.</div></div>
+
+<div class="row"><div class="k">Marketing / Customer Data Scientist</div><div class="v">Work on customer segmentation, churn prediction, campaign targeting, pricing and recommendation systems.</div></div>
+
+<div class="row"><div class="k">Risk / Fraud Data Scientist</div><div class="v">Use data and ML to detect suspicious transactions, credit risk and fraud in banking, fintech and insurance.</div></div>
+
+<div class="row"><div class="k">Operations / Supply Chain Data Scientist</div><div class="v">Forecast demand, optimise inventory, routes, staffing, factory schedules and logistics.</div></div>
+
+<div class="row"><div class="k">Healthcare Data Scientist</div><div class="v">Analyse medical, hospital or public-health data. Some roles work on risk prediction, imaging, clinical operations or drug research and may require additional healthcare knowledge.</div></div>
+
+<div class="row"><div class="k">AI / Applied Scientist</div><div class="v">Work on advanced machine learning, language models, recommendation systems, computer vision or generative AI. Stronger Maths and research skills are often expected.</div></div>
+
+<div class="row"><div class="k">Research Data Scientist</div><div class="v">Develop new statistical/ML methods, publish research and work on difficult scientific or industrial problems. Master's/PhD-level training is common in advanced research roles.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Data Scientist vs Data Analyst</div><div class="v"><b>Data Analyst:</b> usually focuses more on reporting, dashboards and explaining past/current performance.<br><b>Data Scientist:</b> usually adds deeper statistics, experiments and predictive modelling.<br>In real companies, the titles can overlap.</div></div>
+
+<div class="row"><div class="k">Data Scientist vs ML Engineer</div><div class="v"><b>Data Scientist:</b> focuses on finding patterns, building models and answering business/scientific questions.<br><b>ML Engineer:</b> focuses more on deploying, scaling and maintaining machine-learning systems in production.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v">Technology, banking, fintech, ecommerce, healthcare, manufacturing, consulting, telecom, retail, logistics, insurance, media, government analytics, sports and research.</div></div>
+
+<div class="row"><div class="k">AI-era reality</div><div class="v"><b>AI will automate some basic analysis and coding, but it also increases the amount of data and AI systems that need to be tested, measured and improved.</b> Strong Data Scientists will spend less time on repetitive work and more time on problem definition, experimentation, model evaluation and decision-making.</div></div>
+
+<div class="row"><div class="k">What employers value</div><div class="v"><div class="chips"><span class="chip">Statistics</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">ML</span><span class="chip">Projects</span><span class="chip">Communication</span><span class="chip">Domain knowledge</span></div></div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Data Science skills transfer into:
+<div class="chips"><span class="chip">Data Analytics</span><span class="chip">Business Intelligence</span><span class="chip">Machine Learning</span><span class="chip">Data Engineering</span><span class="chip">Software</span><span class="chip">Research</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>A certificate does not make someone a Data Scientist.</b> Employers want proof that you can work with real data, write code, choose sensible methods and explain the result clearly.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Data Science can pay well, but salary depends heavily on skill level, company, city, education and whether the role is really Data Science or a lower-level analytics job.</p>
+
+<div class="card">
+<div class="row"><div class="k">Intern / trainee</div><div class="v"><span class="money">₹10,000 – ₹30,000/month</span><br><span style="font-size:13px">Internships vary widely. Strong companies may pay more, while academic or small-company internships may pay less.</span></div></div>
+
+<div class="row"><div class="k">Starting Data / Analytics role</div><div class="v"><span class="money">₹4 – ₹8 lakh/year</span><br><span style="font-size:13px">A realistic broad range for many fresh graduates entering analytics, junior data science or related roles. Strong coding, statistics and internships can move this higher.</span></div></div>
+
+<div class="row"><div class="k">India Data Scientist benchmark</div><div class="v"><span class="money">≈ ₹12.34 lakh/year average</span><br><span style="font-size:13px">Indeed's September 2026 India-wide Data Scientist benchmark is about <b>₹12,33,675/year</b>, based on <b>374 reported salaries</b>. This includes experienced professionals, so a fresher should <b>not</b> assume ₹12 lakh as a starting salary.</span></div></div>
+
+<div class="row"><div class="k">Experienced Data Scientist</div><div class="v"><span class="money">₹8 – ₹20 lakh+/year</span><br><span style="font-size:13px">Good Data Scientists with several years of experience, strong ML/statistics and business impact can move well above entry-level pay.</span></div></div>
+
+<div class="row"><div class="k">Senior / specialist</div><div class="v"><span class="money">₹15 – ₹35 lakh+/year</span><br><span style="font-size:13px">Senior Data Scientists, Applied Scientists, ML specialists and strong product-company roles can go substantially higher. These jobs are highly selective.</span></div></div>
+
+<div class="row"><div class="k">Course cost</div><div class="v">You do <b>not</b> need an expensive private “Data Science bootcamp” to enter the field. A strong B.Tech/B.Sc. foundation plus Python, SQL, statistics and projects can be enough to start. Compare degree quality, placements and total fees before borrowing heavily.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not believe ads promising “₹20 lakh Data Scientist job in 6 months.”</b> Entry-level competition is strong, and many beginners first enter through Data Analyst, BI or software roles before moving into Data Science.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Maths + coding + curiosity</span> — Data Science may be a strong fit.</p>
+<p><span class="hi">Love dashboards and business reporting</span> — compare Data Analyst / Business Intelligence.</p>
+<p><span class="hi">Love coding more than statistics</span> — compare Software Engineering / ML Engineering / Data Engineering.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>a good Data Scientist does not ask only “Can I build a model?” — they ask “Is this the right problem, and can I trust the answer?”</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">A school student can test Data Science without paying for an expensive course.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Become strong in <b>Maths, graphs, percentages, averages and probability</b></li>
+<li>Start basic <b>Python</b></li>
+<li>Use Excel or Google Sheets to analyse a small dataset and create charts</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>MPC</b></li>
+<li>Compare <b>B.Tech CSE / AI / Data Science</b> with <b>B.Sc. Statistics / Mathematics / Data Science</b></li>
+<li>Prepare for AP EAPCET / JEE / CUET or university admission based on the programme you target</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Learn <b>Python, SQL, statistics, machine learning and data visualisation</b></li>
+<li>Build 4–6 projects using real datasets — not only tutorial copies</li>
+<li>Get internships in analytics, product, finance, healthcare, manufacturing or another domain that interests you</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Take a simple dataset — for example <b>your class marks, cricket scores, weather data or household electricity use</b>. Clean it, make three graphs and answer one question with evidence. If you enjoy turning messy numbers into a clear conclusion, Data Science may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission or salary notice. Course names, entrance routes, branch availability and eligibility change by institution and year. Andhra Pradesh engineering admission examples use AP EAPCET 2026; national engineering routes use JEE. Some B.Sc./B.S. programmes use CUET-UG or university-specific admission. Salary figures are broad guidance; the September 2026 Indeed India Data Scientist benchmark was about ₹12.34 lakh/year based on 374 reported salaries and should not be treated as a fresher salary guarantee.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Data Science fit</strong>You seem comfortable with Maths, coding, evidence and problem-solving. Build strong fundamentals before chasing AI tools.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of Data Science. Try a real dataset and basic Python project before choosing the career.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may like technology without enjoying statistics and data work. Compare Software Engineering, UI/UX, Cybersecurity, Business Management or other careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

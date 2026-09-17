@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import {
@@ -11,13 +11,33 @@ import {
   CheckCircle,
   X,
   Printer,
+  Users,
 } from "lucide-react";
+import { fetchStudentProfilesFromSupabase } from "@/lib/supabase";
+import { DiagnosticReportModal } from "./DiagnosticReportModal";
 
 export const DetailedReportsView = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [previewFile, setPreviewFile] = useState<string | null>(null);
   const [previewTitle, setPreviewTitle] = useState<string>("");
+  const [savedProfiles, setSavedProfiles] = useState<any[]>([]);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [selectedProfileForModal, setSelectedProfileForModal] = useState<any | null>(null);
+
+  const handleReportSaved = (updatedProfile: any) => {
+    setSavedProfiles((prev) =>
+      prev.map((p) => (p.id === updatedProfile.id ? { ...p, ...updatedProfile } : p))
+    );
+  };
+
+  useEffect(() => {
+    fetchStudentProfilesFromSupabase().then((profiles) => {
+      if (profiles && profiles.length > 0) {
+        setSavedProfiles(profiles);
+      }
+    });
+  }, []);
 
   const filteredOptions = DEFAULT_CAREER_OPTIONS.filter((opt) =>
     opt.label.toLowerCase().includes(searchTerm.toLowerCase())
@@ -47,15 +67,27 @@ export const DetailedReportsView = () => {
             </p>
           </div>
 
-          <button
-            onClick={() => navigate("/form")}
-            className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer shrink-0"
-            style={{ background: "#1C1917", color: "#FAF8F5" }}
-          >
-            <Sparkles className="w-4 h-4 text-[#C9A97A]" />
-            <span>Generate Full Student Report</span>
-            <ArrowRight className="w-4 h-4 ml-1 opacity-70" />
-          </button>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0">
+            <button
+              onClick={() => {
+                setSelectedProfileForModal(savedProfiles[0] || null);
+                setReportModalOpen(true);
+              }}
+              className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer bg-stone-900 text-[#FAF8F5] hover:bg-stone-800"
+            >
+              <Users className="w-4 h-4 text-[#C9A97A]" />
+              <span>Report from Saved Profile</span>
+            </button>
+
+            <button
+              onClick={() => navigate("/form")}
+              className="inline-flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-2xl font-bold text-xs sm:text-sm transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 cursor-pointer border border-stone-300 bg-white text-stone-900 hover:bg-stone-100"
+            >
+              <Sparkles className="w-4 h-4 text-[#7C5C3E]" />
+              <span>Generate Full Student Report</span>
+              <ArrowRight className="w-4 h-4 ml-0.5 opacity-60" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -157,6 +189,14 @@ export const DetailedReportsView = () => {
           </div>
         </div>
       )}
+
+      <DiagnosticReportModal
+        isOpen={reportModalOpen}
+        onClose={() => setReportModalOpen(false)}
+        profile={selectedProfileForModal}
+        savedProfiles={savedProfiles}
+        onReportSaved={handleReportSaved}
+      />
     </div>
   );
 };

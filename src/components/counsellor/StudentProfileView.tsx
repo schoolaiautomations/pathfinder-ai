@@ -18,9 +18,19 @@ import {
   Pencil,
   Trash2,
   Save,
+  Loader2,
+  Sparkles,
+  FileText,
+  CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  saveStudentProfileToSupabase,
+  fetchStudentProfilesFromSupabase,
+  deleteStudentProfileFromSupabase,
+} from "@/lib/supabase";
+import { DiagnosticReportModal } from "./DiagnosticReportModal";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface SavedProfile { [key: string]: any; id: string; savedAt: string; studentName: string; studentClass: string; school: string; }
@@ -32,13 +42,37 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
   const [view, setView] = useState<"landing" | "create" | "saved" | "view_profile">("landing");
   const [savedProfiles, setSavedProfiles] = useState<SavedProfile[]>([]);
   const [editingProfileId, setEditingProfileId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [reportProfile, setReportProfile] = useState<SavedProfile | null>(null);
+
+  const handleOpenAiReport = (profile: SavedProfile) => {
+    setReportProfile(profile);
+    setReportModalOpen(true);
+  };
+
+  const handleReportSaved = (updatedProfile: SavedProfile) => {
+    setSavedProfiles((prev) =>
+      prev.map((p) => (p.id === updatedProfile.id ? { ...p, ...updatedProfile } : p))
+    );
+  };
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) setSavedProfiles(JSON.parse(stored));
     } catch { /* ignore */ }
-  }, []);
+
+    setIsLoading(true);
+    fetchStudentProfilesFromSupabase(counsellorName)
+      .then((profiles) => {
+        if (profiles && profiles.length > 0) {
+          setSavedProfiles(profiles);
+        }
+      })
+      .finally(() => setIsLoading(false));
+  }, [counsellorName]);
 
   // ─── Section A: ABOUT YOU ──────────────────────────────────────────
   const [name, setName] = useState("");
@@ -471,13 +505,15 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
     setEditingProfileId(null);
   };
 
-  const handleSaveProfile = () => {
+  const handleSaveProfile = async () => {
     if (!name.trim()) {
       alert("Please enter the student name before saving.");
       return;
     }
+    setIsSaving(true);
+    const profileId = editingProfileId || `stu_${Date.now()}`;
     const profile: SavedProfile = {
-      id: editingProfileId || Date.now().toString(),
+      id: profileId,
       savedAt: new Date().toISOString(),
       studentName: name, studentClass, section, school, age, gender, caste,
       villageTown, mandal, district, dob, fillerRole,
@@ -503,20 +539,34 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
     if (editingProfileId) {
       updated = savedProfiles.map((p) => (p.id === editingProfileId ? profile : p));
     } else {
-      updated = [profile, ...savedProfiles];
+      updated = [profile, ...savedProfiles.filter((p) => p.id !== profileId)];
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     setSavedProfiles(updated);
     setEditingProfileId(null);
+
+    try {
+      await saveStudentProfileToSupabase(profile, counsellorName);
+    } catch (err) {
+      console.warn("Supabase save error (saved locally):", err);
+    } finally {
+      setIsSaving(false);
+    }
+
     alert("Profile saved successfully!");
     setView("saved");
   };
 
-  const handleDeleteProfile = (id: string) => {
+  const handleDeleteProfile = async (id: string) => {
     if (!window.confirm("Are you sure you want to delete this profile?")) return;
     const updated = savedProfiles.filter((p) => p.id !== id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     setSavedProfiles(updated);
+    try {
+      await deleteStudentProfileFromSupabase(id);
+    } catch (err) {
+      console.warn("Supabase delete error:", err);
+    }
   };
 
   const loadProfileIntoForm = (profile: SavedProfile) => {
@@ -620,7 +670,12 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
 
           {/* View Saved Profiles Card */}
           <button
-            onClick={() => setView("saved")}
+            onClick={() => {
+              setView("saved");
+              fetchStudentProfilesFromSupabase(counsellorName).then((p) => {
+                if (p && p.length > 0) setSavedProfiles(p);
+              });
+            }}
             className="group p-6 sm:p-8 rounded-2xl border border-stone-200 bg-white hover:border-stone-900 hover:bg-stone-50 transition-all cursor-pointer text-left space-y-3"
           >
             <div className="w-12 h-12 rounded-xl bg-[#C9A97A] text-white flex items-center justify-center">
@@ -672,17 +727,42 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
             {savedProfiles.map((profile) => (
               <div
                 key={profile.id}
-                className="p-4 sm:p-5 rounded-2xl border border-stone-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                className="p-4 sm:p-5 rounded-2xl border border-stone-200 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all hover:border-stone-300 shadow-2xs"
               >
                 <div className="space-y-1">
-                  <h3 className="text-sm font-extrabold text-stone-900">{profile.studentName || "Unnamed Student"}</h3>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-sm font-extrabold text-stone-900">{profile.studentName || "Unnamed Student"}</h3>
+                    {profile.generatedReport && (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                        Report Ready
+                      </span>
+                    )}
+                  </div>
                   <div className="flex flex-wrap items-center gap-3 text-[11px] text-stone-500 font-medium">
                     {profile.studentClass && <span>Class: {profile.studentClass}</span>}
                     {profile.school && <span>School: {profile.school}</span>}
                     <span>Saved: {new Date(profile.savedAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-2 shrink-0 flex-wrap">
+                  {profile.generatedReport ? (
+                    <Button
+                      onClick={() => handleOpenAiReport(profile)}
+                      className="h-9 px-3.5 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white shadow-2xs cursor-pointer flex items-center gap-1.5 transition-all"
+                    >
+                      <FileText className="w-3.5 h-3.5 text-emerald-200" />
+                      <span>See Generated Report</span>
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => handleOpenAiReport(profile)}
+                      className="h-9 px-3.5 rounded-xl text-xs font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 shadow-2xs cursor-pointer flex items-center gap-1.5"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-[#C9A97A]" />
+                      <span>AI Career Report</span>
+                    </Button>
+                  )}
                   <Button onClick={() => handleViewProfile(profile)} variant="outline" className="h-9 px-3 rounded-xl text-xs font-bold cursor-pointer">
                     <Eye className="w-3.5 h-3.5 mr-1" /> View
                   </Button>
@@ -697,6 +777,14 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
             ))}
           </div>
         )}
+
+        <DiagnosticReportModal
+          isOpen={reportModalOpen}
+          onClose={() => setReportModalOpen(false)}
+          profile={reportProfile}
+          savedProfiles={savedProfiles}
+          onReportSaved={handleReportSaved}
+        />
       </div>
     );
   }
@@ -745,11 +833,54 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
 
             <Button
               type="button"
-              onClick={handleSaveProfile}
-              className="h-11 px-5 rounded-xl font-bold text-xs sm:text-sm shadow-md cursor-pointer transition-all flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white"
+              onClick={() => {
+                const currentProfile = {
+                  id: editingProfileId || `stu_${Date.now()}`,
+                  studentName: name, studentClass, section, school, age, gender, caste,
+                  villageTown, mandal, district, dob, fillerRole,
+                  livesWithFather, livesWithMother, livesWithBrothers, brotherCount,
+                  livesWithSisters, sisterCount, livesWithGrandparents, livesWithOtherRelative,
+                  parentsStatus, parentsStatusOther, fatherWorkType, fatherWorkDetail,
+                  motherWorkType, motherWorkDetail, otherEarners, otherEarnersDetail,
+                  parentsWorkingAbility, isEldestChild, olderSiblingsStatus, olderSiblingsDetail,
+                  houseType, houseAmenities, rationCard, pensionSchemes, travelModes,
+                  studyDevice, quietStudyPlace, familyLoan, earningExpectation,
+                  familyResponsibilityType, familyResponsibilityDetail,
+                  likedSubjects, difficultSubjects, marksDescription, tuitionAttendance,
+                  repeatedClassType, repeatedClassDetail, extracurriculars, hobbyType, hobbyDetail,
+                  careerDiscussion, careerCertainty, careerOnMind, admiredRoleModel,
+                  wearsGlasses, eyesightTested, colourVisionDifficulty, hearingDifficulty,
+                  speechDifficulty, height, weight, heightWeightUnknown, longTermHealthCondition,
+                  healthWorkDifficulties, allergiesType, allergiesDetail, disabilityCertificate,
+                  majorIllnessOrInjury, regularMedicalExpenses, stomachDigestionProblem,
+                  skinProblem, skinProblemDuration, skinProblemAffects,
+                  worryingTalkType, worryingTalkDetail,
+                };
+                handleOpenAiReport(currentProfile as any);
+              }}
+              className="h-11 px-4 sm:px-5 rounded-xl font-bold text-xs sm:text-sm shadow-md cursor-pointer transition-all flex items-center gap-2 bg-stone-900 text-[#FAF8F5] hover:bg-stone-800"
             >
-              <Save className="w-4 h-4" />
-              <span>Save Profile</span>
+              <Sparkles className="w-4 h-4 text-[#C9A97A]" />
+              <span>AI Career Report</span>
+            </Button>
+
+            <Button
+              type="button"
+              disabled={isSaving}
+              onClick={handleSaveProfile}
+              className="h-11 px-5 rounded-xl font-bold text-xs sm:text-sm shadow-md cursor-pointer transition-all flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white disabled:opacity-50"
+            >
+              {isSaving ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Saving...</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4" />
+                  <span>Save Profile</span>
+                </>
+              )}
             </Button>
 
             <Button
@@ -2916,7 +3047,47 @@ export const StudentProfileView = ({ counsellorName }: { counsellorName: string 
             </div>
           </div>
         </div>
+
+        {/* Bottom Save Action Bar (hidden in print) */}
+        <div className="pt-6 border-t border-stone-200 flex items-center justify-end gap-3 print:hidden">
+          <Button
+            type="button"
+            onClick={handleReset}
+            variant="outline"
+            className="h-11 px-4 rounded-xl font-bold text-xs bg-white border-stone-300 text-stone-700 hover:bg-stone-100 cursor-pointer shadow-2xs"
+          >
+            <RotateCcw className="w-3.5 h-3.5 mr-1.5" />
+            Clear Form
+          </Button>
+
+          <Button
+            type="button"
+            disabled={isSaving}
+            onClick={handleSaveProfile}
+            className="h-11 px-6 rounded-xl font-bold text-xs sm:text-sm shadow-md cursor-pointer transition-all flex items-center gap-2 bg-emerald-700 hover:bg-emerald-800 text-white disabled:opacity-50"
+          >
+            {isSaving ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Saving...</span>
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" />
+                <span>Save Profile</span>
+              </>
+            )}
+          </Button>
+        </div>
       </div>
+
+      <DiagnosticReportModal
+        isOpen={reportModalOpen}
+        onClose={() => setReportModalOpen(false)}
+        profile={reportProfile}
+        savedProfiles={savedProfiles}
+        onReportSaved={handleReportSaved}
+      />
     </div>
   );
 };
