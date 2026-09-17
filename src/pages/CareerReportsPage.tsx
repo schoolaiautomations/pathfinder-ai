@@ -259,6 +259,36 @@ const CATEGORY_MAP: Record<string, { category: string; streamBadge: string; desc
     streamBadge: "Any Stream / Cosmetology",
     description: "Skincare treatments, professional hair styling, bridal & event makeup artistry, salon management, and aesthetic studio ownership.",
   },
+  "ai-scientist": {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "MPC / B.Tech / M.S / Ph.D AI",
+    description: "Foundational AI research, neural architecture design, Large Language Models (LLMs), machine learning algorithms, and deep learning R&D laboratories.",
+  },
+  "data-scientist": {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "MPC / B.Tech CSE / Data Science",
+    description: "Machine learning pipelines, predictive modeling, statistical computing, big data analytics, and decision intelligence across tech, healthcare, and finance.",
+  },
+  "robotics-engineer": {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "MPC / B.Tech Robotics / Mechatronics",
+    description: "Industrial robot design, autonomous navigation, embedded microcontrollers, computer vision, kinematics, and automation engineering for manufacturing and space.",
+  },
+  "forensic-scientist": {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "Science (BiPC / MPC) / B.Sc Forensic Science",
+    description: "Crime scene evidence analysis, DNA profiling, forensic toxicology, ballistic analysis, cyber forensics, and central/state forensic science laboratories (CFSL).",
+  },
+  horticulturist: {
+    category: "Medical & Healthcare (BiPC)",
+    streamBadge: "BiPC / B.Sc Horticulture",
+    description: "Cultivation of high-yield fruits, vegetables, flowers, and medicinal plants, greenhouse technology, landscape architecture, and agri-business enterprises.",
+  },
+  stenographer: {
+    category: "Commerce & Finance",
+    streamBadge: "Any Stream + Shorthand Certification",
+    description: "High-speed verbatim transcription, court reporting, parliamentary reporting, SSC Stenographer Grade C & D, and secretarial executive roles in government.",
+  },
   "not-decided": {
     category: "Self-Discovery & Exploration",
     streamBadge: "All Streams",

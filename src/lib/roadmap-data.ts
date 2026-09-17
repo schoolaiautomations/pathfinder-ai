@@ -51,6 +51,12 @@ export const DEFAULT_CAREER_OPTIONS = [
   { id: "nutritionist", label: "Nutritionist / Dietitian", icon: "🥗", file: "four-circles-nutritionist.html" },
   { id: "veterinarian", label: "Veterinarian / Veterinary Doctor", icon: "🐾", file: "four-circles-veterinarian.html" },
   { id: "beautician", label: "Beautician / Beauty Professional", icon: "💄", file: "four-circles-beautician.html" },
+  { id: "ai-scientist", label: "AI Research Scientist", icon: "🧠", file: "four-circles-ai-research-scientist.html" },
+  { id: "data-scientist", label: "Data Scientist", icon: "📊", file: "four-circles-data-scientist.html" },
+  { id: "robotics-engineer", label: "Robotics Engineer", icon: "🤖", file: "four-circles-robotics-engineer.html" },
+  { id: "forensic-scientist", label: "Forensic Scientist", icon: "🔍", file: "four-circles-forensic-scientist.html" },
+  { id: "horticulturist", label: "Horticulturist", icon: "🪴", file: "four-circles-horticulturist.html" },
+  { id: "stenographer", label: "Stenographer", icon: "⌨️", file: "four-circles-stenographer.html" },
   { id: "not-decided", label: "Not Decided Yet", icon: "🧭", file: "four-circles-not-decided-yet.html" },
   { id: "other", label: "Other", icon: "✨", file: "four-circles-not-decided-yet.html" },
 ] as const;
@@ -98,6 +104,12 @@ export function findCareerFormatFile(careerGoal: string): string | null {
   if (normalized.includes("pilot") || normalized.includes("aviation")) return "four-circles-commercial-pilot.html";
   if (normalized.includes("mba") || normalized.includes("business management") || normalized.includes("bba")) return "four-circles-business-management-mba.html";
   if (normalized.includes("entrepreneur") || normalized.includes("startup") || normalized.includes("start-up") || normalized.includes("business owner") || normalized.includes("own business") || normalized.includes("founder") || normalized.includes("businessman") || normalized.includes("businesswoman")) return "four-circles-entrepreneur-business-owner.html";
+  if (normalized.includes("ai research") || normalized.includes("artificial intelligence") || normalized.includes("ai scientist") || normalized.includes("machine learning") || normalized.includes("deep learning")) return "four-circles-ai-research-scientist.html";
+  if (normalized.includes("data scientist") || normalized.includes("data science") || normalized.includes("data analyst") || normalized.includes("big data")) return "four-circles-data-scientist.html";
+  if (normalized.includes("robotics") || normalized.includes("robot engineer") || normalized.includes("robotics engineer")) return "four-circles-robotics-engineer.html";
+  if (normalized.includes("forensic") || normalized.includes("criminolog")) return "four-circles-forensic-scientist.html";
+  if (normalized.includes("horticultur") || normalized.includes("floricultur")) return "four-circles-horticulturist.html";
+  if (normalized.includes("stenograph") || normalized.includes("steno") || normalized.includes("shorthand")) return "four-circles-stenographer.html";
   if (normalized.includes("scientist") || normalized.includes("researcher") || normalized.includes("isro") || normalized.includes("drdo") || normalized.includes("iisc") || normalized.includes("iiser") || normalized.includes("astronomy") || normalized.includes("astrophysics") || normalized.includes("research")) return "four-circles-scientist.html";
   if (normalized.includes("journalist") || normalized.includes("journalism") || normalized.includes("news reporter")) return "four-circles-journalist.html";
   if (normalized.includes("pharmacist") || normalized.includes("pharmacy")) return "four-circles-pharmacist.html";
@@ -119,7 +131,6 @@ export function findCareerFormatFile(careerGoal: string): string | null {
     normalized.includes("ece") ||
     normalized.includes("eee") ||
     normalized.includes("mechatronics") ||
-    normalized.includes("robotics") ||
     normalized.includes("aerospace") ||
     normalized.includes("aeronautical") ||
     normalized.includes("chemical engineer") ||

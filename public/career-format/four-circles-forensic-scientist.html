@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Forensic Scientist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Forensic Scientist</h2><p class="standfirst">Forensic Scientists use science to examine evidence connected to crimes and legal investigations. They may analyse DNA, blood, drugs, poisons, documents, fingerprints, firearms, digital devices, fibres, glass, soil or other evidence. The job is not like a crime TV show — most work requires careful laboratory procedure, documentation, quality control and scientifically defensible conclusions.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Forensic Scientist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Science + evidence</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>What to study?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Specialities</b><em>Many forensic fields</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Niche scientific career</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want Forensic Science?</h3><p class="lede">Being interested in crime stories is not enough. Real forensic work is scientific, repetitive, confidential and highly accuracy-sensitive.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy Biology, Chemistry, Physics or Computer Science enough to study them deeply?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you work very carefully when one small mistake could affect a police investigation or court case?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy laboratory analysis and documentation even when there is no dramatic “mystery-solving” moment?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you remain objective and report what the evidence supports even if it does not match someone's expectation?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you comfortable with evidence that may involve blood, bodily fluids, decomposition, drugs or disturbing criminal cases?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be willing to study beyond a basic bachelor's degree if a specialised forensic role requires it?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">Forensic Science is multidisciplinary. The best school stream depends on whether you are more interested in DNA/biology, chemistry/toxicology, physics, digital forensics or forensic engineering.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Biology</div><div class="v">Important for DNA, blood, body fluids, wildlife forensics, serology, microbiology and biological evidence.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Chemistry</div><div class="v">Essential for drugs, poisons, explosives, trace evidence, toxicology and instrumental chemical analysis.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Physics / Computing</div><div class="v">Useful for ballistics, documents, instrumentation, accident/engineering evidence and digital/cyber forensics.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Choose Science.</b><br><br><b>BiPC</b> is especially strong for DNA, biology, serology, toxicology and life-science forensics.<br><br><b>MPC</b> is especially strong for forensic physics, digital forensics, engineering, ballistics and technical analysis.<br><br><b>PCMB</b>, where available and manageable, keeps the widest science options open.</div></div>
+
+<div class="row"><div class="k">Direct undergraduate route</div><div class="v"><b>Class 12 Science → B.Sc. Forensic Science / B.Sc. (Hons.) Forensic Science / integrated B.Sc.–M.Sc. Forensic Science.</b><br><br>The Andhra Pradesh State Council of Higher Education has a current <b>B.Sc. Honours in Forensic Science major curriculum</b> covering crime-scene management, fingerprints, documents, ballistics, DNA, chemistry, toxicology, physics, instrumentation and forensic medicine/anthropology.</div></div>
+
+<div class="row"><div class="k">NFSU route</div><div class="v">The <b>National Forensic Sciences University (NFSU)</b>, an Institution of National Importance under the Ministry of Home Affairs, currently offers a <b>5-year integrated B.Sc.–M.Sc. Forensic Science</b>. Its 2026 eligibility requires Class 12 Science with Physics/Chemistry/Biology/Mathematics and the prescribed minimum marks.<br><br>NFSU also offers a <b>3-year B.Sc. Criminology and Forensic Science</b> and several specialised postgraduate programmes.</div></div>
+
+<div class="row"><div class="k">Alternative science route</div><div class="v"><b>You do not always need B.Sc. Forensic Science.</b> Another strong route is:<br><b>B.Sc. Chemistry / Physics / Biotechnology / Microbiology / Zoology / Biochemistry / Computer Science or related field → M.Sc. Forensic Science or specialist forensic programme.</b><br><br>This can be valuable because many government forensic posts recruit by scientific speciality rather than by one generic “Forensic Scientist” title.</div></div>
+
+<div class="row"><div class="k">Entrance / admission</div><div class="v"><b>There is no single compulsory national entrance exam for every Forensic Science course.</b><br><br>NFSU's 2026 admissions use national-level admission scores according to programme, while other universities may use <b>CUET, university entrance or Class 12 merit</b>. Always shortlist the college first and then check its current admission rule.</div></div>
+
+<div class="row"><div class="k">Postgraduate route</div><div class="v">NFSU's current <b>M.Sc. Forensic Science</b> accepts graduates from a wide range of Science, Forensic Science, Medicine, Engineering, Pharmacy and related backgrounds through the applicable <b>CUET-PG 2026</b> test subjects and eligibility rules.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → Science (BiPC/MPC/PCMB) → B.Sc. Forensic Science or strong core-science/engineering/computing degree → M.Sc./specialisation where needed → laboratory internship / practical training → Forensic Scientist / Scientific Assistant / Forensic Analyst.</b></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Forensic Science is not a shortcut into police investigation.</b> A forensic scientist analyses evidence scientifically. Police officers investigate crimes, question witnesses, make arrests and build the broader case.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · FORENSIC SPECIALITIES</div><h3>What kind of Forensic Scientist could you become?</h3><p class="lede">Most forensic laboratories are divided into specialised scientific sections.</p>
+
+<div class="card">
+<div class="row"><div class="k">Forensic Biology / DNA</div><div class="v"><b>Analyse blood, saliva, semen, hair, tissue and DNA.</b> Used for identity, biological relationships and linking biological evidence to people or scenes.<div class="chips"><span class="chip">DNA</span><span class="chip">Serology</span><span class="chip">Biology</span></div></div></div>
+
+<div class="row"><div class="k">Forensic Chemistry</div><div class="v">Analyse chemicals, unknown substances, residues, petroleum products, paints, fibres and other chemical evidence using laboratory instruments.</div></div>
+
+<div class="row"><div class="k">Forensic Toxicology</div><div class="v">Identify alcohol, medicines, narcotics, poisons and toxic chemicals in biological or other samples and interpret their forensic significance.</div></div>
+
+<div class="row"><div class="k">Narcotics / Drug Analysis</div><div class="v">Examine suspected controlled substances using chemical and instrumental techniques.</div></div>
+
+<div class="row"><div class="k">Fingerprint Examination</div><div class="v">Develop, compare and interpret fingerprints and other friction-ridge impressions. Digital systems assist comparison, but trained examination remains important.</div></div>
+
+<div class="row"><div class="k">Questioned Documents</div><div class="v">Examine handwriting, signatures, altered documents, printing, ink, paper and suspected forgery.</div></div>
+
+<div class="row"><div class="k">Forensic Ballistics</div><div class="v">Examine firearms, bullets, cartridge cases, trajectories and related physical evidence. Strong Physics and careful comparative analysis are useful.</div></div>
+
+<div class="row"><div class="k">Digital / Cyber Forensics</div><div class="v">Recover and analyse evidence from computers, phones, storage devices, networks and digital accounts while preserving the integrity of digital evidence.<div class="chips"><span class="chip">Computers</span><span class="chip">Mobile Devices</span><span class="chip">Cyber Evidence</span></div></div></div>
+
+<div class="row"><div class="k">Forensic Physics</div><div class="v">Work with physical evidence such as glass, paint, fibres, marks, measurements and other material/physics-based examinations.</div></div>
+
+<div class="row"><div class="k">Forensic Engineering</div><div class="v">Investigate structural, mechanical, electrical or material failures, accidents and engineering evidence. This route typically begins with an engineering degree.</div></div>
+
+<div class="row"><div class="k">Forensic Anthropology</div><div class="v">Study skeletal remains to help estimate biological profile, identity and trauma. Advanced roles usually require specialised postgraduate training.</div></div>
+
+<div class="row"><div class="k">Wildlife Forensics</div><div class="v">Use biology, DNA, morphology or chemistry to investigate illegal wildlife trade and identify animal/plant species or products.</div></div>
+
+<div class="row"><div class="k">Crime Scene Forensics</div><div class="v">Document scenes, recognise evidence, photograph and collect material correctly, and maintain chain of custody. Crime-scene roles may be separate from laboratory-specialist roles.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Forensic Scientist vs Police Officer</div><div class="v"><b>Forensic Scientist:</b> scientifically examines evidence and reports findings.<br><b>Police Officer:</b> investigates the crime as a whole, interviews people, gathers intelligence and takes legal/police action.</div></div>
+
+<div class="row"><div class="k">Forensic Scientist vs Forensic Doctor</div><div class="v"><b>Forensic Scientist:</b> usually follows Science / Forensic Science / Engineering routes.<br><b>Forensic Medicine Doctor:</b> is a medical doctor who completes <b>MBBS + postgraduate Forensic Medicine</b> and may conduct medico-legal examinations/autopsies.<br>These are different careers.</div></div>
+
+<div class="row"><div class="k">Forensic Scientist vs Forensic Psychologist</div><div class="v"><b>Forensic Scientist:</b> analyses physical, chemical, biological or digital evidence.<br><b>Forensic Psychologist:</b> applies psychology within legal/criminal-justice contexts and follows a Psychology pathway.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v"><b>State Forensic Science Laboratories, Central Forensic Science Laboratories, police forensic units, cyber-forensic labs, universities/research institutes, private digital-forensics firms, banks/corporate investigation teams and specialised laboratories.</b><br><br>The Directorate of Forensic Science Services currently manages <b>six Central Forensic Science Laboratories</b> at Chandigarh, Kolkata, Hyderabad, Pune, Guwahati and Bhopal.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh — current opportunity</div><div class="v">APPSC issued a fresh notification on <b>15 September 2026</b> for <b>8 Assistant Director posts</b> in the A.P. State Forensic Science Laboratory Service across <b>Forensic Engineering, Physics, Chemistry and Biology</b>.<br><br>This is a good example of why specialisation matters: the government recruits forensic professionals by scientific discipline, and senior posts may require postgraduate qualifications plus laboratory experience.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Forensic-science skills can also support:
+<div class="chips"><span class="chip">Analytical Chemistry</span><span class="chip">Biotechnology</span><span class="chip">Cybersecurity</span><span class="chip">Quality Labs</span><span class="chip">Research</span><span class="chip">Scientific Instrumentation</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Evidence rule</span><span><b>A forensic scientist must not try to “prove who is guilty.”</b> The job is to examine evidence objectively, document methods and report scientifically supportable findings.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Forensic Science is a relatively small employment market. Government laboratory pay can be strong, but entry-level private/project roles may be modest and vacancies can be limited.</p>
+
+<div class="card">
+<div class="row"><div class="k">Intern / trainee</div><div class="v"><span class="money">₹5,000 – ₹15,000/month</span><br><span style="font-size:13px">Training or project placements may be unpaid or modestly paid. Strong laboratory exposure and instrumentation experience are especially valuable.</span></div></div>
+
+<div class="row"><div class="k">Junior private / project role</div><div class="v"><span class="money">₹20,000 – ₹35,000/month</span><br><span style="font-size:13px">A broad practical range for many junior forensic, analytical, digital-forensic or scientific-assistant roles. Specialist cyber roles may vary considerably.</span></div></div>
+
+<div class="row"><div class="k">Government Scientific Assistant</div><div class="v"><span class="money">Often Pay Level 5–6 depending on recruitment</span><br><span style="font-size:13px">For example, a 2026 government recruitment for Scientific Assistant (Forensic Science Laboratory) listed <b>Pay Level 6</b> for a Biology/Serology role. Government pay varies by state, organisation and post.</span></div></div>
+
+<div class="row"><div class="k">Central Scientist 'B'</div><div class="v"><span class="money">₹56,100 basic/month</span><br><span style="font-size:13px">A recent UPSC recruitment for <b>Scientist 'B' (Documents)</b> in the Central Forensic Science Laboratory listed <b>Pay Level 10: ₹56,100–₹1,77,500</b>.</span></div></div>
+
+<div class="row"><div class="k">AP Assistant Director — FSL</div><div class="v"><span class="money">₹57,100 – ₹1,47,760 pay scale</span><br><span style="font-size:13px">APPSC's current 2026 brief notification lists this scale for Assistant Director posts in <b>Forensic Engineering, Physics, Chemistry and Biology</b>. These are experienced/senior scientific posts, not fresher jobs.</span></div></div>
+
+<div class="row"><div class="k">Higher / specialist roles</div><div class="v"><span class="money">Can rise significantly</span><br><span style="font-size:13px">Senior laboratory officers, digital-forensic specialists, scientific directors, technical experts and experienced consultants may earn more depending on role, government level or private-sector speciality.</span></div></div>
+
+<div class="row"><div class="k">Study cost</div><div class="v">Fees vary widely. NFSU currently lists government-category tuition of about <b>₹65,000 per semester</b> for its 5-year integrated B.Sc.–M.Sc. Forensic Science programme. State/public-university routes may cost less; private programmes may cost much more.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not take a large loan for a private Forensic Science degree assuming a government FSL job is guaranteed.</b> Government vacancies are limited and specialised. Choose a programme that also gives you strong Chemistry, Biology, Physics, Computing or laboratory skills for backup careers.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Science + evidence + precision</span> — Forensic Science may be a strong fit.</p>
+<p><span class="hi">Love crime investigation more than laboratory science</span> — compare Police / IPS / Investigation careers.</p>
+<p><span class="hi">Love computers and cybercrime</span> — compare Digital Forensics / Cybersecurity.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>forensic science is not about finding the answer you expect — it is about finding the answer the evidence can support.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For school students, build strong science first. Specialisation can come later.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen <b>Biology, Chemistry, Physics and basic Maths</b></li>
+<li>Practise writing observations separately from conclusions</li>
+<li>Learn why contamination, chain of custody and scientific controls matter</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>Science — BiPC, MPC or PCMB</b> depending on your forensic interest</li>
+<li>Shortlist B.Sc. Forensic Science as well as strong core-science degrees such as Chemistry, Biotechnology, Physics or Computer Science</li>
+<li>Check whether your target university uses CUET, NFSU's current national admission route, merit or another entrance process</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Build practical laboratory skills and learn scientific instrumentation</li>
+<li>Seek internships/visits with forensic, analytical, cyber or research laboratories where permitted</li>
+<li>Choose a speciality — DNA, Chemistry, Toxicology, Digital Forensics, Physics, Documents, Ballistics or another area — instead of staying too general</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Create a simple mock investigation using safe household objects. Photograph the “scene,” label each item, record exactly where it was found, avoid contamination and write <b>observation → test → result → conclusion</b>. If you enjoy careful evidence handling more than guessing the answer, Forensic Science may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission or recruitment notice. Course structures, entrance tests, laboratory recruitments and qualifications change. Current examples were checked against National Forensic Sciences University 2026–27 programmes, Andhra Pradesh State Council of Higher Education's B.Sc. Honours Forensic Science curriculum, Directorate of Forensic Science Services information and APPSC Notification No.11/2026 dated 15 September 2026. Government forensic posts often specify exact scientific qualifications and experience, so always read the current recruitment notification.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Forensic Science fit</strong>You seem comfortable with science, precision and evidence-based work. Build a strong scientific foundation and later choose a speciality.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of forensics. Compare real laboratory work with crime-investigation work before choosing the degree.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may enjoy crime stories without enjoying forensic laboratory work. Compare Police, Law, Cybersecurity, Psychology, Medicine or other science careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

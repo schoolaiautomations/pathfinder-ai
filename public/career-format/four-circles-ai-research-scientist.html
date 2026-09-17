@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — AI Research Scientist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>AI Research Scientist</h2><p class="standfirst">AI Research Scientists try to create better ways for machines to learn, reason, understand language, see images, make decisions and solve difficult problems. Unlike simply using an AI tool, this career involves mathematics, programming, experiments, reading research papers and often developing new algorithms or models.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; AI Research Scientist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Do you enjoy research?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Maths + CS + research</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Research Areas</b><em>Many AI fields</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>High skill ceiling</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want AI research?</h3><p class="lede">Using ChatGPT or enjoying AI videos does not automatically mean AI research will suit you. The real work involves difficult Maths, coding, experiments and a lot of failure before something works.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy Maths enough to become strong in algebra, calculus, probability and matrices?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy writing code and debugging experiments for hours when a model is not working?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Do you like asking “Why does this method work?” instead of only “How do I use this tool?”</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you read difficult material patiently and learn ideas that may take days or weeks to understand?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy comparing models carefully using experiments rather than choosing the one that simply “looks smart”?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to study for many years if the research role you want requires an M.Tech/MS or PhD?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Subjects &amp; pathway</h3><p class="lede">AI Research Scientist is usually an advanced career. The strongest route combines Mathematics, Computer Science and real research experience.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Mathematics</div><div class="v">Core areas include <b>linear algebra, calculus, probability, statistics and optimisation</b>. Advanced research may also use information theory, numerical methods and other mathematical tools.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Programming</div><div class="v">Python is widely used for AI research. Strong researchers also understand algorithms, data structures, software engineering and often C/C++ or GPU/parallel-computing concepts.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Scientific Thinking</div><div class="v">Research means forming a hypothesis, designing experiments, controlling variables, measuring results, checking whether improvements are real and documenting the work so others can reproduce it.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Choose MPC — Mathematics, Physics and Chemistry.</b> Maths is especially important because almost every serious AI/ML research pathway depends on strong quantitative foundations.</div></div>
+
+<div class="row"><div class="k">Strong bachelor's routes</div><div class="v">Good undergraduate options include:
+<div class="chips"><span class="chip">B.Tech CSE</span><span class="chip">AI &amp; ML</span><span class="chip">Data Science</span><span class="chip">Mathematics &amp; Computing</span><span class="chip">ECE</span><span class="chip">B.Sc./BS Mathematics</span><span class="chip">Statistics</span></div>
+<br><b>You do not need a bachelor's degree named “AI Research.”</b> A rigorous CSE, Mathematics, Statistics or related programme can be an excellent foundation.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh entrance</div><div class="v"><b>AP EAPCET</b> is the main state engineering entrance route for participating Andhra Pradesh engineering colleges. For 2026, the Engineering paper uses <b>Mathematics, Physics and Chemistry</b>.<br><br>Branch names such as CSE-AI, AI &amp; ML and Data Science vary by college and counselling year.</div></div>
+
+<div class="row"><div class="k">National engineering route</div><div class="v"><b>JEE Main</b> is used for NITs, IIITs and other participating institutes; <b>JEE Advanced</b> is used for IIT admission. Strong CSE, Mathematics &amp; Computing, ECE or related programmes can lead into AI research.</div></div>
+
+<div class="row"><div class="k">Postgraduate route</div><div class="v"><b>Bachelor's → M.Tech/MS/M.Sc. in AI, Machine Learning, Computer Science, Data Science, Mathematics or a related area.</b><br><br>For example, IISc's 2026 M.Tech admissions require an eligible prior degree and a valid <b>GATE</b> score for its M.Tech programmes, subject to programme-specific selection rules.</div></div>
+
+<div class="row"><div class="k">PhD route</div><div class="v"><b>For many true Research Scientist positions — especially those expected to publish new methods — a PhD is highly valuable and often preferred.</b><br><br>A typical route is <b>B.Tech/BS → MS/M.Tech or direct PhD → publications + research internships → AI Research Scientist.</b><br><br>However, some strong research engineers and applied researchers enter through an excellent bachelor's/master's plus exceptional research work.</div></div>
+
+<div class="row"><div class="k">What to learn</div><div class="v"><div class="chips"><span class="chip">Python</span><span class="chip">PyTorch / JAX</span><span class="chip">Linear Algebra</span><span class="chip">Probability</span><span class="chip">Optimisation</span><span class="chip">Algorithms</span><span class="chip">Research Papers</span><span class="chip">Git / Linux</span></div></div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → MPC → strong bachelor's in CSE / AI / Maths / Statistics / related field → research projects + internships → M.Tech/MS/M.Sc. and/or PhD for advanced research roles → AI Research Scientist.</b></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Do not choose a weak “AI” degree only because the name sounds futuristic.</b> For research careers, rigorous Maths, algorithms, computer science, good faculty, research labs and strong projects matter far more than a fashionable branch title.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · AI RESEARCH AREAS</div><h3>What could you research?</h3><p class="lede">AI Research Scientists often specialise deeply rather than working on every part of AI.</p>
+
+<div class="card">
+<div class="row"><div class="k">Machine Learning</div><div class="v"><b>Develop methods that learn patterns from data.</b> Research may focus on generalisation, optimisation, representation learning, uncertainty or efficient training.<div class="chips"><span class="chip">ML</span><span class="chip">Statistics</span><span class="chip">Optimisation</span></div></div></div>
+
+<div class="row"><div class="k">Deep Learning</div><div class="v">Study neural networks, architectures, training methods and ways to improve accuracy, efficiency, robustness and scalability.</div></div>
+
+<div class="row"><div class="k">Generative AI / LLMs</div><div class="v">Research language models, multimodal models, reasoning, retrieval, agents, model evaluation and methods for making generative systems more useful and reliable.</div></div>
+
+<div class="row"><div class="k">Natural Language Processing</div><div class="v">Build systems that understand and generate human language — including Indian-language NLP, translation, speech-language systems and information extraction.</div></div>
+
+<div class="row"><div class="k">Computer Vision</div><div class="v">Teach machines to understand images and video — object recognition, segmentation, medical imaging, autonomous driving, industrial inspection and more.</div></div>
+
+<div class="row"><div class="k">Speech AI</div><div class="v">Speech recognition, text-to-speech, speaker understanding and multilingual voice systems. India offers especially interesting research challenges because of its many languages and accents.</div></div>
+
+<div class="row"><div class="k">Reinforcement Learning</div><div class="v">Study how agents learn decisions through interaction and feedback. Applications include robotics, games, operations and autonomous systems.</div></div>
+
+<div class="row"><div class="k">Robotics &amp; Embodied AI</div><div class="v">Combine AI with physical machines so robots can perceive, plan, manipulate objects and learn from the real world.</div></div>
+
+<div class="row"><div class="k">AI Safety / Alignment</div><div class="v">Research how to make advanced AI systems more reliable, controllable, interpretable and aligned with intended behaviour.</div></div>
+
+<div class="row"><div class="k">Responsible / Fair AI</div><div class="v">Study bias, fairness, privacy, transparency, accountability and the social effects of AI systems.</div></div>
+
+<div class="row"><div class="k">AI for Science</div><div class="v">Apply AI to biology, drug discovery, materials, chemistry, climate, physics and other scientific problems.</div></div>
+
+<div class="row"><div class="k">Efficient AI</div><div class="v">Make models faster, smaller and less expensive through compression, quantisation, better algorithms, hardware-aware training and efficient architectures.</div></div>
+
+<div class="row"><div class="k">Multimodal AI</div><div class="v">Build systems that combine text, images, audio, video and other data types instead of understanding only one modality.</div></div>
+
+<div class="row"><div class="k">Human–AI Interaction</div><div class="v">Study how people collaborate with AI, how interfaces affect trust and performance, and how AI systems should communicate uncertainty.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Research Scientist vs ML Engineer</div><div class="v"><b>AI Research Scientist:</b> tries to discover or validate new methods, often through experiments and publications.<br><b>Machine Learning Engineer:</b> focuses more on building, deploying and maintaining ML systems that work reliably in production.<br>Strong teams need both.</div></div>
+
+<div class="row"><div class="k">Research Scientist vs Data Scientist</div><div class="v"><b>Data Scientist:</b> mainly uses data/statistics/ML to answer business or domain questions.<br><b>AI Research Scientist:</b> more often studies the AI methods themselves and tries to advance what models can do.</div></div>
+
+<div class="row"><div class="k">Research Scientist vs AI Engineer</div><div class="v"><b>AI Engineer:</b> usually builds applications using existing models, APIs and ML systems.<br><b>Research Scientist:</b> asks whether the underlying model, learning method or evaluation can be improved or redesigned.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v">AI research labs, technology companies, universities, IITs/IISc/IIITs, research institutes, healthcare/biotech, robotics, autonomous systems, semiconductor companies, finance, climate/science organisations and AI startups.</div></div>
+
+<div class="row"><div class="k">What employers value</div><div class="v"><div class="chips"><span class="chip">Strong Maths</span><span class="chip">Research papers</span><span class="chip">Experiments</span><span class="chip">Python</span><span class="chip">PyTorch / JAX</span><span class="chip">Algorithms</span><span class="chip">Communication</span></div></div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">AI research skills transfer strongly into:
+<div class="chips"><span class="chip">ML Engineering</span><span class="chip">Data Science</span><span class="chip">AI Engineering</span><span class="chip">Software</span><span class="chip">Applied Scientist</span><span class="chip">Academia</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Research reality</span><span><b>Most research ideas do not work the first time.</b> A good researcher learns from failed experiments, checks results carefully and does not claim an improvement unless the evidence supports it.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">AI research salaries vary enormously between university research, startups, Indian technology firms and global AI labs. Advanced qualifications and research quality can make a major difference.</p>
+
+<div class="card">
+<div class="row"><div class="k">Research intern</div><div class="v"><span class="money">₹10,000 – ₹60,000+/month</span><br><span style="font-size:13px">Academic internships may pay modest stipends, while competitive corporate research internships can pay much more. The learning, mentor and research output matter greatly.</span></div></div>
+
+<div class="row"><div class="k">Entry research / applied ML</div><div class="v"><span class="money">₹6 – ₹15 lakh/year</span><br><span style="font-size:13px">A broad practical range for early-career research engineer, applied ML and junior research roles in India. Strong product companies can exceed this substantially.</span></div></div>
+
+<div class="row"><div class="k">Market benchmark</div><div class="v"><span class="money">≈ ₹16 lakh/year average base</span><br><span style="font-size:13px">Glassdoor's September 2026 India data for <b>Machine Learning Researcher</b> reports an average base around <b>₹16 lakh/year</b>, with a broad base-pay range around <b>₹7–18.6 lakh/year</b>. Treat this as a rough market indicator because job titles and experience levels vary.</span></div></div>
+
+<div class="row"><div class="k">Experienced Research Scientist</div><div class="v"><span class="money">₹15 – ₹35 lakh+/year</span><br><span style="font-size:13px">Strong industry researchers with publications, advanced ML expertise and several years of experience can move considerably higher.</span></div></div>
+
+<div class="row"><div class="k">Top AI labs / specialist roles</div><div class="v"><span class="money">Can be much higher</span><br><span style="font-size:13px">Compensation at elite global or frontier-AI labs can be far above normal Indian market ranges, but these roles are exceptionally competitive and should not be treated as a typical outcome.</span></div></div>
+
+<div class="row"><div class="k">PhD / academic stage</div><div class="v"><span class="money">Often stipend-based while training</span><br><span style="font-size:13px">A PhD is several years of advanced training. Students may receive institute/fellowship stipends rather than industry salaries during this period. The trade-off is deeper research preparation.</span></div></div>
+
+<div class="row"><div class="k">Education cost</div><div class="v">You do <b>not</b> need the most expensive private AI degree. A strong public engineering/science programme can be an excellent route. For research, look at <b>faculty, labs, mathematics, research opportunities, computing access and publications</b> rather than marketing.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not choose AI research only because you hear about very high AI salaries.</b> The highest-paying research roles usually demand exceptional Maths, coding, publications and often postgraduate/PhD-level preparation.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Maths + coding + deep curiosity</span> — AI Research may be a strong fit.</p>
+<p><span class="hi">Love building AI products but dislike academic research</span> — compare AI Engineer / ML Engineer.</p>
+<p><span class="hi">Love analysing data more than inventing algorithms</span> — compare Data Scientist.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>an AI Research Scientist is not someone who knows every answer — it is someone who knows how to design an experiment that can reveal a better answer.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, the best preparation is not learning every new AI tool. Build the foundations that will still matter when today's tools change.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Become very strong in <b>Maths</b>, especially algebra, graphs, probability and logical problem-solving</li>
+<li>Start <b>Python</b> and build small programs yourself</li>
+<li>Learn what training data, model, prediction, error, testing and overfitting mean</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>MPC</b></li>
+<li>Target a strong bachelor's programme in <b>CSE, AI/ML, Mathematics &amp; Computing, Mathematics, Statistics, ECE or related field</b></li>
+<li>Use AP EAPCET / JEE / other university routes based on the colleges you target</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Learn <b>linear algebra, probability, calculus, algorithms, Python and ML</b> properly</li>
+<li>Join a research lab, reproduce published papers and complete research internships</li>
+<li>By 3rd/4th year, decide whether you prefer <b>AI engineering</b> or deeper <b>MS/M.Tech/PhD research</b></li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Do not begin by building a huge AI model. Take a simple problem — for example predicting whether a student improves based on study hours — and test <b>two different methods</b>. Keep the same data, measure which works better and explain <b>why you trust the result</b>. If comparing ideas scientifically excites you more than just getting an answer, AI Research may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission or salary notice. Course names, entrance routes and research-job requirements change. Current admission examples were checked against AP EAPCET 2026, JEE Main 2026 and IISc 2026 M.Tech admissions. AI Research Scientist roles vary widely: some applied research positions accept strong bachelor's/master's candidates, while many advanced research roles prefer or require PhD-level research experience. Salary figures are broad market guidance only.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong AI Research fit</strong>You seem comfortable with Maths, coding, experimentation and long-term learning. Build deep foundations before specialising.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like AI, but test whether you enjoy the Maths, research papers and repeated experiments behind it.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may enjoy using AI without enjoying AI research. Compare AI Engineering, Software Engineering, Data Science, Product Design or other technology careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>
