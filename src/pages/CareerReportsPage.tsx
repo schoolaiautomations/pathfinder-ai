@@ -66,6 +66,13 @@ const CAREER_AUDIO_MAP: Record<string, string> = {
   mba: `${SUPABASE_AUDIO_BASE_URL}/mba.mp3`,
   physiotherapy: `${SUPABASE_AUDIO_BASE_URL}/physiotherapist.mp3`,
   "air-hostess": `${SUPABASE_AUDIO_BASE_URL}/air_hostess.mp3`,
+  "ai-scientist": `${SUPABASE_AUDIO_BASE_URL}/ai_research_scientist.mp3`,
+  "data-scientist": `${SUPABASE_AUDIO_BASE_URL}/data_scientist.mp3`,
+  "robotics-engineer": `${SUPABASE_AUDIO_BASE_URL}/robotics_engineer.mp3`,
+  "forensic-scientist": `${SUPABASE_AUDIO_BASE_URL}/forensic_scientist.mp3`,
+  horticulturist: `${SUPABASE_AUDIO_BASE_URL}/horticulturist.mp3`,
+  stenographer: `${SUPABASE_AUDIO_BASE_URL}/stenographer.mp3`,
+  designer: `${SUPABASE_AUDIO_BASE_URL}/graphic_designer.mp3`,
 };
 
 interface CareerItem {
