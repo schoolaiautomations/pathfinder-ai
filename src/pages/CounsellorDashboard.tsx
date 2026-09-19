@@ -73,9 +73,11 @@ export interface ClassTeacherRosterItem {
   section: string;      // "A", "B", "C"
   teacherName: string;
   totalStrength: number;
+  phone?: string;
+  subject?: string;
 }
 
-export type SchoolRosterId = "lingamparthi" | "jeddangi" | "yeleswaram" | "ghs_yeleswaram";
+export type SchoolRosterId = "lingamparthi" | "jeddangi" | "yeleswaram" | "ghs_yeleswaram" | "tirumali";
 
 export interface SchoolRosterConfig {
   id: SchoolRosterId;
@@ -231,6 +233,35 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
       { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "M Anjaneyulu", totalStrength: 49 },
       { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "V Sriram Murthy", totalStrength: 48 },
       { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "B Ganga Raja Reddy", totalStrength: 47 },
+    ],
+  },
+  tirumali: {
+    id: "tirumali",
+    schoolName: "ZPHS Tirumali",
+    badgeName: "ZPHS Tirumali",
+    headmasterName: "M Rajani Kumari",
+    headmasterPhone: "9494006738",
+    matchSchool: (sch: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("yeleswaram") ||
+        s.includes("ghs")
+      ) return false;
+      return (
+        s.includes("tirumali") ||
+        s.includes("thirumali") ||
+        s.includes("తిరుమలి") ||
+        s.includes("tirumala") ||
+        s.includes("thirumala")
+      );
+    },
+    teachers: [
+      { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "A S Subhashini", totalStrength: 31, phone: "9849857572", subject: "NS" },
+      { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "V Viswanath", totalStrength: 31, phone: "9949397566", subject: "PS" },
+      { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "P Varalakshmi", totalStrength: 44, phone: "8500396760", subject: "Social" },
+      { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "P Gopala Krishna", totalStrength: 38, phone: "9398917754" },
     ],
   },
 };
@@ -1015,23 +1046,27 @@ const CounsellorDashboard = () => {
                     const jeddangiData = computeRosterStats(SCHOOL_ROSTERS.jeddangi);
                     const yeleswaramData = computeRosterStats(SCHOOL_ROSTERS.yeleswaram);
                     const ghsYeleswaramData = computeRosterStats(SCHOOL_ROSTERS.ghs_yeleswaram);
+                    const tirumaliData = computeRosterStats(SCHOOL_ROSTERS.tirumali);
 
                     const combinedEnrolled =
                       lingamparthiData.totalEnrolled +
                       jeddangiData.totalEnrolled +
                       yeleswaramData.totalEnrolled +
-                      ghsYeleswaramData.totalEnrolled;
+                      ghsYeleswaramData.totalEnrolled +
+                      tirumaliData.totalEnrolled;
                     const combinedReceived =
                       lingamparthiData.totalRosterReceived +
                       jeddangiData.totalRosterReceived +
                       yeleswaramData.totalRosterReceived +
-                      ghsYeleswaramData.totalRosterReceived;
+                      ghsYeleswaramData.totalRosterReceived +
+                      tirumaliData.totalRosterReceived;
                     const combinedOverallPct = combinedEnrolled > 0 ? Math.round((combinedReceived / combinedEnrolled) * 100) : 0;
                     const combinedBelowThreshold =
                       lingamparthiData.belowThresholdCount +
                       jeddangiData.belowThresholdCount +
                       yeleswaramData.belowThresholdCount +
-                      ghsYeleswaramData.belowThresholdCount;
+                      ghsYeleswaramData.belowThresholdCount +
+                      tirumaliData.belowThresholdCount;
 
                     const currentRosterData =
                       activeRosterSchoolId === "jeddangi"
@@ -1040,6 +1075,8 @@ const CounsellorDashboard = () => {
                         ? yeleswaramData
                         : activeRosterSchoolId === "ghs_yeleswaram"
                         ? ghsYeleswaramData
+                        : activeRosterSchoolId === "tirumali"
+                        ? tirumaliData
                         : lingamparthiData;
 
                     const handlePrintRosterPDF = (rosterData: typeof currentRosterData) => {
@@ -1070,7 +1107,10 @@ const CounsellorDashboard = () => {
                           return `
                         <tr style="border-bottom: 1px solid #e5e7eb;">
                           <td style="padding: 10px 14px; font-weight: 700; color: #111827;">${item.gradeLabel} - Section ${item.section}</td>
-                          <td style="padding: 10px 14px; font-weight: 600; color: #1f2937;">${item.teacherName}</td>
+                          <td style="padding: 10px 14px; font-weight: 600; color: #1f2937;">
+                            ${item.teacherName} ${item.subject ? `<span style="font-size: 10px; background: #f3f4f6; border: 1px solid #d1d5db; padding: 1px 6px; border-radius: 4px; color: #4b5563;">${item.subject}</span>` : ""}
+                            ${item.phone ? `<div style="font-size: 11px; color: #6b7280; font-weight: 500; margin-top: 2px;">Ph: ${item.phone}</div>` : ""}
+                          </td>
                           <td style="padding: 10px 14px; text-align: center; color: #4b5563;">${item.totalStrength}</td>
                           <td style="padding: 10px 14px; text-align: center; font-weight: 700; color: ${textColor};">${item.receivedCount}</td>
                           <td style="padding: 10px 14px; text-align: center;">
@@ -1252,7 +1292,7 @@ const CounsellorDashboard = () => {
                                   Class Teachers &amp; School Rosters
                                 </div>
                                 <p className="text-xs text-stone-500 font-medium mt-0.5 truncate">
-                                  Lingamparthi &bull; Jeddangi &bull; Yeleswaram (Girls) &bull; GHS Yeleswaram &bull; Received: <strong>{combinedReceived}</strong> / {combinedEnrolled} ({combinedOverallPct}%)
+                                  Lingamparthi &bull; Jeddangi &bull; Yeleswaram (Girls) &bull; GHS Yeleswaram &bull; Tirumali &bull; Received: <strong>{combinedReceived}</strong> / {combinedEnrolled} ({combinedOverallPct}%)
                                 </p>
                               </div>
                             </div>
@@ -1334,6 +1374,9 @@ const CounsellorDashboard = () => {
                                       </option>
                                       <option value="ghs_yeleswaram">
                                         GHS Yeleswaram ({ghsYeleswaramData.totalRosterReceived}/{ghsYeleswaramData.totalEnrolled})
+                                      </option>
+                                      <option value="tirumali">
+                                        ZPHS Tirumali ({tirumaliData.totalRosterReceived}/{tirumaliData.totalEnrolled})
                                       </option>
                                     </select>
                                     <ChevronDown className="w-4 h-4 text-stone-600 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -1508,7 +1551,23 @@ const CounsellorDashboard = () => {
                                           item.tier === "red" ? "text-rose-600" : item.tier === "orange" ? "text-amber-600" : "text-emerald-600"
                                         }`}
                                       />
-                                      <span>{item.teacherName}</span>
+                                      <span className="truncate">{item.teacherName}</span>
+                                       {item.subject && (
+                                         <span className="text-[10px] font-bold text-stone-600 bg-stone-100 px-1.5 py-0.5 rounded border border-stone-200 shrink-0">
+                                           {item.subject}
+                                         </span>
+                                       )}
+                                       {item.phone && (
+                                         <a
+                                           href={`tel:${item.phone}`}
+                                           onClick={(e) => e.stopPropagation()}
+                                           className="inline-flex items-center gap-1 text-[11px] font-bold text-stone-600 hover:text-stone-900 bg-stone-100 hover:bg-stone-200 px-1.5 py-0.5 rounded transition-colors ml-1 shrink-0"
+                                           title={`Call ${item.teacherName}: ${item.phone}`}
+                                         >
+                                           <Phone className="w-3 h-3 text-emerald-600" />
+                                           <span>{item.phone}</span>
+                                         </a>
+                                       )}
                                       {item.tier === "red" && (
                                         <span className="ml-auto text-[10px] font-black uppercase tracking-wider text-rose-700 bg-rose-200/80 px-1.5 py-0.5 rounded border border-rose-300">
                                           Action Req. (&lt;70%)

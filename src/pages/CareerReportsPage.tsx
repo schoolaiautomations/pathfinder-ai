@@ -25,6 +25,7 @@ import {
   IndianRupee,
   Zap,
   Phone,
+  Gamepad2,
 } from "lucide-react";
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
@@ -1060,6 +1061,33 @@ export default function CareerReportsPage() {
 
       {/* Main Cards Section */}
       <section className="flex-1 max-w-7xl w-full mx-auto py-6 sm:py-10 px-4 sm:px-6 space-y-6">
+        {/* Interactive Career Quest Game Showcase Banner */}
+        <div className="rounded-3xl bg-white border border-[#E0D6CA] p-6 sm:p-7 shadow-2xs text-stone-900 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
+          <div className="space-y-2 max-w-xl z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-[#F5F1EC] text-stone-800 border border-[#E0D6CA]">
+              <Gamepad2 className="w-3.5 h-3.5 text-[#7C5C3E]" />
+              <span>Career Roadmap Quiz &bull; For Classes 8th–10th</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-stone-900">
+              Play the Career Roadmap Quiz!
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
+              Step into a student's shoes: pick your intermediate stream, course duration, school subjects, and skills to build. Ready for Software Engineer, Doctor, Police Officer, Teacher, IAS, Nurse, and Lawyer!
+            </p>
+          </div>
+
+          <div className="flex items-center shrink-0 z-10">
+            <Link
+              to="/career-game"
+              className="px-5 sm:px-6 py-3 rounded-2xl font-black text-xs sm:text-sm bg-[#1C1917] hover:bg-stone-800 text-[#FAF8F5] shadow-sm hover:shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Gamepad2 className="w-4 h-4 text-[#C9A97A]" />
+              <span>Play Career Roadmap Quiz</span>
+              <ArrowRight className="w-4 h-4 text-[#C9A97A]" />
+            </Link>
+          </div>
+        </div>
+
         {/* Search & Filter Bar */}
         <div
           className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-2xl border shadow-2xs"
@@ -1147,6 +1175,17 @@ export default function CareerReportsPage() {
                         <Headphones className="w-2.5 h-2.5 text-amber-700" />
                         <span>Audio</span>
                       </span>
+                    )}
+                    {["swe", "doctor", "police", "teacher", "ias", "nurse", "lawyer"].includes(item.id) && (
+                      <Link
+                        to={`/career-game?track=${item.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-indigo-100 text-indigo-900 border border-indigo-300 hover:bg-indigo-200 transition-colors shadow-2xs"
+                        title={`Play ${item.label} Career Roadmap Quiz`}
+                      >
+                        <Gamepad2 className="w-2.5 h-2.5 text-indigo-700 animate-pulse" />
+                        <span>Play Quiz</span>
+                      </Link>
                     )}
                   </div>
                 </div>

@@ -19,6 +19,7 @@ import CounsellorDashboard from "./pages/CounsellorDashboard.tsx";
 import FaqPage from "./pages/FaqPage.tsx";
 import CareersTreePage from "./pages/CareersTreePage.tsx";
 import CareerReportsPage from "./pages/CareerReportsPage.tsx";
+import CareerGamePage from "./pages/CareerGamePage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,9 @@ const App = () => (
           <Route path="/career-reports" element={<CareerReportsPage />} />
           <Route path="/career-options" element={<CareerReportsPage />} />
           <Route path="/reports-all" element={<CareerReportsPage />} />
+          <Route path="/career-game" element={<CareerGamePage />} />
+          <Route path="/game" element={<CareerGamePage />} />
+          <Route path="/career-quiz" element={<CareerGamePage />} />
           <Route path="/roadmap" element={<RoadmapForm />} />
           <Route path="/roadmap/generating" element={<RoadmapGenerating />} />
           <Route path="/roadmap/result" element={<RoadmapResult />} />
