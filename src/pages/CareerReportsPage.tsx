@@ -1072,7 +1072,7 @@ export default function CareerReportsPage() {
               Play the Career Roadmap Quiz!
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
-              Step into a student's shoes: pick your intermediate stream, course duration, school subjects, and skills to build. Ready for Software Engineer, Doctor, Police Officer, Teacher, IAS, Nurse, and Lawyer!
+              Step into a student's shoes: pick your intermediate stream, course duration, school subjects, and skills to build. Ready for Software Engineer, Doctor, Police, Teacher, IAS, Nurse, Lawyer, Bank PO, Agricultural Officer, CA, Engineer, MBA, Air Hostess, Physiotherapist, Psychologist, Pilot, Indian Army, and Journalist!
             </p>
           </div>
 
@@ -1176,7 +1176,7 @@ export default function CareerReportsPage() {
                         <span>Audio</span>
                       </span>
                     )}
-                    {["swe", "doctor", "police", "teacher", "ias", "nurse", "lawyer"].includes(item.id) && (
+                    {["swe", "doctor", "police", "teacher", "ias", "nurse", "lawyer", "bank", "agri", "ca", "engineer", "mba", "air-hostess", "physiotherapy", "psychologist", "pilot", "army", "journalist"].includes(item.id) && (
                       <Link
                         to={`/career-game?track=${item.id}`}
                         onClick={(e) => e.stopPropagation()}
