@@ -45,21 +45,48 @@ function parseReportJSON(content: string): CareerReport {
   }
 
   // Ensure 3 matches with clamped scores and roadmaps
-  parsed.matches = parsed.matches.slice(0, 3).map((m) => ({
+  parsed.matches = parsed.matches.slice(0, 3).map((m: any) => ({
     name: m.name || "Career Option",
     score: Math.max(1, Math.min(100, Math.round(Number(m.score) || 80))),
-    why: m.why || "Matches your academic strengths and personal interests.",
+    why: m.why || "Matches the student's evaluated academic strengths and diagnostic profile.",
+    aiImpact:
+      m.aiImpact ||
+      "Artificial intelligence and automation are transforming routine workflows in this field. Professionals must develop strong critical reasoning, high-order strategic problem-solving, and human collaboration skills to thrive alongside AI tools.",
+    backupPlan:
+      m.backupPlan ||
+      "An adjacent applied degree or vocational diploma within the same stream provides an immediate safety-net alternative if primary competitive admission thresholds are not met.",
+    riskFactors:
+      m.riskFactors ||
+      "Entrance examination cutoffs, coaching expenses, and educational gestation periods should be carefully balanced with family financial commitments.",
     roadmap: Array.isArray(m.roadmap) ? m.roadmap : [],
   }));
 
-  // Fallback defaults for any missing insights keys
+  // Fallback defaults for all insights keys (including 360-degree counsellor pillars)
   parsed.insights = {
-    studyRoadmap: parsed.insights.studyRoadmap || "Focus on core foundation subjects and consistent revision.",
-    whereToStudy: parsed.insights.whereToStudy || "Explore accredited state and national universities or polytechnics.",
-    skillsToBuild: parsed.insights.skillsToBuild || "Develop digital literacy, problem solving, and effective communication.",
-    salaryAndDemand: parsed.insights.salaryAndDemand || "Strong demand in growing industry sectors across India.",
-    whatToStudyNext: parsed.insights.whatToStudyNext || "Select the relevant stream after Class 10 and prepare for standard entrance tests.",
-    parentGuidance: parsed.insights.parentGuidance || "Provide encouragement and support balanced exploration of career pathways.",
+    strengthAnalysis:
+      parsed.insights.strengthAnalysis ||
+      "The student shows positive academic engagement and foundational aptitude in core subject areas. Reinforcing problem-solving discipline will unlock significant potential.",
+    economicReality:
+      parsed.insights.economicReality ||
+      "Educational planning should align with family financial bandwidth. Prioritizing affordable government institutions, polytechnic routes, or scholarship programs is strongly advised.",
+    studyRoadmap:
+      parsed.insights.studyRoadmap ||
+      "Focus on strengthening core foundation subjects and establishing a consistent daily revision schedule.",
+    whereToStudy:
+      parsed.insights.whereToStudy ||
+      "Explore accredited state and central universities, government polytechnics, or reputed regional colleges offering strong placement records.",
+    skillsToBuild:
+      parsed.insights.skillsToBuild ||
+      "Develop digital literacy, logical problem-solving, analytical thinking, and effective spoken and written communication.",
+    salaryAndDemand:
+      parsed.insights.salaryAndDemand ||
+      "Healthy demand across organized sectors in India, with strong salary growth as domain expertise and practical skills mature.",
+    whatToStudyNext:
+      parsed.insights.whatToStudyNext ||
+      "Select the appropriate stream after Class 10 and commence early, steady preparation for standard entrance examinations.",
+    parentGuidance:
+      parsed.insights.parentGuidance ||
+      "Maintain open dialogue with the student, avoid unnecessary peer pressure, and provide a supportive home environment for steady study.",
   };
 
   return parsed;
@@ -75,7 +102,7 @@ async function callGemini(prompt: string, title?: string): Promise<CareerReport>
       systemInstruction: {
         parts: [
           {
-            text: "You are an elite, highly empathetic AI career counsellor in India. Analyze the student profile thoroughly and respond ONLY with valid JSON conforming to the exact schema specified. Do not include markdown code fences, backticks, or any conversational text.",
+            text: "You are a distinguished senior educational psychologist and strategic career counsellor in India. You are creating a confidential, in-depth 360-degree diagnostic clinical assessment report exclusively for a professional intermediate school counsellor who will advise the student. Conduct a comprehensive 360-degree evaluation across academic strengths, family financial reality, health constraints, sibling precedent, AI disruption risk, and safety-net backup plans (Plan B). Output strict valid JSON only, without any markdown backticks or conversational text.",
           },
         ],
       },
@@ -86,7 +113,7 @@ async function callGemini(prompt: string, title?: string): Promise<CareerReport>
       ],
       generationConfig: {
         responseMimeType: "application/json",
-        temperature: 0.7,
+        temperature: 0.5,
       },
     }),
   });
@@ -126,15 +153,15 @@ async function callOpenRouter(prompt: string, title?: string): Promise<CareerRep
         {
           role: "system",
           content:
-            "You are an expert career guidance AI. Always respond with valid JSON only, no markdown fences or extra text.",
+            "You are a distinguished senior educational psychologist and strategic career counsellor in India. Create a confidential 360-degree clinical diagnostic report for a school counsellor. Always respond with valid JSON only, no markdown fences or extra text.",
         },
         {
           role: "user",
           content: prompt,
         },
       ],
-      temperature: 0.7,
-      max_tokens: 8192,
+      temperature: 0.5,
+      max_tokens: 16384,
     }),
   });
 
@@ -227,15 +254,20 @@ Based on the above profile, generate a career guidance report with:
 
 1. **matches** — An array of exactly 3 best-fit career paths. Each entry must have:
    - "name": career title (string)
-   - "score": match percentage 1-100 (number) — be realistic, don't give all 90+
-   - "why": one-sentence personalised explanation why this career suits the student (string)
+   - "score": match percentage 1-100 (number) — be realistic and differentiated
+   - "why": detailed multi-sentence personalised explanation why this career suits the student's academic and personal profile (string, 3-5 sentences)
+   - "aiImpact": how Artificial Intelligence and automation will reshape this field in the next 5-10 years and what human skills are vital (string, 2-4 sentences)
+   - "backupPlan": concrete Plan B alternative career branching from the same stream (string, 2-3 sentences)
+   - "riskFactors": realistic assessment of entrance cutoffs, competition, cost, or work demands (string, 2-3 sentences)
    - "roadmap": An array of 3-6 steps (objects) starting from their current education level (${d.educationLevel || "current level"}) leading to the final career. Each step must have:
      - "stage": Stage title (string, e.g., "Class 11-12", "B.Tech Computer Science")
      - "description": What to do at this stage (string). If the stage is Class 11/12, clearly mention the stream to select (e.g., PCM, PCB, Commerce).
      - "duration": Time required (string, e.g., "2 years")
      - "institutes": Array of strings containing exactly 3-5 REAL institutes/colleges in India (or preferred location) excellent for this stage. IMPORTANT: If the stage is Class 11/12 (Intermediate), leave this array empty.
 
-2. **insights** — An object with exactly 6 keys, each value is a short paragraph (2-3 sentences, practical and specific to this student):
+2. **insights** — An object with 8 keys, each value is a practical, detailed paragraph (2-4 sentences):
+   - "strengthAnalysis": where the student's core academic, problem-solving, and personal strengths lie
+   - "economicReality": practical assessment of financial feasibility, coaching costs, and high-ROI education options
    - "studyRoadmap": what subjects/courses to focus on right now
    - "whereToStudy": specific colleges/universities that fit (use real names relevant to India or the student's preferred location)
    - "skillsToBuild": specific skills to develop with actionable steps
@@ -246,8 +278,27 @@ Based on the above profile, generate a career guidance report with:
 IMPORTANT: Respond ONLY with valid JSON. No markdown, no code fences, no extra text.
 The JSON must match this exact structure:
 {
-  "matches": [{"name":"...","score":0,"why":"...","roadmap":[{"stage":"...","description":"...","duration":"...","institutes":["..."]}]}],
-  "insights": {"studyRoadmap":"...","whereToStudy":"...","skillsToBuild":"...","salaryAndDemand":"...","whatToStudyNext":"...","parentGuidance":"..."}
+  "matches": [
+    {
+      "name": "...",
+      "score": 0,
+      "why": "...",
+      "aiImpact": "...",
+      "backupPlan": "...",
+      "riskFactors": "...",
+      "roadmap": [{"stage":"...","description":"...","duration":"...","institutes":["..."]}]
+    }
+  ],
+  "insights": {
+    "strengthAnalysis": "...",
+    "economicReality": "...",
+    "studyRoadmap": "...",
+    "whereToStudy": "...",
+    "skillsToBuild": "...",
+    "salaryAndDemand": "...",
+    "whatToStudyNext": "...",
+    "parentGuidance": "..."
+  }
 }`;
 }
 
@@ -399,42 +450,81 @@ ${focusCareer && !["auto", "none", "no idea"].includes(focusCareer.toLowerCase()
 
 === END OF 44-QUESTION DIAGNOSTIC DATA ===
 
-CRITICAL INSTRUCTIONS FOR AI ANALYSIS:
-1. **ANALYZE WITH COMPLETE FREEDOM**:
-   You are NOT restricted to any predefined list of careers. You can suggest ANY career in India or the modern world.
-   Suggest the 3 BEST-FIT careers that genuinely match this student's unique combination of answers.
-   Careers can be in technology, sciences, arts, design, government services, public administration, healthcare, defence, skilled trades, entrepreneurship, media, aviation, agriculture, environmental science, finance, or modern hybrid digital careers.
+CRITICAL INSTRUCTIONS FOR 360-DEGREE COUNSELLOR-GRADE CLINICAL ANALYSIS:
+This evaluation is written STRICTLY FOR THE PROFESSIONAL INTERMEDIATE / SCHOOL COUNSELLOR to analyze before guiding the student. The counsellor needs deep, unfiltered, 360-degree forensic insight into the student's real standing.
 
-2. **DEEP MULTI-DIMENSIONAL REASONING**:
-   - Cross-check academic marks with career difficulty (e.g. don't suggest elite competitive medicine if marks are below 40% and biology is difficult, unless a practical diploma path exists).
-   - Cross-check health restrictions: E.g., if colour vision difficulty is present, avoid commercial pilot, railway loco pilot, or certain armed forces roles where colour perception is mandatory. If standing/walking is difficult, favor desk or cognitive roles.
-   - Cross-check family finances & earning expectation: If student must start earning quickly after Class 10/12, suggest high-ROI diploma, polytechnic, technical degree, or vocational pathways alongside long-term paths.
+1. **ANALYZE WITH COMPLETE FREEDOM ACROSS 360 DEGREES**:
+   - Do NOT restrict yourself to any narrow list of careers. You can suggest ANY career in India or globally.
+   - Suggest the 3 BEST-FIT careers that genuinely match this student's unique combination of 44 diagnostic answers.
+
+2. **DEEP 360-DEGREE REASONING MANDATE**:
+   - **Academic Aptitude & Reality**: Cross-check marks with subject preferences. If the student struggles with Mathematics, do NOT recommend elite quantitative engineering without acknowledging the hurdle. If marks are 50-70%, be honest about cutoffs for competitive government or medical entrance tests.
+   - **Socio-Economic & Family Financial Bandwidth**:
+     * Examine parents' work type and details, other earners, whether parents are able to work, elder sibling responsibilities, and family loans (Q16).
+     * Examine Q17 (earning expectations after Class 10): If the student must start earning quickly to support the family, prioritize high-ROI diploma, polytechnic, technical degree, or vocational pathways. If family has financial bandwidth, long-gestation courses (MBBS, CA, Ph.D) can be considered.
+   - **Safety-Net / Plan B for EVERY Career**:
+     * Competitive examinations in India (JEE, NEET, UPSC, CA) have sub-5% selection ratios. A recommendation without a Plan B is dangerous. For EVERY recommended career, specify a concrete, realistic Plan B alternative that branches from the SAME intermediate/degree stream.
+   - **AI Impact & Future Transformation (Next 5-10 Years)**:
+     * Explain how Artificial Intelligence, generative algorithms, and automation will reshape this field by 2030-2035.
+     * Which repetitive tasks will AI automate?
+     * What high-order human capabilities (complex problem solving, emotional intelligence, strategic systems design, physical dexterity) will make the professional irreplaceable?
+     * How should the student prepare starting from school?
+   - **Health & Physical Restrictions Check**:
+     * Cross-reference eyesight, colour vision, prolonged standing, heavy weight lifting, screen sensitivity, dust/allergies, and medical history with the work demands of each career.
+   - **Brutal Honesty on Risk Factors**:
+     * Call out entrance cutoff realities, long gestation periods, expensive coaching requirements, and market saturation risks so the counsellor can prepare the student and parents.
 
 3. **OUTPUT FORMAT (STRICT JSON ONLY)**:
-Produce a comprehensive report with exactly 3 matching careers and 6 detailed insight pillars:
+Produce a comprehensive report with exactly 3 matching careers and 8 detailed insight pillars:
 
 - "matches": Array of exactly 3 objects:
-  - "name": Precise career title (string, e.g. "Data Analyst", "Agricultural Officer", "Cybersecurity Specialist", "Physiotherapist", "Graphic & UI Designer", etc.)
-  - "score": Realistic match score 1-100 (number)
-  - "why": 1-2 insightful, highly personalised sentences explaining why this career fits this student's specific answers from the 44 questions.
-  - "roadmap": Array of 3-5 progressive steps from current class to career launch:
-    - "stage": Stage title (string, e.g., "Class 11-12 (MPC / BiPC / CEC / MEC / Vocational)", "Diploma / Degree", etc.)
-    - "description": Practical advice for this stage including exact stream to select after Class 10.
-    - "duration": Duration (string, e.g., "2 years")
-    - "institutes": Array of 3-5 real top/reputed colleges or institutes in India for this stage (empty if Class 11-12).
+  - "name": Precise career title (string, e.g. "Software Engineer (Full-Stack & Cloud)", "Agricultural Officer", "Chartered Accountant", "Robotics & Automation Engineer", etc.)
+  - "score": Realistic match percentage 1-100 (number) — differentiate scores based on genuine fit.
+  - "why": Comprehensive multi-paragraph counsellor analysis (4-6 detailed sentences). Break down WHY this fits the student's exact academic profile, liked vs difficult subjects, cognitive strengths, and family socioeconomic background.
+  - "aiImpact": Substantive analysis (3-5 detailed sentences) on how AI and automation will disrupt and transform this career over the next 5-10 years, which tasks will be automated, and what human skills will ensure long-term career resilience.
+  - "backupPlan": Concrete Plan B alternative (2-4 detailed sentences) with the specific adjacent career, degree, or diploma option that branches from the same stream if primary entrance/selection is not achieved.
+  - "riskFactors": Honest risk assessment (2-4 sentences) covering academic competition cutoffs, financial cost vs ROI, gestation period before earning, or health/work-environment considerations.
+  - "roadmap": Array of 3-5 progressive educational steps from current class to career launch:
+    - "stage": Stage title (e.g. "Class 11-12 (MPC / BiPC / CEC / MEC / Vocational)", "Undergraduate Degree", etc.)
+    - "description": Practical advice for this stage including exact stream/subjects and entrance examinations.
+    - "duration": Duration (e.g. "2 years")
+    - "institutes": Array of 3-5 real reputed colleges/institutes in India for this stage (empty if Class 11-12).
 
-- "insights": Object with 6 keys (2-3 practical, detailed sentences each):
-  - "studyRoadmap": Immediate subject focus and academic strategy based on their liked and difficult subjects.
-  - "whereToStudy": Recommended colleges, polytechnics, or universities in India matching their family financial context.
-  - "skillsToBuild": Specific actionable skills, tools, or hobbies to develop starting today.
-  - "salaryAndDemand": Realistic entry-level and 5-year salary ranges in India with job market outlook.
-  - "whatToStudyNext": Immediate next academic step after Class 10 (exact Intermediate stream, diploma, or vocational course) and key entrance exams.
-  - "parentGuidance": Tailored advice for parents considering their family situation, earning needs, and student's natural strengths.
+- "insights": Object with 8 keys (3-5 practical, detailed sentences each):
+  - "strengthAnalysis": Deep diagnostic mapping of where the student's core strengths lie (academic aptitude, extracurricular signals, cognitive patterns, problem-solving, and personality traits).
+  - "economicReality": Candid evaluation of family financial feasibility, loan considerations, earning urgency, and low-cost government vs private pathway recommendations.
+  - "studyRoadmap": Immediate subject focus and academic strategy based on liked vs difficult subjects to maximize Class 10/12 board outcomes.
+  - "whereToStudy": Recommended colleges, polytechnics, or universities in India matching the student's academic and financial context.
+  - "skillsToBuild": Specific actionable skills, tools, programming languages, or practical competencies to begin building immediately.
+  - "salaryAndDemand": Realistic entry-level and 5-year salary ranges in India with job market outlook and industry hiring trends.
+  - "whatToStudyNext": Immediate next academic step after Class 10 (exact Intermediate stream, diploma, or vocational track) and key entrance exams to target.
+  - "parentGuidance": Practical, sensitive advice for the counsellor to convey to parents considering family dynamics, earning expectations, and student's genuine potential.
 
 Respond ONLY with valid JSON. No markdown backticks, no code fences.
 {
-  "matches": [{"name":"...","score":0,"why":"...","roadmap":[{"stage":"...","description":"...","duration":"...","institutes":["..."]}]}],
-  "insights": {"studyRoadmap":"...","whereToStudy":"...","skillsToBuild":"...","salaryAndDemand":"...","whatToStudyNext":"...","parentGuidance":"..."}
+  "matches": [
+    {
+      "name": "...",
+      "score": 85,
+      "why": "...",
+      "aiImpact": "...",
+      "backupPlan": "...",
+      "riskFactors": "...",
+      "roadmap": [
+        { "stage": "...", "description": "...", "duration": "...", "institutes": ["..."] }
+      ]
+    }
+  ],
+  "insights": {
+    "strengthAnalysis": "...",
+    "economicReality": "...",
+    "studyRoadmap": "...",
+    "whereToStudy": "...",
+    "skillsToBuild": "...",
+    "salaryAndDemand": "...",
+    "whatToStudyNext": "...",
+    "parentGuidance": "..."
+  }
 }`;
 }
 

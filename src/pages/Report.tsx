@@ -1,6 +1,26 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Sparkles, TrendingUp, BookOpen, MapPin, Award, Briefcase, Heart, Download, ArrowLeft, ChevronDown, ChevronUp, Clock, GraduationCap } from "lucide-react";
+import {
+  Sparkles,
+  TrendingUp,
+  BookOpen,
+  MapPin,
+  Award,
+  Briefcase,
+  Heart,
+  Download,
+  ArrowLeft,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  GraduationCap,
+  UserCheck,
+  Cpu,
+  ShieldCheck,
+  AlertTriangle,
+  Target,
+  Coins,
+} from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { STORAGE_KEY, REPORT_STORAGE_KEY } from "@/lib/career-data";
@@ -60,6 +80,8 @@ const Report = () => {
   if (!report) return null;
 
   const insightCards = [
+    ...(report.insights.strengthAnalysis ? [{ icon: Target, title: "Student strength analysis", body: report.insights.strengthAnalysis }] : []),
+    ...(report.insights.economicReality ? [{ icon: Coins, title: "Economic reality check", body: report.insights.economicReality }] : []),
     { icon: BookOpen, title: "Study roadmap", body: report.insights.studyRoadmap },
     { icon: MapPin, title: "Where to study", body: report.insights.whereToStudy },
     { icon: Award, title: "Skills to build", body: report.insights.skillsToBuild },
@@ -115,18 +137,63 @@ const Report = () => {
                 <div className="h-full bg-black rounded-full transition-all duration-1000 ease-out" style={{ width: `${m.score}%` }} />
               </div>
 
-              {m.roadmap && m.roadmap.length > 0 && (
-                <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-zinc-100">
-                  <button 
-                    onClick={() => toggleMatch(i)}
-                    className="flex items-center gap-2 text-xs sm:text-sm font-bold text-zinc-950 hover:text-zinc-600 transition-colors w-full touch-manipulation"
-                  >
-                    {expandedMatches.has(i) ? <ChevronUp className="w-4 h-4 shrink-0" /> : <ChevronDown className="w-4 h-4 shrink-0" />}
-                    <span>Explore Pathway to {m.name}</span>
-                  </button>
+              {/* Match Expanded Section */}
+              <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-zinc-100">
+                <button 
+                  onClick={() => toggleMatch(i)}
+                  className="flex items-center gap-2 text-xs sm:text-sm font-bold text-zinc-950 hover:text-zinc-600 transition-colors w-full touch-manipulation"
+                >
+                  {expandedMatches.has(i) ? <ChevronUp className="w-4 h-4 shrink-0" /> : <ChevronDown className="w-4 h-4 shrink-0" />}
+                  <span>Explore Pathway, AI Impact &amp; Plan B for {m.name}</span>
+                </button>
 
-                  {expandedMatches.has(i) && (
-                    <div className="mt-4 sm:mt-6 ml-1 sm:ml-6 relative border-l-2 border-zinc-300 space-y-6 sm:space-y-8 pb-2 sm:pb-4 animate-fade-in">
+                {expandedMatches.has(i) && (
+                  <div className="mt-4 space-y-4 animate-fade-in">
+                    {/* 360° Fit Analysis */}
+                    <div className="p-3.5 rounded-xl bg-zinc-50 border border-zinc-200 text-xs space-y-1">
+                      <div className="flex items-center gap-1.5 font-bold text-zinc-950 text-xs">
+                        <UserCheck className="w-3.5 h-3.5 text-blue-600" />
+                        <span>360° Fit &amp; Diagnostic Rationale:</span>
+                      </div>
+                      <p className="text-zinc-700 leading-relaxed font-medium">{m.why}</p>
+                    </div>
+
+                    {/* AI Disruption & Future Outlook */}
+                    {m.aiImpact && (
+                      <div className="p-3.5 rounded-xl bg-purple-50/70 border border-purple-200/80 text-xs space-y-1">
+                        <div className="flex items-center gap-1.5 font-bold text-purple-950 text-xs">
+                          <Cpu className="w-3.5 h-3.5 text-purple-600" />
+                          <span>AI Disruption &amp; Future Outlook (Next 5–10 Years):</span>
+                        </div>
+                        <p className="text-purple-900 leading-relaxed font-medium">{m.aiImpact}</p>
+                      </div>
+                    )}
+
+                    {/* Plan B / Safety Net Career Alternative */}
+                    {m.backupPlan && (
+                      <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-xs space-y-1">
+                        <div className="flex items-center gap-1.5 font-bold text-emerald-950 text-xs">
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>Plan B / Safety Net Alternative:</span>
+                        </div>
+                        <p className="text-emerald-900 leading-relaxed font-medium">{m.backupPlan}</p>
+                      </div>
+                    )}
+
+                    {/* Risk Factors & Feasibility Check */}
+                    {m.riskFactors && (
+                      <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200/80 text-xs space-y-1">
+                        <div className="flex items-center gap-1.5 font-bold text-amber-950 text-xs">
+                          <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+                          <span>Feasibility, Cutoffs &amp; Risk Factors:</span>
+                        </div>
+                        <p className="text-amber-900 leading-relaxed font-medium">{m.riskFactors}</p>
+                      </div>
+                    )}
+
+                    {m.roadmap && m.roadmap.length > 0 && (
+                      <div className="pt-2">
+                        <div className="ml-1 sm:ml-6 relative border-l-2 border-zinc-300 space-y-6 sm:space-y-8 pb-2 sm:pb-4">
                       {m.roadmap.map((step, stepIdx) => (
                         <div key={stepIdx} className="relative pl-5 sm:pl-8">
                           {/* Timeline node */}
@@ -161,11 +228,13 @@ const Report = () => {
                         <p className="text-[11px] sm:text-xs text-zinc-500 font-medium mt-0.5">Destination Reached</p>
                       </div>
                     </div>
-                  )}
-                </div>
-              )}
-            </Card>
-          ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </Card>
+      ))}
         </div>
 
         <h2 className="text-lg sm:text-xl font-bold text-zinc-950 mt-8 sm:mt-10 mb-3 sm:mb-4">Personalised insights</h2>

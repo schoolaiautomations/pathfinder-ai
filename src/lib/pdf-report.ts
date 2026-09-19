@@ -21,7 +21,10 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
           <div class="match-rank">${i + 1}</div>
           <div class="match-info">
             <h3>${m.name}</h3>
-            <p>${m.why}</p>
+            <p><strong>360° Fit Rationale:</strong> ${m.why}</p>
+            ${m.aiImpact ? `<p style="margin-top: 6px; color: #581c87;"><strong>🤖 AI Disruption &amp; Future Outlook (Next 5-10 Years):</strong> ${m.aiImpact}</p>` : ""}
+            ${m.backupPlan ? `<p style="margin-top: 6px; color: #065f46;"><strong>🔄 Plan B / Safety Net Alternative:</strong> ${m.backupPlan}</p>` : ""}
+            ${m.riskFactors ? `<p style="margin-top: 6px; color: #92400e;"><strong>⚠️ Feasibility &amp; Risk Factors:</strong> ${m.riskFactors}</p>` : ""}
           </div>
           <div class="match-score">${m.score}%</div>
         </div>
@@ -60,6 +63,8 @@ export function downloadReportAsPDF(report: CareerReport, formData: FormData) {
     .join("\n");
 
   const insightItems = [
+    ...(report.insights.strengthAnalysis ? [{ title: "🎯 Core Strengths & Aptitude Mapping", body: report.insights.strengthAnalysis }] : []),
+    ...(report.insights.economicReality ? [{ title: "💰 Family Economic Reality & Feasibility", body: report.insights.economicReality }] : []),
     { title: "📚 Study Roadmap", body: report.insights.studyRoadmap },
     { title: "📍 Where to Study", body: report.insights.whereToStudy },
     { title: "🏆 Skills to Build", body: report.insights.skillsToBuild },

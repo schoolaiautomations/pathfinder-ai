@@ -78,9 +78,21 @@ export type RoadmapStep = {
   institutes: string[];
 };
 
+export type CareerMatch = {
+  name: string;
+  score: number;
+  why: string;
+  aiImpact?: string;
+  backupPlan?: string;
+  riskFactors?: string;
+  roadmap: RoadmapStep[];
+};
+
 export type CareerReport = {
-  matches: { name: string; score: number; why: string; roadmap: RoadmapStep[] }[];
+  matches: CareerMatch[];
   insights: {
+    strengthAnalysis?: string;
+    economicReality?: string;
     studyRoadmap: string;
     whereToStudy: string;
     skillsToBuild: string;

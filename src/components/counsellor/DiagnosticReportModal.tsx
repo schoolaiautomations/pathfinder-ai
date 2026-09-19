@@ -17,6 +17,12 @@ import {
   Users,
   CheckCircle2,
   RotateCcw,
+  UserCheck,
+  Cpu,
+  ShieldCheck,
+  AlertTriangle,
+  Target,
+  Coins,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
@@ -452,14 +458,59 @@ export const DiagnosticReportModal = ({
 
                         {isExpanded && (
                           <div className="p-4 sm:p-5 border-t border-stone-100 bg-stone-50/50 space-y-4">
-                            <div className="p-3 rounded-xl bg-white border border-stone-200 text-xs font-semibold text-stone-800 leading-relaxed">
-                              <span className="font-bold text-stone-900">Why this fits: </span>
-                              {match.why}
+                            {/* 1. 360° Fit Analysis */}
+                            <div className="p-3.5 rounded-xl bg-white border border-stone-200 text-xs space-y-1.5 shadow-2xs">
+                              <div className="flex items-center gap-1.5 font-extrabold text-stone-900 text-xs">
+                                <UserCheck className="w-4 h-4 text-blue-600" />
+                                <span>360° Student Fit &amp; Diagnostic Rationale:</span>
+                              </div>
+                              <p className="text-stone-700 leading-relaxed font-medium whitespace-pre-line">
+                                {match.why}
+                              </p>
                             </div>
+
+                            {/* 2. AI Impact & Future Transformation */}
+                            {match.aiImpact && (
+                              <div className="p-3.5 rounded-xl bg-gradient-to-br from-purple-50/80 to-indigo-50/60 border border-purple-200/80 text-xs space-y-1.5 shadow-2xs">
+                                <div className="flex items-center gap-1.5 font-extrabold text-purple-950 text-xs">
+                                  <Cpu className="w-4 h-4 text-purple-600" />
+                                  <span>AI Disruption &amp; Future Outlook (Next 5–10 Years):</span>
+                                </div>
+                                <p className="text-purple-900 leading-relaxed font-medium">
+                                  {match.aiImpact}
+                                </p>
+                              </div>
+                            )}
+
+                            {/* 3. Plan B / Safety Net Career Alternative */}
+                            {match.backupPlan && (
+                              <div className="p-3.5 rounded-xl bg-gradient-to-br from-emerald-50/80 to-teal-50/60 border border-emerald-200/80 text-xs space-y-1.5 shadow-2xs">
+                                <div className="flex items-center gap-1.5 font-extrabold text-emerald-950 text-xs">
+                                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                                  <span>Plan B / Safety Net Career Alternative:</span>
+                                </div>
+                                <p className="text-emerald-900 leading-relaxed font-medium">
+                                  {match.backupPlan}
+                                </p>
+                              </div>
+                            )}
+
+                            {/* 4. Risk Factors & Feasibility Check */}
+                            {match.riskFactors && (
+                              <div className="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs space-y-1.5 shadow-2xs">
+                                <div className="flex items-center gap-1.5 font-extrabold text-amber-950 text-xs">
+                                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                                  <span>Feasibility, Cutoffs &amp; Risk Factors:</span>
+                                </div>
+                                <p className="text-amber-900 leading-relaxed font-medium">
+                                  {match.riskFactors}
+                                </p>
+                              </div>
+                            )}
 
                             {/* Roadmap Stages */}
                             {match.roadmap && match.roadmap.length > 0 && (
-                              <div className="space-y-2">
+                              <div className="space-y-2 pt-1">
                                 <h6 className="text-[11px] font-bold uppercase tracking-wider text-stone-500">
                                   Step-by-Step Educational Pathway
                                 </h6>
@@ -505,14 +556,40 @@ export const DiagnosticReportModal = ({
                 </div>
               </div>
 
-              {/* Section 2: 6 Diagnostic Insight Pillars */}
+              {/* Section 2: 360° Diagnostic Insight Pillars */}
               <div className="space-y-4 pt-2">
                 <h4 className="text-sm font-extrabold uppercase tracking-wider text-stone-900 flex items-center gap-2">
                   <GraduationCap className="w-4 h-4 text-[#7C5C3E]" />
-                  Strategic Guidance &amp; Action Plan
+                  Strategic Guidance &amp; 360° Action Plan
                 </h4>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                  {/* Strength Analysis (Full Width Highlight) */}
+                  {report.insights.strengthAnalysis && (
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-emerald-50/70 to-teal-50/50 border border-emerald-200 space-y-1.5 shadow-2xs md:col-span-2">
+                      <div className="flex items-center gap-2 text-xs font-extrabold text-emerald-950">
+                        <Target className="w-4 h-4 text-emerald-700" />
+                        Core Strengths &amp; Diagnostic Aptitude Mapping
+                      </div>
+                      <p className="text-xs text-emerald-950 font-medium leading-relaxed">
+                        {report.insights.strengthAnalysis}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Economic Reality Check (Full Width Highlight) */}
+                  {report.insights.economicReality && (
+                    <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-50/80 to-yellow-50/50 border border-amber-200 space-y-1.5 shadow-2xs md:col-span-2">
+                      <div className="flex items-center gap-2 text-xs font-extrabold text-amber-950">
+                        <Coins className="w-4 h-4 text-amber-700" />
+                        Family Economic Reality &amp; Financial Feasibility Check
+                      </div>
+                      <p className="text-xs text-amber-950 font-medium leading-relaxed">
+                        {report.insights.economicReality}
+                      </p>
+                    </div>
+                  )}
+
                   <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-1.5 shadow-2xs">
                     <div className="flex items-center gap-2 text-xs font-extrabold text-stone-900">
                       <BookOpen className="w-4 h-4 text-blue-600" />
