@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
+import { AiCareerMentor } from "@/components/common/AiCareerMentor";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import archerAnimation from "@/lib/Archer.lottie";
 import questionAnimation from "@/lib/question.lottie";
@@ -423,6 +424,9 @@ const Index = () => {
         isOpen={isBookingModalOpen}
         onClose={() => setIsBookingModalOpen(false)}
       />
+
+      {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
+      <AiCareerMentor onOpenBooking={() => setIsBookingModalOpen(true)} />
 
     </main>
   );
