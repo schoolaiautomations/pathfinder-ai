@@ -20,6 +20,7 @@ import FaqPage from "./pages/FaqPage.tsx";
 import CareersTreePage from "./pages/CareersTreePage.tsx";
 import CareerReportsPage from "./pages/CareerReportsPage.tsx";
 import CareerGamePage from "./pages/CareerGamePage.tsx";
+import CareerMentorsPage from "./pages/CareerMentorsPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/roadmap/:counsellorName/result" element={<RoadmapResult />} />
           <Route path="/roadmap/:counsellorName/learn" element={<SkillLearning />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/career-mentors" element={<CareerMentorsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

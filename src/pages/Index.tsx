@@ -70,6 +70,12 @@ const Index = () => {
             >
               Explore Careers
             </Link>
+            <Link
+              to="/career-mentors"
+              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
+            >
+              Career Mentors
+            </Link>
             <button
               type="button"
               onClick={() => setIsBookingModalOpen(true)}
@@ -119,6 +125,17 @@ const Index = () => {
               <span className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-stone-500" />
                 Explore Careers
+              </span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </Link>
+            <Link
+              to="/career-mentors"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-white border border-stone-200 text-stone-800 shadow-2xs hover:bg-stone-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <Users className="w-4 h-4 text-stone-500" />
+                Career Mentors
               </span>
               <ChevronRight className="w-4 h-4 opacity-50" />
             </Link>
