@@ -26,9 +26,9 @@ import {
   Zap,
   Phone,
   Gamepad2,
+  Home,
 } from "lucide-react";
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
-import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import { StudentAuthGateModal } from "@/components/common/StudentAuthGateModal";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
@@ -687,7 +687,8 @@ export default function CareerReportsPage() {
             className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-xs hover:scale-102 active:scale-98 shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to All Careers</span>
+            <span className="hidden sm:inline">Back to All Careers</span>
+            <span className="sm:hidden">Back</span>
           </button>
 
           {/* Middle: Career Title Info */}
@@ -963,20 +964,13 @@ export default function CareerReportsPage() {
         style={{ background: "rgba(250,248,245,0.95)", backdropFilter: "blur(16px)" }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0">
-            <img
-              src={wabiLogo}
-              alt="Wabi"
-              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover shadow-sm shrink-0"
-            />
-            <div className="min-w-0">
-              <span className="font-normal uppercase tracking-wider text-xs sm:text-base text-stone-900 block leading-none truncate">
-                Wabi Career Guidance
-              </span>
-              <span className="text-[9px] sm:text-[10px] font-semibold text-stone-400 tracking-widest uppercase block mt-0.5 truncate">
-                All Career Options &amp; Reports
-              </span>
-            </div>
+          {/* Left: Home Button */}
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white border border-stone-200 text-stone-700 hover:text-stone-900 hover:bg-stone-50 hover:border-stone-300 transition-all cursor-pointer shadow-2xs hover:scale-102 active:scale-98 shrink-0"
+          >
+            <Home className="w-4 h-4 text-stone-600" />
+            <span>Home</span>
           </Link>
 
           <nav className="flex items-center gap-1.5 sm:gap-2">
@@ -1007,20 +1001,15 @@ export default function CareerReportsPage() {
               </div>
             )}
 
-            <Link
-              to="/"
-              className="hidden sm:inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
-            >
-              Home
-            </Link>
             <button
               type="button"
               onClick={() => setIsBookingModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 text-white"
+              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 text-white shrink-0"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
-              <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
-              <span>Book Online Counselling</span>
+              <Calendar className="w-3.5 h-3.5 text-[#C9A97A] shrink-0" />
+              <span className="hidden sm:inline">Book Online Counselling</span>
+              <span className="sm:hidden">Book Counselling</span>
             </button>
           </nav>
         </div>
@@ -1072,7 +1061,7 @@ export default function CareerReportsPage() {
               Play the Career Roadmap Quiz!
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 font-medium leading-relaxed">
-              Step into a student's shoes: pick your intermediate stream, course duration, school subjects, and skills to build. Ready for Software Engineer, Doctor, Police, Teacher, IAS, Nurse, Lawyer, Bank PO, Agricultural Officer, CA, Engineer, MBA, Air Hostess, Physiotherapist, Psychologist, Pilot, Indian Army, and Journalist!
+              Step into a student's shoes: pick your intermediate stream, course duration, school subjects, and skills to build.
             </p>
           </div>
 

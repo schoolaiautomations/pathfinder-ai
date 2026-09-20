@@ -433,6 +433,32 @@ export default function CareerGamePage() {
     sfx.enabled = soundOn;
   }, [soundOn]);
 
+  // Sync gameMode with URL ?track= param so back navigation and link switches work instantaneously
+  useEffect(() => {
+    const track = searchParams.get("track");
+    if (track && CAREER_GAMES[track]) {
+      setGameMode("playing");
+    } else {
+      setGameMode("lobby");
+    }
+  }, [searchParams]);
+
+  // Handle single-click Back action:
+  // If in a quiz, goes directly back to all career quiz cards (lobby)
+  // If in lobby, returns to career reports page
+  const handleBack = () => {
+    if (gameMode !== "lobby" || searchParams.get("track")) {
+      setSearchParams({}, { replace: true });
+      setGameMode("lobby");
+      setCurrentIdx(0);
+      setIsAnswered(false);
+      setSelectedOption(null);
+      window.scrollTo({ top: 0, behavior: "instant" });
+    } else {
+      navigate("/career-reports");
+    }
+  };
+
   // Handle Career Select from Lobby
   const handleStartCareerQuiz = (id: string) => {
     if (!CAREER_GAMES[id]) return;
@@ -545,18 +571,20 @@ export default function CareerGamePage() {
           gameMode === "lobby" ? "max-w-7xl" : "max-w-4xl"
         }`}>
           <div className="flex items-center gap-3">
-            <Link
-              to="/career-reports"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-stone-600 hover:text-stone-900 text-xs font-bold transition-all shadow-2xs hover:bg-stone-50"
+            <button
+              type="button"
+              onClick={handleBack}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 hover:text-stone-900 text-xs font-bold transition-all shadow-2xs hover:bg-stone-50 cursor-pointer"
+              title="Go Back"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>All Careers</span>
-            </Link>
+              <span>Back</span>
+            </button>
 
             {gameMode !== "lobby" ? (
               <button
                 type="button"
-                onClick={() => setGameMode("lobby")}
+                onClick={handleBack}
                 className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#F5F1EC] border border-[#E0D6CA] text-xs font-bold text-stone-800 hover:bg-stone-200/60 cursor-pointer transition-colors"
               >
                 <Gamepad2 className="w-3.5 h-3.5 text-[#7C5C3E]" />
@@ -603,8 +631,8 @@ export default function CareerGamePage() {
       </header>
 
       {/* ─── Main Container ──────────────────────────────────────────────────── */}
-      <div className={`flex-1 w-full mx-auto px-4 sm:px-6 py-6 sm:py-10 flex flex-col justify-center ${
-        gameMode === "lobby" ? "max-w-7xl" : "max-w-4xl"
+      <div className={`flex-1 w-full mx-auto px-3 sm:px-6 py-3 sm:py-8 flex flex-col justify-center ${
+        gameMode === "lobby" ? "max-w-7xl" : "max-w-3xl"
       }`}>
 
         {/* ══════════════════════════════════════════════════════════════════════ */}
@@ -699,23 +727,23 @@ export default function CareerGamePage() {
         {/* VIEW B: QUIZ IN PROGRESS                                               */}
         {/* ══════════════════════════════════════════════════════════════════════ */}
         {gameMode === "playing" && (
-          <div className="space-y-6 animate-in fade-in zoom-in-95 duration-200">
+          <div className="space-y-3.5 sm:space-y-5 animate-in fade-in zoom-in-95 duration-200">
             {/* Roadmap Level Header */}
-            <div className="space-y-2.5">
-              <div className="flex flex-wrap items-center justify-between text-xs font-bold text-stone-700 gap-2">
-                <span className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded-lg bg-stone-900 text-[#FAF8F5] font-mono text-[11px]">
+            <div className="space-y-1.5 sm:space-y-2">
+              <div className="flex flex-wrap items-center justify-between text-[11px] sm:text-xs font-bold text-stone-700 gap-1.5">
+                <span className="flex items-center gap-1.5 sm:gap-2">
+                  <span className="px-2 py-0.5 rounded-md bg-stone-900 text-[#FAF8F5] font-mono text-[10px] sm:text-[11px]">
                     {question.roadmapStage}
                   </span>
                   <span className="text-stone-500">Step {currentIdx + 1} of {totalQ}</span>
                 </span>
-                <span className="text-stone-900 font-mono font-extrabold">
+                <span className="text-stone-900 font-mono font-extrabold text-[11px] sm:text-xs">
                   {Math.round(((currentIdx + 1) / totalQ) * 100)}% Roadmap Explored
                 </span>
               </div>
 
               {/* Progress Segment Bar */}
-              <div className="w-full bg-stone-200 rounded-full h-2.5 overflow-hidden p-0.5 border border-stone-300">
+              <div className="w-full bg-stone-200 rounded-full h-1.5 sm:h-2 overflow-hidden p-0.5 border border-stone-300">
                 <div
                   className="bg-stone-900 h-full rounded-full transition-all duration-500 ease-out shadow-sm"
                   style={{ width: `${((currentIdx + 1) / totalQ) * 100}%` }}
@@ -724,26 +752,26 @@ export default function CareerGamePage() {
             </div>
 
             {/* Question Card Box */}
-            <div className="rounded-3xl bg-white border border-[#E5DDD2] shadow-sm p-6 sm:p-8 space-y-6 relative overflow-hidden">
+            <div className="rounded-2xl sm:rounded-3xl bg-white border border-[#E5DDD2] shadow-sm p-3.5 sm:p-6 space-y-3 sm:space-y-4 relative overflow-hidden">
               {/* Category Pill & XP */}
               <div className="flex items-center justify-between gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold border bg-[#F5F1EC] text-stone-800 border-[#E0D6CA]">
-                  <Milestone className="w-3.5 h-3.5 text-[#7C5C3E]" />
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-extrabold border bg-[#F5F1EC] text-stone-800 border-[#E0D6CA]">
+                  <Milestone className="w-3 h-3 text-[#7C5C3E]" />
                   {question.category}
                 </span>
 
-                <span className="text-xs text-stone-900 font-bold font-mono bg-stone-100 px-2.5 py-0.5 rounded-lg border border-stone-200">
+                <span className="text-[10px] sm:text-xs text-stone-900 font-bold font-mono bg-stone-100 px-2 py-0.5 rounded-md border border-stone-200">
                   +100 XP
                 </span>
               </div>
 
               {/* Question Text */}
-              <h2 className="text-lg sm:text-2xl font-black text-stone-900 leading-snug">
+              <h2 className="text-sm sm:text-lg font-extrabold text-stone-900 leading-snug">
                 {question.question}
               </h2>
 
               {/* 4 Interactive MCQ Options */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-0.5">
                 {question.options.map((opt, oIdx) => {
                   const letter = String.fromCharCode(65 + oIdx);
                   const isSelected = selectedOption === oIdx;
@@ -754,8 +782,8 @@ export default function CareerGamePage() {
 
                   if (isAnswered) {
                     if (isCorrect) {
-                      cardStyle = "bg-emerald-50 border-emerald-500 text-emerald-950 shadow-lg scale-[1.02] ring-4 ring-emerald-400/40 ring-offset-1 transition-all duration-300 animate-in zoom-in-95";
-                      badgeStyle = "bg-emerald-600 text-white border-emerald-600 scale-110 shadow-sm animate-bounce";
+                      cardStyle = "bg-emerald-50 border-emerald-500 text-emerald-950 shadow-md scale-[1.01] ring-2 ring-emerald-400/40 transition-all duration-200";
+                      badgeStyle = "bg-emerald-600 text-white border-emerald-600 shadow-sm";
                     } else if (isSelected) {
                       cardStyle = "bg-rose-50 border-rose-400 text-rose-950";
                       badgeStyle = "bg-rose-600 text-white border-rose-600";
@@ -771,29 +799,29 @@ export default function CareerGamePage() {
                       type="button"
                       disabled={isAnswered}
                       onClick={() => handleSelectOption(oIdx)}
-                      className={`p-4 sm:p-5 rounded-2xl border text-left flex items-start gap-3.5 transition-all duration-200 cursor-pointer ${cardStyle}`}
+                      className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border text-left flex items-start gap-2.5 sm:gap-3 transition-all duration-200 cursor-pointer ${cardStyle}`}
                     >
-                      <span className={`w-8 h-8 rounded-xl font-black text-xs flex items-center justify-center shrink-0 transition-transform ${badgeStyle}`}>
+                      <span className={`w-6 h-6 sm:w-7 sm:h-7 rounded-lg sm:rounded-xl font-black text-[11px] sm:text-xs flex items-center justify-center shrink-0 transition-transform ${badgeStyle}`}>
                         {isAnswered && isCorrect ? (
-                          <CheckCircle2 className="w-5 h-5 text-white" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                         ) : isAnswered && isSelected ? (
-                          <XCircle className="w-5 h-5 text-white" />
+                          <XCircle className="w-3.5 h-3.5 text-white" />
                         ) : (
                           letter
                         )}
                       </span>
-                      <div className="space-y-1.5 min-w-0">
-                        <span className="text-xs sm:text-sm font-extrabold block leading-snug">
+                      <div className="space-y-1 min-w-0 flex-1">
+                        <span className="text-xs sm:text-sm font-bold block leading-snug">
                           {opt.text}
                         </span>
                         {isAnswered && isCorrect && (
-                          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-black bg-emerald-100 text-emerald-900 border border-emerald-300 animate-in fade-in zoom-in duration-300 shadow-2xs">
-                            <Sparkles className="w-3 h-3 text-emerald-600 animate-pulse" />
+                          <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-900 border border-emerald-300 shadow-2xs">
+                            <Sparkles className="w-2.5 h-2.5 text-emerald-600" />
                             <span>Correct Choice! +100 XP 🎉</span>
                           </div>
                         )}
                         {opt.badge && (
-                          <span className="inline-block text-[10px] font-bold text-stone-600 bg-stone-100 px-2 py-0.5 rounded-md border border-stone-200">
+                          <span className="inline-block text-[9.5px] sm:text-[10px] font-bold text-stone-600 bg-stone-100 px-1.5 py-0.5 rounded border border-stone-200">
                             {opt.badge}
                           </span>
                         )}
@@ -805,31 +833,31 @@ export default function CareerGamePage() {
 
               {/* Feedback & Explanation Card (Appears after answer) */}
               {isAnswered && (
-                <div className="pt-2 animate-in fade-in slide-in-from-bottom-3 duration-300 space-y-4">
-                  <div className={`p-4 sm:p-5 rounded-2xl border ${
+                <div className="pt-1 animate-in fade-in slide-in-from-bottom-2 duration-300 space-y-3">
+                  <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border ${
                     selectedOption === question.correctIndex
                       ? "bg-emerald-50/80 border-emerald-300 text-emerald-950"
                       : "bg-rose-50/80 border-rose-300 text-rose-950"
                   }`}>
-                    <div className="flex items-center gap-2 font-extrabold text-sm mb-1.5">
+                    <div className="flex items-center gap-1.5 font-extrabold text-xs sm:text-sm mb-1">
                       {selectedOption === question.correctIndex ? (
                         <>
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                           <span className="text-emerald-900">Spot On! You know your roadmap!</span>
                         </>
                       ) : (
                         <>
-                          <XCircle className="w-4 h-4 text-rose-600" />
+                          <XCircle className="w-3.5 h-3.5 text-rose-600" />
                           <span className="text-rose-900">Good try! Here is the right roadmap:</span>
                         </>
                       )}
                     </div>
-                    <p className="text-xs sm:text-sm leading-relaxed text-stone-800 font-medium">
+                    <p className="text-[11.5px] sm:text-xs leading-relaxed text-stone-800 font-medium">
                       {question.explanation}
                     </p>
 
-                    <div className="mt-3 pt-3 border-t border-stone-200 flex items-start gap-2 text-xs text-stone-700 font-medium">
-                      <Sparkles className="w-4 h-4 text-[#7C5C3E] shrink-0 mt-0.5" />
+                    <div className="mt-2 pt-2 border-t border-stone-200 flex items-start gap-1.5 text-[11px] sm:text-xs text-stone-700 font-medium">
+                      <Sparkles className="w-3.5 h-3.5 text-[#7C5C3E] shrink-0 mt-0.5" />
                       <span><strong>Student Pro Tip: </strong>{question.proTip}</span>
                     </div>
                   </div>
@@ -839,10 +867,10 @@ export default function CareerGamePage() {
                     <button
                       type="button"
                       onClick={handleNextQuestion}
-                      className="px-6 py-3 rounded-2xl font-black text-xs sm:text-sm bg-[#1C1917] hover:bg-stone-800 text-[#FAF8F5] shadow-md transition-all hover:scale-103 active:scale-98 cursor-pointer flex items-center gap-2"
+                      className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-extrabold text-xs sm:text-sm bg-[#1C1917] hover:bg-stone-800 text-[#FAF8F5] shadow-md transition-all hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-1.5"
                     >
                       <span>{currentIdx + 1 < totalQ ? "Next Roadmap Step" : "See Final Score"}</span>
-                      <ArrowRight className="w-4 h-4 text-[#C9A97A]" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[#C9A97A]" />
                     </button>
                   </div>
                 </div>
