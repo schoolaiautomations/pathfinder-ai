@@ -398,7 +398,7 @@ export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking })
                           type="button"
                           onClick={() => {
                             setIsOpen(false);
-                            navigate("/reports");
+                            navigate("/career-reports");
                           }}
                           className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-900 border border-stone-300 text-[11px] font-extrabold shadow-2xs cursor-pointer transition-all hover:scale-[1.02]"
                         >
