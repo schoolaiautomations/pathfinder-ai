@@ -31,6 +31,7 @@ import {
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import { StudentAuthGateModal } from "@/components/common/StudentAuthGateModal";
+import { AiCareerMentor } from "@/components/common/AiCareerMentor";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import {
   supabase,
@@ -901,7 +902,7 @@ export default function CareerReportsPage() {
         {showBookingPopup && (
           <aside
             aria-label="Book Online Counselling Notification"
-            className="fixed bottom-5 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
+            className="fixed bottom-20 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
           >
             <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
               <Calendar className="w-5 h-5" />
@@ -944,6 +945,9 @@ export default function CareerReportsPage() {
           user={currentUser}
           onProfileSaved={(prof) => setStudentProfile(prof)}
         />
+
+        {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
+        <AiCareerMentor onOpenBooking={handleOpenBookingModal} />
       </main>
     );
   }
@@ -1231,7 +1235,7 @@ export default function CareerReportsPage() {
       {showBookingPopup && (
         <aside
           aria-label="Book Online Counselling Notification"
-          className="fixed bottom-5 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
+          className="fixed bottom-20 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
         >
           <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
             <Calendar className="w-5 h-5" />
@@ -1274,6 +1278,9 @@ export default function CareerReportsPage() {
         user={currentUser}
         onProfileSaved={(prof) => setStudentProfile(prof)}
       />
+
+      {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
+      <AiCareerMentor onOpenBooking={handleOpenBookingModal} />
     </main>
   );
 }

@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
-import { AiCareerMentor } from "@/components/common/AiCareerMentor";
+import { CaseStudyModal } from "@/components/common/CaseStudyModal";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import archerAnimation from "@/lib/Archer.lottie";
 import questionAnimation from "@/lib/question.lottie";
@@ -27,6 +27,7 @@ const Index = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
 
   return (
     <main className="min-h-screen font-sans text-stone-900" style={{ background: "#FAF8F5" }}>
@@ -213,13 +214,22 @@ const Index = () => {
               {/* Primary CTA */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <button
-                  onClick={() => navigate("/career-reports")}
+                  onClick={() => window.open("https://jqerkjewmmpowiwwpifv.supabase.co/storage/v1/object/public/pdf-section/four_circles_of_choosing_career.pdf", "_blank")}
                   className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
                   style={{ background: "#1C1917", color: "#FAF8F5" }}
                 >
                   <BookOpen className="w-4 h-4" />
-                  Explore Careers
+                  How to Choose a Career
                   <ArrowRight className="w-4 h-4 ml-1" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsCaseStudyOpen(true)}
+                  className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all border border-stone-300/90 bg-white hover:bg-stone-100/90 text-stone-900 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
+                >
+                  <Sparkles className="w-4 h-4 text-[#8B6F47]" />
+                  <span>Read Case Study</span>
                 </button>
               </div>
 
@@ -442,8 +452,31 @@ const Index = () => {
         onClose={() => setIsBookingModalOpen(false)}
       />
 
-      {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
-      <AiCareerMentor onOpenBooking={() => setIsBookingModalOpen(true)} />
+      {/* Case Study Modal: Two Students & A Dream (Plan A vs Plan B) */}
+      <CaseStudyModal
+        isOpen={isCaseStudyOpen}
+        onClose={() => setIsCaseStudyOpen(false)}
+      />
+
+      {/* Floating Case Study Toggle (Bottom Right - circular icon only) */}
+      <div className="fixed bottom-5 inset-x-0 pointer-events-none z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 flex justify-end">
+          <div className="pointer-events-auto relative flex items-center">
+            {/* Circular Floating Action Button */}
+            <button
+              type="button"
+              onClick={() => setIsCaseStudyOpen(true)}
+              className="w-12 h-12 rounded-full bg-[#1C1917] hover:bg-stone-800 text-[#FAF8F5] shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 border border-[#E0D6CA]/30 cursor-pointer flex items-center justify-center relative group"
+              aria-label="Read Case Study: Two Students & A Dream"
+              title="Read Case Study: Two Students & A Dream"
+            >
+              <BookOpen className="w-5 h-5 text-[#C9A97A] group-hover:scale-110 transition-transform" />
+              {/* Subtle Amber Beacon Dot */}
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-[#C9A97A] rounded-full border-2 border-[#1C1917] animate-pulse" />
+            </button>
+          </div>
+        </div>
+      </div>
 
     </main>
   );

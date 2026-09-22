@@ -8,13 +8,13 @@ const mentors = [
   {
     name: "KJD Raviteja",
     photo: raviTeja,
-    qualification: "M.Sc Psychology & Diploma in Career Guidance",
+    qualification: "Diploma in Psychology Guidance and Counselling",
     role: "Career Mentor",
   },
   {
     name: "N Srinivas",
     photo: srinivasN,
-    qualification: "M.Sc Psychology & Diploma in Career Guidance",
+    qualification: "Diploma in Psychology Guidance and Counselling",
     role: "Career Mentor",
   },
 ];
