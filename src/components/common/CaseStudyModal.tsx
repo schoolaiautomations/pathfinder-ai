@@ -207,7 +207,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ isOpen, onClose 
             <p className="text-xs sm:text-sm text-stone-600 pt-1">
               Having a backup plan does not mean you don&apos;t believe in your dream — <strong>it means you are protecting your dream</strong> so you can chase it without financial pressure.
             </p>
-          </div>
+          </div> 
 
           {/* Closing Message */}
           <div className="text-center space-y-3 py-2">

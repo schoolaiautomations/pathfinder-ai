@@ -1238,5 +1238,112 @@ export async function saveGeneratedReportToSupabase(
   }
 }
 
+// ─── AI Mentor Query Logging ──────────────────────────────────────────────────
 
+export interface LogAiMentorQueryPayload {
+  query_text: string;
+  response_text?: string | null;
+  language?: string | null;
+  input_mode?: 'text' | 'voice' | string | null;
+  student_name?: string | null;
+  student_phone?: string | null;
+  student_email?: string | null;
+  student_class?: string | null;
+  student_school?: string | null;
+  student_location?: string | null;
+  career_context?: string | null;
+  source_page?: string | null;
+  model_used?: string | null;
+}
+
+/**
+ * Retrieves cached student details from localStorage if available
+ */
+export function getStoredStudentDetails(): {
+  student_name?: string | null;
+  student_phone?: string | null;
+  student_email?: string | null;
+  student_class?: string | null;
+  student_school?: string | null;
+  student_location?: string | null;
+} {
+  try {
+    const explorerRaw = localStorage.getItem('wabi_student_explorer_profile');
+    if (explorerRaw) {
+      const parsed = JSON.parse(explorerRaw);
+      if (parsed?.student_name || parsed?.student_phone || parsed?.email) {
+        return {
+          student_name: parsed.student_name || null,
+          student_phone: parsed.student_phone || null,
+          student_email: parsed.email || null,
+          student_class: parsed.student_class || null,
+          student_school: parsed.student_school || null,
+          student_location: parsed.student_location || null,
+        };
+      }
+    }
+
+    const roadmapRaw = localStorage.getItem('learning-roadmap-form');
+    if (roadmapRaw) {
+      const parsed = JSON.parse(roadmapRaw);
+      if (parsed?.name || parsed?.phone) {
+        return {
+          student_name: parsed.name || null,
+          student_phone: parsed.phone || null,
+          student_email: null,
+          student_class: parsed.currentClass || null,
+          student_school: parsed.school || null,
+          student_location: parsed.location || null,
+        };
+      }
+    }
+  } catch (e) {
+    // ignore parse errors
+  }
+
+  return {};
+}
+
+/**
+ * Logs a question and its AI response into the public.ai_mentor_queries Supabase table
+ */
+export async function logAiMentorQuery(
+  payload: LogAiMentorQueryPayload
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const studentInfo = getStoredStudentDetails();
+
+    const insertData = {
+      query_text: payload.query_text,
+      response_text: payload.response_text || null,
+      language: payload.language || 'en',
+      input_mode: payload.input_mode || 'text',
+      student_name: payload.student_name ?? studentInfo.student_name ?? null,
+      student_phone: payload.student_phone ?? studentInfo.student_phone ?? null,
+      student_email: payload.student_email ?? studentInfo.student_email ?? null,
+      student_class: payload.student_class ?? studentInfo.student_class ?? null,
+      student_school: payload.student_school ?? studentInfo.student_school ?? null,
+      student_location: payload.student_location ?? studentInfo.student_location ?? null,
+      career_context: payload.career_context || null,
+      source_page:
+        payload.source_page ||
+        (typeof window !== 'undefined'
+          ? window.location.pathname + window.location.search
+          : null),
+      model_used: payload.model_used || null,
+    };
+
+    const { error } = await supabase.from('ai_mentor_queries').insert([insertData]);
+
+    if (error) {
+      console.warn('Failed to log query to Supabase ai_mentor_queries:', error.message);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true };
+  } catch (err) {
+    console.warn('Exception logging AI mentor query:', err?.message || err);
+    return { success: false, error: err?.message };
+  }
+}
 

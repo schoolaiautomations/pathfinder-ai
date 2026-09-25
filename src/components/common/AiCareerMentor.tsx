@@ -17,10 +17,12 @@ import {
   Compass,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { askCareerMentor, transcribeAudioBlob } from "@/lib/ai-mentor";
 
 interface AiCareerMentorProps {
   onOpenBooking?: () => void;
+  careerContext?: string;
 }
 
 interface ChatMessage {
@@ -37,9 +39,23 @@ const STARTER_QUESTIONS = [
   { label: "Is Polytechnic better?", query: "10th తర్వాత ఇంటర్ కంటే పాలిటెక్నిక్ డిప్లొమా మంచిదా?" },
 ];
 
-export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking }) => {
+const ENGAGING_CAREER_TIPS = [
+  { icon: "💡", text: "Over 65% of today's school students will work in brand new careers that are just emerging today!" },
+  { icon: "🧬", text: "BiPC opens 30+ career avenues beyond MBBS: Genetics, Naturopathy, Food Safety, and Audiology." },
+  { icon: "🔭", text: "Astrophysicists decode signals from deep space missions at ISRO & NASA using physics & coding." },
+  { icon: "⚖️", text: "You can write the CLAT exam right after 12th to enter 26 top National Law Universities in India." },
+  { icon: "🛡️", text: "Cyber Security specialists defend digital infrastructure with ethical hacking and threat response." },
+  { icon: "🛸", text: "DGCA-certified drone pilots are in surging demand across precision farming, surveys, and defence." },
+  { icon: "🤖", text: "Robotics engineering combines mechanical logic with microcontrollers, IoT, and machine learning." },
+  { icon: "✈️", text: "Commercial pilots need 200 flying hours and DGCA theory examinations after 12th MPC." },
+  { icon: "📊", text: "Chartered Accountants (CA) can start ICAI Foundation exam prep right after 10th or 12th standard." },
+  { icon: "🎯", text: "Did you know? Our platform tracks 54 in-depth Four-Circles career blueprints for 8th-10th graders." },
+];
+
+export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking, careerContext }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const lastInputModeRef = useRef<"text" | "voice">("text");
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "welcome",
@@ -50,11 +66,40 @@ export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking })
   ]);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [currentTipIndex, setCurrentTipIndex] = useState(0);
+  const [loadingSeconds, setLoadingSeconds] = useState(0);
   const [speechLang, setSpeechLang] = useState<"te-IN" | "en-IN">("te-IN");
   const [isListening, setIsListening] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [voiceNotice, setVoiceNotice] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(true); // Show on first load
+
+  // Rotate fun career tips and track seconds while isLoading is active
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingSeconds(0);
+      return;
+    }
+
+    const secInterval = setInterval(() => {
+      setLoadingSeconds((prev) => prev + 1);
+    }, 1000);
+
+    const tipInterval = setInterval(() => {
+      setCurrentTipIndex((prev) => (prev + 1) % ENGAGING_CAREER_TIPS.length);
+    }, 2800);
+
+    return () => {
+      clearInterval(secInterval);
+      clearInterval(tipInterval);
+    };
+  }, [isLoading]);
+
+  const getLoadingStepText = (seconds: number) => {
+    if (seconds < 2) return "Consulting Knowledgebase...";
+    if (seconds < 4) return "Analyzing Stream Paths...";
+    return "Personalizing Advice...";
+  };
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const recognitionRef = useRef<any>(null);
@@ -122,6 +167,7 @@ export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking })
             const transcript = event.results[0]?.[0]?.transcript;
             if (transcript) {
               setInputText(transcript);
+              lastInputModeRef.current = "voice";
               setVoiceNotice(null);
             }
           };
@@ -187,6 +233,7 @@ export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking })
               const transcribed = await transcribeAudioBlob(audioBlob, speechLang);
               if (transcribed) {
                 setInputText(transcribed);
+                lastInputModeRef.current = "voice";
                 setVoiceNotice(null);
               } else {
                 setVoiceNotice(
@@ -248,12 +295,25 @@ export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking })
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
+    const detectedCareer =
+      careerContext ||
+      (typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("career") || undefined
+        : undefined);
+
+    const inputMode = lastInputModeRef.current;
+    lastInputModeRef.current = "text"; // reset to text
+
     setMessages((prev) => [...prev, userMsg]);
     setInputText("");
     setIsLoading(true);
 
     try {
-      const reply = await askCareerMentor(text);
+      const reply = await askCareerMentor(text, {
+        careerContext: detectedCareer,
+        language: speechLang === "te-IN" ? "te" : "en",
+        inputMode,
+      });
       const mentorMsg: ChatMessage = {
         id: `mentor-${Date.now()}`,
         sender: "mentor",
@@ -431,15 +491,54 @@ export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking })
               );
             })}
 
-            {/* Typing Loader */}
+            {/* Engaging AI Mentor Thinking Card with Rocket & Career Trivia */}
             {isLoading && (
-              <div className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-white border border-[#E0D6CA] w-fit">
-                <div className="w-2 h-2 rounded-full bg-[#C9A97A] animate-bounce" />
-                <div className="w-2 h-2 rounded-full bg-[#C9A97A] animate-bounce [animation-delay:0.2s]" />
-                <div className="w-2 h-2 rounded-full bg-[#C9A97A] animate-bounce [animation-delay:0.4s]" />
-                <span className="text-[11px] text-stone-500 font-medium ml-1">
-                  Mentoring...
-                </span>
+              <div className="flex flex-col gap-2 p-3 rounded-2xl bg-gradient-to-br from-amber-50/90 via-white to-stone-50 border border-[#E0D6CA] shadow-xs max-w-[95%] animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100/80 border border-amber-200 flex items-center justify-center shrink-0 overflow-hidden shadow-2xs mt-0.5">
+                    <DotLottieReact
+                      src="/rocket-animation.lottie"
+                      loop
+                      autoplay
+                      className="w-9 h-9 object-contain"
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-1.5 mb-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[11px] font-bold text-stone-800">Wabi AI Mentor</span>
+                        <div className="flex items-center gap-0.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#C9A97A] animate-bounce" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#C9A97A] animate-bounce [animation-delay:0.2s]" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#C9A97A] animate-bounce [animation-delay:0.4s]" />
+                        </div>
+                      </div>
+                      <span className="flex items-center gap-1 text-[9px] font-bold text-amber-800 bg-amber-100/90 border border-amber-200/80 px-2 py-0.5 rounded-full shadow-2xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping" />
+                        {getLoadingStepText(loadingSeconds)}
+                      </span>
+                    </div>
+
+                    {/* Engaging Career Tip Carousel */}
+                    <div className="bg-white/95 border border-amber-200/70 rounded-xl px-2.5 py-1.5 shadow-2xs transition-all duration-300">
+                      <p className="text-[11px] text-stone-700 leading-tight">
+                        <span className="mr-1.5 text-xs">{ENGAGING_CAREER_TIPS[currentTipIndex].icon}</span>
+                        <span className="font-semibold text-stone-900">Career Tip: </span>
+                        <span>{ENGAGING_CAREER_TIPS[currentTipIndex].text}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Animated Progress Shimmer Line */}
+                <div className="w-full bg-stone-200/80 h-1 rounded-full overflow-hidden mt-0.5">
+                  <div
+                    className="h-full bg-gradient-to-r from-amber-400 via-[#C9A97A] to-amber-500 rounded-full transition-all duration-500 animate-pulse"
+                    style={{
+                      width: loadingSeconds < 2 ? "35%" : loadingSeconds < 4 ? "70%" : "92%",
+                    }}
+                  />
+                </div>
               </div>
             )}
 

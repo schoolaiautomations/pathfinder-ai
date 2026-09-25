@@ -1010,7 +1010,7 @@ export default function CareerReportsPage() {
         />
 
         {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
-        <AiCareerMentor onOpenBooking={handleOpenBookingModal} />
+        <AiCareerMentor onOpenBooking={handleOpenBookingModal} careerContext={selectedCareer.label} />
       </main>
     );
   }
@@ -1343,7 +1343,7 @@ export default function CareerReportsPage() {
       />
 
       {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
-      <AiCareerMentor onOpenBooking={handleOpenBookingModal} />
+      <AiCareerMentor onOpenBooking={handleOpenBookingModal} careerContext="Explore All Careers" />
     </main>
   );
 }
