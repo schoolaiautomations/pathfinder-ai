@@ -975,38 +975,172 @@ const CounsellorDashboard = () => {
                     const currentDisplayed = activeTab === "submissions" ? displayedSubmissions : displayedBookings;
                     const hasActiveFilters = schoolFilter !== "ALL" || classFilter !== "ALL" || sectionFilter !== "ALL" || searchQuery.trim() !== "";
 
-                    // Class Teachers Roster Analytics (Multi-school: Lingamparthi, Jeddangi Annavaram, Yeleswaram, GHS Yeleswaram)
+                    // Class Teachers Roster Analytics (Checking BOTH roadmap_basic & book_councelling tables)
                     const computeRosterStats = (config: SchoolRosterConfig) => {
-                      // Filter submissions belonging strictly to this school
-                      const schoolSubmissions = submissions.filter((row) => {
+                      const u = username.toLowerCase().trim();
+                      const norm = (s: string | null) => (s || "").toLowerCase().replace(/[\s_-]+/g, "");
+                      const matchesCounsellor = (cName: string | null | undefined) => {
+                        if (!cName) return true; // general or unassigned for this school
+                        return norm(cName) === norm(u) || cName.toLowerCase().trim() === u;
+                      };
+
+                      // 1. Filter submissions from roadmap_basic belonging strictly to this school
+                      const sourceSubmissions = allSubmissions.length > 0 ? allSubmissions : submissions;
+                      const schoolSubmissions = sourceSubmissions.filter((row) => {
                         const sch = (row.student_school || "").trim();
-                        return config.matchSchool(sch);
+                        const loc = (row.student_location || "").trim();
+                        return config.matchSchool(sch, loc) && matchesCounsellor(row.councellor_name);
                       });
 
-                      // Uniquely identify each student within this school
-                      const uniqueSchoolSubs = deduplicateSubmissions(schoolSubmissions);
+                      // 2. Filter bookings from book_councelling belonging strictly to this school
+                      const sourceBookings = allBookings.length > 0 ? allBookings : bookings;
+                      const schoolBookings = sourceBookings.filter((row) => {
+                        const sch = (row.student_school || "").trim();
+                        const loc = (row.student_location || "").trim();
+                        return config.matchSchool(sch, loc) && matchesCounsellor(row.councellor_name);
+                      });
 
+                      // Helper to parse grade (8, 9, 10) and section (A, B, C, D) from any class string
+                      const parseStudentGradeAndSec = (
+                        rawClass: string | null | undefined,
+                        rawSec: string | null | undefined,
+                        extraText?: string | null | undefined
+                      ) => {
+                        const cls = (rawClass || "").toLowerCase().trim();
+                        const extra = (extraText || "").toLowerCase().trim();
+                        const combined = `${cls} ${extra}`;
+
+                        let gradeNumber: number | null = null;
+                        if (
+                          cls.includes("8") ||
+                          cls.includes("eighth") ||
+                          cls.includes("viii") ||
+                          /\b8\b/.test(combined)
+                        ) {
+                          gradeNumber = 8;
+                        } else if (
+                          cls.includes("9") ||
+                          cls.includes("ninth") ||
+                          cls.includes("ix") ||
+                          /\b9\b/.test(combined)
+                        ) {
+                          gradeNumber = 9;
+                        } else if (
+                          cls.includes("10") ||
+                          cls.includes("tenth") ||
+                          cls.includes("x") ||
+                          /\b10\b/.test(combined)
+                        ) {
+                          gradeNumber = 10;
+                        }
+
+                        let section = "";
+                        if (rawSec && rawSec.trim() && rawSec.trim() !== "—" && rawSec.trim() !== "-") {
+                          const s = rawSec.trim().toUpperCase().replace(/SECTION/i, "").trim();
+                          section = s ? s[0] : "";
+                        } else {
+                          const explicitSec = combined.match(/(?:section|sec|sec\.)\s*([a-d])\b/i);
+                          if (explicitSec && explicitSec[1]) {
+                            section = explicitSec[1].toUpperCase();
+                          } else {
+                            const patternedSec =
+                              combined.match(/(?:8|9|10)(?:th)?\s*[-–—/]\s*([a-d])\b/i) ||
+                              combined.match(/(?:8|9|10)(?:th)?\s+([a-d])\b/i) ||
+                              combined.match(/(?:class\s*(?:8|9|10)?\s*)([a-d])\b/i) ||
+                              combined.match(/\b([a-d])\s*(?:section|sec)\b/i) ||
+                              combined.match(/(?:8|9|10)([a-d])\b/i);
+
+                            if (patternedSec && patternedSec[1]) {
+                              section = patternedSec[1].toUpperCase();
+                            }
+                          }
+                        }
+
+                        return { gradeNumber, section };
+                      };
+
+                      // 3. Unified student map deduplicated strictly by student name
+                      // (so distinct students sharing a school/teacher phone number are preserved)
+                      interface UnifiedStudent {
+                        name: string;
+                        gradeNumber: number | null;
+                        section: string;
+                        source: "roadmap" | "booking";
+                      }
+
+                      const studentMap = new Map<string, UnifiedStudent>();
+
+                      // Add roadmap submissions
+                      for (const row of schoolSubmissions) {
+                        const name = (row.student_name || "").toLowerCase().trim().replace(/\s+/g, " ");
+                        const key = name && name !== "—" && name !== "-" ? `name:${name}` : `sub:${row.id || Math.random()}`;
+                        const { gradeNumber, section } = parseStudentGradeAndSec(
+                          row.student_class,
+                          row.student_section,
+                          row.student_location
+                        );
+                        if (!studentMap.has(key)) {
+                          studentMap.set(key, {
+                            name: row.student_name || "",
+                            gradeNumber,
+                            section,
+                            source: "roadmap",
+                          });
+                        }
+                      }
+
+                      // Add book_councelling submissions (counts students even if not in roadmap_basic)
+                      for (const row of schoolBookings) {
+                        const name = (row.student_name || "").toLowerCase().trim().replace(/\s+/g, " ");
+                        const key = name && name !== "—" && name !== "-" ? `name:${name}` : `book:${row.id || Math.random()}`;
+                        const { gradeNumber, section } = parseStudentGradeAndSec(
+                          row.student_class,
+                          (row as any).student_section,
+                          `${row.query_description || ""} ${row.student_location || ""}`
+                        );
+                        if (!studentMap.has(key)) {
+                          studentMap.set(key, {
+                            name: row.student_name || "",
+                            gradeNumber,
+                            section,
+                            source: "booking",
+                          });
+                        } else {
+                          // Merge grade and section if this entry has more specific info
+                          const existing = studentMap.get(key)!;
+                          if (!existing.gradeNumber && gradeNumber) existing.gradeNumber = gradeNumber;
+                          if (!existing.section && section) existing.section = section;
+                        }
+                      }
+
+                      const uniqueStudents = Array.from(studentMap.values());
+
+                      // 4. Match students to teachers & calculate section metrics
                       const stats = config.teachers.map((item) => {
-                        const matchingSubs = uniqueSchoolSubs.filter((row) => {
-                          const cls = (row.student_class || "").toLowerCase().trim();
-                          const sec = (row.student_section || "").trim().toUpperCase();
+                        const matchingStudents = uniqueStudents.filter((student) => {
+                          const matchesGrade = student.gradeNumber === item.gradeNumber;
+                          if (!matchesGrade) return false;
 
-                          const matchesGrade =
-                            (item.gradeNumber === 8 && (cls.includes("8") || cls.includes("eighth") || cls.includes("viii"))) ||
-                            (item.gradeNumber === 9 && (cls.includes("9") || cls.includes("ninth") || cls.includes("ix"))) ||
-                            (item.gradeNumber === 10 && (cls.includes("10") || cls.includes("tenth") || cls.includes("x")));
+                          const hasSingleSection =
+                            config.teachers.filter((t) => t.gradeNumber === item.gradeNumber).length === 1;
 
-                          const hasSingleSection = config.teachers.filter((t) => t.gradeNumber === item.gradeNumber).length === 1;
-                          const matchesSection = hasSingleSection
-                            ? (!sec || sec === item.section || sec.startsWith(item.section) || sec === "—" || sec === "-")
-                            : (sec === item.section || sec.startsWith(item.section));
-
-                          return matchesGrade && matchesSection;
+                          if (hasSingleSection) {
+                            return (
+                              !student.section ||
+                              student.section === item.section ||
+                              student.section.startsWith(item.section)
+                            );
+                          } else {
+                            if (student.section) {
+                              return student.section === item.section || student.section.startsWith(item.section);
+                            }
+                            // If student didn't specify section in a multi-section school, default to Section A
+                            return item.section === "A";
+                          }
                         });
 
-                        const receivedCount = matchingSubs.length;
+                        const receivedCount = matchingStudents.length;
                         const percentage = item.totalStrength > 0 ? Math.round((receivedCount / item.totalStrength) * 100) : 0;
-                        // Tier thresholds: <70% red, 70-90% orange, >90% green
                         const tier: "red" | "orange" | "green" =
                           percentage < 70 ? "red" : percentage <= 90 ? "orange" : "green";
                         const isBelowThreshold = percentage < 70;
@@ -1021,7 +1155,8 @@ const CounsellorDashboard = () => {
                       });
 
                       const totalEnrolled = config.teachers.reduce((acc, curr) => acc + curr.totalStrength, 0);
-                      const totalRosterReceived = stats.reduce((acc, curr) => acc + curr.receivedCount, 0);
+                      const sectionSum = stats.reduce((acc, curr) => acc + curr.receivedCount, 0);
+                      const totalRosterReceived = Math.max(sectionSum, uniqueStudents.length);
                       const overallPercentage = totalEnrolled > 0 ? Math.round((totalRosterReceived / totalEnrolled) * 100) : 0;
                       const overallTier: "red" | "orange" | "green" =
                         overallPercentage < 70 ? "red" : overallPercentage <= 90 ? "orange" : "green";

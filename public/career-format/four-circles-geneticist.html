@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Geneticist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · India</div><h2>Geneticist</h2><p class="standfirst">Geneticists study genes, DNA, heredity and genetic variation. They may investigate inherited diseases, analyse genomes, improve crops and animals, study evolution, work in biotechnology or develop new diagnostic and research methods. “Geneticist” is a broad science career — a research geneticist, clinical/medical geneticist, plant geneticist and computational geneticist can have very different training routes.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Geneticist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>DNA + discovery</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Biology → Genetics</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Specialities</b><em>Health + agriculture + data</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Research career</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Would Genetics suit you?</h3><p class="lede">Being interested in DNA is a good start. Real genetics involves laboratory work, statistics, experiments, data analysis and careful interpretation.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you genuinely enjoy Biology, especially cells, DNA, inheritance and evolution?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy laboratory work such as DNA extraction, PCR, sequencing or microscopy?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to learn statistics and basic programming to analyse genetic data?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you repeat experiments carefully and accept that research may fail many times?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy reading scientific papers and asking why a biological result happened?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you open to postgraduate study if your preferred genetics career requires an M.Sc., PhD or medical specialisation?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Which pathway can you take?</h3><p class="lede">There is no single compulsory “Geneticist entrance exam.” The right route depends on whether you want research, biotechnology, agriculture, computational genetics or medical genetics.</p>
+
+<div class="flag green"><span class="mark">Important terms</span><span><b>Genetics</b> = study of genes and heredity. <b>Genomics</b> = study of many genes or whole genomes. <b>Bioinformatics</b> = using computing and statistics to analyse biological data. <b>PCR</b> = Polymerase Chain Reaction, a laboratory method used to make many copies of selected DNA.</span></div>
+
+<div class="card">
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>BiPC is the most direct route.</b><br><br>Biology is essential for most Genetics, Biotechnology, Life Sciences and Biomedical Science programmes. Chemistry is also very important.<br><br><b>PCMB</b> is excellent if available and manageable because Mathematics helps greatly in genomics and bioinformatics.<br><br>MPC students can still enter some Biotechnology/Bioinformatics or computational routes, depending on university eligibility.</div></div>
+
+<div class="row"><div class="k">Route A — B.Sc. Genetics / Life Sciences</div><div class="v"><b>Class 10 → BiPC → B.Sc. Genetics / Human Genetics / Biotechnology / Biochemistry / Microbiology / Zoology / Life Sciences → M.Sc. Genetics / Human Genetics / Genomics / Biotechnology → research or industry.</b><br><br>This is one of the clearest routes for students who want laboratory and biological genetics.</div></div>
+
+<div class="row"><div class="k">Route B — B.Tech Biotechnology</div><div class="v"><b>Class 10 → suitable Class 12 science combination → B.Tech Biotechnology / related programme → genetics/genomics electives + laboratory projects → M.Tech/MS/industry/research.</b><br><br>Eligibility for Biotechnology engineering programmes varies by institution, so check whether the college accepts MPC, BiPC/PCB or both.</div></div>
+
+<div class="row"><div class="k">Route C — Research-first science route</div><div class="v"><b>BiPC/PCMB → IISER / NISER / strong B.Sc./BS programme → major in Biological Sciences → genetics/genomics research projects → Integrated PhD / PhD.</b><br><br>This is especially strong if your goal is to become a <b>research geneticist</b> rather than immediately enter a routine laboratory job.</div></div>
+
+<div class="row"><div class="k">CUET route</div><div class="v"><b>CUET-UG</b> is used by many participating universities for undergraduate science programmes. In 2026, CUET includes a combined domain subject covering <b>Biology / Biological Science / Biotechnology / Biochemistry</b>.<br><br>But CUET is <b>not compulsory for every Genetics course</b>; some universities use merit or their own admission process.</div></div>
+
+<div class="row"><div class="k">Postgraduate specialisation</div><div class="v">Useful programmes include <b>M.Sc. Human Genetics, Genetics, Genomics, Molecular Biology, Biotechnology, Biomedical Science, Bioinformatics and Computational Biology</b>.<br><br>As one current example, SDM University lists a <b>2-year M.Sc. Human Genetics</b> for graduates from biological-science backgrounds.</div></div>
+
+<div class="row"><div class="k">Biomedical Genomics route</div><div class="v">The <b>National Institute of Biomedical Genomics (NIBMG)</b> offers advanced training and research in human genetics/genomics. For 2026 it invited applications for an <b>Integrated MS-PhD in Biotechnology with specialisation in Biomedical Genomics</b>.<br><br>This is the type of route students may target after building a strong biological-science foundation.</div></div>
+
+<div class="row"><div class="k">PhD route</div><div class="v"><b>B.Sc./B.Tech → M.Sc./M.Tech or Integrated PhD → PhD in Genetics / Genomics / Molecular Biology / related field → Research Geneticist / Scientist.</b><br><br>For many independent research-scientist and university careers, a <b>PhD is normally expected</b>.</div></div>
+
+<div class="row"><div class="k">Research entrance examples</div><div class="v">Depending on programme and institute, postgraduate/research routes may use <b>GAT-B, BET, CSIR-UGC NET/JRF, GATE, DBT/ICMR fellowships or institute-specific tests/interviews.</b><br><br>There is no single exam that every future geneticist must clear.</div></div>
+
+<div class="row"><div class="k">Medical Genetics route</div><div class="v"><b>If you want to diagnose and medically manage patients with genetic disorders, that is a medical-specialist route.</b><br><br>Typical pathway: <b>BiPC → NEET-UG → MBBS → postgraduate/superspecialty medical training in the relevant genetics pathway.</b><br><br>A research geneticist with B.Sc./M.Sc./PhD training is <b>not the same as a medical doctor specialising in genetics.</b></div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Research Geneticist:</b> Class 10 → BiPC/PCMB → B.Sc./BS/B.Tech in Genetics/Life Sciences/Biotechnology → M.Sc./Integrated PhD → PhD → research scientist.<br><br><b>Industry Geneticist:</b> Class 10 → BiPC/PCMB → relevant B.Sc./B.Tech → strong molecular/genomics skills → M.Sc. often useful → biotech/genomics laboratory.<br><br><b>Medical Genetics:</b> Class 10 → BiPC → NEET-UG → MBBS → recognised specialist medical training → Medical Genetics career.</div></div>
+
+<div class="flag red"><span class="mark">Very important</span><span><b>“Geneticist” is not one single licensed profession.</b> A research geneticist, genetic counsellor and medical geneticist have different qualifications and responsibilities. Never assume a Genetics degree allows someone to diagnose or treat patients as a doctor.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · GENETICS CAREERS</div><h3>What kind of Geneticist could you become?</h3><p class="lede">Genes affect medicine, agriculture, evolution and biotechnology. Your specialisation determines both the science you study and the jobs available.</p>
+
+<div class="card">
+<div class="row"><div class="k">Human Geneticist</div><div class="v"><b>Study genetic variation in humans</b> and how genes are connected with inherited traits and disease.<div class="chips"><span class="chip">Human DNA</span><span class="chip">Disease</span><span class="chip">Genomics</span></div></div></div>
+
+<div class="row"><div class="k">Molecular Geneticist</div><div class="v">Study how genes function at the molecular level, including DNA replication, gene expression, mutations and regulation.</div></div>
+
+<div class="row"><div class="k">Genomics Scientist</div><div class="v">Analyse large-scale genome data using DNA sequencing and computational methods. Modern genomics increasingly combines wet-lab biology with bioinformatics.</div></div>
+
+<div class="row"><div class="k">Cancer Geneticist / Cancer Genomics Researcher</div><div class="v">Study mutations and genomic changes involved in cancer to improve classification, diagnosis, treatment research and precision medicine.</div></div>
+
+<div class="row"><div class="k">Population Geneticist</div><div class="v">Study genetic variation across populations to understand ancestry, evolution, migration, natural selection and disease risk.</div></div>
+
+<div class="row"><div class="k">Plant Geneticist</div><div class="v">Study genes controlling crop traits such as yield, disease resistance, drought tolerance and quality. Work can connect to plant breeding and agricultural biotechnology.</div></div>
+
+<div class="row"><div class="k">Animal Geneticist</div><div class="v">Study inherited traits in livestock, poultry and other animals to support breeding, health, productivity and conservation.</div></div>
+
+<div class="row"><div class="k">Microbial Geneticist</div><div class="v">Study genes in bacteria, fungi and other microorganisms. Applications include biotechnology, antimicrobial resistance, fermentation and infectious-disease research.</div></div>
+
+<div class="row"><div class="k">Developmental Geneticist</div><div class="v">Study how genes control growth and development from embryo to adult organism.</div></div>
+
+<div class="row"><div class="k">Computational Geneticist</div><div class="v">Use programming, statistics and algorithms to analyse genetic and genomic datasets.<div class="chips"><span class="chip">Python / R</span><span class="chip">Statistics</span><span class="chip">Sequencing Data</span></div></div></div>
+
+<div class="row"><div class="k">Forensic Genetics Scientist</div><div class="v">Use DNA analysis for identity and forensic investigations in authorised laboratories. This overlaps with Forensic Science and requires appropriate forensic/laboratory training.</div></div>
+
+<div class="row"><div class="k">Conservation Geneticist</div><div class="v">Use genetic information to understand endangered populations, biodiversity and conservation strategies.</div></div>
+
+<div class="row"><div class="k">Gene-editing Researcher</div><div class="v">Study technologies such as CRISPR and other gene-editing methods for basic research, biotechnology, agriculture or therapeutic research under strict scientific and ethical controls.</div></div>
+
+<div class="row"><div class="k">Medical Geneticist</div><div class="v">A <b>medical doctor with specialist genetics training</b> who evaluates and manages patients/families affected by genetic disease. This is a separate medical route from B.Sc./M.Sc./PhD genetics.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Geneticist vs Genetic Counsellor</div><div class="v"><b>Geneticist:</b> may be a laboratory/research scientist studying genes and genomes, or a medically trained genetics specialist depending on qualification.<br><br><b>Genetic Counsellor:</b> helps individuals/families understand genetic-test results, inheritance, risk and healthcare choices using specialised counselling/genetics training. It is a distinct professional role.</div></div>
+
+<div class="row"><div class="k">Geneticist vs Biotechnologist</div><div class="v"><b>Geneticist:</b> specialises in heredity, genes and genomes.<br><b>Biotechnologist:</b> applies biological systems more broadly to create products/processes in health, agriculture, food and industry.<br><br>There is substantial overlap.</div></div>
+
+<div class="row"><div class="k">Geneticist vs Bioinformatician</div><div class="v"><b>Geneticist:</b> focuses on the biological/genetic question.<br><b>Bioinformatician:</b> specialises in computational methods for analysing biological data.<br><br>Modern genomics teams often need both skill sets, and one person may develop expertise in both.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v">Genomics and diagnostic laboratories, biotechnology companies, pharmaceutical companies, universities, research institutes, hospitals/research centres, agriculture/seed companies, forensic labs, conservation organisations and bioinformatics teams.</div></div>
+
+<div class="row"><div class="k">AI-era relevance</div><div class="v"><b>Genetics is becoming more computational.</b> AI and machine learning are increasingly used to interpret genome sequences, predict variant effects, analyse gene expression and discover biological patterns. Geneticists who understand both Biology and data analysis will have stronger long-term options.</div></div>
+
+<div class="row"><div class="k">What employers value</div><div class="v"><div class="chips"><span class="chip">Molecular Biology</span><span class="chip">PCR</span><span class="chip">Sequencing</span><span class="chip">Statistics</span><span class="chip">Bioinformatics</span><span class="chip">Research Skills</span></div></div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Genetics skills transfer into:
+<div class="chips"><span class="chip">Biotechnology</span><span class="chip">Bioinformatics</span><span class="chip">Molecular Biology</span><span class="chip">Clinical Research</span><span class="chip">Agriculture</span><span class="chip">Data Science</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>Genes rarely act alone.</b> Good geneticists learn to separate strong evidence from simple “this gene causes everything” explanations and consider environment, probability and biological context.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">There is no single reliable India-wide salary for “Geneticist” because jobs appear under titles such as Research Assistant, Genomics Scientist, Molecular Biologist, Bioinformatician, Scientist and Medical Geneticist.</p>
+
+<div class="card">
+<div class="row"><div class="k">Lab / research trainee</div><div class="v"><span class="money">₹10,000 – ₹25,000/month</span><br><span style="font-size:13px">Internships and junior laboratory roles vary widely. Focus on gaining real molecular-biology, sequencing and data-analysis experience.</span></div></div>
+
+<div class="row"><div class="k">Early-career private research / genomics</div><div class="v"><span class="money">₹25,000 – ₹50,000/month</span><br><span style="font-size:13px">A broad practical range for junior roles in molecular biology, genomics, diagnostics, biotechnology and bioinformatics. Higher-skill computational roles can differ significantly.</span></div></div>
+
+<div class="row"><div class="k">PhD — JRF stage</div><div class="v"><span class="money">₹37,000/month + applicable HRA</span><br><span style="font-size:13px">Current Government of India research-fellowship norms commonly use <b>₹37,000/month</b> for Junior Research Fellowship under eligible schemes.</span></div></div>
+
+<div class="row"><div class="k">PhD — SRF stage</div><div class="v"><span class="money">₹42,000/month + applicable HRA</span><br><span style="font-size:13px">Eligible fellows may move to the Senior Research Fellowship level after the required assessment under the relevant scheme.</span></div></div>
+
+<div class="row"><div class="k">Experienced scientist / genomics specialist</div><div class="v"><span class="money">₹50,000 – ₹1,00,000+/month</span><br><span style="font-size:13px">Experienced industry scientists, genomics specialists, bioinformatics professionals and project leaders can earn more depending on company, city, degree and technical expertise.</span></div></div>
+
+<div class="row"><div class="k">Medical Genetics</div><div class="v"><span class="money">Different medical salary pathway</span><br><span style="font-size:13px">A medically trained genetics specialist follows the MBBS + postgraduate/superspecialty route, so compensation should be compared with specialist medical careers rather than research-scientist salaries.</span></div></div>
+
+<div class="row"><div class="k">Study cost</div><div class="v">You do <b>not</b> need an expensive bachelor's degree titled exactly “Genetics.” A strong public B.Sc./BS in Life Sciences, Biotechnology, Biochemistry, Microbiology or related fields can provide an excellent foundation if it includes good laboratory training and access to research.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not choose a very expensive Genetics degree expecting a high-paying job immediately after B.Sc.</b> Many true geneticist/research roles value M.Sc. or PhD-level training. Build laboratory + bioinformatics skills so your degree also opens biotechnology and data-oriented jobs.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Biology + experiments + DNA</span> — Genetics may be a strong fit.</p>
+<p><span class="hi">Love Biology but dislike laboratory/research work</span> — compare healthcare, Nutrition, Agriculture or other life-science careers.</p>
+<p><span class="hi">Love genes + computers</span> — compare Bioinformatics / Computational Biology.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>a Geneticist does not just study why children resemble their parents — modern genetics uses DNA, statistics and computation to understand how biological information works.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, the best preparation is strong Biology plus curiosity about experiments and data.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Become strong in <b>Biology, especially cells, chromosomes, DNA and inheritance</b></li>
+<li>Do not ignore Maths — probability and statistics become important later</li>
+<li>Learn basic coding such as Python when comfortable; modern genomics uses large datasets</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>BiPC</b> for the clearest genetics/life-science route; choose PCMB if you want to keep strong computational options too</li>
+<li>After Class 12, compare <b>Genetics, Biotechnology, Biochemistry, Microbiology, Life Sciences, Biomedical Science and research-oriented BS programmes</b></li>
+<li>Shortlist universities first, then check whether they use CUET, their own entrance test or merit</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Learn <b>molecular biology, PCR, genetics, statistics and basic bioinformatics</b></li>
+<li>Get laboratory/research internships and learn how to keep proper experimental records</li>
+<li>By final year, decide whether you prefer <b>research genetics, genomics/bioinformatics, agriculture genetics, biotechnology or medical genetics</b></li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Try a simple inheritance investigation using a safe dataset — for example plant traits or a simulated family pedigree. Predict the inheritance pattern, then check whether the data actually supports your prediction. If you enjoy asking <b>“What genetic explanation fits the evidence?”</b>, Genetics may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not medical advice or an official admission notice. Genetics is a broad field, and there is no single compulsory “Geneticist” degree or entrance exam. CUET-UG 2026 includes Biology/Biological Science/Biotechnology/Biochemistry as a domain subject used by participating universities. The National Institute of Biomedical Genomics is currently offering an Integrated MS-PhD in Biotechnology with specialisation in Biomedical Genomics for its August 2026 session, illustrating an advanced research route. Medical Genetics follows a separate medical-qualification pathway. Course eligibility and research-admission requirements vary by institution and should be verified before applying.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Genetics fit</strong>You seem comfortable with Biology, experiments, data and long-term learning. Build strong life-science foundations and explore both wet-lab and computational genetics.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of genetics. Try a biology research project and compare Genetics with Biotechnology, Bioinformatics, Medicine and Agriculture.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may enjoy Biology without enjoying genetics research. Compare Nutrition, Healthcare, Environmental Science, Agriculture or other life-science careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

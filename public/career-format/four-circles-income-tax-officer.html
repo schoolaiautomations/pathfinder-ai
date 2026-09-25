@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Income Tax Officer</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · India</div><h2>Income Tax Officer</h2><p class="standfirst">An <b>Income Tax Officer (ITO)</b> is a Group B Gazetted officer in the Income Tax Department under the <b>Central Board of Direct Taxes (CBDT)</b>, Department of Revenue, Ministry of Finance. A very important point for students: <b>there is no direct SSC exam that appoints a fresh graduate straight as an Income Tax Officer.</b> The common route is to first become an <b>Income Tax Inspector</b> and then earn promotion to ITO through the department's examination and promotion process.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Income Tax Officer &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Tax + responsibility</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Inspector → ITO</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Work</b><em>Tax administration</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Gazetted Govt. post</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Would Income Tax Officer work suit you?</h3><p class="lede">An ITO needs much more than interest in government jobs. The work involves tax law, financial records, digital systems, official responsibility, communication and decision-making.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy working with numbers, financial records and rules?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you carefully examine documents and notice when information does not match?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be comfortable applying tax rules fairly even when cases are complicated?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you handle confidential financial and personal information responsibly?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be comfortable communicating with taxpayers, accountants, businesses and other government officers?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to enter as an Inspector first and build your career through departmental examinations and promotion?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Which route can you take?</h3><p class="lede">For a school student starting from outside the department, the clearest route is <b>Graduate → SSC CGL → Income Tax Inspector → departmental qualification + promotion → Income Tax Officer.</b></p>
+
+<div class="flag green"><span class="mark">Exam words</span><span><b>SSC = Staff Selection Commission.</b> <b>CGL = Combined Graduate Level Examination.</b> <b>CBDT = Central Board of Direct Taxes.</b> <b>DPC = Departmental Promotion Committee</b>, the official committee that considers eligible employees for promotion under the applicable service rules.</span></div>
+
+<div class="card">
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Choose any recognised stream.</b><br><br><b>CEC / Commerce</b> can be useful because Accounts, Economics and Business Studies relate naturally to taxation, but it is <b>not compulsory</b>.<br><br>MPC, BiPC and Humanities students can also follow this career route.</div></div>
+
+<div class="row"><div class="k">After Class 12</div><div class="v"><b>Complete a recognised bachelor's degree.</b><br><br>BA, B.Com, B.Sc., B.Tech, BBA and other recognised bachelor's degrees can all lead to the main SSC CGL route. You do not need a specialised Taxation degree.</div></div>
+
+<div class="row"><div class="k">Step 1 — Become Income Tax Inspector</div><div class="v"><b>Bachelor's Degree → SSC CGL → qualify Tier-I and Tier-II → give “Inspector of Income Tax — CBDT” a suitable post preference → final selection/allotment → join CBDT as Income Tax Inspector.</b><br><br>SSC CGL directly recruits <b>Income Tax Inspectors</b>; it does <b>not</b> directly recruit fresh graduates as Income Tax Officers.</div></div>
+
+<div class="row"><div class="k">Step 2 — Departmental qualification</div><div class="v">After joining the Income Tax Department, an Inspector must complete the departmental requirements applicable to the cadre.<br><br>Under the current <b>2026 Departmental Examination Rules for Income Tax Officers</b>, an <b>Income Tax Inspector who has passed the Departmental Examination for Inspectors</b> is eligible to appear in the departmental examination for Income Tax Officers.</div></div>
+
+<div class="row"><div class="k">ITO Departmental Exam</div><div class="v">This is an <b>internal departmental examination</b> for eligible Income Tax Department employees — not an examination that Class 12 students or outside graduates can directly apply for.<br><br>The current 2026 rules provide for the departmental examination to be held ordinarily once a year, subject to the Directorate of Income Tax (HRD).</div></div>
+
+<div class="row"><div class="k">Step 3 — Promotion</div><div class="v"><b>Passing the departmental examination does not automatically make someone an ITO.</b><br><br>Promotion depends on the applicable recruitment/service rules, eligibility, seniority/service position, availability of promotional posts, vigilance/administrative requirements and consideration by the <b>Departmental Promotion Committee (DPC)</b>.</div></div>
+
+<div class="row"><div class="k">Evidence from current promotions</div><div class="v">The Income Tax Department's Hyderabad region issued regular promotion orders in <b>2026</b> promoting serving <b>Inspectors of Income Tax</b> to the cadre of <b>Income Tax Officer (Group B, Gazetted)</b>. This shows the real career progression: Inspector first, then departmental promotion to ITO.</div></div>
+
+<div class="row"><div class="k">Main student roadmap</div><div class="v"><b>Class 10 → Class 12 in any stream → Bachelor's Degree → SSC CGL → Income Tax Inspector (CBDT) → pass required departmental examinations → gain required service/eligibility → DPC / promotion process → Income Tax Officer.</b></div></div>
+
+<div class="row"><div class="k">Other internal routes</div><div class="v">The 2026 ITO departmental-exam rules also permit certain eligible <b>Office Superintendents, Tax Assistants and Stenographer Grade-I/II</b> who have already passed the Departmental Examination for Inspectors to appear for the ITO departmental examination.<br><br>For a school student planning from the beginning, however, <b>SSC CGL → Income Tax Inspector → ITO</b> is the clearest route to understand.</div></div>
+
+<div class="row"><div class="k">No direct SSC ITO exam</div><div class="v"><b>There is no separate “SSC Income Tax Officer” examination for fresh graduates.</b><br><br>If an advertisement or coaching centre says “clear SSC and become ITO directly,” check carefully. SSC CGL's direct CBDT post is <b>Inspector of Income Tax</b>; ITO is a higher departmental cadre reached through promotion.</div></div>
+
+<div class="flag red"><span class="mark">Very important</span><span><b>Do not confuse Income Tax Officer with IRS Officer.</b> An <b>ITO</b> is a departmental Group B Gazetted cadre reached mainly through promotion. An <b>IRS (Income Tax) officer</b> enters through the UPSC Civil Services Examination and begins in the Group A officer structure at a different level.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · THE WORK</div><h3>What does an Income Tax Officer actually do?</h3><p class="lede">The exact responsibilities depend on the charge and posting. ITOs work within the direct-tax administration system and may exercise functions assigned under tax law and departmental orders.</p>
+
+<div class="card">
+<div class="row"><div class="k">Assessment Work</div><div class="v"><b>Examine tax cases, records and information within the authority assigned to the officer.</b> Modern assessment work is increasingly digital and data-driven.</div></div>
+
+<div class="row"><div class="k">Tax Compliance</div><div class="v">Review whether taxpayers have complied with applicable direct-tax requirements and handle matters falling within the officer's assigned jurisdiction.</div></div>
+
+<div class="row"><div class="k">Notices &amp; Proceedings</div><div class="v">Handle official tax proceedings, records, responses and communications as authorised under the law and departmental framework.</div></div>
+
+<div class="row"><div class="k">Verification / Enquiry</div><div class="v">Examine information, financial records and supporting material; seek or verify information where legally authorised.</div></div>
+
+<div class="row"><div class="k">Survey / Investigation Support</div><div class="v">Depending on posting, an ITO may participate in or supervise authorised survey, verification or investigation-related work under the applicable legal powers and departmental instructions.</div></div>
+
+<div class="row"><div class="k">Supervision</div><div class="v">As an officer-level post, an ITO may supervise Inspectors, Tax Assistants or other staff and coordinate work within the assigned office/charge.</div></div>
+
+<div class="row"><div class="k">Taxpayer Interaction</div><div class="v">Communicate with taxpayers, authorised representatives and other agencies as required for official proceedings and compliance work.</div></div>
+
+<div class="row"><div class="k">Digital Tax Administration</div><div class="v">Use departmental tax systems, electronic records and data tools. India's direct-tax administration now depends heavily on digital information and online workflows.</div></div>
+
+<div class="row"><div class="k">Reports &amp; Administration</div><div class="v">Prepare reports, maintain case records, monitor assigned work and handle administrative responsibilities connected with the charge.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Inspector vs Income Tax Officer</div><div class="v"><b>Income Tax Inspector:</b> SSC CGL direct-recruitment post in CBDT; assists with tax administration, verification and field/office work.<br><br><b>Income Tax Officer:</b> higher <b>Group B Gazetted</b> departmental cadre reached through promotion, with greater officer-level responsibility and authority.</div></div>
+
+<div class="row"><div class="k">ITO vs IRS Officer</div><div class="v"><b>Income Tax Officer:</b> departmental promotion route, commonly beginning with SSC CGL as Inspector.<br><br><b>IRS (Income Tax):</b> Group A service recruited through <b>UPSC Civil Services Examination</b>. Direct IRS recruits enter as <b>Assistant Commissioners of Income Tax</b>, not as Income Tax Officers.</div></div>
+
+<div class="row"><div class="k">ITO vs Tax Consultant / CA</div><div class="v"><b>ITO:</b> government officer who administers and enforces tax law within official authority.<br><b>CA / Tax Consultant:</b> private professional who advises or represents taxpayers/businesses. The roles are on different sides of the tax system.</div></div>
+
+<div class="row"><div class="k">Where you may work</div><div class="v">Assessment units, TDS-related offices, investigation formations, exemptions/international-tax or other specialised direct-tax formations, administrative offices and other CBDT charges depending on posting and department structure.</div></div>
+
+<div class="row"><div class="k">Transfers</div><div class="v">Income Tax Department employees are allocated to regions and can be transferred/posting-changed during service. Students should not assume they will permanently work in their home city.</div></div>
+
+<div class="row"><div class="k">Useful strengths</div><div class="v"><div class="chips"><span class="chip">Tax Law</span><span class="chip">Accounts</span><span class="chip">Analysis</span><span class="chip">Decision-making</span><span class="chip">Communication</span><span class="chip">Integrity</span></div></div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">The degree and SSC-CGL preparation needed to enter CBDT can also support:
+<div class="chips"><span class="chip">Income Tax Inspector</span><span class="chip">Assistant Section Officer</span><span class="chip">CBIC Inspector</span><span class="chip">Auditor</span><span class="chip">Accountant</span><span class="chip">Other Graduate Govt. Jobs</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>Income Tax Officer is a progression career, not a one-exam career.</b> First you enter the department, prove yourself, qualify departmentally and then compete/qualify for promotion under the service rules.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Income Tax Officer is a Central Government Group B Gazetted post. Pay follows the Central Government pay matrix.</p>
+
+<div class="card">
+<div class="row"><div class="k">Income Tax Officer</div><div class="v"><span class="money">Pay Level 8 · ₹47,600 basic/month at entry</span><br><span style="font-size:13px">Current 2026 CBDT promotion orders identify Income Tax Officer as a <b>Level 8</b> post. Under the 7th Central Pay Commission pay matrix, Level 8 begins at <b>₹47,600 basic</b> and extends to ₹1,51,100.</span></div></div>
+
+<div class="row"><div class="k">Allowances</div><div class="v">Actual gross/take-home pay can include applicable <b>Dearness Allowance (DA), House Rent Allowance (HRA), Transport Allowance</b> and other government benefits, with deductions according to service rules and posting.</div></div>
+
+<div class="row"><div class="k">Before becoming ITO</div><div class="v">Remember that a student normally spends the earlier part of the career as an <b>Income Tax Inspector or other eligible departmental employee</b>. ITO salary begins only after actual promotion/appointment to the ITO cadre.</div></div>
+
+<div class="row"><div class="k">Further progression</div><div class="v">An ITO can later become eligible for promotion to higher Income Tax Department cadres such as <b>Assistant Commissioner of Income Tax</b>, subject to applicable service rules, required service, vacancies and selection/promotion processes.</div></div>
+
+<div class="row"><div class="k">Preparation cost</div><div class="v">You do <b>not</b> need an expensive Taxation degree. The common route needs a recognised bachelor's degree, strong SSC CGL preparation and later departmental learning/examinations after joining CBDT.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not plan your life assuming you will become ITO immediately after SSC CGL.</b> The direct SSC selection is to Income Tax Inspector; the time required to reach ITO depends on departmental rules, seniority/eligibility, promotion opportunities and administrative factors.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Tax + numbers + government responsibility</span> — the Income Tax Department pathway may suit you.</p>
+<p><span class="hi">Want direct officer entry after graduation</span> — compare UPSC Civil Services / IRS rather than assuming SSC gives direct ITO appointment.</p>
+<p><span class="hi">Want professional tax practice outside government</span> — compare Chartered Accountancy / Tax Consulting.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>Income Tax Inspector is the common entry door; Income Tax Officer is a later departmental promotion.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, focus on Maths, language and understanding how money/taxes work. The departmental part comes much later.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen <b>percentages, ratios, averages, arithmetic and logical reasoning</b></li>
+<li>Improve English reading and comprehension</li>
+<li>Learn basic ideas such as income, expenses, tax, bank interest and financial records</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>any stream</b>; Commerce/CEC is useful but not compulsory</li>
+<li>Complete Class 12 and then a recognised <b>bachelor's degree</b></li>
+<li>Choose a degree that also gives you a good Plan B career</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During / after graduation</div><ul>
+<li>Prepare for <b>SSC CGL</b></li>
+<li>Target <b>Inspector of Income Tax — CBDT</b> in your post preferences if your score and eligibility allow</li>
+<li>After joining, complete departmental training/examinations and build the service record needed for future ITO promotion</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Take a simple mock business record containing sales, expenses and bank entries. Calculate totals, find inconsistencies and write three questions you would ask before accepting the figures. If you enjoy <b>numbers + evidence + rules</b>, tax administration may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official recruitment/promotion notice. Current information was checked against CBDT's Departmental Examination Rules for Income Tax Officers 2026 and current Income Tax Department promotion orders. Under the 2026 departmental rules, Income Tax Inspectors who have passed the Departmental Examination for Inspectors are eligible for the ITO departmental examination. Recent 2026 CBDT Hyderabad-region orders show serving Inspectors being promoted to Income Tax Officer (Group B, Gazetted) at Pay Level 8. Passing an examination does not by itself guarantee promotion; applicable recruitment rules, eligibility, service position, DPC consideration, vacancies and administrative conditions also matter.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong tax-administration fit</strong>You seem comfortable with numbers, rules, confidentiality and responsibility. Remember that ITO is reached through departmental career progression, not direct SSC appointment.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of the career. Compare Income Tax Inspector, IRS, CA and other government finance roles before choosing a long-term route.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may prefer work with less tax-law and record responsibility. Compare Banking, Police, Technology, Business or other government/private careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

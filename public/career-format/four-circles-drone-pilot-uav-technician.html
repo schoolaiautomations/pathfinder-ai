@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Drone Pilot & UAV Technician</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · India</div><h2>Drone Pilot &amp; UAV Technician</h2><p class="standfirst">Drone careers have two different practical tracks. A <b>Drone Pilot / Remote Pilot</b> safely flies drones for mapping, inspection, agriculture, media and other authorised work. A <b>UAV / Drone Technician</b> assembles, checks, maintains, troubleshoots and repairs drone systems. Students can learn both, but the qualifications and daily work are different.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Drone Pilot &amp; UAV Technician &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Flying or fixing?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Skill-first routes</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Jobs</b><em>Many drone uses</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Skills + projects</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Would a drone career suit you?</h3><p class="lede">Flying a drone for fun is different from operating one professionally. Professional work requires safety checks, weather judgement, regulations, mission planning and sometimes field repairs.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy machines, electronics, gadgets or remote-controlled systems?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy practising the same flight manoeuvre until you can do it accurately and safely?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you follow safety rules even when skipping them would make the job faster?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy finding why a motor, propeller, battery, GPS or sensor is not working correctly?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you comfortable working outdoors at farms, construction sites, survey locations or industrial areas?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be willing to learn maps, weather, batteries, basic electronics and computer-based mission planning?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Which route can you take?</h3><p class="lede">This is one of the careers where a student can start through a <b>short skill-training route after Class 10</b>. But professional drone flying and drone repair are different pathways.</p>
+
+<div class="flag green"><span class="mark">Important terms</span><span><b>UAV = Unmanned Aerial Vehicle.</b> <b>DGCA = Directorate General of Civil Aviation.</b> <b>RPTO = Remote Pilot Training Organisation</b> authorised by DGCA. <b>RPC = Remote Pilot Certificate</b>, issued after successful authorised remote-pilot training and proficiency testing for the applicable drone category/class.</span></div>
+
+<div class="card">
+<div class="row"><div class="k">Route A — Drone Pilot (skill-first)</div><div class="v"><b>Class 10 with Science + Mathematics → Drone Pilot (Junior) CTS course where available → practical flying + safety skills → after meeting DGCA age/eligibility requirements, complete training at a DGCA-authorised RPTO → pass proficiency test → Remote Pilot Certificate (RPC) → Drone Pilot / UAV Operator jobs.</b><br><br>The Directorate General of Training currently lists <b>Drone Pilot (Junior)</b> as a <b>6-month / 600-hour, NSQF Level 3</b> Craftsmen Training Scheme course for students who passed Class 10 with Science and Mathematics or the specified vocational equivalent.</div></div>
+
+<div class="row"><div class="k">DGCA pilot eligibility</div><div class="v">Under India's Drone Rules framework, the normal professional remote-pilot route requires the individual to be <b>at least 18 years old</b>, have passed <b>Class 10 or equivalent</b>, and complete prescribed training at a <b>DGCA-authorised RPTO</b> for the applicable drone category/class.<br><br><b>So a Class 10 student can begin drone skill training, but cannot simply become a professional DGCA remote pilot immediately if still under 18.</b></div></div>
+
+<div class="row"><div class="k">DGCA training</div><div class="v">DGCA's remote-pilot syllabus includes topics such as <b>Drone Rules, airspace, principles of flight, weather, flight operations, emergency procedures, payloads, basic maintenance, risk assessment and drone data</b>, followed by practical training and proficiency testing.</div></div>
+
+<div class="row"><div class="k">Route B — Drone Technician</div><div class="v"><b>Class 10 with Science + Mathematics → DGT/ITI Drone Technician course → hands-on assembly, electronics, motors, batteries, controllers, testing and fault diagnosis → internship/apprenticeship/service centre → Drone Technician.</b><br><br>DGT currently lists <b>Drone Technician</b> as a <b>6-month / 600-hour, NSQF Level 3</b> CTS trade.</div></div>
+
+<div class="row"><div class="k">What a Drone Technician learns</div><div class="v">Typical training includes <b>drone components, electrical/electronic checks, assembly, wiring, motors/ESCs, batteries, controllers, troubleshooting, maintenance, safety and technical documentation.</b><br><br>The DGT progression pathway explicitly includes employment as a Drone Technician, progression toward Senior Technician/Supervisor and entrepreneurship/service-centre possibilities.</div></div>
+
+<div class="row"><div class="k">Hyderabad practical option</div><div class="v"><b>NSTI Hyderabad, Ramanthapur</b> currently offers both <b>Drone Pilot (Junior)</b> and <b>Drone Technician</b> under the Craftsmen Training Scheme. Both are listed as 6-month new-age skill courses.<br><br>This is a useful example for students looking for a government skill-training route rather than immediately choosing a 4-year degree.</div></div>
+
+<div class="row"><div class="k">Route C — Diploma / Engineering</div><div class="v"><b>Class 10 → Diploma or Class 12 MPC → B.Tech/B.E. in ECE, EEE, Mechanical, Aerospace, Mechatronics, Robotics, CSE or related field → drone projects / internships → UAV engineer, integration engineer, autopilot engineer or advanced drone-operations role.</b><br><br>This longer route is better if you want to <b>design drones</b>, build autopilot systems, work on advanced sensors or move into R&amp;D rather than only operate/repair them.</div></div>
+
+<div class="row"><div class="k">Pilot + Technician combination</div><div class="v"><b>Knowing both is valuable.</b> A field drone professional who can fly safely <b>and</b> perform basic troubleshooting is useful in agriculture, surveying, inspection and remote field deployments.<br><br>However, having an RPC does not automatically make someone a qualified repair technician, and a technician certificate does not automatically authorise professional flying.</div></div>
+
+<div class="row"><div class="k">Do you need a degree?</div><div class="v"><b>For many entry Drone Pilot and Drone Technician roles: no.</b> Class 10 + skill training can be a valid starting route.<br><br><b>For engineering/design/R&amp;D roles:</b> employers often prefer Diploma/B.Tech/B.E. qualifications in electronics, mechanical, aerospace, robotics or related disciplines.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Drone Pilot:</b> Class 10 → build basic drone skills → reach minimum DGCA age → DGCA-authorised RPTO training → proficiency test → RPC → authorised commercial drone operations.<br><br><b>Drone Technician:</b> Class 10 with Science + Maths → 6-month Drone Technician CTS / equivalent practical training → hands-on projects → internship/service experience → Drone Technician.</div></div>
+
+<div class="flag red"><span class="mark">Very important</span><span><b>Do not pay a private institute just because it says “DGCA approved.”</b> Verify the training organisation and its authorised scope on the current DGCA / Digital Sky information before paying fees. Also check which drone category/class the training covers.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · DRONE CAREERS</div><h3>Where can you work?</h3><p class="lede">The strongest drone careers usually combine flying or technical skill with an industry skill such as agriculture, mapping, inspection, cinematography or engineering.</p>
+
+<div class="card">
+<div class="row"><div class="k">Agricultural Drone Pilot</div><div class="v"><b>Fly drones for crop spraying, field observation, mapping or other authorised agricultural operations.</b> Knowledge of agriculture, safe chemical handling and field planning improves employability.<div class="chips"><span class="chip">Farms</span><span class="chip">Spraying</span><span class="chip">Crop Monitoring</span></div></div></div>
+
+<div class="row"><div class="k">Survey / Mapping Pilot</div><div class="v">Capture systematic aerial imagery for land surveys, construction, roads, mines and infrastructure. Skills in <b>GIS, photogrammetry and mapping software</b> can be as important as flying.</div></div>
+
+<div class="row"><div class="k">Inspection Drone Pilot</div><div class="v">Inspect solar plants, power lines, telecom towers, roofs, industrial sites and other infrastructure using cameras or specialised sensors.</div></div>
+
+<div class="row"><div class="k">Cinematography Pilot</div><div class="v">Capture aerial video for films, weddings, advertising, tourism and media. Creative camera movement and editing skills can matter alongside safe flying.</div></div>
+
+<div class="row"><div class="k">UAV Field Operator</div><div class="v">Deploy drones at client sites, perform pre-flight checks, execute missions, manage batteries/data and complete field reports.</div></div>
+
+<div class="row"><div class="k">Drone Technician</div><div class="v">Inspect, assemble, test and repair drones. Troubleshoot motors, propellers, controllers, wiring, batteries, sensors and communication systems.</div></div>
+
+<div class="row"><div class="k">Drone Assembly Technician</div><div class="v">Work in manufacturing/assembly lines building UAV subassemblies and final systems, testing hardware and documenting production quality.</div></div>
+
+<div class="row"><div class="k">Field Service Technician</div><div class="v">Travel to customer sites to diagnose faults, replace components, update systems and return drones to safe operating condition.</div></div>
+
+<div class="row"><div class="k">Drone Mapping Technician</div><div class="v">Process images collected by drones into maps, orthomosaics, elevation models or 3D data. This role combines drone knowledge with GIS/software.</div></div>
+
+<div class="row"><div class="k">Drone Trainer</div><div class="v">Experienced remote pilots can later pursue the DGCA instructor pathway. DGCA's current instructor rules require, among other conditions, a valid RPC and specified instructor training/approval requirements.</div></div>
+
+<div class="row"><div class="k">UAV Integration / Test Technician</div><div class="v">Help integrate autopilots, sensors, payloads, communication links and mechanical/electronic systems, then perform ground and flight testing.</div></div>
+
+<div class="row"><div class="k">Advanced UAV Engineer</div><div class="v">With Diploma/B.Tech/B.E. and stronger engineering skills, work on <b>flight controls, embedded systems, computer vision, autonomy, propulsion, structures or payload integration</b>.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Drone Pilot vs Technician</div><div class="v"><b>Drone Pilot:</b> plans and safely executes flights/missions.<br><b>Drone Technician:</b> maintains, tests and repairs the drone hardware/system.<br><br>One person may learn both, but they are different competencies.</div></div>
+
+<div class="row"><div class="k">Drone Pilot vs Drone Engineer</div><div class="v"><b>Drone Pilot:</b> operates the aircraft.<br><b>Drone Engineer:</b> designs or develops the aircraft, electronics, software, autonomy or payload systems and usually has deeper Diploma/Engineering training.</div></div>
+
+<div class="row"><div class="k">Where demand comes from</div><div class="v">Agriculture, surveying, GIS, construction, mining, renewable energy, utilities, infrastructure inspection, media, disaster response, logistics trials, manufacturing and drone-service companies.</div></div>
+
+<div class="row"><div class="k">What employers value</div><div class="v"><div class="chips"><span class="chip">Safe Flying</span><span class="chip">RPC</span><span class="chip">Troubleshooting</span><span class="chip">Mapping</span><span class="chip">Field Work</span><span class="chip">Documentation</span></div></div></div>
+
+<div class="row"><div class="k">AI-era relevance</div><div class="v">Drones are increasingly combined with <b>computer vision, AI-based object detection, autonomous navigation, crop analysis and automated inspection</b>. Pilots who also understand data/GIS and technicians who understand electronics/software will have stronger long-term options.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Drone skills can also support:
+<div class="chips"><span class="chip">Electronics Technician</span><span class="chip">GIS Technician</span><span class="chip">Robotics</span><span class="chip">Surveying</span><span class="chip">Agritech</span><span class="chip">Field Service</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>Flying alone is becoming less valuable than “flying + useful industry skill.”</b> A pilot who can produce a correct survey map, crop report or inspection result is more useful than someone who only knows how to move the drone.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Drone work is still an emerging market. Income varies with location, mission type, RPC/category, field travel, equipment responsibility and additional skills such as GIS or agriculture.</p>
+
+<div class="card">
+<div class="row"><div class="k">Drone trainee / co-pilot</div><div class="v"><span class="money">₹12,000 – ₹18,000/month</span><br><span style="font-size:13px">Current job listings include trainee/co-pilot and basic field roles around this range. Some internships or apprenticeships may be lower.</span></div></div>
+
+<div class="row"><div class="k">Entry Drone Pilot</div><div class="v"><span class="money">₹15,000 – ₹30,000/month</span><br><span style="font-size:13px">A practical current range seen across Indian drone-pilot advertisements. Jobs requiring field deployment, specific platforms or mapping skills can vary.</span></div></div>
+
+<div class="row"><div class="k">Skilled / experienced pilot</div><div class="v"><span class="money">₹20,000 – ₹40,000+/month</span><br><span style="font-size:13px">Experience with multirotor/fixed-wing/VTOL systems, surveys, inspection, GIS, agriculture or customer deployments can improve earning potential.</span></div></div>
+
+<div class="row"><div class="k">Entry Drone Technician</div><div class="v"><span class="money">₹12,000 – ₹20,000/month</span><br><span style="font-size:13px">Assembly and technician openings can begin around this level, especially for ITI/skill-course freshers. Practical troubleshooting skill matters greatly.</span></div></div>
+
+<div class="row"><div class="k">Experienced Technician / Field Service</div><div class="v"><span class="money">₹20,000 – ₹35,000+/month</span><br><span style="font-size:13px">Technicians who can troubleshoot electronics, firmware, sensors and flight systems or handle field-service responsibility can move higher.</span></div></div>
+
+<div class="row"><div class="k">Freelance / own drone work</div><div class="v"><span class="money">Highly variable</span><br><span style="font-size:13px">Income depends on equipment cost, legal operating requirements, insurance/safety, travel, customer demand and whether you provide a useful end product such as maps, inspections or media. Revenue is not the same as profit.</span></div></div>
+
+<div class="row"><div class="k">Training cost</div><div class="v">Government CTS courses can provide a lower-cost skill pathway than expensive private programmes. DGCA-authorised RPTO fees vary by organisation and authorised scope. <b>Compare the exact training category, practical flying hours, equipment and current authorisation before paying.</b></div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not buy an expensive drone immediately just because you completed a pilot course.</b> First build field experience, understand legal operations and identify a service customers will actually pay for.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Flying + fieldwork + technology</span> — Drone Pilot may be a strong fit.</p>
+<p><span class="hi">Electronics + repair + troubleshooting</span> — Drone Technician may suit you better.</p>
+<p><span class="hi">Want to design autonomous drones</span> — compare Robotics / ECE / Aerospace / Mechatronics Engineering.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>the drone is only the tool — the real career value comes from what useful problem you can solve with it.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">This is a strong skill-first career for students who learn better by doing, but safety and regulation must come before excitement.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen basic <b>Science, Mathematics and computer skills</b></li>
+<li>Learn the parts of a drone: frame, motor, propeller, ESC, battery, flight controller, GPS, sensors and remote controller</li>
+<li>Use simulators or supervised small-drone practice rather than attempting risky flights</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>For a <b>skill-first route</b>, compare DGT's 6-month <b>Drone Pilot (Junior)</b> and <b>Drone Technician</b> CTS courses</li>
+<li>For a longer engineering route, continue MPC / Diploma and consider ECE, EEE, Mechanical, Mechatronics, Robotics or Aerospace</li>
+<li>If you are under 18, use the time to build technical/flying foundations; the normal DGCA professional remote-pilot eligibility begins at 18</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>Before professional flying</div><ul>
+<li>Verify a <b>DGCA-authorised RPTO</b> and its authorised drone category/class</li>
+<li>Complete required remote-pilot training and proficiency testing to obtain the applicable <b>Remote Pilot Certificate</b></li>
+<li>Add one employable speciality: <b>GIS/mapping, agriculture, inspection, cinematography, surveying or field maintenance</b></li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Try two small projects: <b>(1)</b> safely fly a simulator or supervised drone through a planned route, and <b>(2)</b> identify the major drone components and diagnose a simple simulated fault. If you enjoy the first more, explore the Pilot route. If you enjoy the second more, explore the Technician route. If you enjoy both, build a combined field-operations skill set.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official aviation authorisation. Current DGT information (September 2026) lists Drone Pilot (Junior) and Drone Technician as 6-month / 600-hour NSQF Level 3 CTS trades for candidates who passed Class 10 with Science and Mathematics or the prescribed vocational equivalent. NSTI Hyderabad currently offers both new-age trades. DGCA's Remote Pilot Training framework requires authorised RPTO training and proficiency testing for the applicable Remote Pilot Certificate, and the Drone Rules framework sets age, education and operational requirements. Drone rules, Digital Sky processes and authorised RPTO scopes can change, so verify current DGCA information before training or professional operations.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong drone-career fit</strong>You seem comfortable with technology, fieldwork, safety and troubleshooting. Now test whether flying or technical repair interests you more.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of drone work. Try safe simulator practice and a basic electronics/drone-maintenance project before choosing Pilot or Technician.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may like drones without enjoying professional field operations. Compare Robotics, Electronics, GIS, Photography, Agriculture Technology or other practical careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

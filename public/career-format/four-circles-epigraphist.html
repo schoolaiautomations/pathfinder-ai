@@ -1,0 +1,366 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Epigraphist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Epigraphist</h2><p class="standfirst">Epigraphists study inscriptions written on stone, copper plates, temple walls, pillars, coins and other materials. They identify scripts and languages, copy inscriptions, decipher difficult letters, date them and interpret what they reveal about rulers, society, religion, economy and culture. This is a specialised research career closely connected with Archaeology, Ancient History, Palaeography and languages.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Epigraphist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Scripts + history</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>History → specialisation</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Work</b><em>Read the past</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Niche research career</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Would Epigraphy suit you?</h3><p class="lede">Epigraphy is ideal for someone who enjoys slow, careful detective work with old scripts and historical evidence.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy History enough to study old kingdoms, temples, inscriptions and primary sources?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy learning old scripts such as Brahmi, Telugu-Kannada, Grantha, Nagari or other regional scripts?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you patiently compare tiny differences in letters, dates and damaged words?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy visiting temples, monuments, caves or villages to document inscriptions in the field?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you interested in languages such as Telugu, Sanskrit, Prakrit, Tamil, Kannada or Persian/Arabic depending on your area?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you comfortable with a specialised career where higher study and research experience are often important?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Which route can you take?</h3><p class="lede">There is no single national “Epigraphist entrance exam.” The usual pathway is <b>History / Archaeology / Ancient Indian History → Epigraphy specialisation → research or government recruitment</b>.</p>
+
+<div class="flag green"><span class="mark">Important terms</span><span><b>Epigraphy</b> = study of inscriptions. <b>Palaeography</b> = study of ancient writing and scripts. <b>ASI = Archaeological Survey of India.</b> An Epigraphist often needs both language knowledge and the ability to read changing scripts across centuries.</span></div>
+
+<div class="card">
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Humanities / CEC with History is the most directly relevant route.</b><br><br>Science or Commerce students can also enter History/Archaeology later if the university allows it, but choosing History early gives useful background in ancient and medieval India.</div></div>
+
+<div class="row"><div class="k">After Class 12</div><div class="v">Good undergraduate routes include:<div class="chips"><span class="chip">BA History</span><span class="chip">BA Archaeology</span><span class="chip">Ancient History</span><span class="chip">Anthropology</span><span class="chip">Classical Languages</span></div><br>You do <b>not</b> usually become an Epigraphist immediately after a bachelor's degree; specialisation normally comes later.</div></div>
+
+<div class="row"><div class="k">Postgraduate route</div><div class="v"><b>BA / relevant degree → MA Ancient Indian History, Culture &amp; Archaeology / Archaeology / History → Epigraphy &amp; Palaeography courses → research experience → Epigraphist / Archaeology research roles.</b><br><br>For Andhra Pradesh students, <b>Sri Venkateswara University, Tirupati</b> currently offers a <b>2-year MA in Ancient Indian History, Culture &amp; Archaeology</b> and a <b>1-year PG Diploma in Epigraphy</b>.</div></div>
+
+<div class="row"><div class="k">What the Epigraphy course teaches</div><div class="v">SVU's current Epigraphy &amp; Palaeography syllabus includes <b>Brahmi, Kharoshthi, Nagari, evolution of Telugu-Kannada scripts, inscription types, dating methods, numerals, Prakrit, Sanskrit and regional-language inscriptions</b>.<br><br>That is much closer to real epigraphy than simply reading modern Telugu or Sanskrit.</div></div>
+
+<div class="row"><div class="k">Language specialisation</div><div class="v">Your language choice depends on the inscriptions you want to study. South Indian epigraphy may require combinations of <b>Telugu, Kannada, Tamil, Sanskrit and Prakrit</b>. ASI also has a separate branch for <b>Arabic and Persian inscriptions</b>.<br><br>Strong reading knowledge of at least one classical/historical language can make you much more useful.</div></div>
+
+<div class="row"><div class="k">PhD route</div><div class="v"><b>MA → M.Phil./PhD or direct PhD route where offered → specialise in inscriptions, scripts, dynasties, temple studies, historical geography or related areas.</b><br><br>A PhD is especially useful for university teaching, senior research and highly specialised epigraphy posts.</div></div>
+
+<div class="row"><div class="k">Government / ASI route</div><div class="v">The <b>Archaeological Survey of India</b> has a dedicated <b>Directorate / Epigraphy Branch</b> for Sanskrit &amp; Dravidian inscriptions at Mysuru, along with zonal offices, and a separate Arabic &amp; Persian inscriptions branch.<br><br>Government epigraphy posts are specialised and may be filled through direct recruitment or departmental promotion depending on the post. Eligibility can require specific Master's qualifications, language knowledge, epigraphy/archaeology experience or diplomas.</div></div>
+
+<div class="row"><div class="k">Academic route</div><div class="v"><b>MA → UGC-NET / SET where applicable → PhD → university teaching / research.</b><br><br>Epigraphy is commonly taught inside Ancient History, Archaeology, History, Culture, Sanskrit or regional-language departments rather than as a huge standalone department.</div></div>
+
+<div class="row"><div class="k">Complete roadmap</div><div class="v"><b>Class 10 → Humanities/CEC with History preferred → BA History / Archaeology / Ancient History → MA Ancient Indian History &amp; Archaeology / related field → PG Diploma or strong coursework in Epigraphy &amp; Palaeography → field documentation + language/script expertise → ASI / university / museum / research project → Epigraphist.</b></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Epigraphy is a niche career.</b> Do not depend on a permanent “Epigraphist” vacancy appearing immediately after graduation. Build a broader foundation in History/Archaeology and keep teaching, museums, heritage, research and archaeology as parallel career options.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · THE WORK</div><h3>What does an Epigraphist actually do?</h3><p class="lede">Epigraphists turn old inscriptions into usable historical evidence through field documentation, script reading, language analysis and publication.</p>
+
+<div class="card">
+<div class="row"><div class="k">Discover / Locate Inscriptions</div><div class="v"><b>Survey temples, monuments, caves, fields, stone slabs and other locations</b> where inscriptions may survive.</div></div>
+
+<div class="row"><div class="k">Copy the Inscription</div><div class="v">Prepare photographs, digital records or traditional <b>estampages</b> so the inscription can be studied safely and accurately away from the monument.</div></div>
+
+<div class="row"><div class="k">Decipher the Script</div><div class="v">Identify old letter forms and convert them into readable characters. The same language may look very different in scripts separated by centuries.</div></div>
+
+<div class="row"><div class="k">Transcribe</div><div class="v">Write the inscription carefully in a standard readable form while marking damaged, missing or uncertain letters appropriately.</div></div>
+
+<div class="row"><div class="k">Translate</div><div class="v">Translate the text into a modern scholarly language while preserving the historical meaning and technical terms.</div></div>
+
+<div class="row"><div class="k">Date the Inscription</div><div class="v">Use regnal years, calendars, eras, palaeographic features, rulers, genealogies and historical context to estimate or confirm the date.</div></div>
+
+<div class="row"><div class="k">Interpret History</div><div class="v">Use inscriptions to understand <b>land grants, taxation, kings, temples, administration, trade, social groups, religion, language and local history</b>.</div></div>
+
+<div class="row"><div class="k">Publish Research</div><div class="v">Prepare scholarly readings, translations and notes for journals, catalogues, reports and publications such as archaeological or epigraphical series.</div></div>
+
+<div class="row"><div class="k">Digital Epigraphy</div><div class="v">Modern projects increasingly use <b>high-resolution photography, 3D imaging, GIS, databases, digital archives and image enhancement</b> to document and study inscriptions.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Epigraphist vs Archaeologist</div><div class="v"><b>Epigraphist:</b> specialises in inscriptions, scripts and their historical interpretation.<br><b>Archaeologist:</b> studies material remains more broadly through survey, excavation, artefacts, architecture and scientific methods.<br><br>Epigraphy is one important speciality within the wider archaeology/history field.</div></div>
+
+<div class="row"><div class="k">Epigraphist vs Historian</div><div class="v"><b>Historian:</b> may use many kinds of written and other sources to reconstruct the past.<br><b>Epigraphist:</b> specialises in primary inscriptional evidence and the scripts/languages needed to read it.</div></div>
+
+<div class="row"><div class="k">Epigraphist vs Linguist</div><div class="v"><b>Linguist:</b> studies language scientifically — structure, sound, grammar, change and usage.<br><b>Epigraphist:</b> uses language plus script, historical context, dating and archaeology to interpret inscriptions.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v"><b>Archaeological Survey of India, State Archaeology &amp; Museums Departments, universities, museums, manuscript/heritage institutions, temple-history projects, research institutes and heritage documentation projects.</b></div></div>
+
+<div class="row"><div class="k">Current ASI work</div><div class="v">ASI's Directorate of Epigraphy continues active surveys. Its 2025 activity reporting describes inscriptions being <b>copied, deciphered, transcribed and prepared for publication</b>, including field surveys in Andhra Pradesh and other states.</div></div>
+
+<div class="row"><div class="k">Andhra Pradesh advantage</div><div class="v">Andhra Pradesh has a rich inscriptional record from ancient and medieval dynasties. Learning the evolution of <b>Telugu-Kannada script</b>, Sanskrit/Prakrit and regional history can be especially useful for students who want to work on South Indian epigraphy.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Epigraphy training can also support:
+<div class="chips"><span class="chip">Archaeology</span><span class="chip">Museums</span><span class="chip">History Teaching</span><span class="chip">Heritage Research</span><span class="chip">Archives</span><span class="chip">Cultural Tourism</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Career reality</span><span><b>Reading an inscription is not guessing old letters.</b> A professional reading must be supported by script knowledge, language, chronology, comparison and historical context.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Epigraphy is a small specialist field. Income depends on whether you work in government archaeology, university research, museums, funded projects or heritage documentation.</p>
+
+<div class="card">
+<div class="row"><div class="k">Research / project assistant</div><div class="v"><span class="money">₹15,000 – ₹30,000/month</span><br><span style="font-size:13px">Short-term archaeology/history/heritage projects can begin around this broad range depending on qualification, funding agency and project.</span></div></div>
+
+<div class="row"><div class="k">Academic / research fellowship</div><div class="v"><span class="money">Fellowship-based during higher study</span><br><span style="font-size:13px">Students entering UGC/CSIR or other funded research routes may receive JRF/SRF stipends under the applicable fellowship scheme while completing PhD research.</span></div></div>
+
+<div class="row"><div class="k">ASI Assistant Superintending Epigraphist</div><div class="v"><span class="money">Pay Level 7 · ₹44,900 basic at entry</span><br><span style="font-size:13px">A 2025 ASI promotion order identifies <b>Assistant Superintending Epigraphist</b> as a Group B Gazetted post in <b>Level 7: ₹44,900–₹1,42,400</b>.</span></div></div>
+
+<div class="row"><div class="k">ASI Deputy Superintending Epigraphist</div><div class="v"><span class="money">Pay Level 10 · ₹56,100 basic at entry</span><br><span style="font-size:13px">ASI's 2025 seniority information for Deputy Superintending Epigraphist (Dravidian Inscriptions) lists <b>Pay Level 10</b>. This is a senior specialist position requiring advanced qualifications/experience, not an entry-level graduate job.</span></div></div>
+
+<div class="row"><div class="k">University teaching / research</div><div class="v"><span class="money">Depends on academic post and institution</span><br><span style="font-size:13px">Assistant Professor, project-researcher and university research salaries follow the institution's recruitment rules. NET/SET/PhD requirements may apply depending on the post.</span></div></div>
+
+<div class="row"><div class="k">Study cost</div><div class="v">Epigraphy does <b>not</b> require an expensive private degree. A strong BA/MA in History/Archaeology plus a specialised Epigraphy/Palaeography diploma or university course can be a more sensible route. Language study and field practice matter greatly.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not choose Epigraphy expecting a large number of job openings.</b> It is intellectually valuable but highly specialised. Build parallel skills in Archaeology, Heritage, Museums, Languages, Teaching or Digital Humanities so you have a wider career base.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">History + languages + detective-like detail</span> — Epigraphy may be a strong fit.</p>
+<p><span class="hi">Love excavations and artefacts more than inscriptions</span> — compare Archaeology.</p>
+<p><span class="hi">Love language itself more than historical inscriptions</span> — compare Linguistics / Classical Languages.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>an Epigraphist helps history speak by turning silent inscriptions into readable evidence.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, begin with History, languages and careful observation — not with a specialised degree decision.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen <b>History, Telugu and English</b>; begin Sanskrit if it is available and genuinely interests you</li>
+<li>Visit museums, temples and historical monuments and read the information boards carefully</li>
+<li>Learn the idea of a <b>primary source</b>: evidence created in the historical period itself</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Prefer <b>Humanities / CEC with History</b> if available</li>
+<li>After Class 12, compare <b>BA History, Archaeology, Ancient History and relevant language programmes</b></li>
+<li>Keep language learning active — especially Telugu/Sanskrit and another regional/classical language relevant to your research interest</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>After Bachelor's</div><ul>
+<li>Complete an <b>MA in Ancient Indian History &amp; Archaeology / Archaeology / History</b></li>
+<li>Add a specialised <b>PG Diploma / coursework in Epigraphy &amp; Palaeography</b>; SVU Tirupati is one current AP example</li>
+<li>Build field experience by documenting inscriptions, learning estampage/digital recording methods and working with research/heritage projects</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Visit a historical temple or monument with a published inscription. Photograph only where permitted, then compare the inscription with an authoritative published transcription. Try to identify repeated characters and understand how scholars dated it. If the <b>script itself</b> becomes as interesting as the monument, Epigraphy may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official recruitment notice. Current Andhra Pradesh study examples were checked against Sri Venkateswara University's Department of Ancient Indian History, Culture &amp; Archaeology, which currently offers a 2-year MA and a 1-year PG Diploma in Epigraphy; its 2024–25 syllabus includes Epigraphy &amp; Palaeography, Brahmi, Kharoshthi, Telugu-Kannada script development, inscription dating and detailed inscription study. Archaeological Survey of India sources confirm an active Directorate of Epigraphy at Mysuru and zonal epigraphy offices. Government epigraphy recruitment is specialised and irregular; exact degrees, language requirements, experience and pay must be checked in the specific recruitment notification.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Epigraphy fit</strong>You seem comfortable with History, languages, detail and patient research. Build a broad History/Archaeology foundation before specialising.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of the field. Try learning a historical script and compare Epigraphy with Archaeology, History and Museum careers.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may enjoy history without enjoying script-based research. Compare Archaeology, History Teaching, Museums, Heritage Management or Cultural Tourism.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

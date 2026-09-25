@@ -75,6 +75,14 @@ const CAREER_AUDIO_MAP: Record<string, string> = {
   horticulturist: `${SUPABASE_AUDIO_BASE_URL}/horticulturist.mp3`,
   stenographer: `${SUPABASE_AUDIO_BASE_URL}/stenographer.mp3`,
   designer: `${SUPABASE_AUDIO_BASE_URL}/graphic_designer.mp3`,
+  "cyber-security": `${SUPABASE_AUDIO_BASE_URL}/Cyber%20Security%20Specialist.mp3`,
+  astrophysicist: `${SUPABASE_AUDIO_BASE_URL}/Astrophysicist.mp3`,
+  "income-tax-officer": `${SUPABASE_AUDIO_BASE_URL}/Income%20Tax%20Officer.mp3`,
+  "food-safety-officer": `${SUPABASE_AUDIO_BASE_URL}/Food%20Safety%20Officer.mp3`,
+  "yoga-doctor": `${SUPABASE_AUDIO_BASE_URL}/Yoga%20%26%20Naturopathy%20Doctor.mp3`,
+  "speech-pathologist": `${SUPABASE_AUDIO_BASE_URL}/Speech-Language%20Pathologist.mp3`,
+  epigraphist: `${SUPABASE_AUDIO_BASE_URL}/Epigraphist.mp3`,
+  geneticist: `${SUPABASE_AUDIO_BASE_URL}/Geneticist.mp3`,
 };
 
 interface CareerItem {
@@ -297,6 +305,61 @@ const CATEGORY_MAP: Record<string, { category: string; streamBadge: string; desc
     category: "Commerce & Finance",
     streamBadge: "Any Stream + Shorthand Certification",
     description: "High-speed verbatim transcription, court reporting, parliamentary reporting, SSC Stenographer Grade C & D, and secretarial executive roles in government.",
+  },
+  astrophysicist: {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "MPC / B.Sc / B.Tech / Ph.D",
+    description: "Observational astronomy, theoretical astrophysics, planetary exploration, ISRO/NASA research programs, and deep space data analysis.",
+  },
+  "cyber-security": {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "MPC / B.Tech CSE / IT",
+    description: "Penetration testing, network security, ethical hacking, digital forensics, threat response, and critical infrastructure defense.",
+  },
+  "drone-pilot": {
+    category: "Aviation & Hospitality",
+    streamBadge: "Any Stream / DGCA Certified",
+    description: "DGCA Remote Pilot Certification, commercial UAV operations, agricultural spraying, geographic surveying, aerial cinematography, and drone maintenance.",
+  },
+  epigraphist: {
+    category: "Arts, Design & Media",
+    streamBadge: "Humanities / B.A History",
+    description: "Deciphering ancient stone and copper plate inscriptions, classical linguistics, Archaeological Survey of India (ASI) epigraphy branch, and historical chronology.",
+  },
+  "fitness-coach": {
+    category: "Aviation & Hospitality",
+    streamBadge: "Any Stream / B.P.Ed / Certified",
+    description: "Exercise physiology, strength conditioning, functional training, gym management, celebrity personal training, and international fitness certifications.",
+  },
+  "food-safety-officer": {
+    category: "Civil Services & Defence",
+    streamBadge: "BiPC / B.Sc Food Tech / Chemistry",
+    description: "FSSAI compliance enforcement, food adulteration inspection, laboratory testing, state civil supplies regulation, and public health standards.",
+  },
+  geneticist: {
+    category: "Medical & Healthcare (BiPC)",
+    streamBadge: "BiPC / B.Sc Genetics / Biotech",
+    description: "DNA sequencing, gene editing (CRISPR), hereditary disease research, clinical genetics, agricultural biotechnology, and molecular biology.",
+  },
+  "income-tax-officer": {
+    category: "Civil Services & Defence",
+    streamBadge: "Any Degree / SSC CGL",
+    description: "Central Board of Direct Taxes (CBDT), direct tax assessment, corporate investigation, anti-evasion raids, and central civil service career security.",
+  },
+  "railway-jobs": {
+    category: "Civil Services & Defence",
+    streamBadge: "10th / ITI / Diploma / Any Degree",
+    description: "Assistant Loco Pilot (ALP), Station Master, Track Maintainer, Section Engineer, RRB examinations, and lifetime railway welfare benefits.",
+  },
+  "speech-pathologist": {
+    category: "Medical & Healthcare (BiPC)",
+    streamBadge: "BiPC / BASLP",
+    description: "Speech impediment therapy, hearing rehabilitation, pediatric communication disorders, clinical audiology, and private clinic setup.",
+  },
+  "yoga-doctor": {
+    category: "Medical & Healthcare (BiPC)",
+    streamBadge: "BiPC / BNYS (5.5 Years)",
+    description: "5.5-year medical degree in naturopathy, yogic therapeutics, lifestyle disease reversal, AYUSH government medical officer roles, and wellness centers.",
   },
   "not-decided": {
     category: "Self-Discovery & Exploration",

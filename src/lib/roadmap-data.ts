@@ -57,6 +57,17 @@ export const DEFAULT_CAREER_OPTIONS = [
   { id: "forensic-scientist", label: "Forensic Scientist", icon: "🔍", file: "four-circles-forensic-scientist.html" },
   { id: "horticulturist", label: "Horticulturist", icon: "🪴", file: "four-circles-horticulturist.html" },
   { id: "stenographer", label: "Stenographer", icon: "⌨️", file: "four-circles-stenographer.html" },
+  { id: "astrophysicist", label: "Astrophysicist / Space Scientist", icon: "🔭", file: "four-circles-astrophysicist.html" },
+  { id: "cyber-security", label: "Cyber Security Specialist / Ethical Hacker", icon: "🛡️", file: "four-circles-cyber-security-specialist.html" },
+  { id: "drone-pilot", label: "Drone Pilot & UAV Technician", icon: "🛸", file: "four-circles-drone-pilot-uav-technician.html" },
+  { id: "epigraphist", label: "Epigraphist (Inscriptions Specialist)", icon: "📜", file: "four-circles-epigraphist.html" },
+  { id: "fitness-coach", label: "Fitness Coach / Personal Trainer", icon: "🏋️", file: "four-circles-fitness-coach.html" },
+  { id: "food-safety-officer", label: "Food Safety Officer (FSO)", icon: "🧪", file: "four-circles-food-safety-officer.html" },
+  { id: "geneticist", label: "Geneticist / Biotech Researcher", icon: "🧬", file: "four-circles-geneticist.html" },
+  { id: "income-tax-officer", label: "Income Tax Officer (SSC CGL)", icon: "💼", file: "four-circles-income-tax-officer.html" },
+  { id: "railway-jobs", label: "Indian Railways Jobs (RRB NTPC & ALP)", icon: "🚆", file: "four-circles-indian-railways-jobs.html" },
+  { id: "speech-pathologist", label: "Speech-Language Pathologist (Audiologist)", icon: "🗣️", file: "four-circles-speech-language-pathologist.html" },
+  { id: "yoga-doctor", label: "Yoga & Naturopathy Doctor (BNYS)", icon: "🧘", file: "four-circles-yoga-naturopathy-doctor.html" },
   { id: "not-decided", label: "Not Decided Yet", icon: "🧭", file: "four-circles-not-decided-yet.html" },
   { id: "other", label: "Other", icon: "✨", file: "four-circles-not-decided-yet.html" },
 ] as const;
@@ -79,6 +90,9 @@ export function findCareerFormatFile(careerGoal: string): string | null {
   if (normalized.includes("air hostess") || normalized.includes("airhostess") || normalized.includes("cabin crew") || normalized.includes("flight attendant") || normalized.includes("steward")) return "four-circles-air-hostess.html";
   if (normalized.includes("physiotherapy") || normalized.includes("physiotherapist") || normalized.includes("bpt") || normalized.includes("mpt") || normalized.includes("physical therapy") || normalized.includes("physical therapist")) return "four-circles-physiotherapy.html";
   if (normalized.includes("not decided") || normalized.includes("undecided") || normalized.includes("not sure") || normalized.includes("confused") || normalized.includes("dont know") || normalized.includes("don't know")) return "four-circles-not-decided-yet.html";
+  if (normalized.includes("yoga") || normalized.includes("naturopathy") || normalized.includes("bnys")) return "four-circles-yoga-naturopathy-doctor.html";
+  if (normalized.includes("speech") || normalized.includes("audiolog") || normalized.includes("baslp") || normalized.includes("pathologist") || normalized.includes("speech therapist")) return "four-circles-speech-language-pathologist.html";
+  if (normalized.includes("genetic") || normalized.includes("gene editing") || normalized.includes("crispr") || normalized.includes("genomics")) return "four-circles-geneticist.html";
   if (normalized.includes("doctor") || normalized.includes("mbbs")) return "four-circles-doctor-mbbs.html";
   if (normalized.includes("police")) return "four-circles-police-officer.html";
   if (normalized.includes("teacher")) return "four-circles-teacher.html";
@@ -93,14 +107,17 @@ export function findCareerFormatFile(careerGoal: string): string | null {
   if (normalized.includes("hotel") || normalized.includes("hospitality") || normalized.includes("nchm") || normalized.includes("catering")) return "four-circles-hotel-management.html";
   if (normalized.includes("psycholog") || normalized.includes("counsellor") || normalized.includes("counselor") || normalized.includes("counseling") || normalized.includes("mental health")) return "four-circles-psychologist.html";
   if (normalized.includes("environment") || normalized.includes("ecology") || normalized.includes("eia") || normalized.includes("pollution control")) return "four-circles-environmental-consultant.html";
+  if (normalized.includes("epigraph") || normalized.includes("inscription")) return "four-circles-epigraphist.html";
   if (normalized.includes("archaeolog") || normalized.includes("excavation") || normalized.includes("ancient history") || normalized.includes("asi")) return "four-circles-archaeologist.html";
   if (normalized.includes("nutrition") || normalized.includes("dietitian") || normalized.includes("dietician") || normalized.includes("dietetics")) return "four-circles-nutritionist.html";
   if (normalized.includes("veterinar") || normalized.includes("vet doctor") || normalized.includes("animal doctor") || normalized.includes("bvsc") || normalized.includes("b.v.sc")) return "four-circles-veterinarian.html";
   if (normalized.includes("beautician") || normalized.includes("beauty") || normalized.includes("cosmetolog") || normalized.includes("makeup artist") || normalized.includes("make up") || normalized.includes("hair stylist") || normalized.includes("salon")) return "four-circles-beautician.html";
+  if (normalized.includes("fitness coach") || normalized.includes("personal trainer") || normalized.includes("gym trainer") || normalized.includes("fitness trainer")) return "four-circles-fitness-coach.html";
   if (normalized.includes("sport") || normalized.includes("athlete") || normalized.includes("athletics") || normalized.includes("cricket") || normalized.includes("football") || normalized.includes("badminton") || normalized.includes("khelo india") || normalized.includes("sportsman") || normalized.includes("sportswoman")) return "four-circles-sports-professional-athlete.html";
   if (normalized.includes("interior") || normalized.includes("furniture design") || normalized.includes("home decor") || normalized.includes("spatial design")) return "four-circles-interior-designer.html";
   if (normalized.includes("graphic")) return "four-circles-graphic-designer.html";
   if (normalized.includes("fashion")) return "four-circles-fashion-designer.html";
+  if (normalized.includes("drone") || normalized.includes("uav") || normalized.includes("remote pilot")) return "four-circles-drone-pilot-uav-technician.html";
   if (normalized.includes("pilot") || normalized.includes("aviation")) return "four-circles-commercial-pilot.html";
   if (normalized.includes("mba") || normalized.includes("business management") || normalized.includes("bba")) return "four-circles-business-management-mba.html";
   if (normalized.includes("entrepreneur") || normalized.includes("startup") || normalized.includes("start-up") || normalized.includes("business owner") || normalized.includes("own business") || normalized.includes("founder") || normalized.includes("businessman") || normalized.includes("businesswoman")) return "four-circles-entrepreneur-business-owner.html";
@@ -110,12 +127,17 @@ export function findCareerFormatFile(careerGoal: string): string | null {
   if (normalized.includes("forensic") || normalized.includes("criminolog")) return "four-circles-forensic-scientist.html";
   if (normalized.includes("horticultur") || normalized.includes("floricultur")) return "four-circles-horticulturist.html";
   if (normalized.includes("stenograph") || normalized.includes("steno") || normalized.includes("shorthand")) return "four-circles-stenographer.html";
-  if (normalized.includes("scientist") || normalized.includes("researcher") || normalized.includes("isro") || normalized.includes("drdo") || normalized.includes("iisc") || normalized.includes("iiser") || normalized.includes("astronomy") || normalized.includes("astrophysics") || normalized.includes("research")) return "four-circles-scientist.html";
+  if (normalized.includes("astrophysic") || normalized.includes("astronomy") || normalized.includes("space scientist")) return "four-circles-astrophysicist.html";
+  if (normalized.includes("scientist") || normalized.includes("researcher") || normalized.includes("isro") || normalized.includes("drdo") || normalized.includes("iisc") || normalized.includes("iiser") || normalized.includes("research")) return "four-circles-scientist.html";
   if (normalized.includes("journalist") || normalized.includes("journalism") || normalized.includes("news reporter")) return "four-circles-journalist.html";
   if (normalized.includes("pharmacist") || normalized.includes("pharmacy")) return "four-circles-pharmacist.html";
-  if (normalized.includes("government job") || normalized.includes("govt job") || normalized.includes("sarkari") || normalized.includes("ssc") || normalized.includes("railway") || normalized.includes("rrb") || normalized.includes("appsc") || normalized.includes("group 1") || normalized.includes("group 2") || normalized.includes("group 4") || normalized.includes("group-1") || normalized.includes("group-2") || normalized.includes("chsl") || normalized.includes("cgl")) return "four-circles-government-jobs.html";
+  if (normalized.includes("income tax") || normalized.includes("tax officer") || normalized.includes("cbdt") || normalized.includes("tax inspector")) return "four-circles-income-tax-officer.html";
+  if (normalized.includes("railway") || normalized.includes("rrb") || normalized.includes("loco pilot") || normalized.includes("station master") || normalized.includes("railways")) return "four-circles-indian-railways-jobs.html";
+  if (normalized.includes("food safety") || normalized.includes("fso") || normalized.includes("fssai")) return "four-circles-food-safety-officer.html";
+  if (normalized.includes("government job") || normalized.includes("govt job") || normalized.includes("sarkari") || normalized.includes("ssc") || normalized.includes("appsc") || normalized.includes("group 1") || normalized.includes("group 2") || normalized.includes("group 4") || normalized.includes("group-1") || normalized.includes("group-2") || normalized.includes("chsl") || normalized.includes("cgl")) return "four-circles-government-jobs.html";
 
   // Check software engineer keywords BEFORE general engineer
+  if (normalized.includes("cyber security") || normalized.includes("cybersecurity") || normalized.includes("ethical hack") || normalized.includes("infosec") || normalized.includes("penetration test")) return "four-circles-cyber-security-specialist.html";
   if (normalized.includes("software") || normalized.includes("developer") || normalized.includes("programmer") || normalized.includes("coder") || normalized.includes("cse")) return "four-circles-software-engineer.html";
 
   // Core / General Engineering

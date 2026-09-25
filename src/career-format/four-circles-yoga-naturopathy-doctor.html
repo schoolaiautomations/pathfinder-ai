@@ -1,0 +1,368 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Yoga & Naturopathy Doctor (BNYS)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · Andhra Pradesh</div><h2>Yoga &amp; Naturopathy Doctor (BNYS)</h2><p class="standfirst">A Yoga &amp; Naturopathy professional with a <b>BNYS — Bachelor of Naturopathy and Yogic Sciences</b> degree works in naturopathy, therapeutic yoga, lifestyle counselling, diet planning and non-pharmacological wellness care within the scope permitted by the relevant registration and institutional rules. BNYS is a distinct professional pathway — it is <b>not the same as MBBS</b>.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Yoga &amp; Naturopathy Doctor (BNYS) &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Health + lifestyle</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>BiPC → BNYS</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Careers</b><em>Clinical + wellness</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Private + govt. routes</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Would Yoga &amp; Naturopathy suit you?</h3><p class="lede">This career is more than knowing yoga poses. You study health sciences, examine patients, plan lifestyle-based care, supervise therapies, maintain records and work within a defined professional scope.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do Biology, human health and how the body works interest you?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy teaching and supervising yoga or lifestyle changes for different people?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you listen patiently to a person's health history and explain recommendations clearly?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be comfortable working in hospitals, wellness centres or residential naturopathy settings?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you follow evidence, safety rules and referral limits instead of claiming that one therapy can cure everything?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to complete a long 5½-year professional course including internship?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Which pathway can you take?</h3><p class="lede">For Andhra Pradesh students, the direct route is simple: <b>Class 10 → BiPC → BNYS admission → 5½-year BNYS including internship → registration as applicable → clinical/wellness career.</b></p>
+
+<div class="flag green"><span class="mark">Course words</span><span><b>BNYS = Bachelor of Naturopathy and Yogic Sciences.</b> It is a professional undergraduate course in Naturopathy &amp; Yoga. <b>Dr. NTRUHS = Dr. N.T.R. University of Health Sciences</b>, which currently conducts BNYS admissions in Andhra Pradesh.</span></div>
+
+<div class="card">
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Choose BiPC — Biology, Physics and Chemistry.</b><br><br>For the latest completed Andhra Pradesh BNYS admission cycle (2025–26), candidates needed <b>Physics, Chemistry, Biology and English</b> in Class 12 / Intermediate.</div></div>
+
+<div class="row"><div class="k">Minimum marks — AP example</div><div class="v">In the 2025–26 Dr. NTRUHS prospectus, the minimum aggregate in Science subjects was <b>50% for OC</b>, <b>40% for SC/ST/BC/PwD</b> and <b>45% for OC-PwD</b>, with English compulsory.<br><br>Always check the prospectus for your admission year because rules can change.</div></div>
+
+<div class="row"><div class="k">Entrance exam in Andhra Pradesh?</div><div class="v"><b>In the latest completed 2025–26 AP Competent Authority admission, BNYS merit was based on Intermediate marks in Biology, Physics and Chemistry.</b><br><br>The prospectus did <b>not</b> use NEET for this BNYS counselling cycle. Students applied through Dr. NTRUHS and seats were allotted through the university's merit/web-counselling process.<br><br><b>Do not assume this will remain unchanged forever — verify the current year's prospectus.</b></div></div>
+
+<div class="row"><div class="k">Course duration</div><div class="v"><b>BNYS = 5½ academic years</b>, including <b>1 year compulsory rotatory internship</b> under the current Dr. NTRUHS prospectus.<br><br>This is therefore a full professional healthcare course, not a short yoga certificate.</div></div>
+
+<div class="row"><div class="k">What you study</div><div class="v">The curriculum combines basic health sciences and professional subjects such as <b>Anatomy, Physiology, Pathology, Yoga, Nutrition/Dietetics, Naturopathy principles and clinical/practical training</b>, with the exact syllabus prescribed by the university.</div></div>
+
+<div class="row"><div class="k">AP colleges — latest completed cycle</div><div class="v">The 2025–26 Dr. NTRUHS Competent Authority prospectus listed:<br><br><b>CARE Yoga Naturopathy Medical College &amp; Hospital, Bapatla</b><br><b>Sri Pathanjali Maharshi Naturopathy &amp; Yoga Medical College, Guntakal</b><br><br>The Ministry of AYUSH's national institutional listing also includes these Andhra Pradesh BNYS colleges.</div></div>
+
+<div class="row"><div class="k">Registration after BNYS</div><div class="v">Yoga &amp; Naturopathy registration has historically been handled through <b>state-level arrangements</b>, with central registration initiatives also administered through the Yoga &amp; Naturopathy system.<br><br><b>Before practising, graduates should verify the registration requirement that applies in the state where they intend to work.</b></div></div>
+
+<div class="row"><div class="k">Higher study</div><div class="v">Depending on institution and state availability, BNYS graduates can pursue postgraduate study in <b>Naturopathy, Yoga, Public Health, Hospital Administration, research and related areas</b>. Teaching/research careers may value PG and PhD qualifications.</div></div>
+
+<div class="row"><div class="k">You must clear</div><div class="v"><b>Class 10 → BiPC → Class 12 with Physics + Chemistry + Biology + English → apply through the current BNYS admission process → BNYS 5½ years including 1-year internship → complete applicable registration → Naturopathy / Yoga clinical, wellness, teaching or research career.</b></div></div>
+
+<div class="flag red"><span class="mark">Very important</span><span><b>BNYS is not MBBS.</b> A BNYS graduate should work within the legally permitted scope of Naturopathy &amp; Yoga practice and the rules of the state/institution. Do not assume a BNYS qualification automatically gives the same authority as an MBBS doctor to prescribe modern medicines, perform medical procedures or manage emergencies independently.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · CAREER AREAS</div><h3>What work can you do after BNYS?</h3><p class="lede">BNYS careers can be clinical, wellness-focused, educational, research-oriented or entrepreneurial.</p>
+
+<div class="card">
+<div class="row"><div class="k">Naturopathy Consultant</div><div class="v"><b>Assess lifestyle, health history and wellness goals</b> and provide naturopathy/lifestyle-based care within professional scope.<div class="chips"><span class="chip">Consultation</span><span class="chip">Lifestyle</span><span class="chip">Wellness</span></div></div></div>
+
+<div class="row"><div class="k">Yoga Therapy Practitioner</div><div class="v">Use structured yoga practices such as movement, breathing and relaxation approaches adapted to the person's condition and abilities, within the practitioner's competence and institutional protocols.</div></div>
+
+<div class="row"><div class="k">Lifestyle &amp; Diet Counselling</div><div class="v">Support people with practical lifestyle routines, sleep, activity and diet planning within the boundaries of BNYS training and the clinical setting.</div></div>
+
+<div class="row"><div class="k">Hospital / Wellness Centre BNYS Doctor</div><div class="v">Work with OP and IP clients/patients in naturopathy hospitals, AYUSH/integrative settings, wellness centres and residential health programmes.</div></div>
+
+<div class="row"><div class="k">Naturopathy Therapy Supervision</div><div class="v">Supervise institutionally approved naturopathy modalities such as hydrotherapy, mud applications, massage and other non-pharmacological therapies taught within BNYS programmes.</div></div>
+
+<div class="row"><div class="k">Preventive / Lifestyle Programmes</div><div class="v">Work in wellness, stress-management and lifestyle programmes focused on healthy routines and risk-factor reduction, while referring people for medical evaluation when needed.</div></div>
+
+<div class="row"><div class="k">Research</div><div class="v">Work in Yoga &amp; Naturopathy research through organisations such as the <b>Central Council for Research in Yoga &amp; Naturopathy (CCRYN)</b>, universities and research institutions. Advanced research roles often require postgraduate/PhD training.</div></div>
+
+<div class="row"><div class="k">Teaching</div><div class="v">With the required experience and qualifications, BNYS graduates can move into teaching in Yoga &amp; Naturopathy colleges. Government institutes may require experience and may prefer PG/PhD qualifications for senior academic roles.</div></div>
+
+<div class="row"><div class="k">Wellness / Retreat Industry</div><div class="v">Work in health resorts, yoga retreats, corporate wellness programmes and integrative wellness centres. Communication and client-management skills are especially important here.</div></div>
+
+<div class="row"><div class="k">Own Clinic / Wellness Centre</div><div class="v">After meeting applicable registration, local licensing and professional requirements, some graduates establish private Naturopathy/Yoga practices or wellness centres. Business success depends on trust, location, ethical practice and service quality.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">BNYS vs MBBS</div><div class="v"><b>BNYS:</b> Naturopathy &amp; Yogic Sciences professional pathway focused on naturopathy, yoga and lifestyle-based approaches.<br><br><b>MBBS:</b> modern-medicine medical degree covering diagnosis, pharmacology, surgery, emergency medicine and the full modern medical curriculum.<br><br>They are <b>not interchangeable qualifications</b>.</div></div>
+
+<div class="row"><div class="k">BNYS vs Yoga Instructor</div><div class="v"><b>BNYS professional:</b> completes a 5½-year healthcare-oriented degree including clinical training and internship.<br><b>Yoga Instructor:</b> may complete a certificate/diploma/degree focused mainly on teaching yoga.<br><br>A short yoga certificate is not equivalent to BNYS.</div></div>
+
+<div class="row"><div class="k">BNYS vs Physiotherapist</div><div class="v"><b>BNYS:</b> naturopathy, yoga and lifestyle-health pathway.<br><b>Physiotherapist:</b> trained specifically in physical rehabilitation, movement dysfunction and physiotherapy techniques through BPT and professional standards applicable to physiotherapy.</div></div>
+
+<div class="row"><div class="k">When referral matters</div><div class="v"><b>A responsible BNYS practitioner should recognise when a person needs conventional medical diagnosis, emergency treatment, surgery, medication management or specialist care.</b> Lifestyle and yoga-based care should not delay necessary medical treatment.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v">Naturopathy hospitals, Yoga &amp; Naturopathy medical colleges, integrative hospitals, wellness centres, resorts, rehabilitation/wellness programmes, research institutes, public-health projects and private practice subject to applicable rules.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">BNYS skills can also support:
+<div class="chips"><span class="chip">Yoga Therapy</span><span class="chip">Wellness Management</span><span class="chip">Public Health</span><span class="chip">Hospital Administration</span><span class="chip">Research</span><span class="chip">Teaching</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Professional reality</span><span><b>Good Naturopathy practice should be safe, ethical and evidence-aware.</b> Avoid promising cures for serious diseases, respect professional limits and refer appropriately when medical evaluation is needed.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">BNYS income varies widely between wellness centres, hospitals, teaching/research institutions and private practice.</p>
+
+<div class="card">
+<div class="row"><div class="k">Intern / trainee</div><div class="v"><span class="money">Stipend varies by institution</span><br><span style="font-size:13px">BNYS includes a compulsory rotatory internship, but stipend arrangements differ by college/state/institution. Verify this before admission rather than assuming every internship is paid.</span></div></div>
+
+<div class="row"><div class="k">Starting private BNYS role</div><div class="v"><span class="money">₹18,000 – ₹30,000/month</span><br><span style="font-size:13px">Current 2026 job postings include early-career BNYS / Naturopathy roles around this range, depending on city, employer and responsibilities.</span></div></div>
+
+<div class="row"><div class="k">India benchmark</div><div class="v"><span class="money">≈ ₹28,969/month</span><br><span style="font-size:13px">Indeed's January 2026 India benchmark for <b>Naturopath</b> was about <b>₹28,969/month</b>, based on only <b>7 reported salaries</b>. Treat this as a rough reference, not a guaranteed BNYS salary.</span></div></div>
+
+<div class="row"><div class="k">Experienced wellness / consultant role</div><div class="v"><span class="money">₹28,000 – ₹45,000+/month</span><br><span style="font-size:13px">Current 2026 BNYS job advertisements show some experienced/private wellness roles in this range. Premium wellness centres or management responsibilities can differ significantly.</span></div></div>
+
+<div class="row"><div class="k">Government / research institute example</div><div class="v"><span class="money">Can be much higher with experience</span><br><span style="font-size:13px">National Institute of Naturopathy recruitment has previously listed <b>Resident Medical Officer at Pay Level 10</b> and <b>Assistant Professor at Pay Level 11</b>, but these posts required BNYS plus substantial experience and/or additional qualifications. They are not fresher salary examples.</span></div></div>
+
+<div class="row"><div class="k">Own practice</div><div class="v"><span class="money">Highly variable</span><br><span style="font-size:13px">Private practice income depends on location, patient volume, reputation, legal/registration requirements, operating costs and the services offered. Revenue is not the same as profit.</span></div></div>
+
+<div class="row"><div class="k">AP course-cost example</div><div class="v">In the latest completed 2025–26 Dr. NTRUHS Competent Authority prospectus, the two listed AP private BNYS colleges had a government-notified tuition amount of <b>₹24,500</b> under the cited fee orders, in addition to university/other applicable charges. Fees can change, so always check the new prospectus.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not choose BNYS only because it contains the word “Doctor.”</b> Compare the actual career market, scope of practice, registration rules, course duration and likely early-career income before committing 5½ years.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Health + yoga + lifestyle counselling</span> — BNYS may be a strong fit.</p>
+<p><span class="hi">Want modern medicine, drugs, surgery and emergency care</span> — compare MBBS.</p>
+<p><span class="hi">Love yoga but do not want a 5½-year healthcare degree</span> — compare Yoga Instructor / Yoga Therapist education routes.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>BNYS is a distinct professional health pathway — understand its real scope before choosing it simply because the graduate may work in a clinical setting.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, test both sides of the career: the health-science side and the yoga/lifestyle side.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Strengthen <b>Biology and basic Chemistry</b></li>
+<li>Learn yoga from a qualified instructor and understand that safe teaching involves more than copying poses</li>
+<li>Develop communication and listening skills because much of healthcare is understanding the person in front of you</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>BiPC</b></li>
+<li>Complete Physics, Chemistry, Biology and English in Intermediate/Class 12</li>
+<li>Check the current <b>Dr. NTRUHS BNYS prospectus</b> rather than assuming NEET or another exam is required</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During BNYS</div><ul>
+<li>Take Anatomy, Physiology, Pathology and clinical subjects seriously — not only Yoga</li>
+<li>Use internship to understand real patient communication, documentation, safety and referral</li>
+<li>Decide whether you prefer <b>clinical practice, yoga therapy, wellness, teaching, research or public health</b></li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Spend a day observing a legitimate <b>BNYS hospital or Yoga &amp; Naturopathy medical college</b> if permitted. Ask what practitioners actually do during OP consultations, inpatient care and internship. If the <b>health-science + patient-care + lifestyle</b> work interests you — not just yoga classes — BNYS may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not medical advice or an official admission notice. Andhra Pradesh pathway details are based on Dr. NTR University of Health Sciences BNYS Competent Authority admissions for 2025–26, the latest completed cycle located for this report. That prospectus required Physics, Chemistry, Biology and English, selected candidates using qualifying-examination PCB marks, and specified a 5½-year course including a 1-year compulsory rotatory internship. Ministry of AYUSH sources list Yoga &amp; Naturopathy as an AYUSH system and identify BNYS institutions, but professional registration arrangements for Yoga &amp; Naturopathy are not identical to the statutory councils governing every other medical system. Students should verify the current university prospectus, state registration rules and professional scope before admission or practice.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong BNYS fit</strong>You seem comfortable with health science, patient communication and lifestyle-based care. Now compare BNYS carefully with MBBS, Physiotherapy, Nutrition and Yoga careers before choosing.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of the career. Visit a genuine BNYS institution and understand the 5½-year curriculum and real clinical work before committing.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may enjoy yoga or wellness without wanting a long clinical degree. Compare Yoga Instructor, Nutrition, Physiotherapy, Psychology or other health careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — Astrophysicist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Career fit check · India</div><h2>Astrophysicist</h2><p class="standfirst">Astrophysicists use Physics and Mathematics to understand stars, planets, galaxies, black holes, gravitational waves, dark matter and the Universe itself. Much of the work is not simply looking through a telescope — it involves coding, analysing large datasets, building mathematical models, using simulations and testing ideas against observations.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; Astrophysicist &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Interest</b><em>Physics + curiosity</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Physics → research</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Research</b><em>Many space fields</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Research career</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Do you really want Astrophysics?</h3><p class="lede">Liking space videos is a good start, but professional astrophysics requires strong Physics, Mathematics, coding and patience with difficult research problems.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you enjoy Physics enough to understand why things move, shine, orbit and interact?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to become strong in Mathematics, including calculus, algebra and probability?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy learning programming to analyse data and run scientific simulations?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can you spend a long time working on one scientific question without knowing the answer in advance?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you enjoy reading scientific papers and comparing evidence instead of relying on exciting space claims?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to study for many years, including postgraduate study and usually a PhD for research careers?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>Which pathway can you take?</h3><p class="lede">The safest route is to build a very strong foundation in Physics and Mathematics first, then specialise in Astronomy/Astrophysics during higher study and research.</p>
+
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Physics</div><div class="v">Mechanics, electricity and magnetism, waves, optics, thermodynamics, quantum physics and relativity form the scientific foundation of astrophysics.</div></div>
+
+<div class="row"><div class="k"><span class="subno">2</span>Mathematics</div><div class="v">Astrophysics uses algebra, calculus, differential equations, vectors, matrices, probability and statistics to describe physical systems.</div></div>
+
+<div class="row"><div class="k"><span class="subno">3</span>Programming</div><div class="v">Python is widely useful for scientific computing and data analysis. Researchers also use numerical methods, simulations, Linux and specialised scientific software.</div></div>
+
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Choose MPC — Mathematics, Physics and Chemistry.</b><br><br>This is the strongest and safest route because serious undergraduate Physics programmes require strong Mathematics and Physics foundations. For example, IISc's 2026 B.S. (Research) programme requires Physics, Chemistry and Mathematics in Class 12.</div></div>
+
+<div class="row"><div class="k">Route A — B.Sc. Physics</div><div class="v"><b>Class 10 → MPC → B.Sc. Physics / B.Sc. (Hons.) Physics → M.Sc. Physics / Astronomy / Astrophysics → PhD in Astronomy/Astrophysics → Astrophysicist.</b><br><br>This is one of the most direct and affordable routes through Indian universities and degree colleges.</div></div>
+
+<div class="row"><div class="k">Route B — IISER</div><div class="v"><b>MPC → IISER Aptitude Test (IAT) → 5-year BS-MS Dual Degree → Physics major / research projects → PhD in Astronomy/Astrophysics.</b><br><br>IISERs are especially useful for students who want an undergraduate education strongly connected to scientific research.</div></div>
+
+<div class="row"><div class="k">Route C — NISER / CEBS</div><div class="v"><b>MPC → National Entrance Screening Test (NEST) → 5-year Integrated M.Sc. at NISER or UM-DAE CEBS → Physics specialisation → PhD / astrophysics research.</b><br><br>NEST 2026 requires students to have studied at least three of Biology, Chemistry, Mathematics and Physics in Classes 11–12.</div></div>
+
+<div class="row"><div class="k">Route D — IISc</div><div class="v"><b>MPC → JEE Advanced or IISER Aptitude Test (IAT) → 4-year B.S. (Research) at IISc → Physics major / research → M.S./PhD or direct research pathway.</b><br><br>For 2026, IISc admits Indian students to B.S. (Research) through <b>JEE Advanced 2026 or IAT 2026</b>, subject to eligibility.</div></div>
+
+<div class="row"><div class="k">Route E — Engineering / Engineering Physics</div><div class="v"><b>MPC → JEE / engineering entrance → Engineering Physics / ECE / CSE / Mechanical / related field → M.Sc./M.Tech/MS or research in astronomy, instrumentation, computation or space science → PhD where needed.</b><br><br>This route can be especially useful for astronomical instrumentation, detectors, telescopes, scientific computing and space-technology research.</div></div>
+
+<div class="row"><div class="k">After Bachelor's / Master's</div><div class="v">For professional astrophysics research, students usually move into <b>M.Sc./Integrated PhD/PhD</b> programmes in Physics, Astronomy or Astrophysics.<br><br>Common national screening routes include <b>JEST</b> (Joint Entrance Screening Test), <b>CSIR-UGC NET/JRF</b>, <b>GATE</b> and institute-specific tests/interviews.</div></div>
+
+<div class="row"><div class="k">IUCAA route</div><div class="v"><b>IUCAA = Inter-University Centre for Astronomy and Astrophysics, Pune.</b><br><br>IUCAA is one of India's major astrophysics research centres. Its current PhD routes include <b>INAT (IUCAA National Admission Test), JEST and CSIR-UGC NET/JRF</b>, followed by the institute's selection process. IUCAA's INAT also supports selection to its joint M.Sc. Physics with Astrophysics programme with Savitribai Phule Pune University.</div></div>
+
+<div class="row"><div class="k">Do you need a PhD?</div><div class="v"><b>For a long-term career as an independent Astrophysicist / research scientist, usually yes.</b><br><br>A PhD trains you to do original research and is normally expected for permanent research scientist, faculty and advanced astrophysics positions. Bachelor's/Master's graduates can still work in scientific programming, observatory support, data analysis, instrumentation and project roles.</div></div>
+
+<div class="row"><div class="k">Complete roadmap</div><div class="v"><b>Class 10 → MPC → B.Sc./BS/BS-MS/B.Tech with strong Physics &amp; Maths → research projects → M.Sc./Integrated PhD where applicable → JEST / NET-JRF / GATE / INAT or institute route → PhD in Astronomy/Astrophysics → Postdoctoral Research → Astrophysicist / Scientist / Faculty.</b></div></div>
+
+<div class="flag red"><span class="mark">Important</span><span><b>Do not choose this career only because you like space.</b> The day-to-day work is mostly Physics, Mathematics, programming, data analysis, scientific writing and research — not watching stars through a telescope every night.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · RESEARCH AREAS</div><h3>What kind of Astrophysicist could you become?</h3><p class="lede">Astrophysics contains many specialities. Researchers usually become experts in a narrow scientific area.</p>
+
+<div class="card">
+<div class="row"><div class="k">Observational Astrophysicist</div><div class="v"><b>Use telescope and satellite data to study astronomical objects.</b> Work includes planning observations, reducing data, analysing signals and interpreting results.<div class="chips"><span class="chip">Telescopes</span><span class="chip">Data</span><span class="chip">Observations</span></div></div></div>
+
+<div class="row"><div class="k">Theoretical Astrophysicist</div><div class="v">Use mathematics and physical theory to explain how stars, black holes, galaxies and the Universe behave.</div></div>
+
+<div class="row"><div class="k">Computational Astrophysicist</div><div class="v">Build computer simulations of stars, galaxies, black holes, cosmic structure and other systems. Strong programming and numerical methods are important.</div></div>
+
+<div class="row"><div class="k">Cosmologist</div><div class="v">Study the origin, evolution and large-scale structure of the Universe, including dark matter, dark energy and the early Universe.</div></div>
+
+<div class="row"><div class="k">Stellar Astrophysicist</div><div class="v">Study how stars form, evolve, pulsate, explode and end as white dwarfs, neutron stars or black holes.</div></div>
+
+<div class="row"><div class="k">Galactic / Extragalactic Astronomer</div><div class="v">Study the Milky Way, other galaxies, galaxy formation, active galactic nuclei and large-scale cosmic structures.</div></div>
+
+<div class="row"><div class="k">High-Energy Astrophysicist</div><div class="v">Study extreme objects and energetic events such as neutron stars, black holes, X-ray binaries, gamma-ray bursts and energetic cosmic phenomena.</div></div>
+
+<div class="row"><div class="k">Solar Physicist</div><div class="v">Study the Sun, its magnetic fields, solar atmosphere, flares and space-weather effects. Indian missions such as Aditya-L1 support this area of research.</div></div>
+
+<div class="row"><div class="k">Gravitational-Wave Astronomer</div><div class="v">Use gravitational-wave observations and theory to study merging black holes, neutron stars and fundamental physics. LIGO-India is an important future Indian facility for this field.</div></div>
+
+<div class="row"><div class="k">Planetary / Exoplanet Scientist</div><div class="v">Study planets inside and outside our Solar System, their atmospheres, formation and possible habitability.</div></div>
+
+<div class="row"><div class="k">Radio Astronomer</div><div class="v">Study the Universe using radio waves from facilities such as the Giant Metrewave Radio Telescope (GMRT) and other radio observatories.</div></div>
+
+<div class="row"><div class="k">Astronomical Instrumentation Scientist</div><div class="v">Design and operate telescopes, spectrographs, cameras, detectors and scientific instruments. Physics, optics, electronics and engineering skills are valuable.</div></div>
+
+<div class="row"><div class="k">Astroinformatics / Data Science</div><div class="v">Use statistics, machine learning and large-scale computing to analyse enormous astronomical datasets. Modern sky surveys produce far more data than humans can inspect manually.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Astronomer vs Astrophysicist</div><div class="v"><b>Astronomer:</b> broad term for a scientist who studies objects and phenomena beyond Earth.<br><b>Astrophysicist:</b> especially emphasises using Physics and Mathematics to explain how those objects and phenomena work.<br><br>In modern research, the two titles often overlap heavily.</div></div>
+
+<div class="row"><div class="k">Astrophysicist vs Astronaut</div><div class="v"><b>Astrophysicist:</b> scientist studying the Universe through research, data, theory and observations.<br><b>Astronaut:</b> person trained to travel/work in space missions.<br><br>Becoming an Astrophysicist does not automatically lead to becoming an astronaut.</div></div>
+
+<div class="row"><div class="k">Astrophysicist vs ISRO Engineer</div><div class="v"><b>Astrophysicist:</b> primarily studies scientific questions about the Universe.<br><b>Space Engineer:</b> designs spacecraft, instruments, structures, propulsion, electronics and mission systems.<br><br>They can work together on the same mission but follow different career paths.</div></div>
+
+<div class="row"><div class="k">Where you can work</div><div class="v">IUCAA, Indian Institute of Astrophysics (IIA), ARIES, TIFR, IISc, IISERs, NISER, PRL, IITs, universities, observatories, ISRO-linked research projects and international research institutions.</div></div>
+
+<div class="row"><div class="k">Current Indian research</div><div class="v">Indian astrophysics researchers participate in major projects such as <b>AstroSat, Aditya-L1, GMRT, LIGO-India, Thirty Meter Telescope and international sky-survey collaborations</b>. Research increasingly combines observations with high-performance computing and AI/ML.</div></div>
+
+<div class="row"><div class="k">Your Plan B</div><div class="v">Astrophysics training transfers strongly into:
+<div class="chips"><span class="chip">Data Science</span><span class="chip">Scientific Computing</span><span class="chip">AI / ML</span><span class="chip">Space Technology</span><span class="chip">Instrumentation</span><span class="chip">Teaching</span></div>
+</div></div>
+
+<div class="flag"><span class="mark">Research reality</span><span><b>Most astrophysicists spend much more time with computers, equations and data than with telescopes.</b> The telescope collects evidence; the scientist still has to understand what that evidence means.</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>What you may earn</h3><p class="lede">Astrophysics is usually a long research pathway. Early years often involve fellowships rather than a conventional company salary.</p>
+
+<div class="card">
+<div class="row"><div class="k">During PhD — JRF</div><div class="v"><span class="money">₹37,000/month + applicable HRA</span><br><span style="font-size:13px">Current UGC/CSIR research-fellowship norms list <b>Junior Research Fellowship (JRF)</b> at ₹37,000/month for the initial period, subject to scheme/institute rules.</span></div></div>
+
+<div class="row"><div class="k">During PhD — SRF</div><div class="v"><span class="money">₹42,000/month + applicable HRA</span><br><span style="font-size:13px">After the required progress assessment, eligible researchers may move to <b>Senior Research Fellowship (SRF)</b> at ₹42,000/month under current fellowship norms.</span></div></div>
+
+<div class="row"><div class="k">Research Associate / Postdoc</div><div class="v"><span class="money">₹58,000 – ₹67,000/month + applicable HRA</span><br><span style="font-size:13px">Current CSIR-sponsored research norms list Research Associate slabs of approximately <b>₹58,000, ₹61,000 and ₹67,000/month</b>, depending on qualification and experience. Institute-specific postdoctoral fellowships can differ.</span></div></div>
+
+<div class="row"><div class="k">Project research role</div><div class="v"><span class="money">Around ₹30,000 – ₹37,000+/month in some current projects</span><br><span style="font-size:13px">For example, a 2026 ARIES astronomy-related Project Associate-I role offered ₹37,000 + HRA with valid GATE/NET and ₹30,000 + HRA without it. Project roles are temporary and vary by funding scheme.</span></div></div>
+
+<div class="row"><div class="k">Government research scientist</div><div class="v"><span class="money">Can begin around Pay Level 10</span><br><span style="font-size:13px">A Scientist-B example from ARIES uses <b>Level 10: ₹56,100–₹1,77,500</b>. Permanent scientist/faculty appointments are competitive and may require a PhD, postdoctoral work and a strong publication record.</span></div></div>
+
+<div class="row"><div class="k">Private / transferable skills</div><div class="v">Astrophysics graduates with strong programming, statistics and numerical skills can also move into <b>data science, software, quantitative analysis, scientific computing, AI/ML and instrumentation</b>, where compensation follows those industries rather than astronomy pay scales.</div></div>
+
+<div class="row"><div class="k">Education cost</div><div class="v">You do <b>not</b> need an expensive private “space science” degree. Strong public programmes in Physics, IISERs, NISER, IISc, IITs and universities can provide excellent foundations. For this career, research quality matters far more than a flashy degree title.</div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Do not choose Astrophysics because you expect a very high salary immediately after bachelor's.</b> The professional research route is long and highly competitive. Choose it because you genuinely enjoy Physics and research, while building coding/data skills that also give you strong Plan B options.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Physics + Maths + deep curiosity</span> — Astrophysics may be a strong fit.</p>
+<p><span class="hi">Love space but prefer building machines</span> — compare Aerospace / Space Engineering.</p>
+<p><span class="hi">Love space images but dislike advanced Maths</span> — compare Astronomy Communication, Design, Media or other space-sector careers.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>an Astrophysicist does not study space by imagination — they use Physics, Mathematics and evidence to test how the Universe actually works.</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, the best preparation is not memorising planet facts. Build Physics, Maths and scientific thinking.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Right now, in school</div><ul>
+<li>Become strong in <b>Mathematics and Physics</b>, especially algebra, graphs, motion, forces and basic electricity</li>
+<li>Start basic <b>Python</b> when comfortable</li>
+<li>Use free astronomy software or public space data to learn constellations, planets and real observations</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>After Class 10</div><ul>
+<li>Choose <b>MPC</b></li>
+<li>Compare <b>B.Sc. Physics, IISER BS-MS, NISER Integrated M.Sc., IISc B.S. Research and Physics/Engineering Physics programmes</b></li>
+<li>Prepare for IAT, NEST, JEE or university admission depending on your target institutes</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Learn <b>calculus, linear algebra, classical mechanics, electromagnetism, quantum physics, statistics and Python</b></li>
+<li>Join astronomy/physics research projects and summer internships</li>
+<li>Learn to read scientific papers and work with real observational or simulation data</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Choose one real question such as <b>“How do we know the temperature of a star?”</b> Instead of reading only the final answer, learn the Physics behind spectra, find a real stellar spectrum or dataset and try to explain what evidence scientists use. If the explanation excites you more than the space picture itself, Astrophysics may genuinely suit you.</span></div>
+</section>
+
+<p class="note">This is career guidance, not an official admission or salary notice. Current pathway examples were checked against IISER IAT 2026, NEST 2026, IISc B.S. (Research) 2026 and IUCAA's 2026 admission routes. IISc currently requires Physics, Chemistry and Mathematics in Class 12 for B.S. (Research) and uses JEE Advanced or IAT for Indian applicants. NEST 2026 is used for the Integrated M.Sc. programmes at NISER and UM-DAE CEBS. IUCAA currently uses INAT, JEST and CSIR-UGC NET/JRF routes for relevant postgraduate/research admissions. Fellowship and research pay figures are current broad examples and may change by scheme or institute.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Astrophysics fit</strong>You seem comfortable with Physics, Maths, coding and long-term research. Build fundamentals first and explore real scientific data.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like space and some parts of research. Test whether you enjoy advanced Physics and Maths before choosing the long research pathway.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may love space without enjoying astrophysics research. Compare Aerospace Engineering, Space Technology, Data Science, Science Communication or other space-related careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>
