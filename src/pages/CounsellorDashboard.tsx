@@ -77,7 +77,7 @@ export interface ClassTeacherRosterItem {
   subject?: string;
 }
 
-export type SchoolRosterId = "lingamparthi" | "jeddangi" | "yeleswaram" | "ghs_yeleswaram" | "tirumali";
+export type SchoolRosterId = "lingamparthi" | "jeddangi" | "yeleswaram" | "ghs_yeleswaram" | "tirumali" | "peddanapalli" | "vommangi" | "prathipadu" | "lampakalova" | "dharmavaram";
 
 export interface SchoolRosterConfig {
   id: SchoolRosterId;
@@ -262,6 +262,196 @@ export const SCHOOL_ROSTERS: Record<SchoolRosterId, SchoolRosterConfig> = {
       { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "V Viswanath", totalStrength: 31, phone: "9949397566", subject: "PS" },
       { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "P Varalakshmi", totalStrength: 44, phone: "8500396760", subject: "Social" },
       { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "P Gopala Krishna", totalStrength: 38, phone: "9398917754" },
+    ],
+  },
+  peddanapalli: {
+    id: "peddanapalli",
+    schoolName: "ZPHS Peddanapalli",
+    badgeName: "ZPHS Peddanapalli",
+    headmasterName: "P V Srinivasa Rao",
+    headmasterPhone: "8008516025",
+    matchSchool: (sch: string, loc?: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      const l = (loc || "").toLowerCase().trim();
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("yeleswaram") ||
+        s.includes("tirumali") ||
+        s.includes("ghs")
+      ) return false;
+      return (
+        s.includes("peddanapalli") ||
+        s.includes("peddana palli") ||
+        s.includes("peddhanapalli") ||
+        s.includes("peddanapally") ||
+        s.includes("pedanapalli") ||
+        s.includes("peddanappalli") ||
+        s.includes("పెద్దనపల్లి") ||
+        s.includes("పెదనపల్లి") ||
+        ((l.includes("peddanapalli") || l.includes("peddanappalli") || l.includes("పెద్దనపల్లి")) && (s.includes("zphs") || !s))
+      );
+    },
+    teachers: [
+      { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "S Satyanarayana", totalStrength: 32, phone: "9182201628", subject: "PS" },
+      { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "T Mangaratnam", totalStrength: 30, phone: "8331909914", subject: "Social" },
+      { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "G Trimurthulu", totalStrength: 47, phone: "9848379114", subject: "Maths" },
+      { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "V S Kavitha", totalStrength: 28, phone: "9948272827", subject: "English" },
+      { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "D Prakashrao", totalStrength: 26, phone: "9912916564", subject: "English" },
+    ],
+  },
+  vommangi: {
+    id: "vommangi",
+    schoolName: "ZPHS Vommangi",
+    badgeName: "ZPHS Vommangi",
+    headmasterName: "D Kiran Mayi",
+    headmasterPhone: "9441607632",
+    matchSchool: (sch: string, loc?: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      const l = (loc || "").toLowerCase().trim();
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("yeleswaram") ||
+        s.includes("tirumali") ||
+        s.includes("peddanapalli") ||
+        s.includes("ghs")
+      ) return false;
+      return (
+        s.includes("vommangi") ||
+        s.includes("vomangi") ||
+        s.includes("vommangy") ||
+        s.includes("vommagi") ||
+        s.includes("వొమ్మంగి") ||
+        s.includes("వొమంగి") ||
+        ((l.includes("vommangi") || l.includes("వొమ్మంగి")) && (s.includes("zphs") || !s))
+      );
+    },
+    teachers: [
+      { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "J Seshu Kumar", totalStrength: 40, phone: "9848620232", subject: "Maths" },
+      { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "M B Naga Lakshmi", totalStrength: 40, phone: "9492074632", subject: "PS" },
+      { id: "8-C", gradeLabel: "8th", gradeNumber: 8, section: "C", teacherName: "S Saraswathi Devi", totalStrength: 33, phone: "9701516110", subject: "NS" },
+      { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "R Kumari", totalStrength: 41, phone: "8333844088", subject: "English" },
+      { id: "9-B", gradeLabel: "9th", gradeNumber: 9, section: "B", teacherName: "G Nuka Raju", totalStrength: 40, phone: "9963037387", subject: "Telugu" },
+      { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "V Y Prakash", totalStrength: 36, phone: "9246536209", subject: "English" },
+      { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "K S Ranganayaki", totalStrength: 38, phone: "9959335951", subject: "Maths" },
+      { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "K V V S N Murthy", totalStrength: 39, phone: "9299358254", subject: "English" },
+    ],
+  },
+  prathipadu: {
+    id: "prathipadu",
+    schoolName: "ZPHS Prathipadu",
+    badgeName: "ZPHS Prathipadu",
+    headmasterName: "Ch John Prasad",
+    headmasterPhone: "9948142008",
+    matchSchool: (sch: string, loc?: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      const l = (loc || "").toLowerCase().trim();
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("yeleswaram") ||
+        s.includes("tirumali") ||
+        s.includes("peddanapalli") ||
+        s.includes("vommangi") ||
+        s.includes("ghs")
+      ) return false;
+      return (
+        s.includes("prathipadu") ||
+        s.includes("pratthipadu") ||
+        s.includes("pratipadu") ||
+        s.includes("prattipadu") ||
+        s.includes("ప్రత్తిపాడు") ||
+        s.includes("ప్రతిపాడు") ||
+        ((l.includes("prathipadu") || l.includes("ప్రత్తిపాడు") || l.includes("prattipadu")) && (s.includes("zphs") || !s))
+      );
+    },
+    teachers: [
+      { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "SK Sabeenabanu", totalStrength: 39, phone: "6305893599", subject: "English" },
+      { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "K Ramana", totalStrength: 34, phone: "7386365178", subject: "Social Science" },
+      { id: "8-C", gradeLabel: "8th", gradeNumber: 8, section: "C", teacherName: "S V S Narayana", totalStrength: 41, phone: "9989343798", subject: "Maths" },
+      { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "K Ratna Raju", totalStrength: 39, phone: "9515154729", subject: "BS" },
+      { id: "9-B", gradeLabel: "9th", gradeNumber: 9, section: "B", teacherName: "K Kameswari", totalStrength: 44, phone: "9441969718", subject: "Telugu" },
+      { id: "9-C", gradeLabel: "9th", gradeNumber: 9, section: "C", teacherName: "B Sireesha Devi", totalStrength: 40, phone: "6303963545", subject: "Telugu" },
+      { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "D Vishnu Murthy", totalStrength: 45, phone: "9848072678", subject: "Maths" },
+      { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "Ch Raja Kumar", totalStrength: 50, phone: "9490150250", subject: "Telugu" },
+      { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "G V Ramana", totalStrength: 37, phone: "9959940203", subject: "PS" },
+    ],
+  },
+  lampakalova: {
+    id: "lampakalova",
+    schoolName: "ZPHS Lampakalova",
+    badgeName: "ZPHS Lampakalova",
+    headmasterName: "D Vani Prabha",
+    headmasterPhone: "9441141428",
+    matchSchool: (sch: string, loc?: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      const l = (loc || "").toLowerCase().trim();
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("yeleswaram") ||
+        s.includes("tirumali") ||
+        s.includes("peddanapalli") ||
+        s.includes("vommangi") ||
+        s.includes("prathipadu") ||
+        s.includes("ghs")
+      ) return false;
+      return (
+        s.includes("lampakalova") ||
+        s.includes("lampa kalova") ||
+        s.includes("lampakalva") ||
+        s.includes("lompakalova") ||
+        s.includes("లంపాకలోవ") ||
+        s.includes("లంపకలోవ") ||
+        ((l.includes("lampakalova") || l.includes("లంపాకలోవ")) && (s.includes("zphs") || !s))
+      );
+    },
+    teachers: [
+      { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "R Meena Devi", totalStrength: 35, phone: "6301796965", subject: "Hindi" },
+      { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "S K Meharunnisa lal Beebi", totalStrength: 39, phone: "8519898322", subject: "Social" },
+      { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "K Karuna Sri", totalStrength: 28, phone: "6303688229", subject: "Maths" },
+      { id: "9-B", gradeLabel: "9th", gradeNumber: 9, section: "B", teacherName: "A Nagapparao", totalStrength: 27, phone: "8985679822", subject: "Telugu" },
+      { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "P Kameswararao", totalStrength: 38, phone: "9493102589", subject: "English" },
+    ],
+  },
+  dharmavaram: {
+    id: "dharmavaram",
+    schoolName: "ZPHS Dharmavaram",
+    badgeName: "ZPHS Dharmavaram",
+    headmasterName: "K China Rama Murthy",
+    headmasterPhone: "8500655588",
+    matchSchool: (sch: string, loc?: string) => {
+      const s = (sch || "").toLowerCase().trim();
+      const l = (loc || "").toLowerCase().trim();
+      if (
+        s.includes("lingamparthi") ||
+        s.includes("jeddangi") ||
+        s.includes("yeleswaram") ||
+        s.includes("tirumali") ||
+        s.includes("peddanapalli") ||
+        s.includes("vommangi") ||
+        s.includes("prathipadu") ||
+        s.includes("lampakalova") ||
+        s.includes("ghs")
+      ) return false;
+      return (
+        s.includes("dharmavaram") ||
+        s.includes("dharma varam") ||
+        s.includes("dharmavaramu") ||
+        s.includes("ధర్మవరం") ||
+        ((l.includes("dharmavaram") || l.includes("ధర్మవరం")) && (s.includes("zphs") || !s))
+      );
+    },
+    teachers: [
+      { id: "8-A", gradeLabel: "8th", gradeNumber: 8, section: "A", teacherName: "V Jhansi Lakshmi", totalStrength: 32, phone: "9949842652", subject: "English" },
+      { id: "8-B", gradeLabel: "8th", gradeNumber: 8, section: "B", teacherName: "A Ajay", totalStrength: 32, phone: "8143899480", subject: "PS" },
+      { id: "8-C", gradeLabel: "8th", gradeNumber: 8, section: "C", teacherName: "B Durga Bhavani", totalStrength: 33, phone: "8328399788", subject: "Social" },
+      { id: "9-A", gradeLabel: "9th", gradeNumber: 9, section: "A", teacherName: "K Venkateswararao", totalStrength: 48, phone: "9490633688", subject: "PS" },
+      { id: "9-B", gradeLabel: "9th", gradeNumber: 9, section: "B", teacherName: "S Nagaveni", totalStrength: 47, phone: "9441385228", subject: "Social" },
+      { id: "10-A", gradeLabel: "10th", gradeNumber: 10, section: "A", teacherName: "Ch Srinivas", totalStrength: 32, phone: "9676741116", subject: "Maths" },
+      { id: "10-B", gradeLabel: "10th", gradeNumber: 10, section: "B", teacherName: "S Veerabhadra Rao", totalStrength: 31, phone: "8500490157", subject: "Telugu" },
+      { id: "10-C", gradeLabel: "10th", gradeNumber: 10, section: "C", teacherName: "M Ramesh", totalStrength: 30, phone: "9948048076", subject: "Maths" },
     ],
   },
 };
@@ -1182,26 +1372,46 @@ const CounsellorDashboard = () => {
                     const yeleswaramData = computeRosterStats(SCHOOL_ROSTERS.yeleswaram);
                     const ghsYeleswaramData = computeRosterStats(SCHOOL_ROSTERS.ghs_yeleswaram);
                     const tirumaliData = computeRosterStats(SCHOOL_ROSTERS.tirumali);
+                    const peddanapalliData = computeRosterStats(SCHOOL_ROSTERS.peddanapalli);
+                    const vommangiData = computeRosterStats(SCHOOL_ROSTERS.vommangi);
+                    const prathipaduData = computeRosterStats(SCHOOL_ROSTERS.prathipadu);
+                    const lampakalovaData = computeRosterStats(SCHOOL_ROSTERS.lampakalova);
+                    const dharmavaramData = computeRosterStats(SCHOOL_ROSTERS.dharmavaram);
 
                     const combinedEnrolled =
                       lingamparthiData.totalEnrolled +
                       jeddangiData.totalEnrolled +
                       yeleswaramData.totalEnrolled +
                       ghsYeleswaramData.totalEnrolled +
-                      tirumaliData.totalEnrolled;
+                      tirumaliData.totalEnrolled +
+                      peddanapalliData.totalEnrolled +
+                      vommangiData.totalEnrolled +
+                      prathipaduData.totalEnrolled +
+                      lampakalovaData.totalEnrolled +
+                      dharmavaramData.totalEnrolled;
                     const combinedReceived =
                       lingamparthiData.totalRosterReceived +
                       jeddangiData.totalRosterReceived +
                       yeleswaramData.totalRosterReceived +
                       ghsYeleswaramData.totalRosterReceived +
-                      tirumaliData.totalRosterReceived;
+                      tirumaliData.totalRosterReceived +
+                      peddanapalliData.totalRosterReceived +
+                      vommangiData.totalRosterReceived +
+                      prathipaduData.totalRosterReceived +
+                      lampakalovaData.totalRosterReceived +
+                      dharmavaramData.totalRosterReceived;
                     const combinedOverallPct = combinedEnrolled > 0 ? Math.round((combinedReceived / combinedEnrolled) * 100) : 0;
                     const combinedBelowThreshold =
                       lingamparthiData.belowThresholdCount +
                       jeddangiData.belowThresholdCount +
                       yeleswaramData.belowThresholdCount +
                       ghsYeleswaramData.belowThresholdCount +
-                      tirumaliData.belowThresholdCount;
+                      tirumaliData.belowThresholdCount +
+                      peddanapalliData.belowThresholdCount +
+                      vommangiData.belowThresholdCount +
+                      prathipaduData.belowThresholdCount +
+                      lampakalovaData.belowThresholdCount +
+                      dharmavaramData.belowThresholdCount;
 
                     const currentRosterData =
                       activeRosterSchoolId === "jeddangi"
@@ -1212,6 +1422,16 @@ const CounsellorDashboard = () => {
                         ? ghsYeleswaramData
                         : activeRosterSchoolId === "tirumali"
                         ? tirumaliData
+                        : activeRosterSchoolId === "peddanapalli"
+                        ? peddanapalliData
+                        : activeRosterSchoolId === "vommangi"
+                        ? vommangiData
+                        : activeRosterSchoolId === "prathipadu"
+                        ? prathipaduData
+                        : activeRosterSchoolId === "lampakalova"
+                        ? lampakalovaData
+                        : activeRosterSchoolId === "dharmavaram"
+                        ? dharmavaramData
                         : lingamparthiData;
 
                     const handlePrintRosterPDF = (rosterData: typeof currentRosterData) => {
@@ -1427,7 +1647,7 @@ const CounsellorDashboard = () => {
                                   Class Teachers &amp; School Rosters
                                 </div>
                                 <p className="text-xs text-stone-500 font-medium mt-0.5 truncate">
-                                  Lingamparthi &bull; Jeddangi &bull; Yeleswaram (Girls) &bull; GHS Yeleswaram &bull; Tirumali &bull; Received: <strong>{combinedReceived}</strong> / {combinedEnrolled} ({combinedOverallPct}%)
+                                  Lingamparthi &bull; Jeddangi &bull; Yeleswaram (Girls) &bull; GHS Yeleswaram &bull; Tirumali &bull; Peddanapalli &bull; Vommangi &bull; Prathipadu &bull; Lampakalova &bull; Dharmavaram &bull; Received: <strong>{combinedReceived}</strong> / {combinedEnrolled} ({combinedOverallPct}%)
                                 </p>
                               </div>
                             </div>
@@ -1512,6 +1732,21 @@ const CounsellorDashboard = () => {
                                       </option>
                                       <option value="tirumali">
                                         ZPHS Tirumali ({tirumaliData.totalRosterReceived}/{tirumaliData.totalEnrolled})
+                                      </option>
+                                      <option value="peddanapalli">
+                                        ZPHS Peddanapalli ({peddanapalliData.totalRosterReceived}/{peddanapalliData.totalEnrolled})
+                                      </option>
+                                      <option value="vommangi">
+                                        ZPHS Vommangi ({vommangiData.totalRosterReceived}/{vommangiData.totalEnrolled})
+                                      </option>
+                                      <option value="prathipadu">
+                                        ZPHS Prathipadu ({prathipaduData.totalRosterReceived}/{prathipaduData.totalEnrolled})
+                                      </option>
+                                      <option value="lampakalova">
+                                        ZPHS Lampakalova ({lampakalovaData.totalRosterReceived}/{lampakalovaData.totalEnrolled})
+                                      </option>
+                                      <option value="dharmavaram">
+                                        ZPHS Dharmavaram ({dharmavaramData.totalRosterReceived}/{dharmavaramData.totalEnrolled})
                                       </option>
                                     </select>
                                     <ChevronDown className="w-4 h-4 text-stone-600 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
