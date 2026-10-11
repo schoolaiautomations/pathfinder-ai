@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు అంశాల్లో కెరీర్ పరిశీలన</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>body,.q p,.row .v,.lede,.standfirst,.flag,.rule-box p,.stage li,.note,.verdict,.chip{font-family:"Noto Sans Telugu","Inter",sans-serif!important}h2,h3,h4,.row .k,.stage-head,.pip b,.verdict strong{font-family:"Noto Sans Telugu",sans-serif!important;line-height:1.35!important;text-transform:none!important}.mast h2{font-size:clamp(30px,8vw,46px)}.chip{text-transform:none;font-size:12px}.pip b{font-size:13px}.row .k{font-size:16px}.stage-head{font-size:18px}.flag .mark{font-family:"Noto Sans Telugu",sans-serif}.q{align-items:center}.toggle button{font-family:"Noto Sans Telugu",sans-serif}.printhead{font-family:"Noto Sans Telugu",sans-serif}</style></head><body><div class="wrap"><div class="mast"><div class="eyebrow">ఈ కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>డాక్టర్ (MBBS)</h2><p class="standfirst">డాక్టర్ అంటే జబ్బు ఏమిటో గుర్తించి, రోగులకు చికిత్స చేయడం. కొన్నిసార్లు కష్టమైన నిర్ణయాలు కూడా తీసుకోవాలి. కింద ఉన్న నాలుగు అంశాలను నిజాయితీగా పరిశీలించండి. ఏదైనా మీకు సరిపోకపోతే, ఈ కెరీర్ ఎంచుకునే ముందు బాగా ఆలోచించండి.</p></div><div class="printhead">కెరీర్‌లో నాలుగు అంశాలు  ·  Doctor (MBBS)  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div><nav class="strip"><a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నిజంగా ఇష్టమా?</em></a><a class="pip" href="#c2"><div class="ring">2</div><b>చదువు, నైపుణ్యాలు</b><em>మీరు సిద్ధమా?</em></a><a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>జాగ్రత్త</em></a><a class="pip" href="#c4"><div class="ring">4</div><b>డబ్బు</b><em>సరిపోతుందా?</em></a></nav><section id="c1"><div class="num">అంశం 1</div><h3>మీకు నిజంగానే డాక్టర్ కావాలని ఉందా?</h3><p class="lede">డాక్టర్ అనే పేరు నచ్చడం వేరు, రోజూ ఆ పని చేయడం వేరు. ఈ ప్రశ్నలకు నిజాయితీగా అవును లేదా కాదు అని చెప్పండి.</p><div class="card"><div id="quiz"><div class="q" data-i="0"><p>ఎవరికైనా రక్తం కారుతున్నా, బాగా నొప్పిగా ఉన్నా మీరు కంగారు పడకుండా ఉండగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="1"><p>ఎన్నో ఏళ్ల పాటు రోజుకు 6 గంటలు లేదా అంతకంటే ఎక్కువ సమయం చదవగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="2"><p>రోగుల బాధను, కొన్నిసార్లు మరణాలను కూడా దగ్గరగా చూసి మానసికంగా తట్టుకోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="3"><p>మీకు వేరే అభిప్రాయం ఉన్నా, రోగి భద్రత కోసం చెప్పిన సరైన నియమాలను పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="4"><p>రోగులకు అత్యవసరంగా అవసరమైనప్పుడు నిద్ర, పండుగలు, సెలవులు వదులుకుని పని చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="5"><p>రోజూ చాలామంది రోగులు చెప్పే సమస్యలను ఓపికగా వినగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div></div><div class="verdict" id="verdict" role="status"><strong>మొత్తం ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ సమాధానాల ఆధారంగా ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section><section id="c2"><div class="num">అంశం 2</div><h3>ఏ సబ్జెక్టులు, నైపుణ్యాలు అవసరం?</h3><p class="lede">స్కూల్లో దేనిపై దృష్టి పెట్టాలి? 10వ తరగతి తర్వాత ఏ కోర్సు తీసుకోవాలి?</p><div class="card"><div class="row"><div class="k"><span class="subno">1</span>బయాలజీ (జీవశాస్త్రం)</div><div class="v">మన శరీరం, జబ్బులు, మందులు ఎలా పనిచేస్తాయో తెలుసుకోవడానికి బయాలజీ చాలా ముఖ్యం.</div></div><div class="row"><div class="k"><span class="subno">2</span>ఫిజికల్ సైన్స్</div><div class="v">ఫిజిక్స్, కెమిస్ట్రీ చదివితే వైద్య పరికరాలు, మందులు, శరీరంలోని వ్యవస్థలు ఎలా పనిచేస్తాయో అర్థమవుతుంది.</div></div><div class="row"><div class="k"><span class="subno">3</span>ఇంగ్లీష్</div><div class="v">డాక్టర్ చదువులో పుస్తకాలు, పరీక్షలు, రోగుల వివరాలు చాలా వరకు ఇంగ్లీష్‌లో ఉంటాయి.</div></div><div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>10వ తరగతి తర్వాత ఇంటర్‌లో BiPC (Biology, Physics, Chemistry) తీసుకోవాలి. ఆ తర్వాత NEET-UG పరీక్ష రాసి MBBS సీటు కోసం ప్రయత్నించాలి. MBBS డాక్టర్ కావడానికి ఇదే ప్రధాన మార్గం.</b></div></div><div class="row"><div class="k">ఇప్పటినుంచే అలవాటు చేసుకోండి</div><div class="v"><div class="chips"><span class="chip">ఆరోగ్యానికి సంబంధించిన వార్తలు చదవండి</span><span class="chip">అనుమతి ఉంటే క్లినిక్ లేదా ఆసుపత్రిలో సేవా కార్యక్రమాల్లో పాల్గొనండి</span><span class="chip">ప్రథమ చికిత్స (First Aid) ప్రాథమిక విషయాలు నేర్చుకోండి</span><span class="chip">సైన్స్ క్విజ్‌లలో పాల్గొనండి</span><span class="chip">రోజూ క్రమంగా చదివే అలవాటు పెంచుకోండి</span></div></div></div></div><div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">తర్వాత ఏ చదువు, అర్హతలు అవసరం?</div><div class="row"><div class="k">NEET-UG ద్వారా MBBS</div><div class="v">ఇంటర్ BiPC చదవాలి. సాధారణ అర్హతల్లో Physics, Chemistry, Biology కలిపి కనీసం 50% మార్కులు (వర్తించే కేటగిరీ ఆధారంగా మారవచ్చు), NEET-UG స్కోరు, కనీసం 17 ఏళ్ల వయసు ఉన్నాయి.</div></div><div class="row"><div class="k">AYUSH (BAMS/BHMS)</div><div class="v">ఇంటర్ BiPC, NEET-UG అవసరం. కొన్ని కళాశాలల్లో MBBS కంటే తక్కువ మార్కులతో సీటు వచ్చే అవకాశం ఉండొచ్చు.</div></div><div class="row"><div class="k">BSc Nursing లేదా ఇతర హెల్త్ కోర్సులు</div><div class="v">ఇంటర్ BiPC తర్వాత సంబంధిత ప్రవేశ నియమాల ప్రకారం చేరవచ్చు. ఆరోగ్య రంగంలో పని చేయొచ్చు, కానీ ఇది MBBS డాక్టర్ కోర్సు కాదు.</div></div><div class="row"><div class="k">MBBS కోసం చదువు క్రమం</div><div class="v">10వ తరగతి → ఇంటర్ BiPC → NEET-UG → MBBS (ఇంటర్న్‌షిప్‌తో కలిపి సుమారు 5.5 ఏళ్లు) → రిజిస్ట్రేషన్ → డాక్టర్‌గా పని</div></div><div class="flag red"><span class="mark">ముందుగా తెలుసుకోండి</span><span>NEETలో పోటీ చాలా ఎక్కువ. 720లో 600కు పైగా మార్కులు ఒక లక్ష్యంగా పెట్టుకోవచ్చు. కానీ సీటు వచ్చే మార్కులు ప్రతి ఏడాది, కేటగిరీ, కళాశాలను బట్టి మారుతాయి. అందుకే సైన్స్ బేసిక్స్‌పై ఇప్పటినుంచే పట్టు పెంచుకోండి.</span></div></div></section><section id="c3"><div class="num">అంశం 3 · అవకాశాలు, పోటీ</div><h3>ఉద్యోగ అవకాశాలు ఎలా ఉంటాయి?</h3><p class="lede">ఉద్యోగం కోసం ఎంత పోటీ ఉంది, ఎక్కడ పని దొరుకుతుంది అనే విషయాలను కూడా ముందే తెలుసుకోవాలి.</p><div class="card"><div class="row"><div class="k">ఎక్కడ ఉద్యోగం చేయొచ్చు?</div><div class="v">ప్రభుత్వ ఆసుపత్రులు (AP Health Department, AIIMS, ESI), ప్రైవేట్ ఆసుపత్రులు (Apollo, KIMS, Yashoda), లేదా అవసరమైన అనుమతులతో సొంత క్లినిక్.</div></div><div class="row"><div class="k">అవకాశాలు ఎప్పుడు వస్తాయి?</div><div class="v">ఆసుపత్రుల్లో ఉద్యోగ ప్రకటనలు వస్తుంటాయి. ప్రభుత్వ ఉద్యోగాలకు పోటీ ఉంటుంది. అర్హతలు, రిజిస్ట్రేషన్, అనుమతులు ఉన్నవారు సొంతంగా ప్రాక్టీస్ కూడా చేయవచ్చు.</div></div><div class="row"><div class="k">ఎంత పోటీ ఉంది?</div><div class="v">NEET పరీక్షకు దేశవ్యాప్తంగా లక్షల మంది పోటీపడతారు. MBBS సీట్లు మాత్రం వాటితో పోలిస్తే చాలా తక్కువ. ఈ సంఖ్యలు ప్రతి సంవత్సరం మారతాయి.</div></div><div class="flag"><span class="mark">జాగ్రత్త</span><span>9వ తరగతి నుంచే సైన్స్ బేసిక్స్ బాగా నేర్చుకోండి. తర్వాత NEET కోసం క్రమంగా సిద్ధపడండి.</span></div><div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">MBBS రాకపోతే మరో మార్గం (Plan B)</div><div class="v">BiPC చదువుతో ఉపయోగపడే ఇతర కెరీర్‌లను కూడా ముందే పరిశీలించండి:<div class="chips"><span class="chip">ఫార్మసిస్ట్</span><span class="chip">ఫిజియోథెరపిస్ట్</span><span class="chip">మెడికల్ ల్యాబ్ టెక్నీషియన్</span><span class="chip">బయోమెడికల్ రీసెర్చర్</span><span class="chip">నర్స్ లేదా మిడ్‌వైఫ్</span></div></div></div></div></section><section id="c4"><div class="num">అంశం 4</div><h3>ఎంత సంపాదించే అవకాశం ఉంది?</h3><p class="lede">మొదటి జీతం వచ్చేలోపు చదువుకు ఎంత ఖర్చవుతుందో కూడా తెలుసుకోండి.</p><div class="card"><div class="row"><div class="k">మొదటి ఉద్యోగం (Junior Resident / ప్రభుత్వ మెడికల్ ఆఫీసర్)</div><div class="v"><span class="money">₹55,000–₹75,000</span><br/><span style="font-size:13px">MBBS, ఇంటర్న్‌షిప్ తర్వాత మొదటి ప్రభుత్వ పోస్టింగ్‌లో ఉండవచ్చని ఇచ్చిన అంచనా.</span></div></div><div class="row"><div class="k">కొంత అనుభవం తర్వాత (స్పెషలిస్ట్ / ప్రైవేట్ కన్సల్టెంట్)</div><div class="v"><span class="money">₹1,00,000–₹3,00,000</span><br/><span style="font-size:13px">MD చేసిన తర్వాత లేదా సుమారు 5 ఏళ్ల అనుభవంతో ఉండవచ్చని ఇచ్చిన అంచనా.</span></div></div><div class="row"><div class="k">సీనియర్ స్థాయి (సీనియర్ కన్సల్టెంట్ / సొంత క్లినిక్)</div><div class="v"><span class="money">₹3,00,000–₹10,00,000</span><br/><span style="font-size:13px">బాగా అనుభవం ఉన్న డాక్టర్‌గా లేదా సొంత క్లినిక్ బాగా నడిస్తే ఉండవచ్చని ఇచ్చిన అంచనా.</span></div></div><div class="row"><div class="k">చదువుకు అయ్యే ఖర్చు</div><div class="v">ఈ రిపోర్టులో ఇచ్చిన అంచనా ప్రకారం ప్రభుత్వ MBBS కాలేజీలో మొత్తం ₹5–10 లక్షలు, ప్రైవేట్ కాలేజీలో ₹50 లక్షల నుంచి ₹1 కోటి వరకు ఖర్చయ్యే అవకాశం ఉంది. కోచింగ్, హాస్టల్ వంటి ఖర్చులు కూడా చూడాలి. సుమారు 5.5 ఏళ్లు చదువుకు వెచ్చించాలి. నిజమైన ఫీజులు కాలేజీని బట్టి మారుతాయి.</div></div><div class="flag"><span class="mark">ఇంట్లో మాట్లాడుకోండి</span><span>నేను చదువు పూర్తిచేసి సంపాదించడం మొదలుపెట్టే వరకు మా ఇంట్లో ఖర్చులు ఎలా నడుస్తాయి? కుటుంబ ఆర్థిక పరిస్థితిని బట్టి ముందుగానే ఒక ప్లాన్ వేసుకోండి.</span></div></div></section><div class="rule-box"><h4>ఈ నాలుగు అంశాల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4><p><span class="hi">నాలుగూ సరిపోతే</span> — ఈ కెరీర్ గురించి ఇంకా తెలుసుకుని, నేటి నుంచే సిద్ధపడండి.</p><p><span class="hi">ఒక అంశం సరిపోకపోతే</span> — నిర్ణయం తీసుకునే ముందు ఎందుకు సరిపోలేదో ఆలోచించండి.</p><p><span class="hi">రెండు లేదా అంతకంటే ఎక్కువ సరిపోకపోతే</span> — మీకు ఈ కెరీర్ ఎంతవరకు సరిపోతుందో కెరీర్ కౌన్సిలర్‌తో మాట్లాడండి. ఈ ప్రశ్నలే తుది నిర్ణయం కావు.</p><p style="margin-top:16px;color:#9FAAB9;font-size:14px">మీ కోసం ఒక గడువు పెట్టుకోండి: “___ వయసు వరకు MBBS కోసం ప్రయత్నిస్తాను. అప్పటికీ కుదరకపోతే నా Plan B చూస్తాను.” మీ పరిస్థితిని బట్టి ఈ ప్లాన్ మార్చుకోవచ్చు.</p></div><section id="c5" style="margin-top:34px"><div class="num">ఇప్పటినుంచి చేయాల్సినవి</div><h3>ఈరోజు నుంచే ఎలా మొదలుపెట్టాలి?</h3><p class="lede">ఈ కెరీర్ మీకు నచ్చితే, స్కూల్ నుంచే ఇలా సిద్ధపడొచ్చు. మొదటి అలవాట్లకు పెద్దగా ఖర్చు అవసరం లేదు.</p><div class="card plan"><div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడు స్కూల్లో ఉన్నప్పుడే</div><ul><li>బయాలజీ, ఫిజికల్ సైన్స్‌లో మంచి మార్కుల కోసం ప్రయత్నించండి. 90%ను ఒక లక్ష్యంగా పెట్టుకోవచ్చు.</li><li>ప్రతి వారం ఆరోగ్యం లేదా సైన్స్ గురించి ఒక సులభమైన కథనం చదవండి.</li><li>కుటుంబ సభ్యుడితో ప్రభుత్వ ఆసుపత్రిని సందర్శించి, అనుమతులు మరియు రోగుల గోప్యతను గౌరవిస్తూ డాక్టర్ల పని గురించి తెలుసుకోండి.</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul><li>MBBS లక్ష్యమైతే ఇంటర్‌లో BiPC తీసుకోండి.</li><li>NEET కోసం కోచింగ్ తీసుకోవచ్చు. లేదా Unacademy, Khan Academy వంటి ఉచిత ఆన్‌లైన్ పాఠాలను ఉపయోగించవచ్చు.</li><li>11వ తరగతి నుంచే NEET తరహా Multiple Choice Questions (MCQs) ప్రాక్టీస్ చేయండి. రోజుకు 50 ప్రశ్నలను లక్ష్యంగా పెట్టుకోవచ్చు.</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">3</span>ఇంటర్ తర్వాత</div><ul><li>NEET-UG రాసి, మీ ర్యాంక్ మరియు అర్హతను బట్టి APతో పాటు ఇతర రాష్ట్రాల్లోనూ అందుబాటులో ఉన్న ప్రభుత్వ MBBS కాలేజీలకు దరఖాస్తు చేయండి.</li><li>మార్కులు తక్కువ వస్తే AYUSH వంటి ఇతర కోర్సులను పరిశీలించండి. లేదా పరిస్థితి అనుకూలిస్తే మళ్లీ NEET రాయాలా అని నిర్ణయించుకోండి.</li><li>MBBSలో ఆసుపత్రి ప్రాక్టికల్స్, వార్డ్ డ్యూటీలను శ్రద్ధగా నేర్చుకోండి. పుస్తక జ్ఞానంతో పాటు రోగులను చూసే నైపుణ్యం కూడా ముఖ్యం.</li></ul></div></div><div class="flag"><span class="mark">గుర్తుంచుకోండి</span><span>మీరు ఇంకా స్కూల్లోనే ఉన్నారు. కెరీర్ గురించి తెలుసుకోవడానికి ఇదే మంచి సమయం. ఇప్పుడే నేర్చుకోవడం మొదలుపెడితే తర్వాత నిర్ణయం తీసుకోవడం సులభమవుతుంది.</span></div></section><p class="note">ఇది కెరీర్ గురించి అవగాహన కోసం ఇచ్చిన సమాచారం మాత్రమే; అధికారిక ప్రకటన కాదు. అర్హతలు, వయసు, సీట్లు, ఫీజులు, జీతాలు మారవచ్చు. దరఖాస్తు చేసే ముందు అధికారిక వెబ్‌సైట్‌లో తప్పకుండా చూసుకోండి. సీటు ఇప్పిస్తామని చెప్పే మధ్యవర్తులకు డబ్బులు ఇవ్వకండి.</p></div><script>(()=>{const questions=[...document.querySelectorAll('#quiz .q')],v=document.getElementById('verdict'),p=document.getElementById('pip1');let answers={};questions.forEach((q,i)=>q.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{answers[i]=b.dataset.v;b.parentElement.querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed',String(x===b));x.dataset.picked=x===b?'1':'0';});const n=Object.keys(answers).length;v.className='verdict';if(n<questions.length){v.innerHTML='<strong>ఇంకా '+(questions.length-n)+' ప్రశ్నలు మిగిలాయి</strong>అన్నింటికీ సమాధానం ఇవ్వండి.';return;}const yes=Object.values(answers).filter(a=>a==='y').length;if(yes===6){v.classList.add('good');v.innerHTML='<strong>మీ ఆసక్తి బలంగా కనిపిస్తోంది</strong>డాక్టర్ కెరీర్ గురించి మరింత తెలుసుకుని, మిగతా మూడు అంశాలనూ పరిశీలించండి.';p.className='pip done';}else if(yes>=4){v.classList.add('mixed');v.innerHTML='<strong>కొన్ని విషయాల్లో ఇంకా ఆలోచించాలి</strong>మీకు కష్టంగా అనిపించిన పనుల గురించి డాక్టర్లతో లేదా కౌన్సిలర్‌తో మాట్లాడండి.';p.className='pip warn';}else{v.classList.add('bad');v.innerHTML='<strong>ఈ పని మీకు ఎంతవరకు సరిపోతుందో తెలుసుకోండి</strong>ఈ ప్రశ్నలతోనే నిర్ణయం తీసుకోకండి. డాక్టర్ల పని గురించి మరింత తెలుసుకుని కౌన్సిలర్‌తో మాట్లాడండి.';p.className='pip stop';}})));})();</script></body></html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — Architect</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>body{font-family:system-ui,"Noto Sans Telugu","Gautami",sans-serif;line-height:1.75}.row .k,h3,h4,.pip b,.stage-head,.flag .mark{font-family:system-ui,"Noto Sans Telugu",sans-serif!important;text-transform:none}.source-details{font-size:12.5px;color:#617084;margin-top:7px}.source-details summary{cursor:pointer;color:#52658a;text-decoration:underline}.source-details div{margin-top:6px}.row .v{font-size:15px}.standfirst{max-width:none}.chip{font-family:system-ui,sans-serif;text-transform:none}.rule-box p{color:#e3e6eb}</style><style>.pay-amount{display:inline-block;color:#14243A;font-size:1.05em;margin-bottom:5px}.row .v{line-height:1.7}.stage li{line-height:1.75}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>Architect</h2><p class="standfirst">ఇళ్లు, ఆసుపత్రులు, స్కూళ్లు వంటి భవనాలు ఎలా ఉండాలో ప్లాన్ చేసి డిజైన్ చేసే నిపుణుడు Architect. అందం, భద్రత, ఉపయోగం అన్నీ ముఖ్యం.</p></div>
+<div class="printhead">కెరీర్ నాలుగు సర్కిళ్లు  ·  Architect  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>నైపుణ్యాలు</b></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>డబ్బు</b></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>Architect అవ్వడం నిజంగా ఇష్టమా?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఇళ్లు, గదులు, రోడ్లు ఎలా డిజైన్ చేశారో గమనిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>కొత్త డిజైన్ ఆలోచించడమూ, టెక్నికల్ సమస్యలు పరిష్కరించడమూ రెండూ ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>ఒకే డిజైన్‌లో మళ్లీ మళ్లీ మార్పులు చేయడానికి ఓపిక ఉందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>Maths, కొలతలు, Geometry, ఖచ్చితంగా డ్రాయింగ్ చేయడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>3D సాఫ్ట్‌వేర్, భవన నిర్మాణ పద్ధతులు నేర్చుకోవాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>కష్టమైన ప్రాజెక్టులతో కూడిన 5 ఏళ్ల B.Arch చదవగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానాలు ఇవ్వండి</strong> మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఏ దారిలో వెళ్లాలి?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>గణితం (Mathematics)</div><div class="v">ఇళ్లు, గదుల కొలతలు, పరిమాణాలు, డిజైన్‌లకు Maths బాగా అవసరం.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>భౌతిక శాస్త్రం (Physics)</div><div class="v">భవనం బరువు, వెలుతురు, వేడి, గాలి ఎలా పనిచేస్తాయో అర్థం చేసుకోవడానికి Physics అవసరం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Drawing &amp; Visual Thinking</div><div class="v">అందమైన బొమ్మలు మాత్రమే కాదు; మన ఆలోచనను కొలతలతో స్పష్టంగా గీయడం నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">B.Arch కోసం 10వ తరగతి తర్వాత MPC తీసుకోవడం సులభమైన మార్గం. సంబంధిత సబ్జెక్ట్ అర్హతలను తప్పనిసరిగా చూడాలి.</div></div>
+<div class="row"><div class="k">ప్రవేశ పరీక్షలు</div><div class="v">B.Arch కాలేజీల్లో చేరడానికి NATA లేదా JEE Main Paper 2A వంటి పరీక్షలు ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k">B.Arch eligibility</div><div class="v">B.Arch ప్రవేశానికి 12వ తరగతిలో అవసరమైన సబ్జెక్టులు, కనీస మార్కులు, ప్రవేశ పరీక్ష నిబంధనలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">డిప్లొమా మార్గం</div><div class="v">Maths ఉన్న 10+3 Diploma తర్వాత కూడా నిబంధనలకు అనుగుణంగా B.Arch ప్రయత్నించవచ్చు; కోర్సు ఐదేళ్లదే.</div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన చదువు దారి</div><div class="v">10వ తరగతి → తగిన ఇంటర్ → NATA/JEE → 5 ఏళ్ల B.Arch → Council of Architecture రిజిస్ట్రేషన్ → Architect.</div></div>
+<div class="flag red"><span class="mark">ముందుగా చూసుకోండి</span><span>పేరులో Architecture ఉందని మాత్రమే చేరవద్దు; CoA గుర్తింపు ఉందో చూడండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">CIRCLE 3 · THE WORK</div><h3>What do architects actually do?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">Building Design</div><div class="v">ఇళ్లు, స్కూళ్లు, ఆసుపత్రులు, ఆఫీసుల డిజైన్ ప్లాన్లు రూపొందించడం.</div></div>
+<div class="row"><div class="k">Residential</div><div class="v">కుటుంబ అవసరాలకు తగ్గట్టు ఇళ్లలో గదులు, గాలి, వెలుతురు, ఖర్చు ప్లాన్ చేయడం.</div></div>
+<div class="row"><div class="k">Commercial / Institutional</div><div class="v">ఆఫీసులు, హోటళ్లు, ఆసుపత్రుల వంటి పెద్ద భవనాల డిజైన్‌లో పని చేయడం.</div></div>
+<div class="row"><div class="k">Urban Design &amp; Planning</div><div class="v">వీధులు, కాలనీలు, పార్కులు, పబ్లిక్ స్థలాలను ప్లాన్ చేయడం.</div></div>
+<div class="row"><div class="k">Landscape Architecture</div><div class="v">పార్కులు, గార్డెన్లు, బయట ఖాళీ ప్రదేశాలను డిజైన్ చేయడం.</div></div>
+<div class="row"><div class="k">Interior Architecture</div><div class="v">ఇంటి లోపలి గదులు, స్థల వినియోగం, అలంకరణ, నిర్మాణ వివరాలు డిజైన్ చేయడం.</div></div>
+<div class="row"><div class="k">Sustainable Design</div><div class="v">విద్యుత్, నీరు, గాలి, వెలుతురు ఆదా చేసే భవనాలు రూపొందించడం.</div></div>
+<div class="row"><div class="k">Conservation</div><div class="v">పాత, చారిత్రక భవనాలను వాటి ప్రత్యేకత చెడిపోకుండా కాపాడడం.</div></div>
+<div class="row"><div class="k">BIM / Digital Architecture</div><div class="v">AutoCAD, Revit, BIM, 3D సాఫ్ట్‌వేర్‌తో భవన డిజైన్‌లు తయారు చేయడం.</div></div>
+<div class="row"><div class="k">Project / Site Coordination</div><div class="v">సైట్‌లో ఇంజినీర్లు, కాంట్రాక్టర్లు, క్లయింట్లతో కలిసి పని సరిగ్గా జరిగేలా చూడడం.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Architect vs Civil Engineer</div><div class="v">Architect భవనం ఎలా ఉపయోగపడాలో డిజైన్ చేస్తారు; Civil Engineer నిర్మాణం బలంగా ఉండేలా లెక్కలు, నిర్మాణ పనులు చూస్తారు.</div></div>
+<div class="row"><div class="k">Architect vs Interior Designer</div><div class="v">Architect మొత్తం భవనాన్ని ప్లాన్ చేస్తారు; Interior Designer ప్రధానంగా లోపలి ప్రదేశాలపై పనిచేస్తారు.</div></div>
+<div class="row"><div class="k">రిజిస్ట్రేషన్</div><div class="v">అర్హత ఉన్న B.Arch తర్వాత Council of Architecture రిజిస్ట్రేషన్ తీసుకోవాలి.</div></div>
+<div class="row"><div class="k">ఎవరు ఉద్యోగాలు ఇస్తారు?</div><div class="v">Architecture సంస్థలు, నిర్మాణ కంపెనీలు, డిజైన్ ఆఫీసులు, ప్రభుత్వ రంగంలో ఉద్యోగాలు ఉండొచ్చు.</div></div>
+<div class="row"><div class="k">మీ Plan B</div><div class="v">BIM, Interior Design, 3D Visualisation, Project Management వంటి ఇతర మార్గాలు కూడా ఉన్నాయి. ఉదాహరణలు: BIM, Interior Design, 3D Visualisation, Urban Design, Project Management, Real Estate.</div></div>
+<div class="flag"><span class="mark">జాగ్రత్త</span><span>డిగ్రీతో పాటు మంచి Portfolio, CAD/BIM, Internship అనుభవం ముఖ్యం.</span></div>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">Architecture ఇంటర్న్‌షిప్</div><div class="v"><strong class="pay-amount">₹5,000 – ₹15,000/month</strong> — చదువుతున్న సమయంలో Internshipలకు ఫైల్లో ఇచ్చిన నెలవారీ అంచనా.</div></div>
+<div class="row"><div class="k">కొత్త Architect</div><div class="v"><strong class="pay-amount">₹15,000 – ₹30,000/month</strong> — కొత్త Junior Architectకు ఫైల్లో ఇచ్చిన నెలవారీ అంచనా.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న Architect</div><div class="v"><strong class="pay-amount">₹25,000 – ₹60,000+/month</strong> — అనుభవం తర్వాత Architect ఉద్యోగానికి ఫైల్లో ఇచ్చిన నెలవారీ అంచనా.</div></div>
+<div class="row"><div class="k">సీనియర్ ఉద్యోగం</div><div class="v"><strong class="pay-amount">₹40,000 – ₹1,00,000+/month</strong> — సీనియర్ ఉద్యోగాలు, స్పెషలైజేషన్‌తో జీతం పెరగవచ్చు.</div></div>
+<div class="row"><div class="k">సొంత ఆఫీసు</div><div class="v">సొంత డిజైన్ ఆఫీస్ పెడితే సంపాదన ప్రాజెక్టులు, క్లయింట్లను బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">ఉద్యోగం వచ్చేలోపు ఖర్చు</div><div class="v">B.Arch ఐదేళ్ల కోర్సు. ఫీజులతో పాటు ల్యాప్‌టాప్, మోడల్స్, ప్రింటింగ్, సైట్ విజిట్ ఖర్చులు కూడా ఉంటాయి.</div></div>
+<div class="flag red"><span class="mark">ఇంట్లో చర్చించండి</span><span>ఐదేళ్ల కోర్సు ఖర్చు, మొదటి జీతం గురించి ముందే కుటుంబంతో చర్చించండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p>మీ ఆసక్తి, మీ నైపుణ్యాలు బాగుంటే ఈ కెరీర్‌ను మరింత పరిశీలించండి.</p>
+<p>ఏదైనా కష్టం అనిపిస్తే దాని గురించి మరింత తెలుసుకుని నిర్ణయం తీసుకోండి.</p>
+<p>కొన్ని విషయాలు సరిపోకపోతే మరో కెరీర్ దారినీ పోల్చి చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">మీ చదువుకు, కుటుంబ పరిస్థితికి తగిన ప్రణాళికను ముందే రాసుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏమి చేయాలి?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, స్కూల్లో ఉన్నప్పుడు</div><ul>
+<li>Mathsలో Geometry, Scale, Measurements బాగా నేర్చుకోండి.</li>
+<li>మీ ఇల్లు లేదా స్కూల్ గదికి చిన్న ప్లాన్ గీయండి.</li>
+<li>భవనాల్లో గాలి, వెలుతురు ఎలా వస్తాయో గమనించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>B.Arch లక్ష్యమైతే అవసరమైన సబ్జెక్టులతో ఇంటర్ చదవండి.</li>
+<li>NATA, JEE Main Paper 2A పరీక్షల గురించి తెలుసుకోండి.</li>
+<li>డ్రాయింగ్, 3D డిజైన్‌పై అభ్యాసం చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>Before choosing a B.Arch college</div><ul>
+<li>గుర్తింపు పొందిన కాలేజీలో ఐదేళ్ల B.Archలో చేరండి.</li>
+<li>ప్రాజెక్టులు, డిజైన్‌లు కలిపి Portfolio తయారు చేసుకోండి.</li>
+<li>డిగ్రీ తర్వాత తగిన Council of Architecture రిజిస్ట్రేషన్ తీసుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముందుగా ఇలా ప్రయత్నించండి</span><span>డ్రాయింగ్ మాత్రమే కాదు; కొలతలు, మ్యాథ్స్, నిర్మాణ పద్ధతులపై కూడా ఆసక్తి ఉండాలి. మీకు సరిపోయే దారిని పరీక్షించుకోండి.</span></div>
+</section>
+<p class="note">ఈ రిపోర్టు కెరీర్ గైడెన్స్ మాత్రమే; అధికారిక ఉద్యోగ ప్రకటన కాదు. అర్హతలు, వయస్సు, ఫీజు, పరీక్ష, జీతాల వివరాలను అప్లై చేసే ముందు అధికారిక వెబ్‌సైట్‌లో తప్పకుండా చూసుకోండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong architecture fit</strong>You seem comfortable with both the creative and technical sides. Test the career through drawing, spatial design and a small architecture project next.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>Some parts fit you, but find out whether you enjoy the technical, revision-heavy side as much as the creative side.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>The real work of architecture may not match what you enjoy. Explore Civil Engineering, Interior Design, Graphic Design or other creative/technical careers before committing.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div><script>document.querySelectorAll('.q .toggle button').forEach(btn=>btn.addEventListener('click',()=>{const parent=btn.parentElement;parent.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed',b===btn?'true':'false');b.removeAttribute('data-picked')});btn.setAttribute('data-picked','1');const all=[...document.querySelectorAll('.q')];const chosen=all.map(q=>q.querySelector('button[aria-pressed="true"]'));const v=document.getElementById('verdict');if(!v)return;const done=chosen.filter(Boolean).length;if(done<all.length){v.innerHTML='<strong>'+done+'/'+all.length+' సమాధానాలు</strong>మిగిలిన ప్రశ్నలకు కూడా జవాబివ్వండి.';return}const yes=chosen.filter(b=>b.getAttribute('data-v')==='y').length;v.innerHTML='<strong>'+yes+'/'+all.length+' అవును</strong>ఇవి మీ ప్రస్తుత అభిప్రాయాలు మాత్రమే. చివరి కెరీర్ నిర్ణయానికి మీ ఆసక్తి, చదువు, ఆర్థిక పరిస్థితి, అవకాశాలన్నీ పరిశీలించండి.';}));</script></body></html>

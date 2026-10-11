@@ -26,6 +26,7 @@ import {
   Download,
   Printer,
   Award,
+  Compass,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { ROADMAP_FORM_KEY, ROADMAP_RESULT_KEY, findCareerFormatFile } from "@/lib/roadmap-data";
@@ -138,13 +139,23 @@ const RoadmapResult = () => {
               </span>
             </div>
 
-            <button
-              onClick={handleDownloadPdf}
-              className="no-print inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black text-white hover:bg-zinc-800 text-xs font-bold transition-all shadow-sm cursor-pointer hover:scale-105 active:scale-95"
-            >
-              <Download className="w-3.5 h-3.5" />
-              Download PDF
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => navigate("/career-reports")}
+                className="no-print inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200 text-xs font-bold transition-all shadow-sm cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <Compass className="w-3.5 h-3.5 text-indigo-600" />
+                <span>Explore Other Careers</span>
+              </button>
+
+              <button
+                onClick={handleDownloadPdf}
+                className="no-print inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-black text-white hover:bg-zinc-800 text-xs font-bold transition-all shadow-sm cursor-pointer hover:scale-105 active:scale-95"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download PDF
+              </button>
+            </div>
           </div>
           <h1 className="text-2xl sm:text-4xl font-extrabold text-zinc-950 leading-tight">
             How to become a{" "}

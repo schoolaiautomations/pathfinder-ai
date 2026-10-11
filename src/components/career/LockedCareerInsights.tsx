@@ -30,10 +30,24 @@ import { saveBookCouncellingToSupabase } from "@/lib/supabase";
 type LockedCareerInsightsProps = {
   formData?: RoadmapFormData | null;
   careerGoal: string;
+  isExternalOpen?: boolean;
+  onExternalOpenChange?: (open: boolean) => void;
 };
 
-export const LockedCareerInsights = ({ formData, careerGoal }: LockedCareerInsightsProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const LockedCareerInsights = ({
+  formData,
+  careerGoal,
+  isExternalOpen,
+  onExternalOpenChange,
+}: LockedCareerInsightsProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isOpen = isExternalOpen !== undefined ? isExternalOpen : internalOpen;
+  const setIsOpen = (open: boolean) => {
+    if (onExternalOpenChange) {
+      onExternalOpenChange(open);
+    }
+    setInternalOpen(open);
+  };
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);

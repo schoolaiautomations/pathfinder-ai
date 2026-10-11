@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — Astrophysicist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>body{font-family:system-ui,"Noto Sans Telugu","Gautami",sans-serif;line-height:1.75}.row .k,h3,h4,.pip b,.stage-head,.flag .mark{font-family:system-ui,"Noto Sans Telugu",sans-serif!important;text-transform:none}.source-details{font-size:12.5px;color:#617084;margin-top:7px}.source-details summary{cursor:pointer;color:#52658a;text-decoration:underline}.source-details div{margin-top:6px}.row .v{font-size:15px}.standfirst{max-width:none}.chip{font-family:system-ui,sans-serif;text-transform:none}.rule-box p{color:#e3e6eb}</style><style>.pay-amount{display:inline-block;color:#14243A;font-size:1.05em;margin-bottom:5px}.row .v{line-height:1.7}.stage li{line-height:1.75}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · భారతదేశం</div><h2>Astrophysicist</h2><p class="standfirst">నక్షత్రాలు, గ్రహాలు, బ్లాక్ హోల్స్, విశ్వం ఎలా పనిచేస్తుందో Physics, Mathsతో పరిశోధించే శాస్త్రవేత్త Astrophysicist.</p></div>
+<div class="printhead">కెరీర్ నాలుగు సర్కిళ్లు  ·  Astrophysicist  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు దారి</b></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>పరిశోధన</b></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>డబ్బు</b></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>అంతరిక్ష పరిశోధన నిజంగా ఇష్టమా?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>గ్రహాలు, నక్షత్రాలు ఎలా కదులుతాయో Physicsతో అర్థం చేసుకోవడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Calculus, Algebra, Probability వంటి Maths గట్టిగా నేర్చుకోవాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సైన్స్ డేటా విశ్లేషించడానికి Programming నేర్చుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సమాధానం తెలియని ప్రశ్నపై చాలా కాలం పరిశోధన చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Space వీడియోలతో పాటు నిజమైన సైన్స్ పేపర్లు చదవాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>PhD వరకు చాలా ఏళ్లు చదువుకోవడానికి సిద్ధమేనా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానాలు ఇవ్వండి</strong> మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏ చదువు దారిని ఎంచుకోవచ్చు?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>భౌతిక శాస్త్రం (Physics)</div><div class="v">నక్షత్రాలు, గ్రహాలు, కాంతి, గురుత్వాకర్షణ ఎలా పనిచేస్తాయో తెలుసుకోవడానికి Physics అవసరం.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>గణితం (Mathematics)</div><div class="v">నక్షత్రాల కదలికలు, ఇతర అంతరిక్ష విషయాలు లెక్కించడానికి Maths చాలా ముఖ్యం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>కోడింగ్ (Programming)</div><div class="v">పెద్ద మొత్తంలో సైన్స్ డేటా విశ్లేషించడానికి Python వంటి Programming నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">10వ తరగతి తర్వాత MPC తీసుకోవడం బలమైన మార్గం; Maths, Physics మీద పట్టు కావాలి.</div></div>
+<div class="row"><div class="k">Route A — B.Sc. Physics</div><div class="v">MPC → B.Sc Physics → M.Sc Physics/Astrophysics → PhD → Astrophysicist ఒక సాధారణ మార్గం.</div></div>
+<div class="row"><div class="k">Route B — IISER</div><div class="v">IISERలలో ప్రవేశానికి IAT పరీక్ష ద్వారా BS-MS చదివి, తర్వాత పరిశోధన చేయవచ్చు.</div></div>
+<div class="row"><div class="k">Route C — NISER / CEBS</div><div class="v">NISER/CEBSలో NEST పరీక్ష ద్వారా Integrated M.Sc. చదివి పరిశోధనవైపు వెళ్లవచ్చు.</div></div>
+<div class="row"><div class="k">Route D — IISc</div><div class="v">IIScలో BS Research వంటి కోర్సులకు అర్హతల ప్రకారం ప్రవేశం సాధ్యమవుతుంది.</div></div>
+<div class="row"><div class="k">Route E — Engineering / Engineering Physics</div><div class="v">Engineering Physics, ECE, CSE వంటి ఇంజినీరింగ్ కోర్సుల నుంచి కూడా సంబంధిత పరిశోధనలోకి రావచ్చు.</div></div>
+<div class="row"><div class="k">After Bachelor's / Master's</div><div class="v">డిగ్రీ తర్వాత M.Sc/PhD ప్రవేశానికి JEST, NET-JRF, GATE లేదా సంస్థ ప్రత్యేక పరీక్షలు ఉండొచ్చు.</div></div>
+<div class="row"><div class="k">IUCAA route</div><div class="v">పుణేలోని IUCAAలో ఖగోళ పరిశోధన జరుగుతుంది; PhD కోసం తగిన ప్రవేశ మార్గాలు ఉన్నాయి.</div></div>
+<div class="row"><div class="k">Do you need a PhD?</div><div class="v">సొంతంగా పెద్ద పరిశోధనలు చేసే Scientist కావాలంటే సాధారణంగా PhD అవసరం అవుతుంది.</div></div>
+<div class="row"><div class="k">పూర్తి చదువు మార్గం</div><div class="v">10వ తరగతి → MPC → Physics/ఇంజినీరింగ్ డిగ్రీ → పరిశోధన ప్రాజెక్టులు → ఉన్నత చదువు, PhD → Scientist.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>Space వీడియోలు నచ్చడం ఒక మంచి ప్రారంభం. కానీ Physics, Maths, Coding బలంగా నేర్చుకోవాలి.</span></div>
+</div></section>
+<section id="c3"><div class="num">CIRCLE 3 · RESEARCH AREAS</div><h3>What kind of Astrophysicist could you become?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">Observational Astrophysicist</div><div class="v">టెలిస్కోప్, శాటిలైట్ నుంచి వచ్చిన డేటాతో నక్షత్రాలు, గ్రహాలను అధ్యయనం చేయడం.</div></div>
+<div class="row"><div class="k">Theoretical Astrophysicist</div><div class="v">సమీకరణాలు, Physics సిద్ధాంతాలతో నక్షత్రాలు, బ్లాక్ హోల్స్ ప్రవర్తన అర్థం చేసుకోవడం.</div></div>
+<div class="row"><div class="k">Computational Astrophysicist</div><div class="v">కంప్యూటర్ సిమ్యులేషన్లతో అంతరిక్షంలో జరిగే విషయాలను అధ్యయనం చేయడం.</div></div>
+<div class="row"><div class="k">Cosmologist</div><div class="v">విశ్వం ఎలా పుట్టింది, ఎలా మారుతోంది అనే విషయాలపై పరిశోధించడం.</div></div>
+<div class="row"><div class="k">Stellar Astrophysicist</div><div class="v">నక్షత్రాలు ఎలా పుడతాయి, ఎలా పెరుగుతాయి, చివరికి ఏమవుతాయి తెలుసుకోవడం.</div></div>
+<div class="row"><div class="k">Galactic / Extragalactic Astronomer</div><div class="v">మన పాలపుంత, ఇతర గెలాక్సీలు, వాటి పరిణామం గురించి పరిశోధించడం.</div></div>
+<div class="row"><div class="k">High-Energy Astrophysicist</div><div class="v">బ్లాక్ హోల్స్, న్యూట్రాన్ నక్షత్రాలు, శక్తివంతమైన అంతరిక్ష ఘటనలను అధ్యయనం చేయడం.</div></div>
+<div class="row"><div class="k">Solar Physicist</div><div class="v">సూర్యుడి కాంతి, అయస్కాంత శక్తి, సౌర తుఫానుల గురించి పరిశోధించడం.</div></div>
+<div class="row"><div class="k">Gravitational-Wave Astronomer</div><div class="v">బ్లాక్ హోల్స్ కలిసినప్పుడు వచ్చే Gravitational Waves వంటి సంకేతాలను అధ్యయనం చేయడం.</div></div>
+<div class="row"><div class="k">Planetary / Exoplanet Scientist</div><div class="v">సౌరవ్యవస్థలోని, ఇతర నక్షత్రాల చుట్టూ తిరిగే గ్రహాల గురించి తెలుసుకోవడం.</div></div>
+<div class="row"><div class="k">Radio Astronomer</div><div class="v">రేడియో తరంగాలతో విశ్వాన్ని పరిశీలించే టెలిస్కోపులను ఉపయోగించడం.</div></div>
+<div class="row"><div class="k">Astronomical Instrumentation Scientist</div><div class="v">టెలిస్కోపులు, కెమెరాలు, డిటెక్టర్లు వంటి సైన్స్ పరికరాలను తయారు చేయడం, ఉపయోగించడం.</div></div>
+<div class="row"><div class="k">Astroinformatics / Data Science</div><div class="v">AI, Data Science, Programmingతో పెద్ద ఖగోళ డేటాను విశ్లేషించడం.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Astronomer vs Astrophysicist</div><div class="v">Astronomer, Astrophysicist పేర్లు చాలాసార్లు దగ్గరగా ఉంటాయి; రెండూ అంతరిక్ష పరిశోధన రంగాలే.</div></div>
+<div class="row"><div class="k">Astrophysicist vs Astronaut</div><div class="v">Astrophysicist అంతరిక్షంపై పరిశోధన చేస్తారు; Astronaut అంతరిక్ష ప్రయాణానికి శిక్షణ పొందిన వ్యక్తి.</div></div>
+<div class="row"><div class="k">Astrophysicist vs ISRO Engineer</div><div class="v">Astrophysicist విశ్వం గురించి తెలుసుకుంటారు; Space Engineer రాకెట్లు, ఉపగ్రహాలు, పరికరాలు తయారు చేస్తారు.</div></div>
+<div class="row"><div class="k">ఎక్కడ పనిచేయవచ్చు?</div><div class="v">IUCAA, IIA, ISRO అనుబంధ ప్రాజెక్టులు, IISc, IIT, విశ్వవిద్యాలయాల్లో పరిశోధన అవకాశాలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">భారతదేశంలో పరిశోధనలు</div><div class="v">భారతదేశం కూడా శాటిలైట్లు, టెలిస్కోపులు, అంతరిక్ష పరిశోధన ప్రాజెక్టుల్లో పాల్గొంటోంది.</div></div>
+<div class="row"><div class="k">మీ Plan B</div><div class="v">Plan Bగా Data Science, AI/ML, Scientific Computing, Teaching, Space Technology వంటి రంగాలు చూడవచ్చు. ఉదాహరణలు: Data Science, Scientific Computing, AI / ML, Space Technology, Instrumentation, Teaching.</div></div>
+<div class="flag"><span class="mark">పరిశోధనలో వాస్తవం</span><span>ఈ రంగంలో ఎక్కువ పని కంప్యూటర్, సమీకరణాలు, డేటాతోనే జరుగుతుంది.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">PhD సమయంలో JRF</div><div class="v"><strong class="pay-amount">₹37,000/month + applicable HRA</strong> — PhD చేస్తున్నప్పుడు JRF Fellowship రూపంలో నెలకు డబ్బు రావచ్చు; ఇది సాధారణ కంపెనీ జీతం కాదు.</div></div>
+<div class="row"><div class="k">PhD సమయంలో SRF</div><div class="v"><strong class="pay-amount">₹42,000/month + applicable HRA</strong> — PhDలో అనుభవం పెరిగిన తర్వాత SRF Fellowship మొత్తానికి సంబంధించిన సమాచారం.</div></div>
+<div class="row"><div class="k">PhD తర్వాత పరిశోధన ఉద్యోగం</div><div class="v"><strong class="pay-amount">₹58,000 – ₹67,000/month + applicable HRA</strong> — PhD తర్వాత Postdoctoral Research వంటి తాత్కాలిక పరిశోధన ఉద్యోగాల్లో ఆదాయం ఉంటుంది.</div></div>
+<div class="row"><div class="k">ప్రాజెక్టు పరిశోధన ఉద్యోగం</div><div class="v"><strong class="pay-amount">Around ₹30,000 – ₹37,000+/month in some current projects</strong> — Scientist, Faculty వంటి శాశ్వత ఉద్యోగాలకు సంస్థ, గ్రేడ్ ప్రకారం జీతం మారుతుంది.</div></div>
+<div class="row"><div class="k">ప్రభుత్వ పరిశోధకుడు</div><div class="v"><strong class="pay-amount">Can begin around Pay Level 10</strong> — ప్రైవేట్ Data Science, Software, Space Tech రంగాల్లోకి మారితే జీతాలు వేరుగా ఉండొచ్చు.</div></div>
+<div class="row"><div class="k">ప్రైవేట్ రంగ అవకాశాలు</div><div class="v">ఈ రంగంలో చాలా ఏళ్లు చదవాలి; ఆర్థికంగా కుటుంబం ఎలా మేనేజ్ చేస్తుందో ముందే ఆలోచించాలి.</div></div>
+<div class="row"><div class="k">చదువు ఖర్చు</div><div class="v">Space Science అని పేరున్న ఖరీదైన ప్రైవేట్ కోర్సే చదవాల్సిన అవసరం లేదు. ప్రభుత్వ కాలేజీల్లో Physics, IISER, NISER, IISc, IIT వంటి మంచి చదువు మార్గాలను పరిశీలించండి. PhD సమయంలో కొన్ని ఫెలోషిప్‌లు ఉంటాయి; కానీ అంతవరకు ఎన్నేళ్లు చదవాలో అంచనా వేసుకోండి.</div></div>
+<div class="flag red"><span class="mark">డబ్బు విషయంలో జాగ్రత్త</span><span>ఈ పరిశోధనా రంగంలో ఉన్నత చదువు ఎక్కువకాలం ఉంటుంది. PhD ఫెలోషిప్, చదువు ఖర్చు, ఉద్యోగ అవకాశాలను విడివిడిగా లెక్కించుకోండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p>మీ ఆసక్తి, మీ నైపుణ్యాలు బాగుంటే ఈ కెరీర్‌ను మరింత పరిశీలించండి.</p>
+<p>ఏదైనా కష్టం అనిపిస్తే దాని గురించి మరింత తెలుసుకుని నిర్ణయం తీసుకోండి.</p>
+<p>కొన్ని విషయాలు సరిపోకపోతే మరో కెరీర్ దారినీ పోల్చి చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">మీ చదువుకు, కుటుంబ పరిస్థితికి తగిన ప్రణాళికను ముందే రాసుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏమి చేయాలి?</h3><p class="lede">ఈ విషయాన్ని సులభంగా అర్థం చేసుకుని, మీకు సరిపోతుందో ఆలోచించండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, స్కూల్లో ఉన్నప్పుడు</div><ul>
+<li>Physicsలో గ్రహాల కదలికలు, కాంతి వంటి విషయాలను అర్థం చేసుకోండి.</li>
+<li>Maths సమస్యలు క్రమంగా సాధన చేయండి.</li>
+<li>సైన్స్ ప్రాజెక్టులు చేసి వాటి ఫలితాలను నోట్స్‌లో రాయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>ఇంటర్‌లో MPC తీసుకుని Maths, Physics పునాది పెంచుకోండి.</li>
+<li>IISER, NISER, IISc, B.Sc Physics ప్రవేశ మార్గాలను పోల్చండి.</li>
+<li>ప్రోగ్రామింగ్, డేటా విశ్లేషణ నేర్చుకోవడం ప్రారంభించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>During college</div><ul>
+<li>Physics లేదా సంబంధిత సైన్స్/ఇంజినీరింగ్ డిగ్రీ చదవండి.</li>
+<li>రీసెర్చ్ ప్రాజెక్టులు, ఇంటర్న్‌షిప్‌లలో పాల్గొనండి.</li>
+<li>Scientist కావాలంటే అవసరమైన Masters/PhD దారిని ఎంచుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముందుగా ఇలా ప్రయత్నించండి</span><span>మొదట Physicsలో మీకు నచ్చిన విషయాన్ని ఎంచుకుని, మ్యాథ్స్‌తో వివరించడానికి ప్రయత్నించండి.</span></div>
+</section>
+<p class="note">ఈ రిపోర్టు కెరీర్ గైడెన్స్ మాత్రమే; అధికారిక ఉద్యోగ ప్రకటన కాదు. అర్హతలు, వయస్సు, ఫీజు, పరీక్ష, జీతాల వివరాలను అప్లై చేసే ముందు అధికారిక వెబ్‌సైట్‌లో తప్పకుండా చూసుకోండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Astrophysics fit</strong>You seem comfortable with Physics, Maths, coding and long-term research. Build fundamentals first and explore real scientific data.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like space and some parts of research. Test whether you enjoy advanced Physics and Maths before choosing the long research pathway.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may love space without enjoying astrophysics research. Compare Aerospace Engineering, Space Technology, Data Science, Science Communication or other space-related careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div><script>document.querySelectorAll('.q .toggle button').forEach(btn=>btn.addEventListener('click',()=>{const parent=btn.parentElement;parent.querySelectorAll('button').forEach(b=>{b.setAttribute('aria-pressed',b===btn?'true':'false');b.removeAttribute('data-picked')});btn.setAttribute('data-picked','1');const all=[...document.querySelectorAll('.q')];const chosen=all.map(q=>q.querySelector('button[aria-pressed="true"]'));const v=document.getElementById('verdict');if(!v)return;const done=chosen.filter(Boolean).length;if(done<all.length){v.innerHTML='<strong>'+done+'/'+all.length+' సమాధానాలు</strong>మిగిలిన ప్రశ్నలకు కూడా జవాబివ్వండి.';return}const yes=chosen.filter(b=>b.getAttribute('data-v')==='y').length;v.innerHTML='<strong>'+yes+'/'+all.length+' అవును</strong>ఇవి మీ ప్రస్తుత అభిప్రాయాలు మాత్రమే. చివరి కెరీర్ నిర్ణయానికి మీ ఆసక్తి, చదువు, ఆర్థిక పరిస్థితి, అవకాశాలన్నీ పరిశీలించండి.';}));</script></body></html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>కెరీర్ మార్గదర్శకం — Chef / Culinary Professional</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>body{font-family:"Noto Sans Telugu","Gautami","Nirmala UI",system-ui,sans-serif}h2,h3,h4,.row .k,.stage-head,.pip b,.verdict strong{font-family:"Noto Sans Telugu","Gautami","Nirmala UI",sans-serif;line-height:1.35;text-transform:none}.row .k{font-size:17px}.pip b{font-size:14px} .chip{font-family:inherit} .printhead{font-family:inherit}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">మీకు సరిపోయే కెరీర్ తెలుసుకోండి · ఆంధ్రప్రదేశ్</div><h2>Chef / Culinary Professional</h2><p class="standfirst">Chef అంటే రుచిగా వండటం ఒక్కటే కాదు. ఆహారం భద్రంగా, శుభ్రంగా, ఒకే రుచితో, సరైన సమయానికి అందించడం కూడా బాధ్యత. హోటల్ కిచెన్‌లో వేడి, ఒత్తిడి, టీమ్ పని ఉంటాయి.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ మార్గదర్శకం · పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగం</b><em>అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>డబ్బు</b><em>ఖర్చు / ఆదాయం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఈ పని నిజంగా మీకు నచ్చుతుందా?</h3><p class="lede">ఈ ఆరు ప్రశ్నలకు మీకు నిజంగా అనిపించిన సమాధానం ఎంచుకోండి. ఇది పరీక్ష కాదు; మీ ఆసక్తిని అర్థం చేసుకోవడానికి మాత్రమే.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>ఒకే వంటకాన్ని ప్రతిసారీ ఒకే రుచితో తయారు చేసేంతగా వంటపై ఆసక్తి ఉందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఒకేసారి చాలా ఆర్డర్లు వచ్చినా వేగంగా, తప్పులు లేకుండా పని చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వేడిగా, శబ్దంగా ఉండే కిచెన్‌లో గంటల తరబడి నిలబడి పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>రోజూ ఆహార భద్రత, శుభ్రత, పరికరాలు కడగడం వంటి నియమాలు పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సీనియర్ Chef తప్పు చూపితే నేర్చుకొని మళ్లీ సరిగా చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>హోటళ్లకు పని ఎక్కువగా ఉండే పండుగలు, ఆదివారాలు, రాత్రిళ్లు కూడా పనిచేయడానికి సిద్ధమేనా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీకు ఎంత ఆసక్తి ఉందో ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఏ మార్గంలో వెళ్లాలి?</h3><p class="lede">10వ తరగతి నుంచి కోర్సులు, ఎంట్రన్స్ పరీక్షలు, అవసరమైన నైపుణ్యాలు ఈ భాగంలో తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>వంటలు తయారు చేయడం</div><div class="v">కత్తి వాడకం, వండే విధానాలు, మసాలాల కొలత, సాస్‌లు, సూప్‌లు, భారతీయ/విదేశీ వంటలు, బేకరీ ప్రాథమికాలు నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>ఆహార భద్రత, శుభ్రత</div><div class="v">సరైన ఉష్ణోగ్రతలో ఆహారం నిల్వ చేయడం, పాడుకాకుండా చూసుకోవడం, పచ్చి/వండిన ఆహారం కలవకుండా చూడడం, శుభ్రత ముఖ్యం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>ఖర్చులు, టీమ్ పని</div><div class="v">ఒక ప్లేట్‌కు అయ్యే ఖర్చు, వేస్ట్ తగ్గించడం, స్టాక్ చూడటం, టైమ్, కిచెన్ టీమ్‌తో పని చేయడం నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">10వ తర్వాత రెండు మార్గాలు: (1) ఏ గ్రూప్‌లోనైనా ఇంటర్ చదివి Culinary/Hotel Management కోర్సు; (2) 10వ తర్వాత NCHMCT Food Production Craftsmanship Certificate వంటి సుమారు 1½ ఏళ్ల స్కిల్ కోర్సు.</div></div>
+<div class="row"><div class="k">12వ తరగతి తర్వాత</div><div class="v">12వ తర్వాత Food Production Diploma (సుమారు 1½ ఏళ్లు), B.Sc Hospitality &amp; Hotel Administration (సుమారు 3 ఏళ్లు), లేదా కొన్ని సంస్థల్లో Culinary Arts బ్యాచిలర్ కోర్సులు ఉన్నాయి.</div></div>
+<div class="row"><div class="k">ప్రవేశ పరీక్షలు</div><div class="v">NCHM JEE పరీక్ష NCHMCT అనుబంధ Institute of Hotel Managementలలో 3 ఏళ్ల B.Sc HHA ప్రవేశానికి ప్రధాన మార్గం; ఇంటర్‌లో ఇంగ్లీష్ ఉండాలి. అన్ని Diploma/Culinary కోర్సులకు ఒకే ఎంట్రన్స్ ఉండదు.</div></div>
+<div class="row"><div class="k">ఏ మార్గం బాగుంటుంది?</div><div class="v">కిచెన్‌లోనే పనిచేయాలంటే Food Production/Culinary Arts; హోటల్ విభాగాల్లో ఇతర పనులకూ అవకాశం కావాలంటే B.Sc HHA; బడ్జెట్ తక్కువైతే గుర్తింపు ఉన్న చిన్న కోర్సు + మంచి కిచెన్ అనుభవం ఆలోచించవచ్చు.</div></div>
+<div class="row"><div class="k">చదవాల్సిన మార్గం</div><div class="v">10వ → 12వ ఏ గ్రూప్ అయినా → అవసరమైతే NCHM JEE / కాలేజీ అడ్మిషన్ → Culinary/Food Production/Hotel Management → కిచెన్ ఇంటర్న్‌షిప్ → Commis/Junior Chef → Chef. చిన్న మార్గం: 10వ → Food Production Craftsmanship కోర్సు → కిచెన్ పని.</div></div>
+<div class="flag red"><span class="mark">గమనిక</span><span>సర్టిఫికేట్ ఒక్కటే సరిపోదు. వేగం, రుచి, శుభ్రత, టీమ్ వర్క్ నిజమైన కిచెన్‌లో నేర్చుకోవాలి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఉద్యోగాలు, అవకాశాలు, సవాళ్లు</h3><p class="lede">ఉద్యోగంలో నిజంగా ఏం చేస్తారు, ఎక్కడ అవకాశాలు ఉన్నాయి, పోటీ ఎలా ఉంటుంది అనేది తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k">కొత్త చెఫ్ (Commis)</div><div class="v">Commis Chef: ప్రారంభ కిచెన్ ఉద్యోగం. పదార్థాలు సిద్ధం చేయడం, కేటాయించిన వంటలు చేయడం, శుభ్రత, సీనియర్ల దగ్గర నేర్చుకోవడం.</div></div>
+<div class="row"><div class="k">విభాగ చెఫ్</div><div class="v">Chef de Partie: కిచెన్‌లో గ్రిల్, కర్రీ, సాస్, బేకరీ వంటి ఒక విభాగం బాధ్యత తీసుకుంటారు.</div></div>
+<div class="row"><div class="k">సహాయక ప్రధాన చెఫ్</div><div class="v">Sous Chef: Head Chef తర్వాత ప్రధాన బాధ్యత. సిబ్బంది, వంట నాణ్యత, ఆర్డర్లు, వేస్ట్, పనుల సమన్వయం చూస్తారు.</div></div>
+<div class="row"><div class="k">ప్రధాన చెఫ్</div><div class="v">Executive / Head Chef: మెనూ, ఖర్చులు, సిబ్బంది, సరఫరాలు, రుచి, శుభ్రత, శిక్షణ మొత్తం నిర్వహిస్తారు.</div></div>
+<div class="row"><div class="k">భారతీయ వంటల చెఫ్</div><div class="v">Indian Cuisine Chef: బిర్యానీ, తందూర్, కబాబ్స్, దక్షిణ భారత వంటలు, ప్రాంతీయ వంటల్లో నైపుణ్యం పెంచుకుంటారు.</div></div>
+<div class="row"><div class="k">పాశ్చాత్య వంటల చెఫ్</div><div class="v">Continental / Western Chef: పాస్తా, గ్రిల్స్, సాస్‌లు, యూరోపియన్ వంటలలో ప్రత్యేకత.</div></div>
+<div class="row"><div class="k">ఆసియా వంటల చెఫ్</div><div class="v">Asian Cuisine Chef: చైనీస్, థాయ్, జపనీస్, కొరియన్ వంటల్లో పదార్థాలు, సరైన విధానాలపై శిక్షణ.</div></div>
+<div class="row"><div class="k">పేస్ట్రీ చెఫ్</div><div class="v">Pastry Chef: కేకులు, డెజర్ట్స్, చాక్లెట్లు, పేస్ట్రీలు. కొలతలు, ఉష్ణోగ్రత, అందంగా తయారు చేయడం ముఖ్యం.</div></div>
+<div class="row"><div class="k">బేకర్</div><div class="v">Baker: బ్రెడ్, కేకులు, బేకరీ వస్తువులు. NCHMCT లో 12వ తర్వాత సుమారు 1½ ఏళ్ల Bakery &amp; Confectionery Diploma మార్గం కూడా ఉంది.</div></div>
+<div class="row"><div class="k">తందూర్ చెఫ్</div><div class="v">Tandoor Chef: తందూర్ రొట్టెలు, కబాబ్స్, అధిక వేడిలో వంటల్లో నైపుణ్యం.</div></div>
+<div class="row"><div class="k">పెద్ద సంఖ్యలో వంటలు</div><div class="v">Banquet / Bulk Production: పెళ్లిళ్లు, సమావేశాలకు వందల మంది కోసం ఒకే నాణ్యతతో, సమయానికి వంట చేయడం.</div></div>
+<div class="row"><div class="k">క్రూయిజ్ / విమాన వంటలు</div><div class="v">Cruise / Airline Catering: విమానాలు, క్రూయిజ్‌లకు భారీ స్థాయిలో ఆహార తయారీ; శుభ్రత, టైమింగ్, సరఫరా నియమాలు ముఖ్యం. క్రూయిజ్‌లో ఇంటి నుంచి చాలా రోజులు దూరం ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">వ్యక్తిగత చెఫ్</div><div class="v">Personal / Private Chef: ఒక కుటుంబం, వ్యక్తి లేదా ప్రైవేట్ కార్యక్రమాలకు అవసరానికి తగ్గ వంటలు చేస్తారు.</div></div>
+<div class="row"><div class="k">ఆహార వ్యాపారం</div><div class="v">Food Entrepreneur: Cloud Kitchen, రెస్టారెంట్, బేకరీ, కేటరింగ్, ప్యాకెట్ ఆహార వ్యాపారం ప్రారంభించవచ్చు. వంటతో పాటు ధరలు, మార్కెటింగ్, లైసెన్సులు, సిబ్బంది, డబ్బు నిర్వహణ తెలియాలి.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">చెఫ్, కుక్ తేడా</div><div class="v">Cook సాధారణంగా చెప్పిన రెసిపీ ప్రకారం వంట చేస్తారు; Chef అయితే మెనూ, నాణ్యత, సిబ్బంది, ఖర్చులు, ఒక కిచెన్ విభాగానికి కూడా బాధ్యత తీసుకోవచ్చు. చిన్న చోట్ల పేర్లు కలిసిపోవచ్చు.</div></div>
+<div class="row"><div class="k">చెఫ్, హోటల్ మేనేజర్ తేడా</div><div class="v">Chef ముఖ్యంగా కిచెన్, వంటల బాధ్యత; Hotel Manager గదులు, రిసెప్షన్, సిబ్బంది, వ్యాపార నిర్వహణ వంటి మొత్తం హోటల్‌ను చూస్తారు. B.Sc HHA లో రెండింటి పరిచయం ఉంటుంది.</div></div>
+<div class="row"><div class="k">ఎక్కడ పని చేయవచ్చు</div><div class="v">హోటళ్లు, రెస్టారెంట్లు, రిసార్టులు, కేఫేలు, బేకరీలు, కేటరింగ్, Cloud Kitchen, ఆసుపత్రి కిచెన్, విమాన కేటరింగ్, క్రూయిజ్, ప్రైవేట్ ఇళ్లలో పని చేయవచ్చు.</div></div>
+<div class="row"><div class="k">ఉద్యోగ ఎదుగుదల</div><div class="v">ఉద్యోగ ఎదుగుదల: Trainee → Commis → Demi Chef de Partie → Chef de Partie → Sous Chef → Executive Sous Chef → Executive/Head Chef. అనుభవంతో బాధ్యత పెరుగుతుంది.</div></div>
+<div class="row"><div class="k">మరో అవకాశం (Plan B)</div><div class="v">Plan B: Food Production, Bakery, Catering, Food Styling, Hospitality Training లేదా Food Business.</div></div>
+<div class="flag"><span class="mark">గమనిక</span><span>మొదటి జీతం తక్కువగా ఉండొచ్చు; పనేర్చుకునే అవకాశాన్ని కూడా చూడండి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం ఎంత? ఖర్చు ఎంత?</h3><p class="lede">ఇక్కడ ఉన్న జీతాలు మూల నివేదికలోని సుమారు అంచనాలు మాత్రమే. సంస్థ, నగరం, అనుభవాన్ని బట్టి మారుతాయి.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / ట్రైనీ</div><div class="v">ఇంటర్న్ / ట్రైనీకి నెలకు ₹5,000–₹12,000 అంచనా. ప్రారంభంలో నిజమైన కిచెన్ అనుభవమే చాలా ముఖ్యం.</div></div>
+<div class="row"><div class="k">Commis / Junior Chef</div><div class="v">Commis / Junior Chefకి నెలకు ₹12,000–₹22,000 అంచనా. నగరం, హోటల్‌ను బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">Chef — India benchmark</div><div class="v">భారతదేశంలో Chef సగటు నెలకు సుమారు ₹20,000 అని నివేదికలో Indeed 2026 అంచనా ఉంది.</div></div>
+<div class="row"><div class="k">Chef de Partie / Specialist</div><div class="v">Chef de Partie / Specialistకి నెలకు ₹22,000–₹40,000+ అంచనా. మంచి హోటళ్లలో ప్రత్యేక నైపుణ్యాలకు ఎక్కువ ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">సహాయక ప్రధాన చెఫ్</div><div class="v">Sous Chefకి నెలకు ₹30,000–₹60,000+ అంచనా. అనుభవం, హోటల్ బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">Head / Executive Chef</div><div class="v">Head / Executive Chefకి నెలకు ₹40,000–₹1,00,000+ అంచనా. పెద్ద హోటళ్లు, విదేశాల్లో మరింత ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">NCHMCT 3 ఏళ్ల B.Sc HHA ట్యూషన్ సుమారు ₹3–5 లక్షలు అని ఫైల్‌లో ఉంది. అడ్మిషన్, పరీక్ష, హాస్టల్, ఆహారం, జీవన ఖర్చులు అదనం. చిన్న కోర్సులు తక్కువ ఖర్చుతో రావచ్చు.</div></div>
+<div class="flag red"><span class="mark">గమనిక</span><span>కోర్సు ఫీజుతో పాటు హాస్టల్, ఆహారం, ఇతర ఖర్చులు కూడా లెక్కించండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4><p><span class="hi">అన్నీ సరిపోతే:</span> ఈ రంగం గురించి మరింత తెలుసుకుని చదువు ప్రణాళిక మొదలుపెట్టండి.</p><p><span class="hi">ఒకటి సరిపోకపోతే:</span> ఎందుకు సరిపోవడం లేదో ఆలోచించండి. అవసరమైన నైపుణ్యాలు నేర్చుకోవచ్చేమో చూడండి.</p><p><span class="hi">కొన్ని సరిపోకపోతే:</span> కౌన్సిలర్, టీచర్, తల్లిదండ్రులతో మాట్లాడి మరో మార్గం కూడా పరిశీలించండి.</p><p>Plan B కోసం ఒక సమయం, లక్ష్యం పెట్టుకోండి. ఒక పరీక్ష ఫలితం మాత్రమే మీ భవిష్యత్తును నిర్ణయించదు.</p></div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ</div><h3>ఇప్పటి నుంచి ఏం చేయాలి?</h3><p class="lede">స్కూల్లో ఉన్నప్పటి నుంచే చిన్న చిన్న పనులతో మొదలుపెట్టవచ్చు.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> స్కూల్లో ఉన్నప్పుడే</div><ul>
+<li>ఇంట్లో సురక్షితంగా ఒకటి రెండు వంటలు నేర్చుకోండి.</li>
+<li>వంటకాన్ని మళ్లీ మళ్లీ చేసి రుచి, కొలత ఒకేలా ఉండేలా చూసుకోండి.</li>
+<li>ఆహార శుభ్రత, చేతులు కడుక్కోవడం, పదార్థాల నిల్వ గురించి తెలుసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>10వ తర్వాత ఇంటర్ లేదా గుర్తింపు ఉన్న Food Production స్కిల్ మార్గాన్ని పోల్చండి.</li>
+<li>హోటల్ మేనేజ్‌మెంట్ కోర్సు అయితే NCHM JEE అర్హత చూడండి.</li>
+<li>ఫీజు, ప్రాక్టికల్ కిచెన్ సదుపాయం, ఇంటర్న్‌షిప్‌లను పరిశీలించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / డిగ్రీ తర్వాత</div><ul>
+<li>సరైన శిక్షణ తీసుకుని హోటల్ కిచెన్‌లో పని నేర్చుకోండి.</li>
+<li>మొదట Commis / Junior Chef స్థాయిలో అనుభవం పెంచుకోండి.</li>
+<li>తర్వాత ఒక వంటల విభాగంలో ప్రత్యేక నైపుణ్యం సంపాదించుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">గమనిక</span><span>కోర్సు ఫీజుతో పాటు హాస్టల్, ఆహారం, ఇతర ఖర్చులు కూడా లెక్కించండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నోటిఫికేషన్ కాదు. ఫీజులు, అర్హతలు, జీతాలు, నియామకాలు మారవచ్చు. అప్లై చేసే ముందు అధికారిక వెబ్‌సైట్‌లో ధృవీకరించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Chef fit</strong>You seem comfortable with cooking, repetition, pressure and discipline. Test yourself in a real commercial kitchen before choosing a course.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>You enjoy food, but test long hours, repetition and service pressure — not only creative cooking.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>You may love food without enjoying professional kitchen life. Compare Bakery, Food Technology, Nutrition, Hotel Management or Food Entrepreneurship.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div><script>document.addEventListener("DOMContentLoaded",()=>{const qs=[...document.querySelectorAll("#c1 .q")];qs.forEach(q=>q.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{q.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));const vals=qs.map(q=>q.querySelector('button[aria-pressed="true"]'));const box=document.querySelector("#verdict");if(vals.every(Boolean)){const yes=vals.filter(x=>x.dataset.v==="y").length;box.innerHTML='<strong>'+yes+' / '+qs.length+' అవును</strong>'+(yes>=5?'ఈ రంగంపై మీకు ఆసక్తి ఉన్నట్లు కనిపిస్తోంది. చదువు మార్గాన్ని కూడా పరిశీలించండి.':yes>=3?'కొన్ని అంశాలు మీకు సరిపోతున్నాయి. ఇంకొన్ని నైపుణ్యాలు నేర్చుకోగలరో ఆలోచించండి.':'ఈ రంగంలోని రోజువారీ పనిని మరింత తెలుసుకోండి. ఇతర కెరీర్లు కూడా పరిశీలించండి.');box.className='verdict '+(yes>=5?'good':yes>=3?'mixed':'bad')}})))});</script></body></html>

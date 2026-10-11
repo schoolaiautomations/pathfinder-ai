@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>కెరీర్ మార్గదర్శకం — Cyber Security Specialist</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>body{font-family:"Noto Sans Telugu","Gautami","Nirmala UI",system-ui,sans-serif}h2,h3,h4,.row .k,.stage-head,.pip b,.verdict strong{font-family:"Noto Sans Telugu","Gautami","Nirmala UI",sans-serif;line-height:1.35;text-transform:none}.row .k{font-size:17px}.pip b{font-size:14px} .chip{font-family:inherit} .printhead{font-family:inherit}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">మీకు సరిపోయే కెరీర్ తెలుసుకోండి · ఆంధ్రప్రదేశ్</div><h2>Cyber Security Specialist</h2><p class="standfirst">Cyber Security Specialist అంటే కంప్యూటర్లు, వెబ్‌సైట్లు, నెట్‌వర్క్‌లు, క్లౌడ్, డేటాను హ్యాకింగ్, మోసాలు, అనుమతి లేని యాక్సెస్ నుంచి కాపాడే నిపుణుడు. ఇది కేవలం హ్యాకింగ్ కాదు; సమస్యల్ని గుర్తించి భద్రత పెంచే పని.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ మార్గదర్శకం · పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగం</b><em>అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>డబ్బు</b><em>ఖర్చు / ఆదాయం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఈ పని నిజంగా మీకు నచ్చుతుందా?</h3><p class="lede">ఈ ఆరు ప్రశ్నలకు మీకు నిజంగా అనిపించిన సమాధానం ఎంచుకోండి. ఇది పరీక్ష కాదు; మీ ఆసక్తిని అర్థం చేసుకోవడానికి మాత్రమే.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>కంప్యూటర్లు, ఇంటర్నెట్, యాప్‌లు ఎలా పనిచేస్తాయో తెలుసుకోవడం నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సమాధానం వెంటనే కనిపించని టెక్నికల్ సమస్యల్ని ఓపికగా పరిష్కరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Logs, Alerts, సిస్టమ్ వివరాలను శ్రద్ధగా చూసి సమస్య ఎక్కడుందో కనుక్కోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>కొత్త టెక్నాలజీ, కొత్త ప్రమాదాలు వస్తుంటాయి; జీవితాంతం నేర్చుకోవడానికి సిద్ధమేనా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వ్యక్తిగత సమాచారాన్ని గోప్యంగా ఉంచి నియమాలు తప్పకుండా పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పెద్ద హ్యాకింగ్ సంఘటనలు కాకుండా, రోజూ సమస్యలు రాకుండా కాపాడే పనీ చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీకు ఎంత ఆసక్తి ఉందో ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఏ మార్గంలో వెళ్లాలి?</h3><p class="lede">10వ తరగతి నుంచి కోర్సులు, ఎంట్రన్స్ పరీక్షలు, అవసరమైన నైపుణ్యాలు ఈ భాగంలో తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>కంప్యూటర్ నెట్‌వర్క్‌లు</div><div class="v">IP Address, Router, Switch, DNS, వెబ్ ట్రాఫిక్ ద్వారా కంప్యూటర్లు ఎలా కలుస్తాయో ముందుగా నేర్చుకోండి.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>ఆపరేటింగ్ సిస్టమ్‌లు</div><div class="v">Windows, Linuxలో User, File, Permission, Process, Service ఎలా పనిచేస్తాయో తెలుసుకోవాలి.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>ప్రోగ్రామింగ్</div><div class="v">Python, Scripting, Web, Database, అవసరాన్ని బట్టి C/C++ వంటి ప్రోగ్రామింగ్ నైపుణ్యాలు ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">10వ తర్వాత MPC ఎంచుకుంటే B.Tech CSE/IT/Cyber Security/ECE వంటి ఇంజినీరింగ్ మార్గాలు ఎక్కువ ఉంటాయి. MPC లేకపోయినా కొన్ని BCA/B.Sc మార్గాలు కాలేజీ నిబంధనల బట్టి దొరుకుతాయి.</div></div>
+<div class="row"><div class="k">మార్గం A – ఇంజినీరింగ్</div><div class="v">మార్గం A: 10వ → MPC → AP EAPCET/JEE → B.Tech/B.E (CSE, IT, Cyber Security, AI/ML, ECE) → సెక్యూరిటీ ప్రాజెక్టులు, ఇంటర్న్‌షిప్ → ఉద్యోగం.</div></div>
+<div class="row"><div class="k">మార్గం B – B.Sc / BCA</div><div class="v">మార్గం B: 12వ → B.Sc Computer Science / Cyber Security / IT లేదా BCA → Networking, Linux, Security Labs → ఇంటర్న్‌షిప్ → ప్రారంభ ఉద్యోగం. అడ్మిషన్ కాలేజీ బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">మార్గం C – డిప్లొమా</div><div class="v">మార్గం C: 10వ → Computer Engineering / IT / ECE Diploma → అర్హత ఉంటే AP ECET ద్వారా B.Tech Lateral Entry → Cyber Security నైపుణ్యాలు.</div></div>
+<div class="row"><div class="k">పై చదువులు</div><div class="v">అధిక స్థాయి ఉద్యోగాలకు M.Tech / M.Sc Cyber Security, Information Security, Computer Science, Digital Forensics ఉపయోగపడవచ్చు; ప్రతి ఉద్యోగానికి PG అవసరం లేదు.</div></div>
+<div class="row"><div class="k">సర్టిఫికేట్లు</div><div class="v">Security+, CEH, eJPT, OSCP, Cloud Security వంటి సర్టిఫికేషన్లు సహాయపడవచ్చు. కానీ Networks, Linux, ప్రాక్టికల్ స్కిల్స్ పునాది లేకుండా సర్టిఫికేట్ ఒక్కటే సరిపోదు.</div></div>
+<div class="row"><div class="k">నేర్చుకోవాల్సిన నైపుణ్యాలు</div><div class="v">Networking, Linux, Windows, Python, Web Basics, Cloud, Security Monitoring క్రమంగా నేర్చుకోండి.</div></div>
+<div class="row"><div class="k">చదవాల్సిన మార్గం</div><div class="v">10వ → సాధ్యమైతే MPC → B.Tech/B.Sc/BCA/Diploma → Networks + Linux + Programming + Security → చట్టబద్ధమైన Practice Labs → Internship/SOC/Junior Job → Specialist.</div></div>
+<div class="flag red"><span class="mark">గమనిక</span><span>ఇతరుల కంప్యూటర్లు, వెబ్‌సైట్లు, ఖాతాలు అనుమతి లేకుండా పరీక్షించడం చట్టవిరుద్ధం.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఉద్యోగాలు, అవకాశాలు, సవాళ్లు</h3><p class="lede">ఉద్యోగంలో నిజంగా ఏం చేస్తారు, ఎక్కడ అవకాశాలు ఉన్నాయి, పోటీ ఎలా ఉంటుంది అనేది తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k">SOC అనలిస్ట్</div><div class="v">SOC Analyst: Security Operations Centerలో Alerts పరిశీలించి అనుమానాస్పద సంఘటనలను పరిశోధిస్తారు. కొత్తవారికి ఇది ఒక ప్రారంభ ఉద్యోగం.</div></div>
+<div class="row"><div class="k">సైబర్ సెక్యూరిటీ అనలిస్ట్</div><div class="v">Cybersecurity Analyst: కంపెనీ కంప్యూటర్లు, డేటాకు ప్రమాదాలు గుర్తించి, సమస్యలు పరిశీలించి, రక్షణ మెరుగుపరుస్తారు.</div></div>
+<div class="row"><div class="k">సెక్యూరిటీ ఇంజినీర్</div><div class="v">Security Engineer: Firewall, Identity, Endpoint, Cloud భద్రతా టూల్స్‌ను నిర్మించి నిర్వహిస్తారు.</div></div>
+<div class="row"><div class="k">ఎథికల్ హ్యాకర్ / టెస్టర్</div><div class="v">Penetration Tester / Ethical Hacker: స్పష్టమైన అనుమతి తీసుకున్న సిస్టమ్‌లలో మాత్రమే బలహీనతలు పరీక్షించి, వాటిని ఎలా సరిచేయాలో చెబుతారు.</div></div>
+<div class="row"><div class="k">సైబర్ సంఘటనల్లో సహాయం</div><div class="v">Incident Responder: సైబర్ దాడి జరిగినప్పుడు వ్యాప్తి ఆపడం, ఏమైందో కనుక్కోవడం, సిస్టమ్ తిరిగి సరిచేయడం చేస్తారు.</div></div>
+<div class="row"><div class="k">డిజిటల్ ఫోరెన్సిక్ నిపుణుడు</div><div class="v">Digital Forensics Specialist: కంప్యూటర్, ఫోన్, సర్వర్‌లలో డిజిటల్ ఆధారాలు చెడిపోకుండా సేకరించి పరిశీలిస్తారు.</div></div>
+<div class="row"><div class="k">క్లౌడ్ సెక్యూరిటీ ఇంజినీర్</div><div class="v">Cloud Security Engineer: క్లౌడ్‌లో డేటా, అనుమతులు, నెట్‌వర్క్, సెట్టింగులు, సంఘటనల పర్యవేక్షణ చూస్తారు.</div></div>
+<div class="row"><div class="k">యాప్‌ల భద్రతా ఇంజినీర్</div><div class="v">Application Security Engineer: యాప్ కోడ్, సెక్యూరిటీ పరీక్షలు, బలహీనతలను సరిచేయడంలో డెవలపర్లకు సహాయం చేస్తారు.</div></div>
+<div class="row"><div class="k">నెట్‌వర్క్ సెక్యూరిటీ ఇంజినీర్</div><div class="v">Network Security Engineer: ఫైర్‌వాల్, నెట్‌వర్క్ విభజన, యాక్సెస్ నియమాలతో నెట్‌వర్క్ రక్షిస్తారు.</div></div>
+<div class="row"><div class="k">ఎవరికి యాక్సెస్ ఇవ్వాలి?</div><div class="v">Identity &amp; Access Management (IAM): ఎవరు ఏ సిస్టమ్, డేటా వాడవచ్చో నియంత్రిస్తారు.</div></div>
+<div class="row"><div class="k">కొత్త సైబర్ ప్రమాదాల పరిశోధన</div><div class="v">Threat Intelligence Analyst: దాడి చేసే వారి పద్ధతులు, కొత్త ప్రమాదాల వివరాలు తెలుసుకొని సంస్థను ముందుగానే హెచ్చరిస్తారు.</div></div>
+<div class="row"><div class="k">హానికరమైన సాఫ్ట్‌వేర్ పరిశీలన</div><div class="v">Malware Analyst: హానికరమైన సాఫ్ట్‌వేర్‌ను సురక్షితమైన ల్యాబ్‌లో పరిశీలించి అది ఏమి చేస్తుందో తెలుసుకుంటారు.</div></div>
+<div class="row"><div class="k">నిబంధనలు, ప్రమాదాల నిర్వహణ</div><div class="v">GRC / Risk Specialist: Governance, Risk, Compliance అంటే సంస్థ విధానాలు, భద్రతా ప్రమాదాలు, ఆడిట్, నిబంధనలు చూసుకోవడం. ఇందులో కోడింగ్ కొంత తక్కువ ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">సీనియర్ భద్రతా రూపకర్త</div><div class="v">Security Architect: మొత్తం కంపెనీ నెట్‌వర్క్, క్లౌడ్, యాప్, డేటాను ఎలా రక్షించాలో రూపొందించే సీనియర్ ఉద్యోగం.</div></div>
+<div class="row"><div class="k">AI సెక్యూరిటీ నిపుణుడు</div><div class="v">AI Security Specialist: AI మోడల్స్, డేటా, AI యాప్‌లలో సమాచారం లీక్ కాకుండా, దుర్వినియోగం జరగకుండా రక్షిస్తారు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">రక్షణ టీమ్, పరీక్షించే టీమ్</div><div class="v">Blue Team రక్షణ చేస్తుంది; Red Team అనుమతితో బలహీనతలను పరీక్షిస్తుంది; Purple Team రెండు టీమ్‌లను కలిపి మెరుగుపరుస్తుంది.</div></div>
+<div class="row"><div class="k">సైబర్ సెక్యూరిటీ, ఎథికల్ హ్యాకింగ్ తేడా</div><div class="v">Cyber Security అంటే మొత్తం భద్రతా రంగం; Ethical Hacking అందులోని ఒక ప్రత్యేక పని మాత్రమే. అన్ని ఉద్యోగాలు హ్యాకింగ్ కావు.</div></div>
+<div class="row"><div class="k">ఎక్కడ పని చేయవచ్చు</div><div class="v">IT, బ్యాంకులు, Fintech, ఆసుపత్రులు, Telecom, Ecommerce, Manufacturing, ప్రభుత్వ శాఖలు, కన్సల్టింగ్, Cloud కంపెనీల్లో అవకాశాలు ఉన్నాయి.</div></div>
+<div class="row"><div class="k">AI వచ్చిన తర్వాత పరిస్థితి</div><div class="v">AI వల్ల రక్షణ పనుల్లో ఆటోమేషన్ పెరుగుతోంది; అదే సమయంలో AI ఆధారిత దాడులు, AI యాప్‌ల రక్షణ వంటి కొత్త అవసరాలు వస్తున్నాయి.</div></div>
+<div class="row"><div class="k">కంపెనీలు చూసే నైపుణ్యాలు</div><div class="v">ఉద్యోగం ఇచ్చేవారు Networking, Linux, నిజమైన Practice Labs, సమస్యల పరిష్కారం, Cloud, కమ్యూనికేషన్, నైతికత చూస్తారు.</div></div>
+<div class="row"><div class="k">మరో అవకాశం (Plan B)</div><div class="v">ఇతర అవకాశాలు: IT Support, Networking, Cloud Engineering, Software Development, System Administration, Digital Forensics వంటి ఉద్యోగాలకు ఈ నైపుణ్యాలు ఉపయోగపడతాయి.</div></div>
+<div class="flag"><span class="mark">గమనిక</span><span>Cyber Security అనేది హ్యాకింగ్ ఒక్కటే కాదు; నిరంతరం నేర్చుకోవాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం ఎంత? ఖర్చు ఎంత?</h3><p class="lede">ఇక్కడ ఉన్న జీతాలు మూల నివేదికలోని సుమారు అంచనాలు మాత్రమే. సంస్థ, నగరం, అనుభవాన్ని బట్టి మారుతాయి.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / ట్రైనీ</div><div class="v">Intern / Traineeగా నెలకు ₹8,000–₹25,000 అంచనా. ప్రాక్టికల్ ల్యాబ్, నెట్‌వర్క్, సెక్యూరిటీ టూల్స్ నేర్చుకునే అవకాశం ముఖ్యం.</div></div>
+<div class="row"><div class="k">మొదటి అనలిస్ట్ ఉద్యోగం</div><div class="v">ప్రారంభ SOC Analyst / Security Analyst ఉద్యోగానికి సంవత్సరానికి ₹3–₹6 లక్షలు అంచనా. నైపుణ్యం, ఇంటర్న్‌షిప్ ఉంటే మెరుగవుతుంది.</div></div>
+<div class="row"><div class="k">భారత జీతం సగటు</div><div class="v">నివేదిక ప్రకారం 2026 Indeed Cybersecurity Analyst భారత సగటు సంవత్సరానికి ₹4.15 లక్షలు (34 మంది సమాచారంపై). ఇది ఖచ్చితమైన జీతం కాదు.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న నిపుణుడు</div><div class="v">అనుభవం ఉన్న Specialistకి సంవత్సరానికి ₹6–₹15 లక్షలు+ అంచనా. Cloud/App Security వంటి రంగాల్లో ఎక్కువ ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">సీనియర్ ఉద్యోగాలు</div><div class="v">సీనియర్/ప్రత్యేక నిపుణులకు సంవత్సరానికి ₹12–₹30 లక్షలు+ అంచనా. కంపెనీ, అనుభవం, నైపుణ్యాల బట్టి చాలా మారుతుంది.</div></div>
+<div class="row"><div class="k">జీతం గురించి జాగ్రత్త</div><div class="v">ఒక వెబ్‌సైట్‌లో కనిపించే అధిక సగటు జీతాన్ని ప్రతి కొత్త విద్యార్థి జీతంగా అనుకోకండి. కొన్నిసార్లు డేటా చాలా తక్కువ మందిపై ఉంటుంది.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">Cyber Security కోసం ఖరీదైన Ethical Hacking ప్యాకేజీ తప్పనిసరి కాదు. మంచి డిగ్రీ/పునాది + ఉచిత లేదా తక్కువ ఖర్చు లీగల్ ల్యాబ్స్ + ప్రాజెక్టులు ఉపయోగపడతాయి.</div></div>
+<div class="flag red"><span class="mark">గమనిక</span><span>ఖరీదైన కోర్సులకన్నా మంచి పునాది, చట్టబద్ధమైన ల్యాబ్ సాధన ముఖ్యం.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4><p><span class="hi">అన్నీ సరిపోతే:</span> ఈ రంగం గురించి మరింత తెలుసుకుని చదువు ప్రణాళిక మొదలుపెట్టండి.</p><p><span class="hi">ఒకటి సరిపోకపోతే:</span> ఎందుకు సరిపోవడం లేదో ఆలోచించండి. అవసరమైన నైపుణ్యాలు నేర్చుకోవచ్చేమో చూడండి.</p><p><span class="hi">కొన్ని సరిపోకపోతే:</span> కౌన్సిలర్, టీచర్, తల్లిదండ్రులతో మాట్లాడి మరో మార్గం కూడా పరిశీలించండి.</p><p>Plan B కోసం ఒక సమయం, లక్ష్యం పెట్టుకోండి. ఒక పరీక్ష ఫలితం మాత్రమే మీ భవిష్యత్తును నిర్ణయించదు.</p></div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ</div><h3>ఇప్పటి నుంచి ఏం చేయాలి?</h3><p class="lede">స్కూల్లో ఉన్నప్పటి నుంచే చిన్న చిన్న పనులతో మొదలుపెట్టవచ్చు.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> స్కూల్లో ఉన్నప్పుడే</div><ul>
+<li>కంప్యూటర్, ఇంటర్నెట్, పాస్‌వర్డ్, ఆన్‌లైన్ భద్రత ప్రాథమికాలు నేర్చుకోండి.</li>
+<li>చిన్న చిన్న లాజిక్, సమస్యల పరిష్కార ఆటలు ప్రయత్నించండి.</li>
+<li>ఇతరుల ఖాతాలు లేదా వెబ్‌సైట్లు అనుమతి లేకుండా పరీక్షించకండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>10వ తర్వాత మీకు సాధ్యమైతే MPC లేదా సరైన కంప్యూటర్ మార్గం ఎంచుకోండి.</li>
+<li>Python, Networking, Linux ప్రాథమికాలు నేర్చుకోండి.</li>
+<li>ఉచిత, చట్టబద్ధమైన ట్రైనింగ్ ల్యాబ్‌లలో మాత్రమే సాధన చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / డిగ్రీ తర్వాత</div><ul>
+<li>B.Tech / B.Sc / BCA / Diplomaలో మంచి ప్రాజెక్టులు చేయండి.</li>
+<li>ఇంటర్న్‌షిప్, SOC/Junior Security ఉద్యోగాలకు అప్లై చేయండి.</li>
+<li>అనుభవం వచ్చిన తర్వాత Cloud, Forensics, Pen Testing వంటి విభాగం ఎంచుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">గమనిక</span><span>ఖరీదైన కోర్సులకన్నా మంచి పునాది, చట్టబద్ధమైన ల్యాబ్ సాధన ముఖ్యం.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నోటిఫికేషన్ కాదు. ఫీజులు, అర్హతలు, జీతాలు, నియామకాలు మారవచ్చు. అప్లై చేసే ముందు అధికారిక వెబ్‌సైట్‌లో ధృవీకరించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Cyber Security fit</strong>You seem comfortable with systems, investigation, continuous learning and responsibility. Build networking and Linux fundamentals first.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Explore before deciding</strong>You like some parts of cyber security. Try networking, Linux and a legal beginner security lab before choosing the career.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Think twice</strong>You may like technology without enjoying security work. Compare Software Engineering, Data Science, UI/UX, IT Support or other technology careers.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div><script>document.addEventListener("DOMContentLoaded",()=>{const qs=[...document.querySelectorAll("#c1 .q")];qs.forEach(q=>q.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{q.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));const vals=qs.map(q=>q.querySelector('button[aria-pressed="true"]'));const box=document.querySelector("#verdict");if(vals.every(Boolean)){const yes=vals.filter(x=>x.dataset.v==="y").length;box.innerHTML='<strong>'+yes+' / '+qs.length+' అవును</strong>'+(yes>=5?'ఈ రంగంపై మీకు ఆసక్తి ఉన్నట్లు కనిపిస్తోంది. చదువు మార్గాన్ని కూడా పరిశీలించండి.':yes>=3?'కొన్ని అంశాలు మీకు సరిపోతున్నాయి. ఇంకొన్ని నైపుణ్యాలు నేర్చుకోగలరో ఆలోచించండి.':'ఈ రంగంలోని రోజువారీ పనిని మరింత తెలుసుకోండి. ఇతర కెరీర్లు కూడా పరిశీలించండి.');box.className='verdict '+(yes>=5?'good':yes>=3?'mixed':'bad')}})))});</script></body></html>

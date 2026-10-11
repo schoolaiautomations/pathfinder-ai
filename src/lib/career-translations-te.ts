@@ -1,0 +1,433 @@
+// ── Telugu Career Translations & Roadmaps Database ──
+import { CareerRoadmap } from "@/components/common/CareerRoadmapModal";
+
+export interface TeluguCareerMetadata {
+  label: string;
+  category: string;
+  streamBadge: string;
+  description: string;
+}
+
+export const TELUGU_CATEGORIES = [
+  "అన్నీ",
+  "సైన్స్ (MPC / ఇంజనీరింగ్)",
+  "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+  "కామర్స్ & ఫైనాన్స్",
+  "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+  "ఆర్ట్స్, డిజైన్ & మీడియా",
+  "ఏవియేషన్ & హాస్పిటాలిటీ",
+] as const;
+
+export const CATEGORY_EN_TO_TE: Record<string, string> = {
+  "All": "అన్నీ",
+  "Science (MPC / Engineering)": "సైన్స్ (MPC / ఇంజనీరింగ్)",
+  "Medical & Healthcare (BiPC)": "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+  "Commerce & Finance": "కామర్స్ & ఫైనాన్స్",
+  "Civil Services & Defence": "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+  "Arts, Design & Media": "ఆర్ట్స్, డిజైన్ & మీడియా",
+  "Aviation & Hospitality": "ఏవియేషన్ & హాస్పిటాలిటీ",
+};
+
+export const TELUGU_UI = {
+  title: "కెరీర్ మార్గదర్శిని",
+  subtitle: "మీ అభిరుచికి తగిన భవిష్యత్ మార్గాన్ని కనుగొనండి — 10వ తరగతి తర్వాత ఏ గ్రూప్ ఎంచుకోవాలి, ఏయే కోర్సులు మరియు ఉద్యోగావకాశాలు ఉన్నాయో తెలుసుకోండి.",
+  searchPlaceholder: "ఏదైనా కెరీర్ వెతకండి (ఉదా: డాక్టర్, పోలీస్, సాఫ్ట్‌వేర్, టీచర్)...",
+  allFilter: "అన్నీ",
+  audioBadge: "ఆడియో",
+  quizBadge: "క్విజ్ ఆడండి",
+  roadmapBadge: "రోడ్‌మ్యాప్",
+  readReport: "పూర్తి రిపోర్ట్ చదవండి",
+  backToAll: "అన్ని కెరీర్‌లకు తిరిగి వెళ్లండి",
+  back: "వెనుకకు",
+  counsellingCalloutTitle: "కెరీర్ గైడెన్స్ కావాలా?",
+  counsellingCalloutHeading: "1-ఆన్-1 ఆన్‌లైన్ కౌన్సెలింగ్ బుక్ చేసుకోండి",
+  counsellingCalloutDesc: "మీ భవిష్యత్ నిర్ణయాల కోసం నిపుణులైన కెరీర్ కౌన్సిలర్‌తో నేరుగా మాట్లాడండి.",
+  bookNow: "సెషన్ బుక్ చేసుకోండి",
+  listenAudio: "కెరీర్ ఆడియో వినండి",
+  pauseAudio: "ఆడియో పాజ్ చేయండి",
+  audioComingSoon: "ఆడియో త్వరలో వస్తుంది",
+};
+
+export const TELUGU_CAREER_MAP: Record<string, TeluguCareerMetadata> = {
+  doctor: {
+    label: "డాక్టర్ (MBBS / MD)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / MBBS",
+    description: "రోగులకు చికిత్స అందించడం, ప్రాణాలు కాపాడటం, నీట్ (NEET) ప్రవేశ పరీక్ష, ఎంబీబీఎస్ మరియు స్పెషలైజేషన్ మార్గదర్శకత్వం.",
+  },
+  police: {
+    label: "పోలీస్ ఆఫీసర్ (SI / DSP)",
+    category: "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+    streamBadge: "డిగ్రీ / SLPRB",
+    description: "శాంతిభద్రతల పరిరక్షణ, చట్టం అమలు, ఎస్ఐ మరియు కానిస్టేబుల్ రిక్రూట్‌మెంట్, శారీరక దారుఢ్య పరీక్షలు మరియు ప్రమోషన్లు.",
+  },
+  swe: {
+    label: "సాఫ్ట్‌వేర్ ఇంజనీర్",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / B.Tech",
+    description: "కోడింగ్, మొబైల్/వెబ్ అప్లికేషన్ల అభివృద్ధి, AI ఇంజనీరింగ్, ఐఐటీ/ఎన్‌ఐటీ ప్రవేశ పరీక్షలు మరియు ఐటీ కంపెనీల జీతాలు.",
+  },
+  teacher: {
+    label: "ఉపాధ్యాయుడు / టీచర్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "B.Ed / DSC",
+    description: "పాఠశాల మరియు కళాశాలల్లో విద్యాబోధన, డీఎస్సీ (DSC) మరియు టెట్ (TET) అర్హతలు, సమాజ నిర్మాణంలో అత్యంత గౌరవప్రదమైన వృత్తి.",
+  },
+  army: {
+    label: "ఇండియన్ ఆర్మీ (సైనికుడు / అధికారి)",
+    category: "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+    streamBadge: "NDA / CDS",
+    description: "భారత సైన్యంలో అధికారిగా దేశ రక్షణ, నేషనల్ డిఫెన్స్ అకాడమీ (NDA) పరీక్ష, సాహసోపేతమైన జీవితం మరియు విశిష్ట గౌరవం.",
+  },
+  lawyer: {
+    label: "న్యాయవాది / లాయర్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "CLAT / LLB",
+    description: "కోర్టుల్లో న్యాయ పోరాటం, కార్పొరేట్ కంపెనీలకు లీగల్ సలహాలు, క్లాట్ (CLAT) ప్రవేశ పరీక్ష మరియు న్యాయమూర్తి (జడ్జ్) అవకాశాలు.",
+  },
+  nurse: {
+    label: "నర్సింగ్ ఆఫీసర్ / నర్స్",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / B.Sc Nursing",
+    description: "ఆసుపత్రులలో రోగుల సంరక్షణ, ఎయిమ్స్ (AIIMS) నర్సింగ్ ఆఫీసర్ పరీక్షలు, భారతదేశంలో మరియు విదేశాలలో అపారమైన ఉద్యోగావకాశాలు.",
+  },
+  agri: {
+    label: "వ్యవసాయ అధికారి (Agri Officer)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / B.Sc Agri",
+    description: "రైతులకు ఆధునిక సేద్య పద్ధతులు, విత్తనాలు, ఎరువుల మార్గదర్శకత్వం, ఏవో (AO) ప్రభుత్వ రిక్రూట్‌మెంట్లు మరియు వ్యవసాయ పరిశోధన.",
+  },
+  bank: {
+    label: "బ్యాంక్ పి.ఓ (Bank PO)",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "డిగ్రీ / IBPS PO",
+    description: "ప్రభుత్వ మరియు ప్రైవేట్ బ్యాంకుల్లో ప్రొబేషనరీ ఆఫీసర్ హోదా, రుణాలు, ఖాతాల నిర్వహణ, ఐబీపీఎస్ మరియు ఎస్‌బీఐ పరీక్షలు.",
+  },
+  ca: {
+    label: "చార్టర్డ్ అకౌంటెంట్ (CA)",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "MEC / ICAI CA",
+    description: "కంపెనీల ఆడిటింగ్, పన్నుల ప్రణాళిక, ఫైనాన్షియల్ అడ్వైజరీ, ఐసీఏఐ (ICAI) ఫౌండేషన్, ఇంటర్ మరియు ఫైనల్ పరీక్షల మార్గం.",
+  },
+  designer: {
+    label: "గ్రాఫిక్ & UI/UX డిజైనర్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "B.Des / Portfolio",
+    description: "సృజనాత్మక గ్రాఫిక్స్, వెబ్‌సైట్ మరియు మొబైల్ యాప్ డిజైనింగ్, ఫిగ్మా (Figma), డిజైన్ ఇన్‌స్టిట్యూట్లు (NID/NIFT) మరియు ఫ్రీలాన్సింగ్.",
+  },
+  pharmacist: {
+    label: "ఫార్మసిస్ట్ / డ్రగ్ ఇన్‌స్పెక్టర్",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / B.Pharm",
+    description: "మందుల తయారీ, నాణ్యతా పరీక్షలు, మెడికల్ షాపులు, ఫార్మాస్యూటికల్ కంపెనీలు మరియు ప్రభుత్వ డ్రగ్ ఇన్‌స్పెక్టర్ ఉద్యోగాలు.",
+  },
+  engineer: {
+    label: "కోర్ ఇంజనీర్ (మెకానికల్/సివిల్/EEE)",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / Engineering",
+    description: "యంత్రాలు, భవనాలు, వంతెనలు, పవర్ ప్లాంట్ల నిర్మాణం, గేట్ (GATE) పరీక్ష, పీఎస్‌యూ (PSU) ఉద్యోగాలు మరియు ప్రాజెక్ట్ మేనేజ్‌మెంట్.",
+  },
+  architect: {
+    label: "ఆర్కిటెక్ట్ (భవన రూపకర్త)",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / B.Arch",
+    description: "ఆధునిక భవనాలు, విల్లాలు, టౌన్‌షిప్‌ల ఆర్కిటెక్చరల్ డిజైన్, నాటా (NATA) ప్రవేశ పరీక్ష మరియు కౌన్సిల్ ఆఫ్ ఆర్కిటెక్చర్ లైసెన్స్.",
+  },
+  "navy-airforce": {
+    label: "ఇండియన్ నేవీ & ఎయిర్ ఫోర్స్",
+    category: "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+    streamBadge: "MPC / NDA / AFCAT",
+    description: "యుద్ధ విమానాలు నడపడం, సముద్ర జలాల్లో యుద్ధనౌకలను నడపడం, ఎయిర్‌ఫోర్స్ మరియు నేవీ కమిషన్డ్ ఆఫీసర్ అవకాశాలు.",
+  },
+  "hotel-management": {
+    label: "హోటల్ & హాస్పిటాలిటీ మేనేజ్మెంట్",
+    category: "ఏవియేషన్ & హాస్పిటాలిటీ",
+    streamBadge: "NCHMCT / BHM",
+    description: "5-స్టార్ లగ్జరీ హోటళ్లు, రిసార్ట్‌లు, విలాసవంతమైన క్రూయిజ్ నౌకల్లో మేనేజ్‌మెంట్ బాధ్యతలు, ఫుడ్ & బెవరేజ్ మరియు ఈవెంట్స్.",
+  },
+  sports: {
+    label: "ప్రొఫెషనల్ అథ్లెట్ / స్పోర్ట్స్ కోచ్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "B.P.Ed / SAI",
+    description: "క్రీడలలో ప్రతిభ, జిల్లా/రాష్ట్ర/జాతీయ స్థాయి టోర్నమెంట్లు, స్పోర్ట్స్ అథారిటీ ఆఫ్ ఇండియా శిక్షణ మరియు స్పోర్ట్స్ కోటా ఉద్యోగాలు.",
+  },
+  "govt-jobs": {
+    label: "ప్రభుత్వ ఉద్యోగాలు (APPSC గ్రూప్-1, 2)",
+    category: "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+    streamBadge: "డిగ్రీ / APPSC",
+    description: "డిప్యూటీ కలెక్టర్, తహశీల్దార్, ఆర్డీవో వంటి ప్రభుత్వ గెజిటెడ్ ఆఫీసర్ ఉద్యోగాలు, పరీక్షా విధానం మరియు సిలబస్ ప్రిపరేషన్.",
+  },
+  scientist: {
+    label: "రీసెర్చ్ సైంటిస్ట్ (ISRO / DRDO)",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "M.Sc / Ph.D / CSIR",
+    description: "అంతరిక్ష ప్రయోగాలు, శాస్త్రీయ నూతన ఆవిష్కరణలు, ఇస్రో, డీఆర్‌డీఓ, బార్క్ వంటి ప్రతిష్టాత్మక జాతీయ పరిశోధనా సంస్థల్లో కెరీర్.",
+  },
+  entrepreneur: {
+    label: "స్టార్టప్ ఫౌండర్ / పారిశ్రామికవేత్త",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "Business / Startup",
+    description: "సొంత వ్యాపారాన్ని ప్రారంభించడం, వినూత్న ఆలోచనలతో పరిశ్రమలు స్థాపించడం, పెట్టుబడుల సమీకరణ మరియు వ్యాపార విస్తరణ.",
+  },
+  "interior-designer": {
+    label: "ఇంటీరియర్ డిజైనర్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "B.Des / CAD",
+    description: "ఇళ్ళు, కార్యాలయాల అంతర్గత అలంకరణ, స్పేస్ ప్లానింగ్, 3D రెండరింగ్, కలర్ థీమ్స్ మరియు ఆధునిక లైటింగ్ రూపకల్పన.",
+  },
+  mba: {
+    label: "బిజినెస్ మేనేజ్‌మెంట్ లీడర్ (MBA)",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "CAT / IIM / MBA",
+    description: "ఐఐఎంలలో ఎంబీఏ, మార్కెటింగ్, ఫైనాన్స్, బిజినెస్ స్ట్రాటజీ, గ్లోబల్ ఎంఎన్‌సీలలో ఉన్నత స్థాయి మేనేజ్‌మెంట్ ఉద్యోగాలు.",
+  },
+  pilot: {
+    label: "కమర్షియల్ పైలట్ (CPL)",
+    category: "ఏవియేషన్ & హాస్పిటాలిటీ",
+    streamBadge: "MPC / DGCA CPL",
+    description: "విమానాలు నడపడం, ఫ్లయింగ్ స్కూల్ శిక్షణ, డీజీసీఏ (DGCA) లైసెన్స్, ప్రయాణీకుల విమానయాన సంస్థల్లో ఆకర్షణీయమైన వేతనాలు.",
+  },
+  fashion: {
+    label: "ఫ్యాషన్ డిజైనర్ (NIFT)",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "NIFT / B.Des",
+    description: "దుస్తుల శైలుల రూపకల్పన, ఫ్యాషన్ షోలు, టెక్స్‌టైల్ డిజైన్, నిఫ్ట్ (NIFT) ప్రవేశ పరీక్ష మరియు సొంత డిజైనర్ లేబుల్ స్థాపన.",
+  },
+  journalist: {
+    label: "జర్నలిస్ట్ / న్యూస్ యాంకర్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "BJMC / Media",
+    description: "వార్తా సేకరణ, టీవీ మరియు పత్రికా రంగం, పరిశోధనాత్మక జర్నలిజం, డిజిటల్ మీడియా మరియు సమాజ గొంతుకగా నిలవడం.",
+  },
+  ias: {
+    label: "ఐ.ఏ.ఎస్ (IAS అధికారి)",
+    category: "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+    streamBadge: "డిగ్రీ / UPSC CSE",
+    description: "జిల్లా కలెక్టర్‌గా అత్యున్నత ప్రజా పరిపాలన, యూపీఎస్సీ (UPSC) సివిల్ సర్వీసెస్ పరీక్ష, లాల్ బహదూర్ శాస్త్రి అకాడమీ (LBSNAA) శిక్షణ.",
+  },
+  ips: {
+    label: "ఐ.పి.ఎస్ (IPS అధికారి)",
+    category: "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+    streamBadge: "డిగ్రీ / UPSC CSE",
+    description: "పోలీస్ సూపరింటెండెంట్ (SP)గా శాంతిభద్రతల పరిరక్షణ, నేర నియంత్రణ, నేషనల్ పోలీస్ అకాడమీ హైదరాబాద్‌లో కఠిన శిక్షణ.",
+  },
+  "air-hostess": {
+    label: "ఎయిర్ హోస్టెస్ / క్యాబిన్ క్రూ",
+    category: "ఏవియేషన్ & హాస్పిటాలిటీ",
+    streamBadge: "Aviation / Hospitality",
+    description: "విమాన ప్రయాణీకులకు స్వాగతం, భద్రతా సూచనలు, ప్రథమ చికిత్స, అంతర్జాతీయ విమానయాన సంస్థలలో ప్రయాణించే అద్భుత అవకాశం.",
+  },
+  physiotherapy: {
+    label: "ఫిజియోథెరపిస్ట్ (BPT)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / BPT",
+    description: "శారీరక వ్యాయామ చికిత్స, క్రీడా గాయాలు, పక్షవాతం రోగుల పునరావాసం, ఆసుపత్రులు మరియు స్పోర్ట్స్ క్లబ్‌లలో క్లినికల్ ప్రాక్టీస్.",
+  },
+  chef: {
+    label: "ఎగ్జిక్యూటివ్ చెఫ్ (వంట కళాకారుడు)",
+    category: "ఏవియేషన్ & హాస్పిటాలిటీ",
+    streamBadge: "Culinary Arts",
+    description: "భారతీయ మరియు అంతర్జాతీయ రుచికరమైన వంటకాల తయారీ, ఫైన్-డైనింగ్ హోటళ్ల కిచెన్ నిర్వహణ మరియు క్యులినరీ రంగం.",
+  },
+  psychologist: {
+    label: "క్లినికల్ సైకాలజిస్ట్ & కౌన్సిలర్",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "Psychology / RCI",
+    description: "మానసిక ఒత్తిడి, ఆందోళన పరిష్కారాలు, కౌన్సిలింగ్ థెరపీ, విద్యార్థుల కెరీర్ & వ్యక్తిత్వ వికాసం మరియు ఆసుపత్రి ప్రాక్టీస్.",
+  },
+  "environmental-consultant": {
+    label: "పర్యావరణ సలహాదారు (Environmentalist)",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "BiPC/MPC / Env Sci",
+    description: "పర్యావరణ పరిరక్షణ, కాలుష్య నియంత్రణ, కర్బన ఉద్గారాల తగ్గింపు, హరిత ఇంధన ప్రాజెక్టులకు పర్యావరణ అనుమతులు అందించడం.",
+  },
+  archaeologist: {
+    label: "ఆర్కియాలజిస్ట్ (పురావస్తు నిపుణుడు)",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "History / ASI",
+    description: "పురాతన నగరాలు, శాసనాల తవ్వకాలు, పూర్వీకుల నాగరికతలను వెలికితీయడం మరియు ఆర్కియాలజికల్ సర్వే ఆఫ్ ఇండియా (ASI) పరిశోధన.",
+  },
+  nutritionist: {
+    label: "న్యూట్రిషనిస్ట్ & డైటీషియన్",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / Nutrition",
+    description: "ఆరోగ్యకరమైన ఆహార ప్రణాళికలు, జీవనశైలి వ్యాధుల నియంత్రణ, ఆసుపత్రులలో పేషెంట్ డైట్స్ మరియు స్పోర్ట్స్ న్యూట్రిషన్.",
+  },
+  veterinarian: {
+    label: "వెటర్నరీ డాక్టర్ (పశువైద్యుడు)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / B.V.Sc & AH",
+    description: "పెంపుడు జంతువులు, పశువుల వ్యాధులకు చికిత్స, పశు సంవర్ధక శాఖ ప్రభుత్వ సర్జన్ ఉద్యోగాలు మరియు వెటర్నరీ క్లినిక్స్.",
+  },
+  beautician: {
+    label: "కాస్మోటాలజిస్ట్ & బ్యూటీ ప్రొఫెషనల్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "Cosmetology / Diploma",
+    description: "చర్మ సంరక్షణ, హెయిర్ స్టైలింగ్, బ్రైడల్ మేకప్, లగ్జరీ సెలూన్లు మరియు సినీ/మీడియా రంగంలో ఉన్నత ఆదాయ అవకాశాలు.",
+  },
+  "ai-scientist": {
+    label: "AI రీసెర్చ్ సైంటిస్ట్",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / AI & ML",
+    description: "డీప్ లెర్నింగ్, లార్జ్ లాంగ్వేజ్ మోడల్స్ (LLMs), రోబోటిక్ ఇంటెలిజెన్స్, అడ్వాన్స్‌డ్ మ్యాథమెటిక్స్ మరియు గ్లోబల్ AI రీసెర్చ్ ల్యాబ్స్.",
+  },
+  "data-scientist": {
+    label: "డేటా సైంటిస్ట్ (Data Scientist)",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / Data Science",
+    description: "పైథాన్, బిగ్ డేటా విశ్లేషణ, మెషిన్ లెర్నింగ్ మోడల్స్, డేటా ఆధారిత వ్యాపార నిర్ణయాలు మరియు ఐటీలో అత్యున్నత ప్యాకేజీలు.",
+  },
+  "robotics-engineer": {
+    label: "రోబోటిక్స్ ఇంజనీర్",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / Robotics",
+    description: "స్వయంప్రతిపత్తి గల రోబోలు, సెన్సార్లు, ఆటోమేషన్ సాఫ్ట్‌వేర్, పరిశ్రమలలో ఇండస్ట్రియల్ రోబోటిక్ ఆర్మ్స్ మరియు డ్రోన్ల తయారీ.",
+  },
+  "forensic-scientist": {
+    label: "ఫోరెన్సిక్ సైంటిస్ట్ (క్రైమ్ ఇన్వెస్టిగేషన్)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC/MPC / Forensic",
+    description: "నేర స్థలంలో ఆధారాల సేకరణ, డీఎన్‌ఏ విశ్లేషణ, వేలిముద్రల పరీక్ష, ఫోరెన్సిక్ సైన్స్ లేబొరేటరీ (FSL) మరియు కోర్టు సాక్ష్యాలు.",
+  },
+  horticulturist: {
+    label: "హార్టికల్చరిస్ట్ (తోటల సాగు నిపుణుడు)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / B.Sc Horti",
+    description: "పండ్లు, పూలు, కూరగాయల ఆధునిక సాగు, గ్రీన్‌హౌస్ టెక్నాలజీ, హార్టికల్చర్ ఆఫీసర్ (HO) ఉద్యోగాలు మరియు ఎగుమతి వ్యాపారం.",
+  },
+  stenographer: {
+    label: "కోర్టు స్టెనోగ్రాఫర్ / PA",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "10th/Inter / Shorthand",
+    description: "హైస్పీడ్ షార్ట్‌హ్యాండ్, కోర్టు తీర్పుల టైపింగ్, ఎస్సెస్సీ స్టెనోగ్రాఫర్ (SSC Steno) మరియు హైకోర్టు పర్సనల్ అసిస్టెంట్ పోస్టులు.",
+  },
+  astrophysicist: {
+    label: "ఖగోళ భౌతిక శాస్త్రవేత్త (ఆస్ట్రోఫిజిసిస్ట్)",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / Astrophysics",
+    description: "నక్షత్రాలు, కృష్ణబిలాలు, అంతరిక్ష టెలిస్కోపులు, క్వాంటమ్ భౌతికశాస్త్రం, ఇస్రో (ISRO) మరియు నాసా (NASA) పరిశోధనలు.",
+  },
+  "cyber-security": {
+    label: "సైబర్ సెక్యూరిటీ స్పెషలిస్ట్ / ఎథికల్ హ్యాకర్",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "MPC / Cyber Security",
+    description: "కంప్యూటర్ నెట్‌వర్క్‌ల రక్షణ, ఎథికల్ హ్యాకింగ్, సైబర్ దాడుల నివారణ, క్రైమ్ విచారణ మరియు రక్షణ రంగంలో సైబర్ సెల్ ఉద్యోగాలు.",
+  },
+  "drone-pilot": {
+    label: "డ్రోన్ పైలట్ & UAV టెక్నీషియన్",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "DGCA Drone License",
+    description: "వ్యవసాయ పురుగుమందుల పిచికారీ, ల్యాండ్ సర్వే, సినీ ఏరియల్ షూటింగ్ కోసం డ్రోన్లు నడపడం, డీజీసీఏ అధికారిక సర్టిఫికేషన్.",
+  },
+  epigraphist: {
+    label: "శాసన పరిశోధకుడు (ఎపిగ్రాఫిస్ట్)",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "Arts / Ancient History",
+    description: "ప్రాచీన దేవాలయ రాతి శాసనాలు, తామ్రపత్రాలను చదివి పరిష్కరించడం, బ్రాహ్మీ, ప్రాచీన తెలుగు లిపిల ద్వారా చరిత్ర వెలికితీత.",
+  },
+  "fitness-coach": {
+    label: "ఫిట్‌నెస్ కోచ్ & జిమ్ ట్రైనర్",
+    category: "ఆర్ట్స్, డిజైన్ & మీడియా",
+    streamBadge: "Fitness / ACE / ISSA",
+    description: "శరీర దారుఢ్య శిక్షణ, బరువు నియంత్రణ, క్రీడాకారులకు స్ట్రెంత్ కోచింగ్, ప్రైవేట్ జిమ్‌లు మరియు సెలబ్రిటీ పర్సనల్ ట్రైనింగ్.",
+  },
+  "food-safety-officer": {
+    label: "ఫుడ్ సేఫ్టీ ఆఫీసర్ (FSO)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC/MPC / Food Tech",
+    description: "హోటళ్లు, ఆహార తయారీ కర్మాగారాల తనిఖీ, ఆహార కల్తీ నివారణ, FSSAI ఆహార భద్రతా చట్టాల అమలు మరియు గెజిటెడ్ హోదా.",
+  },
+  geneticist: {
+    label: "జెనెటిసిస్ట్ / బయోటెక్ రీసెర్చర్",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / Genetics",
+    description: "డీఎన్‌ఏ నిర్మాణం, జన్యు లోపాల చికిత్స, క్రిస్పర్ (CRISPR) జన్యు సవరణ, బయోటెక్ ఫార్మా కంపెనీలు మరియు సీసీఎంబీ పరిశోధన.",
+  },
+  "income-tax-officer": {
+    label: "ఇన్‌కమ్ టాక్స్ ఆఫీసర్ (SSC CGL)",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "డిగ్రీ / SSC CGL",
+    description: "ఆదాయపు పన్ను మదింపు, పన్ను ఎగవేతల తనిఖీలు, దాడులు (రైడ్స్) మరియు కేంద్ర ప్రభుత్వ ఆర్థిక శాఖలో ఉన్నత అధికార బాధ్యతలు.",
+  },
+  "railway-jobs": {
+    label: "ఇండియన్ రైల్వేస్ ఉద్యోగాలు (RRB)",
+    category: "సివిల్ సర్వీసెస్ & డిఫెన్స్",
+    streamBadge: "10th/Inter/Degree / RRB",
+    description: "స్టేషన్ మాస్టర్, లోకో పైలట్, రైల్వే జూనియర్ ఇంజనీర్ పోస్టులు, రైల్వే రిక్రూట్‌మెంట్ బోర్డ్ (RRB NTPC) పరీక్షల సమగ్ర మార్గం.",
+  },
+  "speech-pathologist": {
+    label: "స్పీచ్-లాంగ్వేజ్ పాథాలజిస్ట్ (ఆడియోలజిస్ట్)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / BASLP",
+    description: "మాటల లోపాలు, వినికిడి సమస్యలు, నత్తి నివారణకు ఆడియోలజీ క్లినికల్ థెరపీ, ఆసుపత్రులు మరియు ప్రత్యేక చికిత్సా కేంద్రాలు.",
+  },
+  "yoga-doctor": {
+    label: "యోగా & నేచురోపతి డాక్టర్ (BNYS)",
+    category: "మెడికల్ & హెల్త్‌కేర్ (BiPC)",
+    streamBadge: "BiPC / BNYS",
+    description: "ఔషధ రహిత ప్రకృతి చికిత్సలు, యోగాసనాలు, జీవనశైలి మార్పులతో వ్యాధుల నివారణ, ఆయుష్ (AYUSH) రిజిస్టర్డ్ మెడికల్ డాక్టర్ హోదా.",
+  },
+};
+
+// ── Telugu File Map (Custom Human Translated Files) ──
+export const TELUGU_CAREER_FILES: Record<string, string> = {
+  agri: "agriculture-officer-FULL-TELUGU.html",
+  "ai-scientist": "ai-research-scientist-FULL-TELUGU.html",
+  "air-hostess": "air-hostess-FULL-TELUGU.html",
+  archaeologist: "archaeologist-FULL-TELUGU.html",
+  architect: "architect-FULL-TELUGU.html",
+  astrophysicist: "astrophysicist-FULL-TELUGU.html",
+  bank: "bank-po-probationary-officer-TELUGU.html",
+  beautician: "beautician-TELUGU.html",
+  mba: "business-management-mba-TELUGU.html",
+  ca: "chartered-accountant-ca-TELUGU.html",
+  chef: "chef-TELUGU.html",
+  pilot: "commercial-pilot-TELUGU.html",
+  "cyber-security": "cyber-security-specialist-TELUGU.html",
+  doctor: "doctor_mbbs-FULL-TELUGU.html",
+};
+
+// Supabase Storage Bucket audio files mapping
+export const SUPABASE_AUDIO_BASE_URL = "https://jqerkjewmmpowiwwpifv.supabase.co/storage/v1/object/public/audio-files";
+
+export const CAREER_AUDIO_MAP: Record<string, string> = {
+  doctor: `${SUPABASE_AUDIO_BASE_URL}/Doctor.mp3`,
+  swe: `${SUPABASE_AUDIO_BASE_URL}/software_engineer.mp3`,
+  police: `${SUPABASE_AUDIO_BASE_URL}/Police.mp3`,
+  teacher: `${SUPABASE_AUDIO_BASE_URL}/Teacher.mp3`,
+  agri: `${SUPABASE_AUDIO_BASE_URL}/agricultural_officer.mp3`,
+  ias: `${SUPABASE_AUDIO_BASE_URL}/ias.mp3`,
+  pilot: `${SUPABASE_AUDIO_BASE_URL}/commercial_pilot.mp3`,
+  journalist: `${SUPABASE_AUDIO_BASE_URL}/journalist.mp3`,
+  ca: `${SUPABASE_AUDIO_BASE_URL}/ca.mp3`,
+  nurse: `${SUPABASE_AUDIO_BASE_URL}/nurse.mp3`,
+  engineer: `${SUPABASE_AUDIO_BASE_URL}/engineer.mp3`,
+  lawyer: `${SUPABASE_AUDIO_BASE_URL}/lawyer.mp3`,
+  bank: `${SUPABASE_AUDIO_BASE_URL}/bank_po.mp3`,
+  archaeologist: `${SUPABASE_AUDIO_BASE_URL}/archaeologist.mp3`,
+  "environmental-consultant": `${SUPABASE_AUDIO_BASE_URL}/environmental_consultant.mp3`,
+  psychologist: `${SUPABASE_AUDIO_BASE_URL}/psychologist.mp3`,
+  entrepreneur: `${SUPABASE_AUDIO_BASE_URL}/entrepreneur.mp3`,
+  fashion: `${SUPABASE_AUDIO_BASE_URL}/fashion_desinger.mp3`,
+  pharmacist: `${SUPABASE_AUDIO_BASE_URL}/pharmacist.mp3`,
+  ips: `${SUPABASE_AUDIO_BASE_URL}/ips.mp3`,
+  mba: `${SUPABASE_AUDIO_BASE_URL}/mba.mp3`,
+  physiotherapy: `${SUPABASE_AUDIO_BASE_URL}/physiotherapist.mp3`,
+  "air-hostess": `${SUPABASE_AUDIO_BASE_URL}/air_hostess.mp3`,
+  "ai-scientist": `${SUPABASE_AUDIO_BASE_URL}/ai_research_scientist.mp3`,
+  "data-scientist": `${SUPABASE_AUDIO_BASE_URL}/data_scientist.mp3`,
+  "robotics-engineer": `${SUPABASE_AUDIO_BASE_URL}/robotics_engineer.mp3`,
+  "forensic-scientist": `${SUPABASE_AUDIO_BASE_URL}/forensic_scientist.mp3`,
+  horticulturist: `${SUPABASE_AUDIO_BASE_URL}/horticulturist.mp3`,
+  stenographer: `${SUPABASE_AUDIO_BASE_URL}/stenographer.mp3`,
+  designer: `${SUPABASE_AUDIO_BASE_URL}/graphic_designer.mp3`,
+  "cyber-security": `${SUPABASE_AUDIO_BASE_URL}/Cyber%20Security%20Specialist.mp3`,
+  astrophysicist: `${SUPABASE_AUDIO_BASE_URL}/Astrophysicist.mp3`,
+  "income-tax-officer": `${SUPABASE_AUDIO_BASE_URL}/Income%20Tax%20Officer.mp3`,
+  "food-safety-officer": `${SUPABASE_AUDIO_BASE_URL}/Food%20Safety%20Officer.mp3`,
+  "yoga-doctor": `${SUPABASE_AUDIO_BASE_URL}/Yoga%20%26%20Naturopathy%20Doctor.mp3`,
+  "speech-pathologist": `${SUPABASE_AUDIO_BASE_URL}/Speech-Language%20Pathologist.mp3`,
+  epigraphist: `${SUPABASE_AUDIO_BASE_URL}/Epigraphist.mp3`,
+  geneticist: `${SUPABASE_AUDIO_BASE_URL}/Geneticist.mp3`,
+};
+

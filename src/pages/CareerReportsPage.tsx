@@ -27,9 +27,25 @@ import {
   Phone,
   Gamepad2,
   Home,
+  Route,
+  ChevronDown,
+  Trophy,
+  CheckCircle2,
 } from "lucide-react";
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
+import { CareerRoadmapModal } from "@/components/common/CareerRoadmapModal";
+import { CAREER_ROADMAP_DATA } from "@/lib/career-roadmaps-data";
+import {
+  TELUGU_CAREER_MAP,
+  TELUGU_CAREER_FILES,
+  TELUGU_UI,
+  TELUGU_CATEGORIES,
+  CATEGORY_EN_TO_TE,
+  CAREER_AUDIO_MAP,
+} from "@/lib/career-translations-te";
+
+import type { CareerRoadmap } from "@/components/common/CareerRoadmapModal";
 import { StudentAuthGateModal } from "@/components/common/StudentAuthGateModal";
 import { AiCareerMentor } from "@/components/common/AiCareerMentor";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
@@ -40,50 +56,6 @@ import {
   StudentExplorerProfile,
 } from "@/lib/supabase";
 import type { User } from "@supabase/supabase-js";
-
-// Supabase Storage Bucket audio files mapping
-const SUPABASE_AUDIO_BASE_URL = "https://jqerkjewmmpowiwwpifv.supabase.co/storage/v1/object/public/audio-files";
-
-const CAREER_AUDIO_MAP: Record<string, string> = {
-  doctor: `${SUPABASE_AUDIO_BASE_URL}/Doctor.mp3`,
-  swe: `${SUPABASE_AUDIO_BASE_URL}/software_engineer.mp3`,
-  police: `${SUPABASE_AUDIO_BASE_URL}/Police.mp3`,
-  teacher: `${SUPABASE_AUDIO_BASE_URL}/Teacher.mp3`,
-  agri: `${SUPABASE_AUDIO_BASE_URL}/agricultural_officer.mp3`,
-  ias: `${SUPABASE_AUDIO_BASE_URL}/ias.mp3`,
-  pilot: `${SUPABASE_AUDIO_BASE_URL}/commercial_pilot.mp3`,
-  journalist: `${SUPABASE_AUDIO_BASE_URL}/journalist.mp3`,
-  ca: `${SUPABASE_AUDIO_BASE_URL}/ca.mp3`,
-  nurse: `${SUPABASE_AUDIO_BASE_URL}/nurse.mp3`,
-  engineer: `${SUPABASE_AUDIO_BASE_URL}/engineer.mp3`,
-  lawyer: `${SUPABASE_AUDIO_BASE_URL}/lawyer.mp3`,
-  bank: `${SUPABASE_AUDIO_BASE_URL}/bank_po.mp3`,
-  archaeologist: `${SUPABASE_AUDIO_BASE_URL}/archaeologist.mp3`,
-  "environmental-consultant": `${SUPABASE_AUDIO_BASE_URL}/environmental_consultant.mp3`,
-  psychologist: `${SUPABASE_AUDIO_BASE_URL}/psychologist.mp3`,
-  entrepreneur: `${SUPABASE_AUDIO_BASE_URL}/entrepreneur.mp3`,
-  fashion: `${SUPABASE_AUDIO_BASE_URL}/fashion_desinger.mp3`,
-  pharmacist: `${SUPABASE_AUDIO_BASE_URL}/pharmacist.mp3`,
-  ips: `${SUPABASE_AUDIO_BASE_URL}/ips.mp3`,
-  mba: `${SUPABASE_AUDIO_BASE_URL}/mba.mp3`,
-  physiotherapy: `${SUPABASE_AUDIO_BASE_URL}/physiotherapist.mp3`,
-  "air-hostess": `${SUPABASE_AUDIO_BASE_URL}/air_hostess.mp3`,
-  "ai-scientist": `${SUPABASE_AUDIO_BASE_URL}/ai_research_scientist.mp3`,
-  "data-scientist": `${SUPABASE_AUDIO_BASE_URL}/data_scientist.mp3`,
-  "robotics-engineer": `${SUPABASE_AUDIO_BASE_URL}/robotics_engineer.mp3`,
-  "forensic-scientist": `${SUPABASE_AUDIO_BASE_URL}/forensic_scientist.mp3`,
-  horticulturist: `${SUPABASE_AUDIO_BASE_URL}/horticulturist.mp3`,
-  stenographer: `${SUPABASE_AUDIO_BASE_URL}/stenographer.mp3`,
-  designer: `${SUPABASE_AUDIO_BASE_URL}/graphic_designer.mp3`,
-  "cyber-security": `${SUPABASE_AUDIO_BASE_URL}/Cyber%20Security%20Specialist.mp3`,
-  astrophysicist: `${SUPABASE_AUDIO_BASE_URL}/Astrophysicist.mp3`,
-  "income-tax-officer": `${SUPABASE_AUDIO_BASE_URL}/Income%20Tax%20Officer.mp3`,
-  "food-safety-officer": `${SUPABASE_AUDIO_BASE_URL}/Food%20Safety%20Officer.mp3`,
-  "yoga-doctor": `${SUPABASE_AUDIO_BASE_URL}/Yoga%20%26%20Naturopathy%20Doctor.mp3`,
-  "speech-pathologist": `${SUPABASE_AUDIO_BASE_URL}/Speech-Language%20Pathologist.mp3`,
-  epigraphist: `${SUPABASE_AUDIO_BASE_URL}/Epigraphist.mp3`,
-  geneticist: `${SUPABASE_AUDIO_BASE_URL}/Geneticist.mp3`,
-};
 
 interface CareerItem {
   id: string;
@@ -450,9 +422,21 @@ export default function CareerReportsPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
+  const [language, setLanguage] = useState<"en" | "te">(() => {
+    return (localStorage.getItem("wabi_career_portal_lang") as "en" | "te") || "en";
+  });
+
+  const handleLanguageChange = (lang: "en" | "te") => {
+    setLanguage(lang);
+    localStorage.setItem("wabi_career_portal_lang", lang);
+  };
+
+  const isTe = language === "te";
+
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [showBookingPopup, setShowBookingPopup] = useState(false);
+  const [roadmapCareer, setRoadmapCareer] = useState<CareerRoadmap | null>(null);
   const [popupCancelCount, setPopupCancelCount] = useState(0);
   const popupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -551,21 +535,23 @@ export default function CareerReportsPage() {
     scheduleNextPopup(120000);
   };
 
-  // Build full career items list
+  // Build full career items list (supports English and Telugu)
   const allCareers: CareerItem[] = DEFAULT_CAREER_OPTIONS.map((opt) => {
-    const meta = CATEGORY_MAP[opt.id] || {
+    const metaEn = CATEGORY_MAP[opt.id] || {
       category: "General Exploration",
       streamBadge: "All Streams",
       description: "Comprehensive Four-Circles career blueprint report covering career path, education, salary and backup plans.",
     };
+    const metaTe = TELUGU_CAREER_MAP[opt.id];
+
     return {
       id: opt.id,
-      label: opt.label,
+      label: isTe && metaTe ? metaTe.label : opt.label,
       icon: opt.icon,
       file: opt.file,
-      category: meta.category,
-      streamBadge: meta.streamBadge,
-      description: meta.description,
+      category: isTe && metaTe ? metaTe.category : metaEn.category,
+      streamBadge: isTe && metaTe ? metaTe.streamBadge : metaEn.streamBadge,
+      description: isTe && metaTe ? metaTe.description : metaEn.description,
     };
   });
 
@@ -751,7 +737,7 @@ export default function CareerReportsPage() {
             className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-xs hover:scale-102 active:scale-98 shrink-0"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">Back to All Careers</span>
+            <span className="hidden sm:inline">{language === "te" ? "అన్ని కెరీర్‌లకు తిరిగి వెళ్లండి" : "Back to All Careers"}</span>
             <span className="sm:hidden">Back</span>
           </button>
 
@@ -768,8 +754,40 @@ export default function CareerReportsPage() {
             </div>
           </div>
 
-          {/* Right: Audio Player or Unavailable Badge */}
+          {/* Right: Language Switcher, Roadmap Icon Button & Audio Player */}
+          <div className="flex items-center gap-1.5 bg-stone-100 p-0.5 rounded-xl border border-stone-200 shrink-0">
+            <button
+              type="button"
+              onClick={() => handleLanguageChange("en")}
+              className={`px-2 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
+                language === "en" ? "bg-white text-stone-900 shadow-2xs" : "text-stone-500 hover:text-stone-900"
+              }`}
+            >
+              English
+            </button>
+            <button
+              type="button"
+              onClick={() => handleLanguageChange("te")}
+              className={`px-2 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
+                language === "te" ? "bg-emerald-600 text-white shadow-2xs" : "text-stone-500 hover:text-stone-900"
+              }`}
+            >
+              తెలుగు
+            </button>
+          </div>
+          {/* Right: Roadmap Icon Button & Audio Player */}
           <div className="flex items-center gap-2 shrink-0">
+            {CAREER_ROADMAP_DATA[selectedCareer.id] && (
+              <button
+                type="button"
+                onClick={() => setRoadmapCareer(CAREER_ROADMAP_DATA[selectedCareer.id])}
+                className="w-9 h-9 rounded-xl bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 flex items-center justify-center transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95 shrink-0"
+                title={`View ${selectedCareer.label} Career Pathway Roadmap`}
+                aria-label={`View ${selectedCareer.label} Career Pathway Roadmap`}
+              >
+                <Route className="w-4 h-4 text-emerald-700" />
+              </button>
+            )}
             {audioUrl ? (
               <div className="flex items-center gap-2 bg-amber-50/90 border border-amber-300/80 rounded-2xl px-3 py-1.5 shadow-2xs">
                 <button
@@ -843,7 +861,13 @@ export default function CareerReportsPage() {
         {/* Full-Page Clean Report Iframe */}
         <div className="flex-1 w-full bg-stone-50 min-h-[calc(100vh-65px)]">
           <iframe
-            src={`/career-format/${selectedCareer.file}`}
+            src={
+              language === "te"
+                ? TELUGU_CAREER_FILES[selectedCareer.id]
+                  ? `/career-format-te/${encodeURIComponent(TELUGU_CAREER_FILES[selectedCareer.id])}`
+                  : `/career-format/${selectedCareer.file}`
+                : `/career-format/${selectedCareer.file}`
+            }
             title={`${selectedCareer.label} Report`}
             className="w-full h-full min-h-[calc(100vh-65px)] border-0"
           />
@@ -1002,7 +1026,14 @@ export default function CareerReportsPage() {
           </aside>
         )}
 
-        {/* Student Auth & Mandatory Onboarding Gate Modal */}
+  
+      {/* ── Career Pathway Roadmap Modal ── */}
+      <CareerRoadmapModal
+        roadmap={roadmapCareer}
+        onClose={() => setRoadmapCareer(null)}
+        onOpenBooking={handleOpenBookingModal}
+      />
+      {/* Student Auth & Mandatory Onboarding Gate Modal */}
         <StudentAuthGateModal
           isOpen={!isAuthChecking && !isAccessGranted}
           user={currentUser}
@@ -1041,6 +1072,27 @@ export default function CareerReportsPage() {
           </Link>
 
           <nav className="flex items-center gap-1.5 sm:gap-2">
+            {/* Language Switcher (English / తెలుగు) */}
+            <div className="flex items-center bg-stone-100 p-0.5 rounded-xl border border-stone-200 shrink-0 shadow-2xs mr-1">
+              <button
+                type="button"
+                onClick={() => handleLanguageChange("en")}
+                className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                  language === "en" ? "bg-white text-stone-900 shadow-2xs" : "text-stone-500 hover:text-stone-900"
+                }`}
+              >
+                English
+              </button>
+              <button
+                type="button"
+                onClick={() => handleLanguageChange("te")}
+                className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                  language === "te" ? "bg-emerald-600 text-white shadow-2xs" : "text-stone-500 hover:text-stone-900"
+                }`}
+              >
+                తెలుగు
+              </button>
+            </div>
             {/* Student Profile / Sign Out */}
             {currentUser && studentProfile && (
               <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-800">
@@ -1153,7 +1205,7 @@ export default function CareerReportsPage() {
             <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search careers (e.g. Doctor, Software Engineer, Pilot, IAS, Police)..."
+              placeholder={isTe ? "ఏదైనా కెరీర్ వెతకండి (ఉదా: డాక్టర్, పోలీస్, సాఫ్ట్‌వేర్ ఇంజనీర్, టీచర్)..." : "Search careers (e.g. Doctor, Software Engineer, Pilot, IAS, Police)..."}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm rounded-xl border border-stone-200 bg-stone-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-stone-900 font-medium transition-all"
@@ -1243,6 +1295,20 @@ export default function CareerReportsPage() {
                         <span>Play Quiz</span>
                       </Link>
                     )}
+                    {CAREER_ROADMAP_DATA[item.id] && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRoadmapCareer(CAREER_ROADMAP_DATA[item.id]);
+                        }}
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 border border-emerald-300 hover:bg-emerald-200 transition-colors shadow-2xs cursor-pointer"
+                        title={`View ${item.label} Career Pathway`}
+                      >
+                        <Route className="w-2.5 h-2.5 text-emerald-700" />
+                        <span>Roadmap</span>
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -1266,7 +1332,7 @@ export default function CareerReportsPage() {
               <div className="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between text-xs font-bold text-stone-900 group-hover:text-[#7C5C3E] transition-colors">
                 <span className="inline-flex items-center gap-1.5">
                   <BookOpen className="w-3.5 h-3.5 text-[#C9A97A]" />
-                  <span>Read Full Report</span>
+                  <span>{isTe ? "పూర్తి రిపోర్ట్ చదవండి" : "Read Full Report"}</span>
                 </span>
                 <span className="text-stone-400 group-hover:translate-x-1 group-hover:text-stone-900 transition-transform">
                   →
@@ -1335,6 +1401,13 @@ export default function CareerReportsPage() {
         </aside>
       )}
 
+      
+      {/* ── Career Pathway Roadmap Modal ── */}
+      <CareerRoadmapModal
+        roadmap={roadmapCareer}
+        onClose={() => setRoadmapCareer(null)}
+        onOpenBooking={handleOpenBookingModal}
+      />
       {/* Student Auth & Mandatory Onboarding Gate Modal */}
       <StudentAuthGateModal
         isOpen={!isAuthChecking && !isAccessGranted}
