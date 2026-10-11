@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ గైడ్ — IPS — ఇండియన్ పోలీస్ సర్వీస్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap'); body,.row,.q,.stage,.flag,.verdict,.pip{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;} .mast h2,.pip b,.row .k,.stage-head,h3,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;line-height:1.4!important;}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ అవగాహన · ఆంధ్రప్రదేశ్</div><h2>IPS — ఇండియన్ పోలీస్ సర్వీస్</h2><p class="standfirst">పోలీసు బృందాలకు నాయకత్వం వహించడం, ప్రజల భద్రత, తీవ్రమైన నేరాల దర్యాప్తు, శాంతిభద్రతల నిర్వహణ IPS పని. యూనిఫాం, హోదా మాత్రమే కాదు; ధైర్యం, న్యాయం, చట్టాలు, ఫిట్‌నెస్, బాధ్యత అవసరం.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్  ·  IPS — ఇండియన్ పోలీస్ సర్వీస్  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>ఏ పని చేయాలి?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>జీతం, ఖర్చు</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>IPS ఉద్యోగం నిజంగా ఇష్టమా?</h3><p class="lede">ఇక్కడ ఉన్న ఆరు ప్రశ్నలకు మీ నిజమైన అభిప్రాయంతో అవును లేదా కాదు అని చెప్పండి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>గొడవ, అత్యవసర పరిస్థితి, నేర స్థలం లేదా ప్రజల్లో ఉద్రిక్తత ఉన్నప్పుడు ప్రశాంతంగా నిర్ణయం తీసుకోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>శారీరక శిక్షణతోపాటు చట్టాలు, క్రిమినల్ జస్టిస్, దర్యాప్తు, ప్రభుత్వ పరిపాలన, వార్తలు చదవడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>కోపంగా ఉన్నా, నేరారోపణ ఎదుర్కొంటున్నా, రాజకీయంగా ప్రభావశీలులైనా అందరితో న్యాయంగా వ్యవహరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>బదిలీలు, రాత్రి పని, అత్యవసర కాల్స్, ప్రజల విమర్శలు, కొంత వ్యక్తిగత ప్రమాదం ఉన్నా ఎదుర్కోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>IPSకు అవసరమైన కఠిన శారీరక, వైద్య ప్రమాణాలు పాటించేందుకు ఆరోగ్యంగా ఉండడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>సోషల్ మీడియా పేరు, సైరన్, అధికారం కనిపించకపోయినా ప్రజల భద్రత, మీ బృందం బాధ్యత కోసం ఈ వృత్తి ఎంచుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ సమాధానాల ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>చదువు, UPSC మార్గం</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అర్హతలు, ప్రవేశ పరీక్షలు, తదుపరి మార్గాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> సాంఘిక శాస్త్రం</div><div class="v">చరిత్ర, భూగోళ శాస్త్రం, పౌరశాస్త్రం/రాజకీయ వ్యవస్థ, ఆర్థిక శాస్త్రం UPSCకి ఉపయోగపడతాయి. ప్రభుత్వం, సమాజం, శాంతిభద్రతల సమస్యలను అర్థం చేసుకోవచ్చు.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> ఇంగ్లీష్, రాయడం</div><div class="v">UPSCలో పాఠాలు చదివి అర్థం చేసుకోవడం, వ్యాసాలు, స్పష్టమైన సమాధానాలు రాయాలి. పోలీసు నాయకత్వంలో నివేదికలు, వివరాలు చెప్పడం కూడా ముఖ్యం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> ఫిట్‌నెస్, క్రమశిక్షణ</div><div class="v">IPSకు ప్రత్యేక వైద్య, శారీరక అర్హతలుంటాయి. హైదరాబాద్ SVPNPA శిక్షణలో బహిరంగ వ్యాయామాలు కష్టంగా ఉంటాయి. చివరి నిమిషంలో కాకుండా ఇప్పటి నుంచే పరుగు, బలం, కదలిక, ఆరోగ్య అలవాట్లు పెంచుకోండి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">CEC / హ్యుమానిటీస్ సంబంధిత సబ్జెక్టులు అందిస్తాయి; కానీ MPC, BiPC, కామర్స్ లేదా ఏ గుర్తింపు పొందిన ఇంటర్ గ్రూప్‌తోనైనా IPSకు వెళ్లవచ్చు. ఇంటర్ తర్వాత BA, B.Com, B.Sc, B.Tech, MBBS, Law వంటి ఏ గుర్తింపు పొందిన బ్యాచిలర్ డిగ్రీ అయినా సరిపోతుంది. UPSC ఒక ప్రత్యేక డిగ్రీ కోరదు.</div></div>
+<div class="row"><div class="k">ఇప్పటి నుంచే అలవాట్లు</div><div class="v">రోజూ వార్తలు, సమాధాన రచన, పరుగు, బలం పెంచుకోవడం, నాయకత్వం, చట్టాల అవగాహన సాధన చేయండి.<div class="chips">
+<span class="chip">ప్రస్తుత వార్తలు</span><span class="chip">సమాధానాల రచన</span><span class="chip">పరుగు</span><span class="chip">బలం</span><span class="chip">నాయకత్వం</span><span class="chip">చట్టాల అవగాహన</span>
+</div></div></div>
+</div>
+<div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">తర్వాత అవసరమైన కోర్సులు, అర్హతలు</div>
+<div class="row"><div class="k">ప్రవేశ పరీక్ష</div><div class="v">UPSC Civil Services Examination (CSE) ద్వారానే నేరుగా IPS ఎంపిక జరుగుతుంది. ప్రత్యేక IPS పరీక్ష లేదు. గుర్తింపు పొందిన డిగ్రీ అవసరం; IPSకు భారత పౌరసత్వం కూడా తప్పనిసరి.</div></div>
+<div class="row"><div class="k">Prelims — మొదటి దశ</div><div class="v">Civil Services Preliminary Examinationలో General Studies Paper I, Paper II (CSAT) అనే రెండు ఆబ్జెక్టివ్ పేపర్లు ఉంటాయి. CSATలో 33% అర్హత మార్కులు అవసరం. ఇది స్క్రీనింగ్ మాత్రమే; ప్రిలిమ్స్ మార్కులు తుది మెరిట్‌లో కలపరు.</div></div>
+<div class="row"><div class="k">Mains — రెండో దశ</div><div class="v">Civil Services Main Examinationలో తొమ్మిది వివరణాత్మక పేపర్లు ఉంటాయి: అర్హత కోసం భాషా పేపర్లు, వ్యాసం, నాలుగు General Studies, ఒక Optional సబ్జెక్టుకు రెండు పేపర్లు. ఆలోచన, విశ్లేషణ, రచనా నైపుణ్యం పరీక్షిస్తారు.</div></div>
+<div class="row"><div class="k">ఇంటర్వ్యూ — మూడో దశ</div><div class="v">Personality Test / ఇంటర్వ్యూ జరుగుతుంది. Mainsలో మెరిట్‌కు లెక్కించే పేపర్లు, ఇంటర్వ్యూ మార్కులు కలిపి తుది ర్యాంకు వస్తుంది.</div></div>
+<div class="row"><div class="k">వైద్య, శారీరక అర్హత</div><div class="v">IPSకు ప్రత్యేక వైద్య, శారీరక ప్రమాణాలుంటాయి. ఎత్తు, చూపు, ఇతర కొలతల కోసం పాత ఇంటర్నెట్ పట్టికలను నమ్మవద్దు; మీ పరీక్ష సంవత్సరపు UPSC వైద్య నియమాలు చూడండి.</div></div>
+<div class="row"><div class="k">IPS కేటాయింపు</div><div class="v">UPSC పాసైన ప్రతి ఒక్కరికీ IPS రాదు. IAS, IPS, IFS, IRS వంటి సర్వీసులకు ఎంపిక జరుగుతుంది. ర్యాంకు, వర్గం, సేవా ప్రాధాన్యత, ఖాళీలు, వైద్య అర్హతలను బట్టి IPS కేటాయిస్తారు.</div></div>
+<div class="row"><div class="k">పూర్తి రోడ్‌మ్యాప్</div><div class="v">ఏ ఇంటర్ గ్రూప్ అయినా → గుర్తింపు పొందిన డిగ్రీ → UPSC Prelims → Mains → Personality Test → IPS వైద్య/శారీరక అర్హత → తుది ర్యాంకు, సర్వీస్ ప్రాధాన్యత → IPS కేటాయింపు → SVPNPA శిక్షణ → Assistant Superintendent of Police (ASP).</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>IPS, ఆంధ్రప్రదేశ్ రాష్ట్ర పోలీసు నియామకాలు వేరు. IPSకు UPSC CSE; Constable, SI, రాష్ట్ర పోలీసు/DSP నియామకాలకు వేరు రాష్ట్ర పరీక్షలు.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఎంపిక ఎంత కష్టం?</h3><p class="lede">ఈ వృత్తిలో చేసే పనులు, అవకాశాలు, పోటీ, పరిమితులు గురించి చదవండి.</p>
+<div class="card">
+<div class="row"><div class="k">ఖాళీలు</div><div class="v">2026 CSEలో అన్ని సివిల్ సర్వీసులకూ కలిపి సుమారు 933 ఖాళీలు అని మూల నివేదిక పేర్కొంది; ఇవన్నీ IPS పోస్టులు కావు. 2025 CSEలో IPSకు 150 ఖాళీలు నమోదయ్యాయని ఉదాహరణ ఇచ్చింది.</div></div>
+<div class="row"><div class="k">దీని అర్థం</div><div class="v">చాలా తక్కువ IPS స్థానాల కోసం ఎంతోమంది డిగ్రీ అభ్యర్థులు పోటీపడతారు. UPSC దశలు దాటినా ర్యాంకు, వర్గం, ప్రాధాన్యత, ఖాళీలను బట్టి IPS రాకపోవచ్చు.</div></div>
+<div class="row"><div class="k">శిక్షణ వాస్తవం</div><div class="v">ఎంపికైన IPS అభ్యర్థులకు హైదరాబాద్‌లోని Sardar Vallabhbhai Patel National Police Academy (SVPNPA)లో శిక్షణ. క్రిమినల్ లా, దర్యాప్తు, ఫోరెన్సిక్స్, పోలీసు నిర్వహణ, నీతి, మానవ హక్కులు, అంతర్గత భద్రత, ICTతో పాటు ఫిట్‌నెస్, డ్రిల్, ఆయుధాల శిక్షణ, యోగా, స్వీయరక్షణ, వ్యూహాలు, మ్యాప్ చదవడం, గుర్రపు స్వారీ వంటి అంశాలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">ఉద్యోగం వాస్తవం</div><div class="v">జిల్లా పోలీసింగ్, నేర దర్యాప్తు, ఇంటెలిజెన్స్, ట్రాఫిక్, సైబర్ క్రైమ్, అవినీతి నిరోధం, ప్రత్యేక భద్రత, కేంద్ర పోలీసు సంస్థలు, ఉన్నత నాయకత్వ బాధ్యతలు చేపట్టవచ్చు. శిక్షణ తర్వాత తొలుత ASPగా నియమితులవుతారని అకాడమీ సమాచారం.</div></div>
+<div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>ఇది సినిమా యాక్షన్ ఉద్యోగం కాదు. నిజాయితీ దర్యాప్తు, ఆధారాలు, పత్రాలు, సిబ్బంది నిర్వహణ, చట్ట ప్రక్రియ, ప్రజలతో మాట్లాడడం ముఖ్యం.</span></div>
+<div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">ఇదే సిద్ధతతో ఇతర UPSC సివిల్ సర్వీసులు, APPSC Group-I, రాష్ట్ర పోలీసు సేవలు, CAPF Assistant Commandant వంటి అర్హత కలిగిన మార్గాలూ పరిశీలించండి.<div class="chips"><span class="chip">ఇతర UPSC సేవలు</span><span class="chip">APPSC Group I</span><span class="chip">రాష్ట్ర పోలీసు సేవలు</span><span class="chip">CAPF Assistant Commandant</span><span class="chip">ఇతర ప్రభుత్వ పరీక్షలు</span><span class="chip">డిగ్రీతో ఉద్యోగం</span></div></div></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఖర్చు ఎంత?</h3><p class="lede">ఇక్కడి జీతాలు మూల నివేదికలోని అంచనాలు మాత్రమే; ఉద్యోగం, ప్రాంతం, కాలాన్ని బట్టి మారవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">ప్రారంభ మూల వేతనం</div><div class="v"><span class="money">నెలకు ₹56,100</span> బేసిక్ పే. IPSలో కొత్త అధికారులకు Level 10 / Junior Time Scale వర్తిస్తుంది; అదనపు భత్యాలు, కోతలు వేరు.</div></div>
+<div class="row"><div class="k">మధ్య, సీనియర్ స్థాయి</div><div class="v"><span class="money">నెలకు ₹78,800</span> –₹1,82,200 బేసిక్ పే. పదోన్నతి, అధికార హోదా, పే మ్యాట్రిక్స్ స్థాయిని బట్టి పెరుగుతుంది.</div></div>
+<div class="row"><div class="k">అత్యున్నత స్థాయులు</div><div class="v"><span class="money">Up to about ₹2,25,000/month basic</span>నెలకు సుమారు ₹2,25,000 వరకు బేసిక్ పే. అత్యున్నత అర్హతగల IPS పదవుల్లో ఈ స్థాయి సాధ్యమవచ్చు; ప్రతి అధికారికి హామీ కాదు.</div></div>
+<div class="row"><div class="k">సిద్ధత ఖర్చు</div><div class="v">UPSC పరీక్ష ఫీజు కన్నా కోచింగ్, వసతి, ప్రయాణం, పుస్తకాలు, సిద్ధతకు పట్టే సమయం పెద్ద ఖర్చు కావచ్చు. కోచింగ్ తప్పనిసరి కాదు; ఉచిత విద్యా వనరులు, స్వయంపఠనం ద్వారా సిద్ధమవ్వవచ్చు.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>మరో ఉద్యోగంలో ఎక్కువ జీతం, తేలిక జీవనం ఉన్నా IPSనే కోరుకుంటారా? హోదా కంటే సేవ, బాధ్యత గురించి ఆలోచించండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్ల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">నాలుగూ సరిపోతే</span> — నిజమైన ప్రణాళికతో ప్రయత్నం ప్రారంభించండి.</p>
+<p><span class="hi">ఒకటి సరిపోకపోతే</span> — నిర్ణయానికి ముందు ఆ అంశాన్ని ఆలోచించండి.</p>
+<p><span class="hi">రెండు లేదా అంతకంటే ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఒక గడువు పెట్టుకోండి: “___ వయసు వరకు ప్రయత్నించి, అవసరమైతే Plan Bకి మారతాను.”</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచే ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే ప్రారంభించగల పనులు, తర్వాత చేయాల్సిన పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul>
+<li>చరిత్ర, భూగోళం, పౌరశాస్త్రం, ఇంగ్లీష్ పునాది బలపరచండి.</li>
+<li>ఆరోగ్యానికి అనుగుణంగా పరుగులు, వ్యాయామం, క్రమశిక్షణ అలవాటు చేసుకోండి.</li>
+<li>ప్రజా భద్రతకు సంబంధించిన వార్తలను చదివి పరిష్కారాల గురించి ఆలోచించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>మీకు సరిపోయే ఇంటర్ గ్రూప్ తీసుకోండి; IPSకి ఒకే గ్రూప్ తప్పనిసరి కాదు.</li>
+<li>రచన, మాట్లాడటం, టీమ్‌వర్క్, నాయకత్వం సాధన చేయండి.</li>
+<li>వైద్య/శారీరక అర్హత నిబంధనలు ఎలా ఉంటాయో తెలుసుకోండి; అధికారిక తాజా ప్రకటనకే ప్రాధాన్యం ఇవ్వండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కోర్సు తర్వాత</div><ul>
+<li>ఉపాధికి ఉపయోగపడే ఏ గుర్తింపు పొందిన బ్యాచిలర్ డిగ్రీ అయినా పూర్తిచేయండి.</li>
+<li>UPSC Prelims, Mains, Interviewకు అధికారిక సిలబస్, పాత ప్రశ్నలతో క్రమంగా సిద్ధమవ్వండి.</li>
+<li>మీ ర్యాంకు, అర్హత IPSకు సరిపోకపోతే ఉపయోగపడే ఇతర సర్వీసుల కోసం Plan B ఉంచుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>స్కూల్ దగ్గర గొడవ, సోషల్ మీడియాలో పుకార్లు వచ్చినట్టు ఊహించండి. ఎవరి భద్రత చూడాలి, నిజాలు ఎలా నిర్ధారించాలి, న్యాయంగా ఎలా స్పందించాలి అని రాయండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే. అర్హతలు, వయసు, పరీక్షలు, వేతనాలు మారవచ్చు; దరఖాస్తు చేసే సంవత్సరపు అధికారిక ప్రకటన చూడండి.</p>
+</div><script>
+ document.addEventListener('DOMContentLoaded',function(){
+  const questions=[...document.querySelectorAll('#quiz .q')];
+  const v=document.querySelector('#verdict');
+  function update(){const picks=questions.map(q=>q.querySelector('button[aria-pressed="true"]'));
+   const done=picks.filter(Boolean).length;if(done<questions.length){v.className='verdict';v.innerHTML='<strong>'+done+' / '+questions.length+' ప్రశ్నలకు సమాధానం ఇచ్చారు</strong>మిగిలిన ప్రశ్నలకూ సమాధానం ఇవ్వండి.';return;}
+   const yes=picks.filter(b=>b.dataset.v==='y').length;
+   v.className='verdict '+(yes>=5?'good':yes>=3?'mixed':'bad');
+   v.innerHTML='<strong>'+yes+' / '+questions.length+' ప్రశ్నలకు అవును</strong>'+(yes>=5?'మీకు ఈ రంగంపై ఆసక్తి ఉండవచ్చు. మిగతా మూడు సర్కిళ్లు కూడా జాగ్రత్తగా చదవండి.':yes>=3?'మీకు కొన్ని అంశాలపై ఆసక్తి ఉంది. నిజమైన పని, అర్హతలు తెలుసుకొని నిర్ణయించండి.':'మీకు ఈ రంగంలోని కొన్ని పనులు అంతగా నచ్చకపోవచ్చు. ఇతర అవకాశాలనూ పరిశీలించండి.');
+  }
+  for(const q of questions){for(const b of q.querySelectorAll('.toggle button'))b.addEventListener('click',()=>{for(const x of q.querySelectorAll('.toggle button')){x.setAttribute('aria-pressed',x===b?'true':'false');x.removeAttribute('data-picked');}b.setAttribute('data-picked','1');update();});}
+ });</script></body></html>

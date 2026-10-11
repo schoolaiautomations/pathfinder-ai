@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ గైడ్ — ఇంకా కెరీర్ నిర్ణయించుకోలేదు</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap'); body,.row,.q,.stage,.flag,.verdict,.pip{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;} .mast h2,.pip b,.row .k,.stage-head,h3,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;line-height:1.4!important;}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ అవగాహన · ఆంధ్రప్రదేశ్</div><h2>ఇంకా కెరీర్ నిర్ణయించుకోలేదు</h2><p class="standfirst">ఇప్పుడే మీ జీవితమంతటికీ ఒక ఉద్యోగం నిర్ణయించాల్సిన అవసరం లేదు. వందలాది కెరీర్లు ఉన్నాయి. మీ ఆసక్తులు, సామర్థ్యాలు, అవకాశాలు తెలుసుకుని సరైన మార్గాలు తెరిచి ఉంచడం ముఖ్యం.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్  ·  ఇంకా కెరీర్ నిర్ణయించుకోలేదు  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తులు</b><em>ఏమి నచ్చుతుంది?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>బలాలు</b><em>ఏమి బాగా వచ్చు?</em></a>
+<a class="pip" href="#c3"><div class="ring">3</div><b>పరిశీలన</b><em>ముందు ప్రయత్నించండి</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>సాధ్యాసాధ్యాలు</b><em>ఏది సాధ్యం?</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఇంకా తెలియకపోయినా పరవాలేదు</h3><p class="lede">ఇక్కడ ఉన్న ఆరు ప్రశ్నలకు మీ నిజమైన అభిప్రాయంతో అవును లేదా కాదు అని చెప్పండి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఒకటి కంటే ఎక్కువ సబ్జెక్టులు లేదా కార్యక్రమాల గురించి తెలుసుకోవడం మీకు ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>అవి ఏ ఉద్యోగానికి దారితీస్తాయో తెలియకపోయినా కొన్ని పనులు చేయడం మీకు నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>కెరీర్ ఎంచుకునే ముందు చిన్న ప్రాజెక్టు, వర్క్‌షాప్ లేదా క్లబ్‌లో ప్రయత్నించి చూడడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>మీకెక్కువ విషయాలు తెలిసేకొద్దీ మొదట అనుకున్న కెరీర్ మారవచ్చని అంగీకరిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>స్నేహితులు ఎంచుకున్నారనే కాక మీ సామర్థ్యం, భవిష్యత్ అవకాశాలను బట్టి ఇంటర్ గ్రూప్ ఎంచుకోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>వెంటనే ఒక ఉద్యోగం నిర్ణయించకుండా మరో 6–12 నెలలు వివిధ కెరీర్లు తెలుసుకోవడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఇక్కడ ఓటమి అంటూ లేదు</strong>ఈ ఆరు ప్రశ్నలు మీ ఆసక్తులు అర్థం చేసుకోవడానికి మాత్రమే.</div></div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>8, 9, 10వ తరగతిలో కెరీర్ నిర్ణయించుకోకపోయినా సమస్య కాదు. తొందరపాటు కంటే పరిశీలించి తీసుకున్న నిర్ణయం మంచిది.</span></div>
+</section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ముందుగా మిమ్మల్ని మీరు తెలుసుకోండి</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అర్హతలు, ప్రవేశ పరీక్షలు, తదుపరి మార్గాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k">సమస్యలు పరిష్కరించడం నచ్చితే</div><div class="v">లెక్కలు, కోడింగ్, పజిల్స్, యంత్రాలు, ప్రయోగాలు, పరికరాలు మరమ్మతు చేయడం, డేటాను విశ్లేషించడం వంటివి ఇష్టమైతే ఇంజినీరింగ్, టెక్నాలజీ, సైన్స్, డేటా రంగాలు పరిశీలించండి.<div class="chips"><span class="chip">ఇంజినీరింగ్</span><span class="chip">టెక్నాలజీ</span><span class="chip">సైన్స్</span><span class="chip">డేటా</span></div></div></div>
+<div class="row"><div class="k">ఇతరులకు సహాయం చేయడం నచ్చితే</div><div class="v">ఇతరులను వినడం, సంరక్షణ, బోధన, ఆరోగ్యం, సమాజ సేవ, మానవ ప్రవర్తన అర్థం చేసుకోవడం ఇష్టమైతే వైద్యం, సైకాలజీ, టీచింగ్, సామాజిక సేవా రంగాలు చూడండి.<div class="chips"><span class="chip">వైద్యం</span><span class="chip">సైకాలజీ</span><span class="chip">బోధన</span><span class="chip">సామాజిక సేవ</span></div></div></div>
+<div class="row"><div class="k">నాయకత్వం నచ్చితే</div><div class="v">బృందాలను నడిపించడం, నిర్ణయాలు, వ్యాపార ఆలోచనలు, బహిరంగ ప్రసంగాలు, కార్యక్రమాల ప్రణాళిక నచ్చితే బిజినెస్, మేనేజ్‌మెంట్, సివిల్ సర్వీసులు, సొంత వ్యాపారం చూడండి.<div class="chips"><span class="chip">వ్యాపారం</span><span class="chip">నిర్వహణ</span><span class="chip">సివిల్ సర్వీసులు</span><span class="chip">సొంత వ్యాపారం</span></div></div></div>
+<div class="row"><div class="k">సృజనాత్మక పని నచ్చితే</div><div class="v">డ్రాయింగ్, రాయడం, ఫోటోగ్రఫీ, ఫ్యాషన్, వీడియో, డిజైన్, కథలు చెప్పడం, కొత్త వస్తువులు చేయడం ఇష్టమైతే డిజైన్, మీడియా, ఫ్యాషన్, ఆర్కిటెక్చర్ వంటి రంగాలు పరిశీలించండి.<div class="chips"><span class="chip">డిజైన్</span><span class="chip">మీడియా</span><span class="chip">ఫ్యాషన్</span><span class="chip">ఆర్కిటెక్చర్</span></div></div></div>
+<div class="row"><div class="k">మనుషులు, ఆలోచనలు నచ్చితే</div><div class="v">డిబేట్, సమాజం, చట్టం, చరిత్ర, రాజకీయాలు, భాషలు, వార్తలు ఇష్టమైతే న్యాయశాస్త్రం, జర్నలిజం, పాలసీ, హ్యుమానిటీస్ వంటి రంగాలు చూడండి.<div class="chips"><span class="chip">చట్టం</span><span class="chip">జర్నలిజం</span><span class="chip">ప్రజా విధానాలు</span><span class="chip">సామాజిక శాస్త్రాలు</span></div></div></div>
+<div class="row"><div class="k">చేతులతో చేసే పని నచ్చితే</div><div class="v">నిర్మించడం, మరమ్మతులు, యంత్రాలు నడపడం, పొలంలో పని, వృత్తి నైపుణ్యాలు నచ్చితే ITI, సాంకేతిక పనులు, వ్యవసాయం, తయారీ రంగం, వృత్తి విద్య పరిశీలించండి.<div class="chips"><span class="chip">సాంకేతిక వృత్తులు</span><span class="chip">వ్యవసాయం</span><span class="chip">తయారీ రంగం</span><span class="chip">వృత్తి విద్య</span></div></div></div>
+</div>
+<div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>మీకు ఒకేసారి రెండు మూడు రకాల ఆసక్తులు ఉండొచ్చు. టెక్నాలజీ + డిజైన్, Biology + బిజినెస్ వంటి కలయికలు కూడా సాధ్యమే.</span></div>
+</section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఎంచుకునే ముందు ప్రయత్నించండి</h3><p class="lede">ఈ వృత్తిలో చేసే పనులు, అవకాశాలు, పోటీ, పరిమితులు గురించి చదవండి.</p>
+<div class="card">
+<div class="row"><div class="k">కెరీర్ పరీక్ష 1</div><div class="v">ఆ వృత్తిలో ప్రతిరోజూ నిజంగా ఏం చేస్తారో తెలుసుకోండి. నమ్మదగిన వీడియో లేదా పరిచయ పాఠం చూసి ఎక్కువ సమయం ఏ పనిలో గడుపుతారో గమనించండి.</div></div>
+<div class="row"><div class="k">కెరీర్ పరీక్ష 2</div><div class="v">ఒక చిన్న పని చేసి చూడండి. చిన్న ప్రోగ్రామ్ రాయడం, వస్తువు డ్రాయింగ్, ఇంటర్వ్యూ, బడ్జెట్, బయాలజీ సమస్య, పాఠం చెప్పడం, వార్త రాయడం, ఏదైనా నిర్మించడం చేయండి.</div></div>
+<div class="row"><div class="k">కెరీర్ పరీక్ష 3</div><div class="v">ఆ రంగంలో పనిచేసే ఉపాధ్యాయుడు, ఉద్యోగి, సీనియర్ విద్యార్థి లేదా తెలిసిన వ్యక్తితో మాట్లాడండి. మంచి విషయాలు, కష్టాలు, కొత్తవాళ్లు చేసే పొరపాట్లు అడగండి.</div></div>
+<div class="row"><div class="k">కెరీర్ పరీక్ష 4</div><div class="v">10వ తరగతి తర్వాత ఏ గ్రూప్? ఏ డిగ్రీ? ఏ ప్రవేశ పరీక్ష? ఎన్ని సంవత్సరాలు? ఎంత ఖర్చు? అన్న మార్గాన్ని తెలుసుకోండి.</div></div>
+<div class="row"><div class="k">కెరీర్ పరీక్ష 5</div><div class="v">ఉద్యోగాలు ఎంత తరచుగా వస్తాయి? ఎక్కడ ఉంటాయి? ప్రారంభ ఆదాయం ఎంత? పని దొరకకపోతే మరో ప్రణాళిక ఏమిటి? అనేవి చూడండి.</div></div>
+</div>
+<div class="rule-box" style="margin-top:14px"><h4>ఇప్పుడే ఒక్క కెరీర్ ఎంచుకోవాల్సిన అవసరం లేదు</h4>
+<p>ముందుగా మీకు ఆసక్తి ఉన్న <span class="hi">10 వృత్తులు</span> రాయండి.</p>
+<p>ప్రాథమికంగా తెలుసుకున్నాక వాటిని <span class="hi">5 వృత్తులకు</span> తగ్గించండి.</p>
+<p>చిన్న ప్రాజెక్టులు, వ్యక్తులతో మాట్లాడాక <span class="hi">3 ముఖ్యమైన ఎంపికలు</span> ఉంచండి.</p>
+<p>ఆ తర్వాతే సబ్జెక్టులు, కాలేజీలు, పరీక్షలు, ఖర్చులు, ఉద్యోగాలు పోల్చండి.</p>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>10వ తరగతి తర్వాత ఏ గ్రూప్?</h3><p class="lede">ఇక్కడి జీతాలు మూల నివేదికలోని అంచనాలు మాత్రమే; ఉద్యోగం, ప్రాంతం, కాలాన్ని బట్టి మారవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">MPC</div><div class="v">మ్యాథ్స్ + ఫిజిక్స్ + కెమిస్ట్రీ. ఇంజినీరింగ్, కంప్యూటర్ సైన్స్, ఆర్కిటెక్చర్, ఏవియేషన్, గణితం, భౌతికశాస్త్రం, టెక్నాలజీ కోర్సులకు ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k">BiPC</div><div class="v">బయాలజీ + ఫిజిక్స్ + కెమిస్ట్రీ. వైద్యం, ఆరోగ్యం, జీవశాస్త్ర కోర్సులకు ముఖ్యమైనది. కొన్ని కోర్సులకు ప్రత్యేక సబ్జెక్టు, ప్రవేశ పరీక్ష నిబంధనలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">CEC / కామర్స్</div><div class="v">కామర్స్, ఎకనామిక్స్, సంబంధిత సబ్జెక్టులు. వ్యాపారం, ఫైనాన్స్, CA, బ్యాంకింగ్, ఆర్థిక శాస్త్రం, మేనేజ్‌మెంట్, పలు ప్రభుత్వ ఉద్యోగాల మార్గాలకు ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k">హ్యుమానిటీస్ / ఆర్ట్స్</div><div class="v">న్యాయశాస్త్రం, సైకాలజీ, జర్నలిజం, సివిల్ సర్వీసులు, భాషలు, సామాజిక శాస్త్రాలు, పాలసీ, డిజైన్, కమ్యూనికేషన్ రంగాలకు ఉపయోగపడవచ్చు.</div></div>
+<div class="row"><div class="k">వృత్తి విద్య / స్కిల్ మార్గం</div><div class="v">డిప్లొమా, ITI, ఇతర నైపుణ్య కోర్సులతో ఎలక్ట్రికల్, మెకానికల్, తయారీ, నిర్మాణం, సాంకేతిక పనుల్లో చేరవచ్చు. విజయానికి డిగ్రీ ఒక్కటే మార్గం కాదు.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>స్నేహితులు ఎంచుకున్నారు, తల్లిదండ్రులు విన్నారు, ఇతరులు గొప్ప అన్నారు అని మాత్రమే ఇంటర్ గ్రూప్ ఎంచుకోవద్దు.</span></div>
+</div>
+</section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్ల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">నాలుగూ సరిపోతే</span> — నిజమైన ప్రణాళికతో ప్రయత్నం ప్రారంభించండి.</p>
+<p><span class="hi">ఒకటి సరిపోకపోతే</span> — నిర్ణయానికి ముందు ఆ అంశాన్ని ఆలోచించండి.</p>
+<p><span class="hi">రెండు లేదా అంతకంటే ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడండి.</p>
+<p>ఒక గడువు పెట్టుకోండి: “___ వయసు వరకు ప్రయత్నించి, అవసరమైతే Plan Bకి మారతాను.”</p>
+<p>Decide to keep learning about yourself.</p>
+<p style="margin-top:16px;color:#C7CFDA"><b>మీ కెరీర్ లక్ష్యం మారవచ్చు.</b> కొత్త విషయాలు తెలుసుకొని నిర్ణయం మార్చుకోవడం ఓటమి కాదు; అది మరింత అవగాహనతో తీసుకున్న నిర్ణయం.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచే ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే ప్రారంభించగల పనులు, తర్వాత చేయాల్సిన పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul>
+<li>మీకు నచ్చిన పది వృత్తుల పేర్లు రాయండి.</li>
+<li>ప్రతి వృత్తిలో రోజూ చేసే పనిని 10 నిమిషాలు తెలుసుకోండి.</li>
+<li>మీకు బాగా వచ్చే మూడు సబ్జెక్టులు, ఇష్టమైన మూడు పనులు నమోదు చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>ఇంటర్ గ్రూపులు, ప్రతి గ్రూప్‌తో తెరచుకునే అవకాశాలు తెలుసుకోండి.</li>
+<li>రెండు వేర్వేరు రంగాల్లో చిన్న ప్రాజెక్టులు ప్రయత్నించండి.</li>
+<li>స్నేహితుల ఎంపిక కంటే మీ ఆసక్తి, అర్హత, ఖర్చు, ఉద్యోగ మార్గాన్ని బట్టి నిర్ణయం తీసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కోర్సు తర్వాత</div><ul>
+<li>పది వృత్తులలో మీకు ఆసక్తి ఉన్న ఐదింటికి జాబితా తగ్గించండి.</li>
+<li>ఆ రంగాల్లోని వ్యక్తులతో మాట్లాడి మూడు నిజమైన ఎంపికలు సిద్ధం చేయండి.</li>
+<li>మూడు ఎంపికల చదువు, ప్రవేశ పరీక్షలు, ఖర్చులు, ఉద్యోగాలు, Plan B పోల్చి కౌన్సెలర్‌తో చర్చించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>ఒక కాగితంపై “నాకు నచ్చేవి”, “నాకు బాగా వచ్చేవి”, “నేర్చుకోవాలనుకునేవి” అని మూడు శీర్షికలు రాసి ప్రారంభించండి.</span></div>
+</section>
+<section style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఇప్పుడే నిర్ణయించుకోకపోయినా పరవాలేదు</h3>
+<div class="card">
+<p style="margin-top:0">కొంతమందికి చిన్నతనం నుంచే డాక్టర్, పైలట్, డిజైనర్ కావాలని తెలుస్తుంది; చాలామందికి అలా తెలియదు. రెండూ సహజమే.</p>
+<p>మీకు ఏ సబ్జెక్టులు నచ్చుతాయి, ఎలాంటి వ్యక్తులతో పని చేయాలనుకుంటారు, ఏ సమస్యలు పరిష్కరించాలనుకుంటారు, భవిష్యత్తులో ఎలాంటి జీవితం కోరుకుంటారు అన్నవి ఇప్పుడు తెలుసుకుంటున్నారు.</p>
+<p>ఒత్తిడితో తీసుకున్న నిర్ణయం కంటే అనుభవం, అవగాహనతో తీసుకున్న నిర్ణయం బలంగా ఉంటుంది.</p>
+<p style="margin-bottom:0">ఈరోజే పూర్తి లక్ష్యం అవసరం లేదు. మంచి తదుపరి అడుగు వేస్తే చాలు.</p>
+</div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే. అర్హతలు, వయసు, పరీక్షలు, వేతనాలు మారవచ్చు; దరఖాస్తు చేసే సంవత్సరపు అధికారిక ప్రకటన చూడండి.</p>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const verdict = document.getElementById("verdict");
+  const quiz = document.getElementById("quiz");
+  if(!quiz || !verdict) return;
+  const qs = [...quiz.querySelectorAll(".q")];
+  function updateSupport(){
+    const picked = qs.filter(q => q.querySelector('button[data-picked="1"]')).length;
+    if(picked < qs.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>There is no failure here</strong>Answer the six questions only to understand how ready you are to explore.";
+      return;
+    }
+    const yes = qs.filter(q => q.querySelector('button[data-picked="1"][data-v="y"]')).length;
+    if(yes >= 4){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>You are ready to explore</strong>You do not need one final career yet. Keep trying different fields and collect evidence about what suits you.";
+    } else if(yes >= 2){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Give yourself time</strong>You may feel uncertain or pressured right now. Start with small career experiments instead of forcing a final answer.";
+    } else {
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>That is still okay</strong>You do not have to feel excited about career planning today. Focus on school, strengths and one small exploration step at a time.";
+    }
+  }
+  quiz.addEventListener("click", function(e){
+    const b = e.target.closest("button");
+    if(!b) return;
+    const group = b.closest(".toggle");
+    group.querySelectorAll("button").forEach(x => {
+      x.setAttribute("aria-pressed","false");
+      x.removeAttribute("data-picked");
+    });
+    b.setAttribute("aria-pressed","true");
+    b.setAttribute("data-picked","1");
+    updateSupport();
+  }, true);
+});
+</script>
+<script>
+ document.addEventListener('DOMContentLoaded',function(){
+  const questions=[...document.querySelectorAll('#quiz .q')];
+  const v=document.querySelector('#verdict');
+  function update(){const picks=questions.map(q=>q.querySelector('button[aria-pressed="true"]'));
+   const done=picks.filter(Boolean).length;if(done<questions.length){v.className='verdict';v.innerHTML='<strong>'+done+' / '+questions.length+' ప్రశ్నలకు సమాధానం ఇచ్చారు</strong>మిగిలిన ప్రశ్నలకూ సమాధానం ఇవ్వండి.';return;}
+   const yes=picks.filter(b=>b.dataset.v==='y').length;
+   v.className='verdict '+(yes>=5?'good':yes>=3?'mixed':'bad');
+   v.innerHTML='<strong>'+yes+' / '+questions.length+' ప్రశ్నలకు అవును</strong>'+(yes>=5?'వేర్వేరు కెరీర్లను తెలుసుకోవడానికి మీరు సిద్ధంగా ఉన్నట్టుంది.':yes>=3?'చిన్న చిన్న పనులు ప్రయత్నిస్తూ మీ ఆసక్తులను తెలుసుకోండి.':'ఇప్పుడే నిర్ణయించాల్సిన అవసరం లేదు; మీకు నచ్చేవి నెమ్మదిగా అన్వేషించండి.');
+  }
+  for(const q of questions){for(const b of q.querySelectorAll('.toggle button'))b.addEventListener('click',()=>{for(const x of q.querySelectorAll('.toggle button')){x.setAttribute('aria-pressed',x===b?'true':'false');x.removeAttribute('data-picked');}b.setAttribute('data-picked','1');update();});}
+ });</script></body></html>

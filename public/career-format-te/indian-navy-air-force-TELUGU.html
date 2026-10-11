@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — భారత నౌకాదళం / వైమానిక దళం</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}
+/* Telugu readability */ body,.row,.q,.stage,.flag,.verdict{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;} .row .k,.stage-head,h3,.mast h2,.pip b,.flag .mark,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;line-height:1.35!important;}
+</style><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>భారత నౌకాదళం / వైమానిక దళం</h2><p class="standfirst">సముద్రంలో నౌకలపై లేదా గగనంలో విమానాల రంగంలో దేశానికి సేవ. ఆఫీసర్, సాంకేతిక నిపుణుడు, పైలట్, Agniveer వంటి వేర్వేరు మార్గాలు ఉన్నాయి. బదిలీలు, కఠిన శిక్షణ, ఆరోగ్య ప్రమాణాలు, టీమ్‌వర్క్ తప్పనిసరి.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · భారత నౌకాదళం / వైమానిక దళం · పేరు: <span class="fill"></span> · తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>ఈ పని నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>పని అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>జీతం, ఖర్చు</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>రక్షణ సేవ మీకు సరిపోతుందా?</h3><p class="lede">మీ నిజమైన ఆసక్తి, రోజూ చేయాల్సిన పని గురించి ఆలోచించి ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఎవరూ చూడకపోయినా కఠిన నియమాలు, సమయపాలన పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>వృత్తి జీవితమంతా ఫిట్‌గా ఉండి వైద్య ప్రమాణాలు పాటిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>వ్యక్తిగత ఇష్టం కంటే క్రమశిక్షణ, భద్రత ముఖ్యం అయిన టీమ్‌లో పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>ఇంటికి దూరంగా సముద్రంలో లేదా దేశంలోని ఎయిర్ బేస్‌లలో పోస్టింగ్ అంగీకరిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>యంత్రాలు, విమానాలు, నౌకలు, ఎలక్ట్రానిక్స్, నావిగేషన్‌పై ఆసక్తి ఉందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>నిర్వహణ, కార్యాలయపని, చదువు, శిక్షణ ఎక్కువైనా ఇదే వృత్తిని ఎంచుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఎలా చేరవచ్చు?</h3><p class="lede">10వ తరగతి తర్వాత ఏ గ్రూప్, ఏ కోర్సు, ఏ పరీక్ష అవసరమో జాగ్రత్తగా చదవండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> గణితం, భౌతికశాస్త్రం</div><div class="v">ఇంటర్ తర్వాత Navy, Air Force ఆఫీసర్ ప్రవేశాలు, పైలట్, సాంకేతిక శాఖలు, కొన్ని Agniveer మార్గాలకు Maths, Physics ముఖ్యమైనవి.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> ఇంగ్లీష్</div><div class="v">రాత పరీక్షలు, ఆదేశాలు, సాంకేతిక పుస్తకాలు, ఇంటర్వ్యూలు, రేడియో ద్వారా సమాచారం, శిక్షణకు ఇంగ్లీష్ చదవడం, మాట్లాడడం అవసరం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> ఫిట్‌నెస్, క్రమశిక్షణ</div><div class="v">పరుగు, బలం, అవసరమైన చోట ఈత, ఆరోగ్యకరమైన బరువు, నిద్ర, వైద్య అర్హత ముఖ్యం. నోటిఫికేషన్ వచ్చిన తర్వాతే వ్యాయామం మొదలుపెట్టవద్దు.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">ఎక్కువ Navy, Air Force ఆఫీసర్ ఎంపికలు అందుబాటులో ఉండాలంటే ఇంటర్ MPC అనుకూలం. ఇంటర్ తర్వాత ప్రధాన మార్గం UPSC NDA &amp; NA పరీక్ష. వేరుగా Navy 10+2 B.Tech, Agniveer ప్రవేశాలూ ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">ఆఫీసర్ — NDA</div><div class="v">UPSC NDA &amp; NA పరీక్ష ఇంటర్ తర్వాత ప్రధాన ఆఫీసర్ మార్గం. Navy, Air Forceలో పేర్కొన్న ప్రవేశాలకు Physics, Mathematics/PCM అర్హత అవసరం. రాత పరీక్ష తర్వాత SSB, వైద్య పరీక్ష, మెరిట్ ఆధారంగా ఎంపిక.</div></div>
+<div class="row"><div class="k">Navy 10+2 B.Tech</div><div class="v">ఇంటర్ PCM విద్యార్థులకు Indian Navy 10+2 (B.Tech) Cadet Entry Scheme ఉంది. JEE Main All India Common Rank List ఆధారంగా SSBకి షార్ట్‌లిస్ట్ చేసి, SSB, వైద్య పరీక్ష, మెరిట్ తర్వాత Indian Naval Academyలో నాలుగేళ్ల B.Tech శిక్షణ ఇస్తారు.</div></div>
+<div class="row"><div class="k">డిగ్రీ తర్వాత</div><div class="v">Navyలో CDS, SSC/Direct Officer ప్రకటనల ద్వారా Executive, Technical, Pilot, Naval Air Operations, Logistics వంటి శాఖలు ఉండవచ్చు. Air Forceలో AFCAT ద్వారా Flying, Ground Duty; అర్హులకు CDS ద్వారా Air Force Academy మార్గం ఉంటుంది. వయసు, డిగ్రీ, మార్కుల నిబంధనలు శాఖను బట్టి మారతాయి.</div></div>
+<div class="row"><div class="k">Agniveer ప్రవేశం</div><div class="v">ఇది కమిషన్డ్ ఆఫీసర్‌గా చేరడం కాదు. Navyలో Agniveer SSR వంటి ప్రవేశాలకు ఆన్‌లైన్ పరీక్ష, శారీరక, వైద్య పరీక్షలు ఉంటాయి; SSRకి ఇంటర్ Maths, Physics లేదా నోటిఫికేషన్‌లో పేర్కొన్న ప్రత్యామ్నాయ విద్య అవసరం. Air Forceలో Agniveervayuకి Science/Non-Science ప్రకారం ప్రత్యేక పరీక్ష, అర్హతలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">పూర్తి అర్హత మార్గాలు</div><div class="v">ఇంటర్ ఆఫీసర్: MPC → NDA/NA లేదా Navy 10+2 ప్రవేశం → రాత పరీక్ష/షార్ట్‌లిస్ట్ → SSB → వైద్యం → మెరిట్ → అకాడమీ శిక్షణ. డిగ్రీ ఆఫీసర్: డిగ్రీ → AFCAT/CDS/Navy ప్రవేశం → ఎంపిక బోర్డు → వైద్యం → మెరిట్. Agniveer: అర్హ 10/12/డిప్లొమా → సర్వీసు పరీక్ష → ఫిట్‌నెస్ → వైద్యం → మెరిట్ → నాలుగేళ్ల సేవ.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>NDA, AFCAT, CDS, Agniveer వేర్వేరు ప్రవేశ మార్గాలు. అన్నీ రాయాల్సిన పని లేదు. మీ వయసు, చదువు, Officer లేదా Agniveer లక్ష్యానికి సరిపోయే మార్గం ఎంచుకోండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>Navy, Air Force మధ్య తేడా</h3><p class="lede">ఈ వృత్తిలో పనులు, అర్హత, పోటీ, ప్రత్యామ్నాయ అవకాశాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k">భారత నౌకాదళం</div><div class="v">నౌకలు, జలాంతర్గాములు, సముద్ర విమానాలు, సముద్రాలు, నౌకాదళ స్థావరాల్లో పని. అధికారులు, నావికులు ఆయుధాలు, ఇంజిన్లు, సెన్సర్లు, కమ్యూనికేషన్, విమాన వ్యవస్థలు నిర్వహిస్తారు; ఎక్కువకాలం సముద్రంలో ఉండవచ్చు.<div class="chips"><span class="chip">Ships</span><span class="chip">Submarines</span><span class="chip">Naval Aviation</span><span class="chip">Ocean</span></div></div></div>
+<div class="row"><div class="k">Navy — Executive</div><div class="v">నావిగేషన్, యుద్ధ కార్యకలాపాలు, Operations, Hydrography, Logistics, నాయకత్వ బాధ్యతలు; నౌకలో సిబ్బంది, విభాగాలను నిర్వహిస్తారు.</div></div>
+<div class="row"><div class="k">Navy — పైలట్ / నేవల్ ఎయిర్</div><div class="v">ప్రత్యేక ఎంపిక, వైద్య ప్రమాణాలకు అర్హులైతే నౌకల నుంచి లేదా తీర స్థావరాల నుంచి విమానాలు, హెలికాప్టర్లు నడపడం లేదా వాటి ఆపరేషన్లు నిర్వహించడం.</div></div>
+<div class="row"><div class="k">Navy — టెక్నికల్</div><div class="v">Engineering, Electrical శాఖల్లో నౌక/జలాంతర్గామి ఇంజిన్లు, విద్యుత్, ఎలక్ట్రానిక్స్, ఆయుధాలు, సెన్సర్లు, ఇతర యంత్రాలు నిర్వహించడం.</div></div>
+<div class="row"><div class="k">Navy — Logistics</div><div class="v">సరఫరాలు, వస్తువుల నిల్వ, ఆర్థిక నిర్వహణ, అవసరమైన సామగ్రి అందించడం. మంచి లాజిస్టిక్స్ లేకుండా యుద్ధనౌక పని చేయదు.</div></div>
+<div class="row"><div class="k">భారత వైమానిక దళం</div><div class="v">విమానాలు, గగన రక్షణ, రాడార్, ఆయుధాలు, ఎయిర్ బేస్‌లు, వైమానిక కార్యకలాపాలు. పైలట్లతో పాటు భూమిపై పెద్ద సాంకేతిక, పరిపాలనా వ్యవస్థలు పనిచేస్తాయి.<div class="chips"><span class="chip">Aircraft</span><span class="chip">Air Defence</span><span class="chip">Radar</span><span class="chip">Aerospace</span></div></div></div>
+<div class="row"><div class="k">Air Force — Flying</div><div class="v">ఎంపిక, శిక్షణ, వైద్య కేటగిరీ ఆధారంగా Fighter, Transport లేదా Helicopter విమానాలు నడపవచ్చు. Flying Branch వైద్య ప్రమాణాలు కఠినంగా ఉంటాయి.</div></div>
+<div class="row"><div class="k">Air Force — Technical</div><div class="v">Aeronautical Engineeringలో విమాన వ్యవస్థలు, ఎలక్ట్రానిక్స్, మెకానికల్ పరికరాలు, మెయింటెనెన్స్, విశ్వసనీయత, సాంకేతిక సిద్ధత చూడటం.</div></div>
+<div class="row"><div class="k">Air Force — Ground Duty</div><div class="v">Administration, Logistics, Accounts, Weapon Systems, Education, Meteorology వంటి ప్రకటించే శాఖల్లో పనిచేయవచ్చు; ప్రతి శాఖ విద్యా అర్హత వేరు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">ఆఫీసర్, Agniveer తేడా</div><div class="v">Officer కమిషన్డ్ నాయకత్వ పదవి; సిబ్బంది, కార్యకలాపాలకు బాధ్యత; సేవా నిర్మాణం వేరు. Agniveer నాలుగేళ్ల ప్రత్యేక సేవా నియామకం; అది స్వయంగా శాశ్వత ఆఫీసర్ నియామకం కాదు.</div></div>
+<div class="row"><div class="k">వైద్య అర్హత</div><div class="v">ఎత్తు, బరువు, చూపు, వినికిడి, ఎముకలు/కీళ్లు, ఇతర ఆరోగ్య ప్రమాణాలు ప్రవేశాన్ని బట్టి మారతాయి. ముఖ్యంగా పైలట్ ఉద్యోగాలకు కఠిన పరీక్షలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">శిక్షణలో వాస్తవం</div><div class="v">సైనిక క్రమశిక్షణ, చదువు, శారీరక శిక్షణ, పరేడ్, ఫీల్డ్/సముద్ర/విమాన సేవ పరిచయం, సాంకేతిక సాధన, టీమ్‌వర్క్ ఉంటాయి.</div></div>
+<div class="row"><div class="k">పౌర ఉద్యోగాల్లో Plan B</div><div class="v">ఇలాంటి ఆసక్తులతో Commercial Pilot, Aerospace Engineering, Marine Engineering, Merchant Navy, Electronics, Mechanical, Logistics వంటి రంగాలు పరిశీలించవచ్చు.<div class="chips"><span class="chip">Commercial Pilot</span><span class="chip">Aerospace Engineering</span><span class="chip">Marine Engineering</span><span class="chip">Merchant Navy</span><span class="chip">Electronics</span><span class="chip">Defence Technology</span></div></div></div>
+<div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>Navyలో నౌకలు, సముద్రంలో ఎక్కువకాలం సేవ; Air Forceలో విమానాలు, ఎయిర్ బేస్‌ల పని. మీకు ఏ జీవనశైలి నిజంగా సరిపోతుందో ఆలోచించండి.</span></div>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఇతర ప్రయోజనాలు</h3><p class="lede">మూల నివేదికలోని వేతన వివరాలు సూచనలు మాత్రమే; సంస్థ, స్థాయి, కాలాన్ని బట్టి మారవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">Navy ఆఫీసర్ — ప్రారంభ వేతనం</div><div class="v"><span class="money">₹56,100 basic + ₹15,500 MSP/month</span><br/>మూల వేతనం ₹56,100 + నెలకు ₹15,500 MSP. కొత్త Sub Lieutenantకి Level 10 వర్తిస్తుంది; పోస్టింగ్, నియమాల ప్రకారం అదనపు భత్యాలు మారతాయి.</div></div>
+<div class="row"><div class="k">Air Force ఆఫీసర్ — ప్రారంభ వేతనం</div><div class="v"><span class="money">₹56,100 basic + ₹15,500 MSP/month</span><br/>మూల వేతనం ₹56,100 + నెలకు ₹15,500 MSP. కొత్త Flying Officerకి Level 10 వర్తిస్తుంది. AFCAT 02/2026 సమాచారం ఆధారంగా మూల నివేదిక ఇచ్చిన సంఖ్యలు ఇవి.</div></div>
+<div class="row"><div class="k">ఆఫీసర్ పదోన్నతి వేతనం</div><div class="v">ర్యాంకు, సేవతో వేతనం పెరుగుతుంది. ఉదాహరణకు Flight Lieutenant Level 10B, Squadron Leader తదుపరి స్థాయిల్లో ఉంటారు; బాధ్యతలు, భత్యాలు కూడా మారుతాయి.</div></div>
+<div class="row"><div class="k">Agniveer — మొదటి ఏడాది</div><div class="v"><span class="money">₹30,000 package → about ₹21,000 in hand/month</span><br/>నెలవారీ ప్యాకేజీ ₹30,000; చేతికి సుమారు ₹21,000. 30% Agniveer Corpus Fundలో జమవుతుంది; ప్రభుత్వం సరిపడా భాగం జమ చేస్తుంది.</div></div>
+<div class="row"><div class="k">Agniveer — నాలుగో ఏడాది</div><div class="v"><span class="money">₹40,000 package → about ₹28,000 in hand/month</span><br/>నెలవారీ ప్యాకేజీ ₹40,000; చేతికి సుమారు ₹28,000. ప్యాకేజీ ప్రతి ఏడాది పెరుగుతుంది; పథకం ప్రకారం ఇతర నిబంధనలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">ఇతర ప్రయోజనాలు</div><div class="v">ప్రవేశ రకం, సేవా స్థాయిని బట్టి వసతి, వైద్య సదుపాయం, రేషన్, ఇతర సైనిక సేవా ప్రయోజనాలు లభించవచ్చు. నియమాలను అధికారిక ప్రకటనలో చూడాలి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>Agniveer అనేది 20–30 ఏళ్ల శాశ్వత రక్షణ ఉద్యోగంతో సమానం కాదు. నాలుగేళ్ల సేవ, తర్వాత కొనసాగింపు అవకాశాలు, అధికారిక నియమాలు చదివి నిర్ణయం తీసుకోండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు సర్కిళ్ల ఫలితం ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">నాలుగూ సరిపోతే</span> — మంచి చదువు, ప్రణాళికతో మీ లక్ష్యానికి ముందడుగు వేయండి.</p>
+<p><span class="hi">ఒక్కటి సరిపోకపోయినా</span> — నిర్ణయం తీసుకునే ముందు ఆ అంశాన్ని జాగ్రత్తగా ఆలోచించండి.</p>
+<p><span class="hi">రెండు లేదా ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ప్రత్యామ్నాయాలు చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">లక్ష్యం కోసం ఎంతకాలం ప్రయత్నించాలో, అవసరమైతే Plan Bకి ఎప్పుడు మారాలో ముందే ప్రణాళిక పెట్టుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే మొదలుపెట్టగల విషయాలు ఇవి. ఖరీదైన కోచింగ్ అవసరం లేదు.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul>
+<li>గణితం, భౌతికశాస్త్రం, ఇంగ్లీష్, జనరల్ నాలెడ్జ్ బాగా నేర్చుకోండి.</li>
+<li>పరుగు, పుష్‌అప్స్, కోర్ బలం, కదలికలు; సురక్షిత శిక్షణ ఉంటే ఈత సాధన చేయండి.</li>
+<li>NCC, క్రీడలు, స్కూల్ టీమ్, వాలంటీరింగ్‌లో బాధ్యత తీసుకొని నాయకత్వం నేర్చుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>NDA, Navy సాంకేతిక, Air Force Flying/Technical అవకాశాలు తెరిచి ఉంచడానికి MPC ఎంచుకోండి.</li>
+<li>NDA రాత పరీక్ష, SSB ప్రక్రియ తెలుసుకోండి; ఇంటర్ పునాది సబ్జెక్టులను నిర్లక్ష్యం చేయవద్దు.</li>
+<li>Navyలో సముద్ర సేవ, Air Forceలో ఎయిర్ బేస్, విమాన సేవల జీవనశైలులను పోల్చండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కాలేజీ / శిక్షణ తర్వాత</div><ul>
+<li>ఇంటర్ తర్వాత అర్హత ఉంటే NDA/NA, Navy 10+2 ప్రవేశాలకు దరఖాస్తు చేయండి.</li>
+<li>డిగ్రీ పూర్తి చేస్తే వయసు, డిగ్రీకి సరిపోయే AFCAT, CDS, Navy Graduate ప్రవేశాలు చూడండి.</li>
+<li>Agniveer ఎంచుకునే ముందు నాలుగేళ్ల నియామకం, విద్య, వైద్య ప్రమాణాలు, వేతనం, కొనసాగింపు నియమాలు మొత్తం చదవండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>ఒక వారం రక్షణ సేవ తరహా క్రమం పాటించండి: సమయానికి లేవండి, వ్యాయామం, రోజూ గంట Maths/Physics చదవండి, మీ వస్తువులు సక్రమంగా ఉంచండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. అర్హతలు, వయసు, సీట్లు, పరీక్ష విధానం, జీతాలు మారవచ్చు. దరఖాస్తు సమయంలో అధికారిక తాజా ప్రకటన తప్పక చదవండి.</p>
+
+</div><script>document.addEventListener('DOMContentLoaded',function(){const q=document.querySelectorAll('#quiz .q'), v=document.getElementById('verdict'), p=document.getElementById('pip1');if(!q.length||!v)return;function show(){let selected=[...q].map(x=>x.querySelector('button[data-picked="1"]'));if(selected.some(x=>!x)){v.className='verdict';v.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(p)p.className='pip';return;}let yes=selected.filter(x=>x.dataset.v==='y').length;if(yes>=5){v.className='verdict good';v.innerHTML='<strong>ఈ వృత్తి బాగా సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఆసక్తి కనిపిస్తోంది. చదువు మార్గం, రోజువారీ పని నిజంగా ఎలా ఉంటాయో కూడా తెలుసుకోండి.';if(p)p.className='pip done';}else if(yes>=3){v.className='verdict mixed';v.innerHTML='<strong>మరింత పరిశీలించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు నచ్చుతున్నాయి. నిర్ణయం ముందు పని వాతావరణం, చదువు, నైపుణ్యాలు తెలుసుకోండి.';if(p)p.className='pip warn';}else{v.className='verdict bad';v.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ పని మీకు అంతగా సరిపోకపోవచ్చు. ప్రత్యామ్నాయ కెరీర్లను కూడా పోల్చి చూడండి.';if(p)p.className='pip stop';}}document.querySelector('#quiz').addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;const group=b.closest('.toggle');group.querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked')});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');show()});show()});</script></body></html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>కెరీర్‌లో నాలుగు అంశాలు — ఫుడ్ సేఫ్టీ ఆఫీసర్ (FSO)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్ / భారతదేశం</div><h2>ఫుడ్ సేఫ్టీ ఆఫీసర్ (FSO)</h2><p class="standfirst">హోటళ్లు, ఆహార తయారీ కేంద్రాలు, దుకాణాలు ఆహార భద్రతా చట్టాలను పాటిస్తున్నాయా అని తనిఖీ చేసి ప్రజల ఆరోగ్యాన్ని కాపాడే అధికారి FSO. శుభ్రత, లైసెన్సులు, ఆహార నమూనాలు, ఫిర్యాదులు, కల్తీ ఆహారంపై చర్యలు వీరి పనులు. ఆంధ్రప్రదేశ్‌లో ప్రభుత్వ FSO ఉద్యోగాలకు ఖాళీలు ప్రకటించినప్పుడు సాధారణంగా APPSC ద్వారా నియామకం జరుగుతుంది; ప్రతి సంవత్సరం పరీక్ష తప్పనిసరిగా ఉండదు.</p></div>
+<div class="printhead">కెరీర్ నాలుగు అంశాలు  ·  Food Safety Officer  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చిందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఏ మార్గం?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>సంపాదన</em></a>
+</nav>
+<section id="c1"><div class="num">అంశం 1 · ఆసక్తి</div><h3>ఫుడ్ సేఫ్టీ పని మీకు సరిపోతుందా?</h3><p class="lede">కేవలం ఆహారం రుచి చూడటం ఈ పని కాదు. సైన్స్, చట్టాలు, తనిఖీలు, రికార్డులు, నియమాలు పాటించనప్పుడు చర్యలు తీసుకునే ధైర్యం అవసరం.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>Biology, Chemistry, Food Science, ప్రజారోగ్యం మీకు ఆసక్తికరమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>హోటళ్లు, వంటశాలలు, ఫ్యాక్టరీలు, గోదాములు, ఆహార దుకాణాలు తనిఖీ చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఆహార నమూనాలు, శుభ్రత, రికార్డుల విషయంలో షార్ట్‌కట్స్ లేకుండా జాగ్రత్తగా పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వ్యాపార యజమాని ఒత్తిడి చేసినా చట్టాన్ని అమలు చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఆహార కల్తీ, కాలుష్యం, శుభ్రత లోపం ఎందుకు వచ్చాయో తెలుసుకోవడం మీకు ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ప్రభుత్వ ఉద్యోగానికి సిద్ధమవుతూనే ప్రైవేటు ఆహార పరిశ్రమ అవకాశాలు కూడా ప్రయత్నిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">అంశం 2 · చదువు మార్గం</div><h3>ఏ మార్గంలో FSO కావచ్చు?</h3><p class="lede">ముఖ్యంగా FSSAI నియమాల ప్రకారం అర్హత ఉన్న డిగ్రీ ఎంచుకోవాలి. అన్ని రాష్ట్రాలకు ఒకే తప్పనిసరి FSO ప్రవేశ పరీక్ష లేదు.</p>
+<div class="flag green"><span class="mark">ముఖ్యమైన పదాలు</span><span>FSO అంటే Food Safety Officer (ఆహార భద్రత అధికారి). FSSAI అంటే Food Safety and Standards Authority of India (భారత ఆహార భద్రతా ప్రమాణాల సంస్థ). APPSC అంటే Andhra Pradesh Public Service Commission. FSSAI జాతీయ అర్హత నిబంధనలు నిర్ణయిస్తుంది; రాష్ట్రాలు నోటిఫికేషన్ వచ్చినప్పుడు నియామకాలు చేస్తాయి.</span></div>
+<div class="card">
+<div class="row"><div class="k">పదో తరగతి తర్వాత</div><div class="v"><span>BiPC వల్ల Agriculture, Horticulture, Biotechnology, Microbiology, Biochemistry, Food/Nutrition, Veterinary, Medicine వంటి అనేక FSO-అర్హత కోర్సులకు వెళ్లవచ్చు. కొన్ని Food Technology, Food Engineering, Agricultural Engineering, Dairy Technology కోర్సులకు MPC కూడా మార్గం. కళాశాల అర్హత నిబంధనలు తప్పక చూడండి.</span></div></div>
+<div class="row"><div class="k">Route A — Food Technology</div><div class="v"><span>పదో తరగతి → కోర్సుకు సరిపోయే BiPC/MPC → గుర్తింపు ఉన్న B.Tech/B.Sc. Food Technology లేదా సంబంధిత డిగ్రీ → APPSC/రాష్ట్ర FSO నోటిఫికేషన్ వచ్చినప్పుడు దరఖాస్తు → రాత పరీక్ష/ఎంపిక → FSO. ఆహార ప్రాసెసింగ్, సూక్ష్మజీవులు, రసాయనశాస్త్రం, నాణ్యత, భద్రత చదువుతారు.</span></div></div>
+<div class="row"><div class="k">Route B — Agriculture / Horticulture</div><div class="v"><span>పదో తరగతి → BiPC → AP EAPCET లేదా వర్తించే ప్రవేశం → B.Sc. Agriculture/Horticulture → అర్హత ప్రకారం FSO పరీక్ష. FSSAI గుర్తించిన Agricultural Science కోర్సులలో Agriculture, Horticulture కూడా ఉన్నాయి.</span></div></div>
+<div class="row"><div class="k">Route C — Biotechnology / Microbiology / Biochemistry</div><div class="v"><span>పదో తరగతి → BiPC → B.Sc./B.Tech Biotechnology, Microbiology లేదా Biochemistry → FSO ఎంపిక. సూక్ష్మజీవులు, ఆహార కలుషితం, ల్యాబ్ పరీక్షలపై అవగాహన పెరుగుతుంది.</span></div></div>
+<div class="row"><div class="k">Route D — Dairy / Fisheries / Nutrition</div><div class="v"><span>పదో తరగతి → సరిపోయే Science గ్రూప్ → FSSAI గుర్తించిన Dairy Technology, Fisheries, Food Nutrition &amp; Dietetics లేదా సంబంధిత డిగ్రీ → FSO నియామకం. 2023 నోటిఫికేషన్‌లో ఇలాంటి పలు కోర్సులు గుర్తించారు.</span></div></div>
+<div class="row"><div class="k">Route E — Chemistry</div><div class="v"><span>Science తర్వాత Chemistryలో Bachelor's/Master's/Doctorate వంటి అర్హతల విషయంలో ప్రస్తుత నియమాల ఖచ్చితమైన పదజాలం చూడాలి. FSO కోసమే కోర్సు ఎంచుకునే ముందు FSSAI, నియామక నోటిఫికేషన్ రెండూ పరీక్షించండి.</span></div></div>
+<div class="row"><div class="k">Route F — Veterinary / Medical</div><div class="v"><span>Veterinary Science, గుర్తించిన Medical Degrees కూడా కొన్ని నియమాల ప్రకారం అర్హత కల్పిస్తాయి. 2025 మార్చి FSSAI నోటిఫికేషన్‌లో MBBS, BDS, BAMS, BHMS, BUMS, BSMS, Sowa-Rigpa వంటి డిగ్రీలను చేర్చినట్లు మూల నివేదిక పేర్కొంది.</span></div></div>
+<div class="row"><div class="k">Andhra Pradesh recruitment</div><div class="v"><span>ఆంధ్రప్రదేశ్‌లో ప్రభుత్వం ఖాళీలు ప్రకటించినప్పుడు APPSC FSO నియామకం చేపడుతుంది. మూల నివేదికలో చివరిగా పూర్తయిన నియామకం Notification No.11/2022 అని, ఎంపిక 2024లో ముగిసిందని పేర్కొన్నారు. ప్రతి సంవత్సరం ప్రకటన వస్తుందని అనుకోకండి.</span></div></div>
+<div class="row"><div class="k">APPSC exam pattern example</div><div class="v"><span>గత APPSC FSO పరీక్షలో General Studies &amp; Mental Ability, Food Technology అనే పేపర్లు ఉండేవి. సిలబస్, ఎంపిక విధానం మారవచ్చు; మీ సంవత్సరం అధికారిక నోటిఫికేషన్‌నే అనుసరించండి.</span></div></div>
+<div class="row"><div class="k">Training after appointment</div><div class="v"><span>నియమితులైన Food Safety Officers, Food Authority సూచించిన ఆహార భద్రత శిక్షణను గుర్తింపు పొందిన సంస్థలో పూర్తిచేయాలి.</span></div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన మార్గం</div><div class="v"><span>పదో తరగతి → సరైన Science గ్రూప్ → FSSAI గుర్తించిన డిగ్రీ → APPSC/రాష్ట్ర నోటిఫికేషన్ → రాత పరీక్ష → పత్రాల తనిఖీ, అవసరమైన నియామక అర్హతలు → నిర్దేశిత శిక్షణ → FSO.</span></div></div>
+<div class="flag red"><span class="mark">చాలా ముఖ్యమైన విషయం</span><span>‘ఆహారానికి సంబంధించిన డిగ్రీ’ అని మాత్రమే కోర్సు ఎంచుకోవద్దు. FSO చట్టపరమైన ఉద్యోగం; ప్రస్తుత FSSAI నిబంధనల్లో మీ డిగ్రీకి గుర్తింపు ఉందో, నియామక ప్రకటనలో అర్హత ఉందో నిర్ధారించండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">అంశం 3 · ఉద్యోగాలు</div><h3>FSO అసలు ఏం చేస్తారు?</h3><p class="lede">ప్రజలకు సురక్షితమైన ఆహారం అందేలా చట్టబద్ధంగా తనిఖీ, పర్యవేక్షణ చేసే ఉద్యోగం ఇది.</p>
+<div class="card">
+<div class="row"><div class="k">Food Business Inspection</div><div class="v"><span>హోటళ్లు, ఫుడ్ ప్రాసెసింగ్ కేంద్రాలు, దుకాణాలు, గోదాముల్లో శుభ్రత, చట్టపరమైన నిబంధనలు తనిఖీ చేయడం.</span></div></div>
+<div class="row"><div class="k">Food Sampling</div><div class="v"><span>నిబంధనల ప్రకారం ఆహార నమూనాలు సేకరించి అధీకృత ల్యాబ్‌కు పరీక్ష కోసం పంపడం.</span></div></div>
+<div class="row"><div class="k">Adulteration Checks</div><div class="v"><span>కల్తీ, కలుషితం, తప్పుదారి పట్టించే లేబుళ్లు, ప్రమాణాలు పాటించని ఆహారంపై విచారణ.</span></div></div>
+<div class="row"><div class="k">Hygiene &amp; Sanitation</div><div class="v"><span>ఆహారం నిల్వ, తయారీ, నిర్వహణ, శుభ్రత, పరిశుభ్రత నియమాలు పాటిస్తున్నారా చూడడం.</span></div></div>
+<div class="row"><div class="k">Licence / Registration Compliance</div><div class="v"><span>వ్యాపారాలకు వర్తించే FSSAI లైసెన్స్/రిజిస్ట్రేషన్, ఇతర నిబంధనలు ఉన్నాయో లేదో పరిశీలించడం.</span></div></div>
+<div class="row"><div class="k">Complaint Investigation</div><div class="v"><span>అసురక్షిత ఆహారం, కల్తీ, తప్పు నిర్వహణపై వచ్చిన ఫిర్యాదులను విచారించి ఆధారాలు సేకరించడం.</span></div></div>
+<div class="row"><div class="k">Enforcement Action</div><div class="v"><span>Food Safety and Standards Act ఇచ్చిన అధికారాల మేరకు అవసరమైన నోటీసులు, నమూనాలు, నివేదికలు, చట్టపరమైన చర్యలు చేపట్టడం; తనకు లేని అధికారాన్ని వినియోగించరాదు.</span></div></div>
+<div class="row"><div class="k">రికార్డులు</div><div class="v"><span>తనిఖీల వివరాలు, సేకరించిన నమూనాలు, ల్యాబ్ ఫలితాలు, ఫిర్యాదులు, తీసుకున్న చర్యలను ఖచ్చితంగా రికార్డు చేయడం.</span></div></div>
+<div class="row"><div class="k">Food-Safety Awareness</div><div class="v"><span>ఆహార వ్యాపారులు, ప్రజలకు శుభ్రత, సరైన నిల్వ, ఆహార భద్రతపై అవగాహన కల్పించడం.</span></div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">FSO vs Food Technologist</div><div class="v"><span>FSO చట్ట అమలు, తనిఖీలు చేస్తారు; Food Technologist ఆహార ఉత్పత్తి, తయారీ, నాణ్యత అభివృద్ధిపై పని చేస్తారు.</span></div></div>
+<div class="row"><div class="k">FSO vs Food Analyst</div><div class="v"><span>FSO ఆహార వ్యాపారాలను తనిఖీ చేస్తారు; Food Analyst అధీకృత ల్యాబ్‌లో నమూనాలను శాస్త్రీయంగా పరీక్షిస్తారు. ఈ రెండు పోస్టులకు వేర్వేరు అర్హతలు ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">FSO vs Health Inspector</div><div class="v"><span>Health Inspector పని విస్తృత ప్రజారోగ్య/పరిశుభ్రత అంశాలను చూడవచ్చు; FSO ప్రత్యేకంగా ఆహార భద్రతా చట్టం పరిధిలో పనిచేస్తారు.</span></div></div>
+<div class="row"><div class="k">ఎక్కడ పని చేయవచ్చు?</div><div class="v"><span>రాష్ట్ర ఆహార భద్రత శాఖలు, ప్రభుత్వ నియామకాలు, ఆహార తయారీ సంస్థలు, QA/QC టీమ్‌లు, ల్యాబ్‌లు, కంప్లయెన్స్ విభాగాల్లో పని చేయవచ్చు.</span></div></div>
+<div class="row"><div class="k">Private-sector Plan B</div><div class="v"><span>ప్రభుత్వ నియామకం ఆలస్యమైనా Food Quality Assurance (QA), Quality Control (QC), Food Testing, Food Technologist, Compliance వంటి ఉద్యోగాలు Plan Bగా ఉపయోగపడతాయి.</span><div class="chips"><span class="chip">Quality Assurance</span><span class="chip">Quality Control</span><span class="chip">Food Microbiology</span><span class="chip">Food Production</span><span class="chip">Regulatory Affairs</span><span class="chip">Food Testing Labs</span></div></div></div>
+<div class="row"><div class="k">AI కాలంలో అవకాశాలు</div><div class="v"><span>డిజిటల్ రికార్డులు, AI సహాయ పరీక్షా పద్ధతులు పెరుగుతున్నా నమూనాలు, తనిఖీలు, శాస్త్రీయ నిర్ణయాలు, చట్ట అమలుకు శిక్షణ పొందిన మనుషులే అవసరం.</span></div></div>
+<div class="flag"><span class="mark">వాస్తవ పరిస్థితి</span><span>FSO పని ప్రజారోగ్యాన్ని కాపాడడం. వ్యాపారి తప్పు చేస్తే దాచిపెట్టడం కాదు. నిజమైన శాస్త్రీయ నివేదికలు, సరైన పద్ధతులు, నిజాయితీ ముఖ్యం.</span></div>
+</div></section>
+<section id="c4"><div class="num">అంశం 4 · ఆదాయం</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">జీతం ప్రభుత్వ పోస్టు, ప్రైవేటు ఉద్యోగం, అనుభవం, నగరంపై ఆధారపడుతుంది.</p>
+<div class="card">
+<div class="row"><div class="k">AP Food Safety Officer — last completed APPSC scale</div><div class="v"><span class="money">₹44,570 – ₹1,27,480 pay scale</span><br/><span>మూల నివేదికలో గత APPSC ప్రకటనలో ఇచ్చిన ప్రభుత్వ FSO జీత స్కేలు ఉంది. కొత్త నియామకంలో వేతన పట్టిక మారవచ్చు; నోటిఫికేషన్ చూడండి.</span></div></div>
+<div class="row"><div class="k">Contract FSO example</div><div class="v"><span class="money">₹44,570/month in one recent AP example</span><br/><span>కొన్ని ప్రాంతాల్లో కాంట్రాక్ట్ ఆధారిత ఆహార భద్రత పోస్టుల వేతనాలు ప్రభుత్వ శాశ్వత ఉద్యోగానికి భిన్నంగా ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">Private QA / QC entry role</div><div class="v"><span class="money">₹15,000 – ₹30,000/month</span><br/><span>ప్రైవేటు రంగంలో ప్రారంభ QA/QC ఉద్యోగం; ఫుడ్ ఫ్యాక్టరీ, ల్యాబ్, నగరాన్ని బట్టి ఆదాయం మారుతుంది.</span></div></div>
+<div class="row"><div class="k">Experienced food-safety / quality professional</div><div class="v"><span class="money">₹30,000 – ₹60,000+/month</span><br/><span>అనుభవజ్ఞులైన Food Safety/Quality నిపుణులకు పెద్ద సంస్థల్లో మంచి అవకాశాలు ఉండవచ్చు; నైపుణ్యం ముఖ్యం.</span></div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v"><span>డిగ్రీ ఫీజు కాలేజీ, కోర్సు, హాస్టల్‌ను బట్టి మారుతుంది. FSO ఒక్క ఉద్యోగం కోసమే అధిక అప్పు తీసుకునే ముందు ప్రత్యామ్నాయ అవకాశాలు కూడా చూడండి.</span></div></div>
+<div class="flag red"><span class="mark">Money warning</span><span>భవిష్యత్తులో APPSC FSO నోటిఫికేషన్ వస్తుందనే నమ్మకంతో ఒక్కదానిపై ఆధారపడవద్దు. నియామకాలు అనియమితంగా వస్తాయి. ప్రైవేటు రంగం, పరిశోధనల్లోనూ పనికొచ్చే డిగ్రీ తీసుకోండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు అంశాల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">Food science + public health + enforcement</span> — Food Safety Officer may be a strong fit.</p>
+<p><span class="hi">Love laboratory testing more than field inspection</span> — compare Food Analyst / Food Microbiologist.</p>
+<p><span class="hi">Love developing food products</span> — compare Food Technologist.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>FSO కేవలం ఆహారం చూసి సురక్షితమో కాదో చెప్పరు. చట్టం, నమూనా పరీక్షా పద్ధతులు, శాస్త్రీయ ఆధారాలను అనుసరిస్తారు.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్ దశ నుంచే ప్రారంభించగల పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే స్కూల్లో ఉన్నప్పుడు</div><ul>
+<li>Biology, Chemistryలో బలంగా తయారవండి.</li>
+<li>ఆహారం ఎందుకు పాడవుతుంది, సూక్ష్మజీవులు ఎలా పెరుగుతాయి, శుభ్రత వల్ల జబ్బులు ఎలా తగ్గుతాయి తెలుసుకోండి.</li>
+<li>ప్యాకెట్లపై ingredients, expiry/best before తేదీ, నిల్వ సూచనలు, FSSAI వివరాలు చదవండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>పదో తరగతి తర్వాత</div><ul>
+<li>అత్యధిక జీవశాస్త్ర/వ్యవసాయ/వైద్య FSO మార్గాల కోసం BiPC అనుకూలం.</li>
+<li>Food Technology, Food Engineering, Agricultural Engineering లక్ష్యమైతే MPC కోర్సులను కూడా పరిశీలించండి.</li>
+<li>డిగ్రీ ఎంచుకునే ముందు FSSAI తాజా నియమాల్లో ఆ ఖచ్చితమైన డిగ్రీకి గుర్తింపు ఉందో నిర్ధారించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>ఇంటర్ / డిగ్రీ సమయంలో</div><ul>
+<li>Food Microbiology, Chemistry, Processing, Hygiene, HACCP, Food Law నేర్చుకోండి.</li>
+<li>ఫుడ్ ఫ్యాక్టరీలు, QA/QC, టెస్టింగ్ ల్యాబ్‌లు, కంప్లయెన్స్ టీమ్‌లలో ఇంటర్న్‌షిప్ ప్రయత్నించండి.</li>
+<li>APPSC FSO నోటిఫికేషన్లు గమనిస్తూనే ప్రైవేటు ఫుడ్ ఇండస్ట్రీ ఉద్యోగాలకూ దరఖాస్తు చేయండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">Best first test</span><span>సూపర్‌మార్కెట్ లేదా ఫుడ్ షాపులో కనిపించే నిల్వ విధానం, ప్యాకెట్ స్థితి, గడువు తేదీ, శుభ్రత, లేబుల్ వివరాలను గమనించి రాసుకోండి. ఏది నిజంగా అసురక్షితమో నిర్ణయించడానికి ఇంకా ఏ శాస్త్రీయ పరీక్ష అవసరమో ఆలోచించండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. వయసు, చదువు అర్హతలు, ప్రవేశ పరీక్షలు, ఫీజులు, జీతాలు మారవచ్చు. దరఖాస్తు ముందు తాజా అధికారిక నోటిఫికేషన్ పరిశీలించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>ఈ కెరీర్ మీకు బాగా సరిపోవచ్చు</strong>మీ ఆసక్తి బలంగా కనిపిస్తోంది. అయితే చదువు, అర్హతలు, రోజువారీ పని, ఖర్చులను కూడా తెలుసుకుని నిర్ణయించుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>ముందుగా ప్రయత్నించి చూడండి</strong>కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. చిన్న ప్రాజెక్టు లేదా సంబంధిత అనుభవంతో ఈ కెరీర్‌ను పరీక్షించుకోండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>కొన్ని ముఖ్యమైన అంశాలపై ఆసక్తి తక్కువగా ఉండవచ్చు. ప్రత్యామ్నాయ కెరీర్లు కూడా పరిశీలించి కౌన్సెలర్‌తో చర్చించండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

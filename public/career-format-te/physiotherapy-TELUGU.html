@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — ఫిజియోథెరపీ</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ పరిశీలన · ఆంధ్రప్రదేశ్</div><h2>ఫిజియోథెరపీ</h2><p class="standfirst">గాయం, శస్త్రచికిత్స, అనారోగ్యం, వైకల్యం తర్వాత నొప్పి తగ్గించి కదలికలను తిరిగి మెరుగుపరచడానికి ఫిజియోథెరపిస్టులు సహాయపడతారు. ఇది మసాజ్ మాత్రమే కాదు; శరీర నిర్మాణం, వ్యాయామ చికిత్స, పునరావాసంపై ఆధారపడిన ఆరోగ్య వృత్తి.</p></div>
+<div class="printhead">కెరీర్‌కు నాలుగు సర్కిళ్లు  ·  Physiotherapy  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు ఆసక్తి ఉందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>అర్హత ఎలా?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>వృత్తులు</b><em>చాలా ప్రత్యేక విభాగాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>వాస్తవాలు తెలుసుకోండి</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఫిజియోథెరపీ నిజంగా ఇష్టమా?</h3><p class="lede">నొప్పి, బలహీనత, భయం ఉన్న రోగులకు రోజంతా సహాయం చేసే పని ఇది.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>కండరాలు, కీళ్లు, నరాలు, గుండె, ఊపిరితిత్తులు ఎలా పనిచేస్తాయో తెలుసుకోవడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>రోగికి వ్యాయామాలు పదేపదే చేయించేటప్పుడు, పురోగతి నెమ్మదిగా ఉన్నా ఓపికగా ప్రోత్సహించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>వివిధ వయసుల, ఆరోగ్య పరిస్థితుల రోగులతో దగ్గరగా, వృత్తిపరంగా పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>క్రీడలు మాత్రమే కాక శరీర నిర్మాణం, కదలికల శాస్త్రం, చికిత్స వ్యాయామాలు నేర్చుకోవాలనుకుంటున్నారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>ప్రతి రోగికి త్వరగా నయం అవుతుందని హామీ ఇవ్వకుండా, ఆధారాలతో జాగ్రత్తగా చికిత్స చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>మొదటి జీతం తక్కువగా ఉండవచ్చని తెలిసినా అనుభవం పెంచుకుంటూ ఈ వృత్తిలో ఉండాలనుకుంటున్నారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానమివ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>విషయాలు, ప్రవేశ మార్గం</h3><p class="lede">AP విద్యార్థులకు BiPC నుంచి BPT ప్రధాన మార్గం.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> జీవశాస్త్రం</div><div class="v">ముఖ్యమైన పునాది జీవశాస్త్రం. తర్వాత శరీర నిర్మాణం (Anatomy), శరీర పనితీరు (Physiology), రోగాలు, నాడీ వ్యవస్థ, వ్యాయామ చికిత్స, పునరావాసం చదువుతారు.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> భౌతికశాస్త్రం</div><div class="v">శరీర కదలిక, బలం, సమతుల్యత, లీవర్లు, నడక, ఎలక్ట్రోథెరపీకి భౌతికశాస్త్రం, బయోమెకానిక్స్ అవసరం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> English &amp; Communication</div><div class="v">మెడికల్ పుస్తకాలు చదవడం, వ్యాయామాలు వివరించడం, రోగి ఆరోగ్య చరిత్ర తెలుసుకోవడం, నమ్మకం కలిగించడం ముఖ్యం. AP BPT అర్హతలో ఇంటర్ ఇంగ్లీష్ కూడా అవసరం.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">10వ తరగతి తర్వాత ఇంగ్లీష్‌తో పాటు BiPC ఇంటర్ ప్రధాన మార్గం. మూల నివేదిక పేర్కొన్న Dr. NTR University of Health Sciences AP BPT నియమాల ప్రకారం ఇంటర్‌లో Physics, Chemistry, Biology, English ఉండాలి. తర్వాత ఆయా సంవత్సరపు ప్రవేశ విధానం ప్రకారం BPTకి దరఖాస్తు చేయాలి.</div></div>
+<div class="row"><div class="k">ప్రవేశం, పరీక్షల మార్గాలు</div><div class="v">భారతదేశమంతటికీ BPT కోసం ఒకే తప్పనిసరి జాతీయ పరీక్ష లేదు. కొన్ని విశ్వవిద్యాలయాల్లో CUET-UG, కొన్ని చోట్ల NEET-UG అంగీకారం/నిబంధన, మరికొన్ని చోట్ల విశ్వవిద్యాలయ పరీక్ష లేదా ఇంటర్ మార్కుల మెరిట్ ఉంటుంది. మీ లక్ష్య కళాశాల నిబంధన తప్పక తెలుసుకోండి.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్</div><div class="v">Dr. NTR UHS 2025–26లో పూర్తయిన AP ప్రవేశ ప్రక్రియలో ప్రత్యేక BPT పరీక్ష కాకుండా ఇంటర్ సైన్స్ మార్కుల ఆధారంగా మెరిట్, వెబ్ కౌన్సెలింగ్ జరిగింది. Botany, Zoology, Physics, Chemistry మార్కుల శాతం ఉపయోగించారు. భవిష్యత్తులో నిబంధనలు మారవచ్చు.</div></div>
+<div class="row"><div class="k">BPT కోర్సు</div><div class="v">BPT అంటే Bachelor of Physiotherapy. మూల నివేదికలోని Dr. NTR UHS 2025–26 ప్రాస్పెక్టస్ ప్రకారం 4 విద్యా సంవత్సరాలు, అదనంగా తప్పనిసరి 6 నెలల రొటేటరీ ఇంటర్న్‌షిప్; మొత్తం సుమారు 4½ సంవత్సరాలు.</div></div>
+<div class="row"><div class="k">చదివే అంశాలు</div><div class="v">Anatomy (శరీర నిర్మాణం), Physiology (శరీర పనితీరు), Biomechanics (కదలికల శాస్త్రం), Exercise Therapy (వ్యాయామ చికిత్స), Electrotherapy, Orthopaedics (ఎముకలు, కీళ్లు), Neurology (నాడీశాస్త్రం), Cardiorespiratory (గుండె, ఊపిరితిత్తులు).<div class="chips"><span class="chip">శరీర నిర్మాణం</span><span class="chip">శరీర పనితీరు</span><span class="chip">కదలికల శాస్త్రం</span><span class="chip">వ్యాయామ చికిత్స</span><span class="chip">Electrotherapy</span><span class="chip">ఎముకలు / కీళ్లు</span><span class="chip">నాడీశాస్త్రం</span><span class="chip">గుండె / ఊపిరితిత్తులు</span></div></div></div>
+<div class="row"><div class="k">వృత్తిపరమైన గుర్తింపు</div><div class="v">National Commission for Allied and Healthcare Professions Act, 2021లో Physiotherapist వృత్తి గుర్తించబడింది. వృత్తి ప్రమాణాలు, కేంద్ర/రాష్ట్ర రిజిస్టర్లకు సంబంధించిన నిబంధనలు ఉన్నాయి. నమోదు వ్యవస్థలు మారుతూ ఉండవచ్చు; డిగ్రీ పూర్తయ్యే సమయానికి తాజా నిబంధనలు చూడాలి.</div></div>
+<div class="row"><div class="k">ఉన్నత చదువులు</div><div class="v">MPT (Master of Physiotherapy) ద్వారా ప్రత్యేక విభాగంలో చదవవచ్చు. Dr. NTR UHS పేర్కొనే విభాగాల్లో Orthopaedics, Neurology, Cardiorespiratory, Sports ఉన్నాయి. స్పెషలిస్ట్ పని, బోధన, పరిశోధనకు ఉపయోగపడుతుంది; కానీ BPT తర్వాత ప్రతి ఉద్యోగానికీ MPT తప్పనిసరి కాదు.</div></div>
+<div class="row"><div class="k">ఈ దశలు పూర్తి చేయాలి</div><div class="v">10వ తరగతి → ఇంగ్లీష్‌తో BiPC ఇంటర్ → ఆయా కళాశాల ప్రకారం CUET-UG/NEET-UG/రాష్ట్ర ప్రవేశం లేదా మెరిట్ → నాలుగేళ్ల BPT + తప్పనిసరి క్లినికల్ ఇంటర్న్‌షిప్ → అవసరమైన వృత్తి నమోదు → Physiotherapist. AP తాజా ఉదాహరణలో ఇంటర్ సైన్స్ మార్కులు, కౌన్సెలింగ్ ఉపయోగించారు.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>గుర్తింపు లేని చిన్న “ఫిజియోథెరపీ” సర్టిఫికెట్‌ను BPTతో సమానంగా భావించవద్దు. విశ్వవిద్యాలయ అనుబంధం, ఆసుపత్రి శిక్షణ, నమోదు నిబంధనలు చూడండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3 · ప్రత్యేకతలు, ఉద్యోగాలు</div><h3>ఏ విభాగాల్లో పనిచేయవచ్చు?</h3><p class="lede">ఇది క్రీడా గాయాలకు మాత్రమే కాదు; అనేక రకాల రోగులకు పునరావాసం అందిస్తుంది.</p>
+<div class="card">
+<div class="row"><div class="k">Orthopaedic / Musculoskeletal</div><div class="v">వెన్నునొప్పి, మెడనొప్పి, కీళ్ల సమస్యలు, ఎముక విరుగుడు, శస్త్రచికిత్స తర్వాత కదలిక మెరుగుపరచడం. రోగి కదలిక, బలం, భంగిమ అంచనా వేసి వ్యాయామాలు చేయిస్తారు.<div class="chips"><span class="chip">వెన్ను / మెడ</span><span class="chip">కీళ్లు</span><span class="chip">ఆపరేషన్ తర్వాత</span></div></div></div>
+<div class="row"><div class="k">Sports Physiotherapy</div><div class="v">క్రీడాకారుల గాయాలు తగ్గించడం, మళ్లీ ఆటలో పాల్గొనే సామర్థ్యం పరీక్షించడం, బలం, కదలిక, టేపింగ్, పునరావాసం; కోచ్‌లతో కలిసి పని. ప్రముఖ స్పోర్ట్స్ టీమ్ ఉద్యోగాలు చాలా పోటీతో ఉంటాయి; BPTతోనే ఆటోమేటిక్‌గా లభించవు.</div></div>
+<div class="row"><div class="k">Neurological Physiotherapy</div><div class="v">స్ట్రోక్, వెన్నుపాము గాయం, మెదడు గాయం, Parkinson’s disease, multiple sclerosis వంటి నాడీ సమస్యల తర్వాత కదలిక, స్వతంత్ర జీవన సామర్థ్యాన్ని మెరుగుపరుస్తారు.</div></div>
+<div class="row"><div class="k">Cardiorespiratory</div><div class="v">గుండె, ఊపిరితిత్తుల వ్యాధులు, శస్త్రచికిత్స, ICU తర్వాత కోలుకునే వారికి శ్వాస వ్యాయామాలు, నడక, ఓర్పు పెంపు, కార్డియాక్/పల్మనరీ పునరావాసం.</div></div>
+<div class="row"><div class="k">Paediatric Physiotherapy</div><div class="v">పిల్లల్లో అభివృద్ధి, నాడీ, ఎముకలు, కదలిక సమస్యలకు వయసుకు తగిన ఆటలతో కూడిన చికిత్స. తల్లిదండ్రులతో మాట్లాడటం ముఖ్యం.</div></div>
+<div class="row"><div class="k">Geriatric Physiotherapy</div><div class="v">వృద్ధులు బలం, సమతుల్యత, నడక, స్వతంత్రంగా పనులు చేసుకునే సామర్థ్యం నిలబెట్టుకునేలా సహాయం. పడిపోవడం నివారించడం, అనారోగ్యం/ఆపరేషన్ తర్వాత కోలుకోవడం.</div></div>
+<div class="row"><div class="k">Women's Health / Pelvic Health</div><div class="v">గర్భధారణ, ప్రసవానంతర కోలుకోవడం, పెల్విక్ ఫ్లోర్ సమస్యలు వంటి మహిళల ఆరోగ్య అంశాలకు ప్రత్యేక పునరావాసం. అదనపు శిక్షణ, జాగ్రత్తైన వృత్తిపరమైన విధానం అవసరం.</div></div>
+<div class="row"><div class="k">ICU / Hospital Rehabilitation</div><div class="v">తీవ్ర అనారోగ్యం, పెద్ద శస్త్రచికిత్స, ఎక్కువకాలం మంచంపైనే ఉన్న రోగులను ఆసుపత్రిలో సురక్షితంగా కదిలించడం. డాక్టర్లు, నర్సులతో కలిసి పనిచేయాలి.</div></div>
+<div class="row"><div class="k">Community / Home Care</div><div class="v">క్లినిక్‌కు రాలేని వృద్ధులు, నాడీ సమస్యలు ఉన్నవారికి ఇంట్లో లేదా సమాజంలోనే ఫిజియోథెరపీ సేవలు అందించడం.</div></div>
+<div class="row"><div class="k">Ergonomics / Workplace</div><div class="v">ఆఫీసు పని చేసే వారి భంగిమ, వర్క్‌స్టేషన్ అమరిక, కదలికలపై అవగాహన కల్పించి కండరాలు, కీళ్ల సమస్యలు తగ్గించే కార్యక్రమాలు.</div></div>
+<div class="row"><div class="k">Rehabilitation Technology</div><div class="v">కృత్రిమ అవయవాలు, ఆర్థోటిక్స్, నడక పరీక్షించే ల్యాబ్‌లు, రోబోటిక్స్, ధరించగల సెన్సర్లు, డిజిటల్ పునరావాస సాంకేతికతలతో కలిసి పని.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Physiotherapist vs Doctor</div><div class="v">Physiotherapist: శరీర కదలిక, బలం, వ్యాయామం, పునరావాసంపై నైపుణ్యం. Medical Doctor: MBBS, ప్రత్యేక వైద్య చదువు ద్వారా వ్యాధుల నిర్ధారణ, చికిత్స చేస్తారు. BPT అనేది MBBS కాదు.</div></div>
+<div class="row"><div class="k">Physiotherapist vs Occupational Therapist</div><div class="v">Physiotherapy ముఖ్యంగా కదలిక, నడక, బలం, నొప్పి, శారీరక పనితీరుపై దృష్టి పెడుతుంది. Occupational Therapy దుస్తులు ధరించడం, చదువు, పని, స్వీయ సంరక్షణ వంటి రోజువారీ పనులను చేయగలిగేలా సహాయం చేస్తుంది. రెండూ కలిసి పనిచేస్తాయి.</div></div>
+<div class="row"><div class="k">Physiotherapist vs Fitness Trainer</div><div class="v">Physiotherapist గాయాలు, వ్యాధులు, కదలిక సమస్యలు ఉన్న రోగులను అంచనా వేసి పునరావాసం చేయగల క్లినికల్ శిక్షణ పొందిన నిపుణుడు. Fitness Trainer సాధారణంగా ఆరోగ్యంగా ఉన్నవారికి వ్యాయామ మార్గదర్శనం ఇస్తారు. జిమ్ సర్టిఫికెట్ BPTకి సమానం కాదు.</div></div>
+<div class="row"><div class="k">ఎవరు ఉద్యోగం ఇస్తారు?</div><div class="v">ఆసుపత్రులు, పునరావాస కేంద్రాలు, ఫిజియోథెరపీ క్లినిక్‌లు, స్పోర్ట్స్ అకాడమీలు, ఆర్థోపెడిక్/న్యూరో కేంద్రాలు, ఇంటి వద్ద ఆరోగ్య సేవలు, వెల్‌నెస్ సంస్థలు, ప్రత్యేక అవసరాల పాఠశాలలు, కమ్యూనిటీ కార్యక్రమాలు.</div></div>
+<div class="row"><div class="k">సొంత ప్రాక్టీస్</div><div class="v">అనుభవం, వృత్తి నిబంధనలు పాటించి సొంత క్లినిక్ లేదా ఇంటి వద్ద సేవలు ప్రారంభించవచ్చు. ఆదాయం రోగుల ఫలితాలు, పేరు, రిఫరల్స్, అద్దె, పరికరాలు, వ్యాపార నైపుణ్యాలపై ఆధారపడి ఉంటుంది.</div></div>
+<div class="row"><div class="k">మీ ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">BPT తర్వాత అనుబంధ ఉద్యోగాలు కూడా: Rehab Coordinator, Sports Rehabilitation, Ergonomics, Healthcare Sales, Clinical Research, ఉన్నత చదువుతో బోధన.<div class="chips"><span class="chip">Rehab Coordinator</span><span class="chip">Sports Rehab</span><span class="chip">Ergonomics</span><span class="chip">Healthcare Sales</span><span class="chip">Clinical Research</span><span class="chip">Teaching after higher study</span></div></div></div>
+<div class="flag"><span class="mark">వాస్తవ పరిస్థితి</span><span>ఫిజియోథెరపీ శారీరకంగా, భావోద్వేగపరంగా కష్టమైన పని. గంటల తరబడి నిలబడి రోగులను కదిలించి ప్రోత్సహించాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత ఆదాయం ఉండవచ్చు?</h3><p class="lede">మొదటి జీతం సాధారణంగా తక్కువగా ఉండవచ్చు. అనుభవం, ప్రత్యేకతతో మెరుగుపడవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్‌షిప్</div><div class="v"><span class="money">Often low / institute-dependent</span><br/>ఇంటర్న్‌షిప్ సమయంలో స్టైపెండ్ తక్కువగా ఉండవచ్చు లేదా కళాశాలపై ఆధారపడి ఉంటుంది. BPTలో తప్పనిసరి క్లినికల్ ఇంటర్న్‌షిప్ ఉంది; అది బాగా చెల్లింపు ఉంటుందని ముందే అనుకోకండి.</div></div>
+<div class="row"><div class="k">ప్రారంభ ఫిజియోథెరపిస్ట్</div><div class="v"><span class="money">₹15,000 – ₹25,000/month</span><br/>/నెల: ప్రారంభ క్లినిక్/ఆసుపత్రి ఉద్యోగాల అంచనా. మూల నివేదికలో Indeed 2026 భారత సగటు సుమారు ₹19,547/నెల.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్ జీతాల అంచనా</div><div class="v"><span class="money">≈ ₹16,800/month reported average</span><br/>ఆంధ్రప్రదేశ్‌లో సుమారు ₹16,800/నెల అని నివేదికలో అంచనా ఉంది. Indeed జనవరి 2026లో ₹16,817/నెల తెలిపినా అది కేవలం ఇద్దరి జీతాల ఆధారంగా కావడంతో జాగ్రత్తగా చూడాలి.</div></div>
+<div class="row"><div class="k">అనుభవం / ప్రత్యేకత</div><div class="v"><span class="money">₹25,000 – ₹50,000+/month</span><br/>/నెల: ఆర్థో, న్యూరో, గుండె/ఊపిరితిత్తులు, స్పోర్ట్స్, ICU, హోమ్‌కేర్ వంటి అనుభవంతో సాధ్యమయ్యే ఆదాయం; నగరం, ఆసుపత్రిపై ఆధారపడి ఉంటుంది.</div></div>
+<div class="row"><div class="k">Private practice / sports</div><div class="v"><span class="money">Highly variable</span><br/>సొంత క్లినిక్ లేదా క్రీడా సేవల ఆదాయం చాలా మారుతుంది. ఇంటి సందర్శనలు, పునరావాస ప్యాకేజీలు ద్వారా సంపాదించవచ్చు. రోగుల సంఖ్య, పేరు, ఖర్చులు తీసేసిన తర్వాత మిగిలే లాభమే ముఖ్యం.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">BPT ఫీజు కళాశాల, కోటాపై ఆధారపడి ఉంటుంది. మూల నివేదికలో Dr. NTR UHS 2025–26 ప్రాస్పెక్టస్ ప్రకారం ప్రైవేటు కళాశాల ట్యూషన్ ఫీజు AP ప్రభుత్వం నిర్ణయించిన రేటు; ప్రత్యేక ఫీజులు మొదటి ఏడాది ₹13,500, 2–4 ఏళ్లలో ఏడాదికి ₹8,500, సీటు కేటాయింపులో యూనివర్సిటీ ఫీజు ₹5,600. తాజా ఫీజు ఉత్తర్వు చూడండి.</div></div>
+<div class="flag red"><span class="mark">ఇంట్లో చర్చించండి</span><span>BPT కోసం లక్షలు ఖర్చు పెట్టేముందు ఆసుపత్రి అనుబంధం, రోగుల అనుభవం, అధ్యాపకులు, ఇంటర్న్‌షిప్, మొత్తం ఫీజు, ఉద్యోగ ఫలితాలు పోల్చండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు సర్కిళ్ల ఫలితం ఎలా చదవాలి?</h4>
+<p>జీవశాస్త్రం + ప్రజలతో పని + పునరావాసం ఇష్టమైతే ఫిజియోథెరపీ అనుకూలంగా ఉండవచ్చు.</p>
+<p>క్రీడలు ఇష్టమే కానీ రోగుల సంరక్షణ ఇష్టం లేకపోతే Sports Science లేదా ఫిట్‌నెస్ కోచింగ్ చూడండి.</p>
+<p>మందులు ఇవ్వడం, వైద్య నిపుణుడు కావడం లక్ష్యమైతే MBBS మార్గాన్ని పోల్చండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">మంచి ఫిజియోథెరపిస్ట్ నొప్పిని తగ్గించడమే కాదు; రోగి మళ్లీ స్వతంత్రంగా పనులు చేసుకునేలా సహాయం చేస్తారు.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">ఇప్పటి నుంచే చిన్నచిన్న పనులు చేసి ఈ కెరీర్ మీకు సరిపోతుందో తెలుసుకోండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, పాఠశాలలో</div><ul>
+<li>జీవశాస్త్రం బాగా చదివి ఎముకలు, కండరాలు, కీళ్లు, గుండె, ఊపిరితిత్తులు, నాడీ వ్యవస్థ గురించి తెలుసుకోండి.</li>
+<li>క్రమంగా ఆటలు, వ్యాయామం చేసి కదలిక, సమతుల్యత, బలం ఎలా మారుతాయో గమనించండి.</li>
+<li>ఒక సాధారణ వ్యాయామాన్ని మరొకరికి సురక్షితంగా, స్పష్టంగా వివరించడం సాధన చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>BPT మీ ఎంపికల్లో ఉంటే ఇంగ్లీష్‌తో పాటు BiPC తీసుకోండి.</li>
+<li>AP తాజా BPT మెరిట్ విధానం సైన్స్ మార్కులపై ఆధారపడినందున వాటిపై శ్రద్ధ పెట్టండి.</li>
+<li>వీలైతే ఫిజియోథెరపీ క్లినిక్ సందర్శించి ఆర్థోపెడిక్, న్యూరో, శస్త్రచికిత్స అనంతర చికిత్స తేడాలు చూడండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> BPT కాలేజీ ఎంచుకునే ముందు</div><ul>
+<li>మీ కళాశాలలో CUET-UG, NEET-UG, రాష్ట్ర మెరిట్ లేదా ఇతర ప్రవేశ పద్ధతి ఏదో తెలుసుకోండి; AP కోసం Dr. NTR UHS తాజా ప్రాస్పెక్టస్ చూడండి.</li>
+<li>ఆసుపత్రి అనుబంధం, రోగుల సంఖ్య, ఇంటర్న్‌షిప్, ల్యాబ్‌లు, అధ్యాపకులు, మొత్తం 4½ సంవత్సరాల ఖర్చు పోల్చండి.</li>
+<li>కోర్సు గుర్తింపు, వృత్తి నమోదు నిబంధనలు ప్రవేశానికి ముందూ, పూర్తి చేసినప్పుడూ పరిశీలించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదట చేసి చూడండి</span><span>మెట్లు ఎక్కడం లేదా కూర్చుని లేవడం వంటి కదలికలో ఏ కీళ్లు, కండరాలు పనిచేస్తాయో నేర్చుకోండి. బలహీనత/నొప్పి ఉంటే ఎందుకు కష్టమవుతుందో వివరించండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; వైద్య, ప్రవేశ, వృత్తి నమోదు ప్రకటన కాదు. BPT అర్హతలు, పరీక్షలు, ఫీజులు, నమోదు నిబంధనలు మారవచ్చు. AP విషయంలో Dr. NTR UHS తాజా ప్రాస్పెక్టస్, 2021 NCAHP చట్టం, సంబంధిత సంస్థ అధికారిక సమాచారం తప్పక పరిశీలించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>ఆరు ప్రశ్నలకు సమాధానమివ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>ఫిజియోథెరపీ మీకు సరిపోవచ్చు</strong>జీవశాస్త్రం, రోగుల సంరక్షణ, పునరావాసంపై మీకు ఆసక్తి ఉన్నట్లు కనిపిస్తోంది. కళాశాల ఎంచుకునే ముందు నిజమైన పని చూడండి.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>నిర్ణయానికి ముందు తెలుసుకోండి</strong>కొన్ని అంశాలు సరిపోతున్నాయి. కేవలం స్పోర్ట్స్ వీడియోలు కాదు, రోగుల పునరావాస పనిని కూడా చూడండి.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>మరోసారి ఆలోచించండి</strong>రోగులతో కలిసి చేసే పునరావాస పని మీకు సరిపోకపోవచ్చు. వైద్యం, నర్సింగ్, ఫార్మసీ, స్పోర్ట్స్ సైన్స్, సైకాలజీతో పోల్చండి.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div></body></html>

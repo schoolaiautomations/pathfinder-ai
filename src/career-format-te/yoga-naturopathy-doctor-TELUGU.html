@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ మార్గదర్శకం — యోగా, ప్రకృతి వైద్య నిపుణుడు (BNYS)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>యోగా, ప్రకృతి వైద్య నిపుణుడు (BNYS)</h2><p class="standfirst">BNYS (Bachelor of Naturopathy and Yogic Sciences) చదివిన నిపుణులు యోగా చికిత్స, జీవనశైలి మార్పులు, ఆహార మార్గదర్శనం, ప్రకృతి వైద్య పద్ధతుల్లో తగిన వృత్తి పరిధిలో పనిచేస్తారు. ఇది MBBSతో సమానమైన కోర్సు కాదు; ప్రత్యేకమైన వృత్తి మార్గం.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · యోగా, ప్రకృతి వైద్య నిపుణుడు (BNYS) · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>నిజంగా ఇష్టమా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు ఏమిటి?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>ఖర్చు, జీతం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఈ పని నిజంగా మీకు ఇష్టమా?</h3><p class="lede">ఆరు ప్రశ్నలకు నిజాయితీగా సమాధానం ఇవ్వండి. ఉద్యోగం పేరు మాత్రమే కాదు, రోజువారీ పని కూడా మీకు నచ్చాలి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>జీవశాస్త్రం, మానవ ఆరోగ్యం, మన శరీరం ఎలా పనిచేస్తుందో తెలుసుకోవడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వివిధ వ్యక్తులకు యోగా, జీవనశైలి మార్పులు నేర్పించి పర్యవేక్షించడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వ్యక్తి ఆరోగ్య చరిత్రను ఓపికగా విని, సూచనలు స్పష్టంగా వివరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఆసుపత్రి, వెల్‌నెస్ సెంటర్, నివాస ప్రకృతి వైద్య కేంద్రాల్లో పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఒక్క చికిత్స అన్నింటినీ నయం చేస్తుందని చెప్పకుండా ఆధారాలు, భద్రత, రిఫరల్ నిబంధనలు పాటిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఇంటర్న్‌షిప్‌తో కలిపి 5½ ఏళ్ల BNYS కోర్సు పూర్తి చేయడానికి సిద్ధంగా ఉన్నారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఎలా చేరాలి?</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అవసరమైన ప్రవేశ పరీక్షలు, అర్హతలు, శిక్షణ మార్గాలను తెలుసుకోండి.</p>
+<div class="flag green"><span class="mark">గమనించండి</span><span>BNYS అంటే Bachelor of Naturopathy and Yogic Sciences; ఇది ప్రకృతి వైద్యం, యోగాలో వృత్తిపరమైన డిగ్రీ. Dr. NTRUHS అంటే Dr. N.T.R. University of Health Sciences; APలో BNYS ప్రవేశ ప్రక్రియ నిర్వహిస్తుంది.</span></div>
+<div class="card">
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">10వ తరగతి తర్వాత ఇంటర్ BiPC (Biology, Physics, Chemistry) ఎంచుకోండి. ఆంధ్రప్రదేశ్ 2025–26 BNYS ప్రవేశ ప్రక్రియలో ఇంటర్‌కు Physics, Chemistry, Biology, English అవసరమని పేర్కొన్నారు.</div></div>
+<div class="row"><div class="k">Minimum marks — AP example</div><div class="v">Dr. NTRUHS 2025–26 ప్రాస్పెక్టస్ ప్రకారం సైన్స్ సబ్జెక్టుల కనీస మొత్తం మార్కులు OCకి 50%, SC/ST/BC/PwDకి 40%, OC-PwDకి 45%; ఇంగ్లీష్ తప్పనిసరి. మీరు చేరే సంవత్సరపు తాజా నిబంధనలు చూడాలి.</div></div>
+<div class="row"><div class="k">Entrance exam in Andhra Pradesh?</div><div class="v">AP 2025–26 Competent Authority BNYS సీట్ల మెరిట్ ఇంటర్ Biology, Physics, Chemistry మార్కుల ఆధారంగా నిర్ణయించారు. ఆ ఏడాది Dr. NTRUHS కౌన్సెలింగ్‌కు NEET ఉపయోగించలేదు. భవిష్యత్తులో విధానం మారవచ్చు; తాజా ప్రాస్పెక్టస్ తప్పనిసరిగా పరిశీలించండి.</div></div>
+<div class="row"><div class="k">కోర్సు వ్యవధి</div><div class="v">BNYS ఐదున్నర సంవత్సరాల వృత్తిపరమైన కోర్సు; ఒక సంవత్సరం తప్పనిసరి Rotatory Internship కలిపి. ఇది చిన్న Yoga Certificate కోర్సు కాదు.</div></div>
+<div class="row"><div class="k">చదివే విషయాలు</div><div class="v">Anatomy, Physiology, Pathology, Yoga, Nutrition/Dietetics, Naturopathy Principles, Clinical/Practical Training వంటి ఆరోగ్యశాస్త్ర, వృత్తి సబ్జెక్టులు చదువుతారు. ఖచ్చితమైన సిలబస్ విశ్వవిద్యాలయం నిర్ణయిస్తుంది.</div></div>
+<div class="row"><div class="k">AP colleges — latest completed cycle</div><div class="v">2025–26 Dr. NTRUHS AP జాబితాలో CARE Yoga Naturopathy Medical College &amp; Hospital, Bapatla; Sri Pathanjali Maharshi Naturopathy &amp; Yoga Medical College, Guntakal ఉన్నాయి. AYUSH జాతీయ సంస్థల జాబితాలోనూ AP కళాశాలలను చూడవచ్చు. తాజా గుర్తింపు/ప్రవేశ పరిస్థితి తనిఖీ చేయండి.</div></div>
+<div class="row"><div class="k">వృత్తి నమోదు after BNYS</div><div class="v">Yoga &amp; Naturopathyలో నమోదు చారిత్రాత్మకంగా రాష్ట్రస్థాయి ఏర్పాట్ల ద్వారా జరిగింది; కేంద్రస్థాయి నమోదు కార్యక్రమాలూ ఉన్నాయి. పట్టా తర్వాత ఏ రిజిస్ట్రేషన్, స్థానిక నియమాలు వర్తిస్తాయో అధికారికంగా తెలుసుకోవాలి.</div></div>
+<div class="row"><div class="k">ఉన్నత చదువులు</div><div class="v">సంస్థ, రాష్ట్రంలో అందుబాటును బట్టి Naturopathy, Yoga, Public Health, Hospital Management, Research వంటి రంగాల్లో పోస్ట్‌గ్రాడ్యుయేట్ చదువు సాధ్యమవుతుంది. గుర్తింపు, ప్రవేశ అర్హత తనిఖీ చేయాలి.</div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన దశలు</div><div class="v">10వ తరగతి → BiPC → Physics, Chemistry, Biology, Englishతో ఇంటర్ → వర్తించే BNYS ప్రవేశ ప్రక్రియ → ఇంటర్న్‌షిప్‌తో 5½ ఏళ్ల BNYS → అవసరమైన నమోదు → Naturopathy/Yoga వృత్తి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>BNYS అనేది MBBS కాదు. BNYS పట్టభద్రులు రాష్ట్ర, సంస్థ నియమాల ప్రకారం చట్టబద్ధంగా అనుమతించిన Naturopathy/Yoga పరిధిలోనే పనిచేయాలి. MBBS వైద్యుడి అధికారాలు అన్నీ ఆటోమేటిక్‌గా రావు.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఉద్యోగాలు, ప్రత్యేక అవకాశాలు ఏమిటి?</h3><p class="lede">వేర్వేరు ప్రత్యేక రంగాలు, వాస్తవ ఉద్యోగ అవకాశాలు, ప్రత్యామ్నాయ మార్గాలను పరిశీలించండి.</p>
+<div class="card">
+<div class="row"><div class="k">Naturopathy Consultant</div><div class="v">వ్యక్తి జీవనశైలి, ఆరోగ్య చరిత్ర, ఆరోగ్య లక్ష్యాలు అర్థం చేసుకుని అనుమతించిన పరిధిలో Naturopathy, Lifestyle ఆధారిత సంరక్షణ, సలహాలు ఇవ్వడం.<div class="chips"><span class="chip">Consultation</span><span class="chip">Lifestyle</span><span class="chip">Wellness</span></div></div></div>
+<div class="row"><div class="k">Yoga Therapy Practitioner</div><div class="v">వ్యక్తి ఆరోగ్యం, సామర్థ్యానికి తగ్గట్టుగా యోగా కదలికలు, శ్వాస సాధన, విశ్రాంతి పద్ధతులను భద్రంగా బోధించడం, పర్యవేక్షించడం. అందరికీ ఒకే విధానం కాదు.</div></div>
+<div class="row"><div class="k">Lifestyle &amp; Diet Counselling</div><div class="v">రోజువారీ జీవనశైలి, నిద్ర, శారీరక చలనం, ఆహార ప్రణాళికలపై విద్య, సూచనలు. BNYS శిక్షణ, వృత్తి పరిమితుల్లోనే పని చేయాలి.</div></div>
+<div class="row"><div class="k">Hospital / Wellness Centre BNYS Doctor</div><div class="v">Naturopathy ఆసుపత్రులు, AYUSH/Integrative ఆసుపత్రులు, Wellness Centres, Residential Health Programsలో OP/IP రోగులు, క్లయింట్లకు సేవలందించవచ్చు.</div></div>
+<div class="row"><div class="k">Naturopathy Therapy Supervision</div><div class="v">సంస్థ ఆమోదించిన Hydrotherapy, Mud Applications, Massage మరియు ఇతర మందులు లేకుండా చేసే ప్రకృతి వైద్య విధానాలను అనుమతించిన పరిధిలో పర్యవేక్షించడం, భద్రత పాటించడం.</div></div>
+<div class="row"><div class="k">Preventive / Lifestyle Programmes</div><div class="v">ఆరోగ్య అలవాట్లు, ఒత్తిడి నిర్వహణ, జీవనశైలి మెరుగుదల, వ్యాధి ప్రమాదాలు తగ్గించే కార్యక్రమాల్లో పని. అవసరమైనపుడు వైద్యులకు రిఫర్ చేయాలి.</div></div>
+<div class="row"><div class="k">పరిశోధన</div><div class="v">CCRYN (Central Council for Research in Yoga &amp; Naturopathy), విశ్వవిద్యాలయాలు, పరిశోధన సంస్థలలో యోగా, ప్రకృతి వైద్య పద్ధతులపై శాస్త్రీయ పరిశోధనలో పని.</div></div>
+<div class="row"><div class="k">Teaching</div><div class="v">అవసరమైన అనుభవం, ఉన్నత అర్హతలతో Yoga &amp; Naturopathy కళాశాలల్లో బోధనలోకి వెళ్లవచ్చు. ప్రభుత్వ/సంస్థ నియామక నిబంధనలు వేరు.</div></div>
+<div class="row"><div class="k">Wellness / Retreat Industry</div><div class="v">Health Resorts, Yoga Retreats, Corporate Wellness, Integrative Wellness Centresలో ఉద్యోగాలు. మంచి సంభాషణ, కస్టమర్ సేవ, ప్రోగ్రాం నిర్వహణ నైపుణ్యాలు ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k">Own Clinic / Wellness Centre</div><div class="v">వర్తించే నమోదు, స్థానిక లైసెన్సు, వృత్తి నిబంధనలను పూర్తిచేసి కొందరు సొంత Naturopathy/Yoga Clinic లేదా Wellness Centre ప్రారంభిస్తారు. ఖర్చులు, వ్యాపార నైపుణ్యం అవసరం.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">BNYS vs MBBS</div><div class="v">BNYS ప్రకృతి వైద్యం, యోగా, జీవనశైలి ఆధారిత ప్రత్యేక వృత్తి చదువు. MBBS ఆధునిక వైద్య విద్య; వ్యాధి నిర్ధారణ, మందులు, శస్త్రచికిత్స వంటి వేరే వృత్తి పరిధి. BNYS అంటే MBBS కాదు.</div></div>
+<div class="row"><div class="k">BNYS vs Yoga Instructor</div><div class="v">BNYS నిపుణుడు క్లినికల్ శిక్షణ, ఇంటర్న్‌షిప్‌తో 5½ ఏళ్ల ఆరోగ్య కోర్సు చదువుతారు. Yoga Instructor చిన్న/ఇతర బోధన సర్టిఫికెట్‌తో యోగా నేర్పవచ్చు. రెండింటి అర్హతలు, పని పరిధి వేరు.</div></div>
+<div class="row"><div class="k">BNYS vs Physiotherapist</div><div class="v">BNYS ప్రకృతి వైద్యం, యోగా, జీవనశైలి ఆరోగ్య మార్గం. Physiotherapist ప్రత్యేకంగా కదలిక సమస్యలు, శారీరక పునరావాసం, గాయం/వ్యాధి తర్వాత Function మెరుగుపరచడానికి శిక్షణ పొందుతారు.</div></div>
+<div class="row"><div class="k">When referral matters</div><div class="v">ఒక వ్యక్తికి అత్యవసర చికిత్స, శస్త్రచికిత్స, మందులు, ప్రత్యేక రోగనిర్ధారణ లేదా ఆధునిక వైద్య సహాయం అవసరమైతే గుర్తించి వెంటనే సంబంధిత వైద్యునికి రిఫర్ చేయడం బాధ్యతాయుతమైన పని.</div></div>
+<div class="row"><div class="k">ఎక్కడ పనిచేయవచ్చు?</div><div class="v">Naturopathy ఆసుపత్రులు, Yoga &amp; Naturopathy Medical Colleges, Integrative Hospitals, Wellness Centres, Resorts, Rehabilitation/Wellness Programs, Research, Teaching వంటి ప్రదేశాలు.</div></div>
+<div class="row"><div class="k">మీ ప్రత్యామ్నాయ మార్గం</div><div class="v">BNYSతో పాటు Yoga Therapy, Wellness Management, Public Health, Hospital Administration, Research, Teaching వంటి ప్రత్యామ్నాయ కెరీర్‌లు.<div class="chips"><span class="chip">Yoga Therapy</span><span class="chip">Wellness Management</span><span class="chip">Public Health</span><span class="chip">Hospital Administration</span><span class="chip">Research</span><span class="chip">Teaching</span></div></div></div>
+<div class="flag"><span class="mark">గమనించండి</span><span>ప్రకృతి వైద్యం భద్రంగా, నైతికంగా, ఆధారాలను గౌరవిస్తూ చేయాలి. తీవ్రమైన వ్యాధులన్నీ నయం చేస్తామని హామీ ఇవ్వవద్దు. పరిమితులు పాటించి అవసరమైతే వైద్యునికి రిఫర్ చేయాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఖర్చు ఎంత?</h3><p class="lede">మొదటి జీతం వచ్చే వరకు చదువు ఖర్చులు, తర్వాత సాధ్యమయ్యే ఆదాయం గురించి ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / శిక్షణ ఉద్యోగి</div><div class="v"><span class="money">Stipend varies by institution</span><br/>BNYSలో తప్పనిసరి Internship ఉంటుంది. స్టైపెండ్ కళాశాల, రాష్ట్రం, సంస్థను బట్టి మారుతుంది. చేరే ముందు ఆర్థిక ఏర్పాట్లు తెలుసుకోండి.</div></div>
+<div class="row"><div class="k">ప్రారంభ private BNYS role</div><div class="v"><span class="money">₹18,000 – ₹30,000/month</span><br/>ప్రైవేటు ప్రారంభ BNYS/Naturopathy ఉద్యోగాల్లో మూల నివేదిక 2026 ప్రకటనల ఆధారంగా నెలకు ₹18,000–₹30,000 అంచనా తెలిపింది. నగరం, సంస్థ, పని అనుభవం ఆధారంగా మారుతుంది.</div></div>
+<div class="row"><div class="k">India benchmark</div><div class="v"><span class="money">≈ ₹28,969/month</span><br/>Indeed 2026 జనవరి భారతదేశం Naturopath సగటు నెలకు సుమారు ₹28,969 అని మూల నివేదిక తెలిపింది; ఇది కేవలం 7 మంది నివేదించిన జీతాల ఆధారంగా కాబట్టి జాగ్రత్తగా అర్థం చేసుకోవాలి.</div></div>
+<div class="row"><div class="k">అనుభవం గల wellness / consultant role</div><div class="v"><span class="money">₹28,000 – ₹45,000+/month</span><br/>అనుభవం ఉన్న Wellness/Consultant ఉద్యోగాలకు 2026 ప్రకటనల ఆధారంగా నెలకు ₹28,000–₹45,000 లేదా ఎక్కువ రావచ్చు. మంచి సంస్థలు వేరే జీతం ఇవ్వవచ్చు; హామీ లేదు.</div></div>
+<div class="row"><div class="k">ప్రభుత్వ / research institute example</div><div class="v"><span class="money">Can be much higher with experience</span><br/>ప్రభుత్వ/పరిశోధనా సంస్థ ఉద్యోగాల్లో అనుభవం, పోస్టును బట్టి ఎక్కువ జీతం ఉండవచ్చు. National Institute of Naturopathy పాత నియామకంలో Resident Medical Officerకు పేర్కొన్న Pay Level ఒక ఉదాహరణ మాత్రమే; తాజా ప్రకటన చూడాలి.</div></div>
+<div class="row"><div class="k">Own practice</div><div class="v"><span class="money">Highly variable</span><br/>సొంత ప్రాక్టీస్ ఆదాయం చాలా మారుతుంది. క్లయింట్ల సంఖ్య, ప్రదేశం, పేరు, నమోదు నిబంధనలు, అద్దె, సిబ్బంది, పరికరాల ఖర్చుపై లాభం ఆధారపడుతుంది. మొత్తం కలెక్షన్ లాభం కాదు.</div></div>
+<div class="row"><div class="k">AP course-cost example</div><div class="v">2025–26 Dr. NTRUHS Competent Authority ప్రాస్పెక్టస్‌లో APలోని రెండు ప్రైవేటు BNYS కళాశాలలకు ప్రభుత్వం నిర్ణయించిన ఫీజులు పేర్కొన్నారు. కాలేజీ, కోటా, ఇతర ఖర్చులు మారవచ్చు; చేరే సంవత్సరపు తాజా ఫీజు ఉత్తర్వును చూసి మొత్తం 5½ ఏళ్ల ఖర్చు లెక్కించండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>“Doctor” అనే పదం కోసమే BNYS ఎంచుకోవద్దు. 5½ ఏళ్లు కేటాయించే ముందు పని మార్కెట్, వృత్తి పరిధి, నమోదు నిబంధనలు, కోర్సు ఖర్చు, ప్రారంభ ఆదాయం పోల్చండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><strong>నాలుగు అంశాలూ సరిపోతే</strong> — ఈ వృత్తికి అవసరమైన శిక్షణ ఇప్పటి నుంచే మొదలుపెట్టండి.</p>
+<p><strong>ఒక అంశం సరిపోకపోతే</strong> — నిర్ణయం ముందు మళ్లీ ఆలోచించండి.</p>
+<p><strong>రెండు లేదా ఎక్కువ అంశాలు సరిపోకపోతే</strong> — కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ఇతర వృత్తులనూ చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఈ ఉద్యోగం కోసం ఎంతకాలం ప్రయత్నించాలో, ఎప్పుడు ప్రత్యామ్నాయ ప్రణాళికకు వెళ్లాలో ముందే నిర్ణయించుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచి ఏం చేయాలి?</h3><p class="lede">ఇప్పటి నుంచే చిన్న సాధనతో ఈ కెరీర్ మీకు నచ్చుతుందో పరీక్షించండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, పాఠశాలలో</div><ul>
+<li>జీవశాస్త్రం, ఆరోగ్యం, శరీర కదలికల గురించి అధ్యయనం చేయండి.</li>
+<li>సురక్షితంగా యోగా అభ్యసించి ఆరోగ్యానికి సంబంధించిన వాదనలకు ఆధారాలు చూడండి.</li>
+<li>జీవనశైలి, ఆహారం, నిద్రపై నమ్మదగిన ఆరోగ్య సమాచారం చదవండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>ఇంటర్‌లో Biology, Physics, Chemistry, Englishతో BiPC ఎంచుకోండి.</li>
+<li>Dr. NTRUHS తాజా BNYS ప్రవేశ ప్రక్రియ, కనీస మార్కులు తెలుసుకోండి.</li>
+<li>కళాశాల గుర్తింపు, క్లినికల్ శిక్షణ, మొత్తం ఫీజులు పరిశీలించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>కాలేజీ, శిక్షణ సమయంలో</div><ul>
+<li>ఇంటర్న్‌షిప్‌తో 5½ ఏళ్ల BNYS కోర్సు పూర్తి చేయండి.</li>
+<li>వర్తించే నమోదు, వృత్తి పరిధి, రిఫరల్ నియమాలను పాటించండి.</li>
+<li>ఆసుపత్రి, Wellness Centre, Research, Teaching లేదా స్వంత క్లినిక్ అవకాశాలను పరిశీలించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">గమనించండి</span><span>అనుమతి ఉంటే గుర్తింపు ఉన్న BNYS ఆసుపత్రి లేదా కళాశాలను సందర్శించండి. OP, IP సంరక్షణ, ఇంటర్న్‌షిప్‌లో నిజంగా ఏం చేస్తారో అడగండి. ఆరోగ్యశాస్త్రం, రోగి సేవ, జీవనశైలి పని మీకు సరిపోతాయో పరీక్షించండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శక సమాచారం మాత్రమే; అధికారిక ప్రవేశం, నియామకం, లైసెన్సు లేదా జీతాల ప్రకటన కాదు. అర్హతలు, పరీక్షలు, గుర్తింపు, ఫీజులు, వయస్సు, జీతాలు మారవచ్చు. దరఖాస్తుకు ముందు సంబంధిత అధికారిక ప్రకటనలు తనిఖీ చేయండి. ఈ నివేదికలోని ఆదాయాలు మూల ఫైలులో ఉన్న అంచనాలే.</p>
+
+</div><script>document.addEventListener('DOMContentLoaded',function(){const quiz=document.getElementById('quiz'),verdict=document.getElementById('verdict'),pip=document.getElementById('pip1');if(!quiz||!verdict)return;const qs=[...quiz.querySelectorAll('.q')];function update(){const selected=qs.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);if(selected.length<qs.length){verdict.className='verdict';verdict.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(pip)pip.className='pip';return;}const yes=selected.filter(b=>b.dataset.v==='y').length;if(yes>=5){verdict.className='verdict good';verdict.innerHTML='<strong>ఈ రంగం మీకు సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఈ వృత్తికి అవసరమైన ఆసక్తి, ఓపిక కనిపిస్తున్నాయి. నిజమైన పనిని దగ్గరగా చూసి, చదువు మార్గం తెలుసుకోండి.';if(pip)pip.className='pip done';}else if(yes>=3){verdict.className='verdict mixed';verdict.innerHTML='<strong>నిర్ణయం ముందు ప్రయత్నించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. రోజువారీ పనిని తెలుసుకొని, చిన్న సాధన చేసి తర్వాత నిర్ణయించండి.';if(pip)pip.className='pip warn';}else{verdict.className='verdict bad';verdict.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ వృత్తి రోజువారీ పని మీకు సరిపోకపోవచ్చు. ఇతర కెరీర్‌లను కూడా పోల్చి కౌన్సెలర్‌తో మాట్లాడండి.';if(pip)pip.className='pip stop';}}quiz.addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;b.closest('.toggle').querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked');});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');update();});});</script></body></html>

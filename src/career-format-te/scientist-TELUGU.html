@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ మార్గదర్శకం — శాస్త్రవేత్త / పరిశోధకుడు</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>శాస్త్రవేత్త / పరిశోధకుడు</h2><p class="standfirst">ఇప్పటివరకు పూర్తి సమాధానం దొరకని ప్రశ్నలకు శాస్త్రవేత్తలు సమాధానాలు వెతుకుతారు. ప్రయోగాలు రూపొందించడం, ఆధారాలు సేకరించడం, డేటా విశ్లేషించడం, కొత్త జ్ఞానం సృష్టించడం వారి పని. భౌతికశాస్త్రం, జీవశాస్త్రం, అంతరిక్షం, వ్యవసాయం, వైద్యం, కృత్రిమ మేధ వంటి ఎన్నో రంగాలు ఉన్నాయి. విఫలమైన ప్రయోగాలు, సుదీర్ఘ చదువు, ఓపిక కూడా ఈ వృత్తిలో భాగమే.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · శాస్త్రవేత్త / పరిశోధకుడు · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>నిజంగా ఇష్టమా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు ఏమిటి?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>ఖర్చు, జీతం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఈ పని నిజంగా మీకు ఇష్టమా?</h3><p class="lede">ఆరు ప్రశ్నలకు నిజాయితీగా సమాధానం ఇవ్వండి. ఉద్యోగం పేరు మాత్రమే కాదు, రోజువారీ పని కూడా మీకు నచ్చాలి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>సైన్స్‌లో ఒక విషయం తెలుసుకున్నప్పుడు “ఇది ఎందుకు జరుగుతుంది?”, “ఇది నిజమని ఎలా తెలుసుకున్నాం?” అని అడుగుతారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>మొదటి ప్రయోగం లేదా విశ్లేషణ తప్పైతే దాన్ని చాలాసార్లు మళ్లీ చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>పరీక్షలో మార్కుల కోసం మాత్రమే కాక ఒక విషయాన్ని లోతుగా చదవడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>మంచి పరిశోధన ఫలితం “మా అంచనా తప్పు” అని వచ్చినా అంగీకరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>మీ రంగాన్ని బట్టి గణితం, డేటా, గ్రాఫ్‌లు, ల్యాబ్ పని లేదా కోడింగ్ చేయడానికి సిద్ధంగా ఉన్నారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>స్వతంత్ర పరిశోధకుడయ్యేందుకు ఇంటర్ తర్వాత మరో 5–10 సంవత్సరాల ఉన్నత చదువు అవసరమైనా ఆసక్తి కొనసాగుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఎలా చేరాలి?</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అవసరమైన ప్రవేశ పరీక్షలు, అర్హతలు, శిక్షణ మార్గాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> సైన్స్ పునాదులు</div><div class="v">భౌతికశాస్త్రం, రసాయనశాస్త్రం, జీవశాస్త్రం, గణితం పరిశోధనలకు పునాది. నాలుగూ సమానంగా ఇష్టపడాల్సిన పని లేదు; కానీ మీ ప్రత్యేక రంగానికి సంబంధించిన ఇతర శాస్త్రాల మూలాలను అర్థం చేసుకోవాలి.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> Maths &amp; Statistics</div><div class="v">ఆధునిక పరిశోధనలో డేటా, సంభావ్యత, గ్రాఫ్‌లు, నమూనాలు, కొలతలు ముఖ్యం. జీవశాస్త్రం, వైద్య పరిశోధకులు కూడా గణాంకాలు, కోడింగ్ వాడుతారు.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> ఇంగ్లీష్ &amp; Writing</div><div class="v">పరిశోధనా పత్రాలు చదవడం, నివేదికలు రాయడం, ఫలితాలు ప్రచురించడం, సమావేశాల్లో వివరించడం శాస్త్రవేత్త పనిలో భాగం. స్పష్టంగా రాయడం కూడా శాస్త్రీయ నైపుణ్యమే.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">భౌతికశాస్త్రం, గణితం, ఖగోళం, కంప్యూటర్/AI, అంతరిక్షం, మెటీరియల్స్ కోసం MPC బలమైన మార్గం. జీవశాస్త్రం, బయోటెక్నాలజీ, వైద్య, వ్యవసాయ పరిశోధనలకు BiPC ఉపయోగకరం. అందుబాటులో, నిర్వహించగలిగితే PCMB ద్వారా మరిన్ని దారులు తెరిచి ఉంచవచ్చు.</div></div>
+<div class="row"><div class="k">పరిశోధనకు నేరుగా చదువు మార్గాలు</div><div class="v">IISER Aptitude Test (IAT) ద్వారా IISERలలో ఐదేళ్ల BS-MS డ్యూయల్ డిగ్రీకు ప్రవేశ మార్గం ఉంది; 2026 నిబంధనల ప్రకారం Biology, Chemistry, Mathematics, Physicsలలో కనీసం మూడు సబ్జెక్టులు అవసరం. NEST ద్వారా NISER Bhubaneswar, UM-DAE CEBS Mumbai ఐదేళ్ల Integrated MScకి ప్రవేశం. IISc BS Researchకు 2026లో JEE Advanced లేదా IAT ఆధారంగా ఎంపిక; 12వ తరగతిలో Physics, Chemistry, Mathematics అవసరం.</div></div>
+<div class="row"><div class="k">సాధారణ విశ్వవిద్యాలయ మార్గం</div><div class="v">ఇంటర్ సైన్స్ తర్వాత BSc/BS Physics, Chemistry, Mathematics, Biology, Biotechnology, Geology, Statistics వంటి శాస్త్రాల్లో డిగ్రీ → MSc/ప్రత్యేక మాస్టర్స్ → పరిశోధన/PhD. CUET-UG, రాష్ట్ర/విశ్వవిద్యాలయ పరీక్షలు, మార్కుల ఆధారంగా ప్రవేశం ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">After B.Sc. / BS</div><div class="v">BSc/BS తర్వాత IIT JAM ద్వారా IITలలో వివిధ పోస్ట్‌గ్రాడ్యుయేట్ కోర్సులకు అవకాశాలు ఉన్నాయి. JAM 2026లో Biotechnology, Chemistry, Geology, Mathematics, Mathematical Statistics, Physics పేపర్లు ఉన్నాయి. ఇతర సంస్థలు తమ ప్రవేశ పరీక్షలు కూడా నిర్వహించవచ్చు.</div></div>
+<div class="row"><div class="k">PhD / research stage</div><div class="v">స్వతంత్ర పరిశోధన, విశ్వవిద్యాలయ బోధన, ఉన్నత R&amp;D ఉద్యోగాలకు PhD తరచూ అవసరం లేదా ఎక్కువ ప్రాధాన్యం ఉంటుంది. CSIR-UGC NET/JRF, GATE, సంస్థ పరీక్షలు, ఇంటర్వ్యూలు, పరిశోధన అనుభవం రంగాన్ని బట్టి అవసరమవుతాయి.</div></div>
+<div class="row"><div class="k">Engineering route</div><div class="v">ఇంజినీరింగ్ నుంచీ శాస్త్రవేత్త కావచ్చు. ISRO, DRDO వంటి సంస్థల్లో Scientist/Engineer లేదా Scientist పోస్టులకు ఇంజినీరింగ్ శాఖల నుంచి నియామకం జరుగుతుంది. MPC → BTech → ప్రాజెక్టులు/అవసరమైన పరీక్షలు → పరిశోధన ఉద్యోగం అనే దారి ఉంటుంది.</div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన దశలు</div><div class="v">సైన్స్ మార్గం: ఇంటర్ సైన్స్ → IAT/NEST/విశ్వవిద్యాలయ ప్రవేశం → BS-MS/Integrated MSc లేదా BSc/BS → MSc/పరిశోధన శిక్షణ → అవసరమైన రంగాల్లో PhD → Scientist. ఇంజినీరింగ్ మార్గం: MPC → BTech → నైపుణ్యాలు/పరిశోధన → Scientist/Engineer ఉద్యోగం.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>B.Sc. పూర్తి చేస్తే ఆటోమేటిక్‌గా “Scientist” ఉద్యోగం రాదు. అదే సమయంలో Scientist అనే పేరు ఉన్న ప్రతి పోస్టుకు PhD తప్పనిసరి కాదు. సంస్థ, పోస్టును బట్టి అర్హత మారుతుంది; ఖచ్చితమైన ప్రకటన చదవండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఉద్యోగాలు, ప్రత్యేక అవకాశాలు ఏమిటి?</h3><p class="lede">వేర్వేరు ప్రత్యేక రంగాలు, వాస్తవ ఉద్యోగ అవకాశాలు, ప్రత్యామ్నాయ మార్గాలను పరిశీలించండి.</p>
+<div class="card">
+<div class="row"><div class="k">భౌతికశాస్త్రం</div><div class="v">పదార్థం, శక్తి, బలాలు, ప్రకృతి నియమాలు అధ్యయనం. క్వాంటమ్ శాస్త్రం, ఆప్టిక్స్, ఫోటానిక్స్, పార్టికల్/న్యూక్లియర్ ఫిజిక్స్, సాధనాల పరిశోధన. విశ్వవిద్యాలయాలు, IISc, IISER, NISER, జాతీయ ల్యాబ్‌లు, పరిశ్రమల్లో అవకాశాలు.<div class="chips"><span class="chip">Quantum</span><span class="chip">Optics</span><span class="chip">Nuclear</span></div></div></div>
+<div class="row"><div class="k">రసాయనశాస్త్రం</div><div class="v">అణువులు, రసాయనాలు, కొత్త పదార్థాలు తయారు చేసి అధ్యయనం. Organic, Inorganic, Physical, Analytical, Medicinal, Catalysis, Materials Chemistry వంటి శాఖలు. ఫార్మా, కెమికల్ కంపెనీలు, CSIR ల్యాబ్‌లు, బ్యాటరీ/మెటీరియల్స్ పరిశ్రమల్లో పనిచేయవచ్చు.<div class="chips"><span class="chip">Molecules</span><span class="chip">Drugs</span><span class="chip">Materials</span></div></div></div>
+<div class="row"><div class="k">జీవశాస్త్రం / Life Sciences</div><div class="v">జీవ వ్యవస్థలను అధ్యయనం చేయడం. Molecular Biology, Genetics, Microbiology, Cell Biology, Ecology, Neuroscience, Developmental Biology. పరిశోధనా సంస్థలు, బయోటెక్, ఫార్మా, విశ్వవిద్యాలయాలు, సంరక్షణ రంగాల్లో పని.<div class="chips"><span class="chip">Genes</span><span class="chip">Cells</span><span class="chip">Microbes</span></div></div></div>
+<div class="row"><div class="k">Biotechnology</div><div class="v">జీవశాస్త్రాన్ని ఉపయోగించి వ్యాక్సిన్లు, జీవ ఔషధాలు, ఫెర్మెంటేషన్, రోగనిర్ధారణ, జీనోమిక్స్, Synthetic Biology, Bioprocess వంటి ఉపయోగకర ఉత్పత్తులు, ప్రక్రియలు అభివృద్ధి చేయడం. బయోటెక్/ఫార్మా పరిశ్రమలు, పరిశోధనా కేంద్రాల్లో పని.</div></div>
+<div class="row"><div class="k">Space Science</div><div class="v">అంతరిక్షం లేదా అంతరిక్ష సాంకేతికత అధ్యయనం. గ్రహ శాస్త్రం, వాతావరణం, Remote Sensing, Astrophysics, Satellites, Propulsion, Spacecraft Systems. ISRO కేంద్రాలు, విశ్వవిద్యాలయాలు, అంతరిక్ష సంస్థలు అవకాశాలు.<div class="chips"><span class="chip">ISRO</span><span class="chip">Satellites</span><span class="chip">Planetary</span></div></div></div>
+<div class="row"><div class="k">Astronomy / Astrophysics</div><div class="v">నక్షత్రాలు, గెలాక్సీలు, బ్లాక్‌హోల్స్, విశ్వాన్ని Physics, Mathematics, టెలిస్కోపులు, Simulation, పెద్ద డేటాతో అధ్యయనం. సాధారణంగా Physics/Astronomy డిగ్రీ తర్వాత ఉన్నత పరిశోధన చదువు అవసరం.</div></div>
+<div class="row"><div class="k">Defence పరిశోధన</div><div class="v">దేశ రక్షణ కోసం మిసైళ్లు, రాడార్, ఎలక్ట్రానిక్స్, మెటీరియల్స్, AI, విమాన సాంకేతికత, సెన్సర్లు, జీవ శాస్త్ర సంబంధ పరిశోధన. DRDO ల్యాబ్‌లు, రక్షణ R&amp;D కేంద్రాలు ప్రధాన పని ప్రదేశాలు.</div></div>
+<div class="row"><div class="k">Materials Scientist</div><div class="v">బ్యాటరీలు, సెమీకండక్టర్లు, లోహాలు, పాలిమర్లు, సిరామిక్స్, కాంపోజిట్లు, నానోమెటీరియల్స్ వంటి మెరుగైన లక్షణాలున్న పదార్థాలు రూపొందించడం. EV, బ్యాటరీ, ఏరోస్పేస్, స్టీల్, పరిశోధనా పరిశ్రమల్లో ఉద్యోగాలు.</div></div>
+<div class="row"><div class="k">Medical / Biomedical పరిశోధన</div><div class="v">వ్యాధులు, రోగనిర్ధారణ పరీక్షలు, ఔషధాలు, ప్రజారోగ్యం, మానవ జీవశాస్త్రంపై పరిశోధన. Biology, Biotechnology, Pharmacy, Medicine, Biomedical Engineering నేపథ్యాల నుంచి రావచ్చు. ICMR సంస్థలు, ఆసుపత్రులు, పరిశ్రమల్లో పని.</div></div>
+<div class="row"><div class="k">Agricultural Scientist</div><div class="v">పంటలు, నేల, పశుసంపద, తెగుళ్లు, ఆహారం, వ్యవసాయ పద్ధతులను మెరుగుపరచే పరిశోధన. Plant Breeding, Genetics, Agronomy, Soil Science, Entomology, Horticulture, Agricultural Biotechnology. ICAR, వ్యవసాయ విశ్వవిద్యాలయాలు, అగ్రిటెక్ సంస్థలు.</div></div>
+<div class="row"><div class="k">Environmental / Climate</div><div class="v">వాతావరణ మార్పు, కాలుష్యం, జీవావరణం, నీరు, భూమి వ్యవస్థలను అధ్యయనం. Climate Modelling, Atmospheric Science, Oceanography, Ecology, Environmental Chemistry, Hydrology ప్రత్యేక రంగాలు.</div></div>
+<div class="row"><div class="k">Earth / Geological Science</div><div class="v">రాళ్లు, ఖనిజాలు, భూకంపాలు, భూగర్భజలం, పెట్రోలియం, ప్రకృతి విపత్తులు, భూమి చరిత్ర అధ్యయనం. విశ్వవిద్యాలయాలు, సర్వే సంస్థలు, మైనింగ్, ఇంధనం, పర్యావరణ పరిశోధనల్లో అవకాశాలు.</div></div>
+<div class="row"><div class="k">Computer / AI పరిశోధన</div><div class="v">కొత్త కంప్యూటింగ్ పద్ధతులు, అల్గారిథమ్‌లు అభివృద్ధి చేయడం. AI, Machine Learning, Robotics, Computer Vision, Language Models, Cybersecurity, Human-Computer Interaction. CSE, Maths, Statistics, Engineering నుంచి ఉన్నత పరిశోధనకు చేరవచ్చు.</div></div>
+<div class="row"><div class="k">Nuclear / Atomic Science</div><div class="v">Nuclear Physics, Reactors, Radiation Science, Materials, Atomic Energy అనువర్తనాలపై పని. DAE, BARC వంటి భారతీయ సంస్థల్లో పరిశోధన; ప్రవేశ మార్గం ఆయా శాస్త్ర, ఇంజినీరింగ్ ఉద్యోగాన్ని బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">Ocean Scientist</div><div class="v">సముద్రాలు, సముద్ర జీవవ్యవస్థలు, వాతావరణం, తీరప్రాంత ప్రక్రియలు, నీటి అడుగున వనరులపై Oceanography, Earth Science, Biology, Chemistry, Engineering ఉపయోగించి పరిశోధన.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Scientist vs Engineer</div><div class="v">Scientist ప్రధానంగా 'ఇది ఎందుకు జరుగుతుంది? నిజమేమిటి? కొత్త విషయం కనుగొనగలమా?' అని పరిశీలిస్తారు. Engineer 'నిజమైన పరిమితుల్లో బాగా పనిచేసేదాన్ని ఎలా రూపొందించాలి?' అని ఆలోచిస్తారు. రెండు వృత్తుల్లో చాలా సందర్భాల్లో కలయిక ఉంటుంది.</div></div>
+<div class="row"><div class="k">Scientist vs Lab Technician</div><div class="v">Scientist ప్రయోగం రూపొందించి ఫలితాలను విశ్లేషించి కొత్త జ్ఞానాన్ని సృష్టిస్తారు. Lab Technician/Technical Assistant ప్రయోగశాల పరికరాలు నడిపి, నిర్వహించి, సాంకేతిక సహాయం అందిస్తారు. రెండూ విలువైన ఉద్యోగాలే; అర్హతలు భిన్నం.</div></div>
+<div class="row"><div class="k">శాస్త్రవేత్తలు పనిచేసే చోటులు</div><div class="v">ISRO, DRDO, CSIR, DAE/BARC, ICMR, ICAR, IISc, IISER, NISER, IITలు, విశ్వవిద్యాలయాలు; ఫార్మా, బయోటెక్, రసాయనాలు, బ్యాటరీలు, సెమీకండక్టర్లు, ఏరోస్పేస్, అగ్రిటెక్, AI కంపెనీలు, రీసెర్చ్ స్టార్టప్‌లు.</div></div>
+<div class="row"><div class="k">మీ ప్రత్యామ్నాయ మార్గం</div><div class="v">సైన్స్ చదువు ఉపయోగపడే మరో ఉద్యోగాలు: Data Science, బోధన, Quality/Lab, Scientific Writing, Patents/IP, Technical Consulting.<div class="chips"><span class="chip">Data Science</span><span class="chip">Teaching</span><span class="chip">Quality / Lab</span><span class="chip">Scientific Writing</span><span class="chip">Patent / IP</span><span class="chip">Technical Consulting</span></div></div></div>
+<div class="flag"><span class="mark">గమనించండి</span><span>ఒక ప్రయోగం ఫలితానికి వారాలు, పరిశోధనా పత్రం సవరించడానికి నెలలు, ఒక సమస్య పరిష్కరించడానికి సంవత్సరాలు పట్టవచ్చు. ప్రతిరోజూ వెంటనే ఫలితం కావాలంటే ఈ పని కష్టంగా అనిపించవచ్చు.</span></div>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఖర్చు ఎంత?</h3><p class="lede">మొదటి జీతం వచ్చే వరకు చదువు ఖర్చులు, తర్వాత సాధ్యమయ్యే ఆదాయం గురించి ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">B.Sc. / early lab role</div><div class="v"><span class="money">₹20,000 – ₹35,000/month</span><br/>BSc తర్వాత ప్రారంభ Lab Assistant, Project Staff, QC/QA, Junior Research Support వంటి ఉద్యోగాల్లో మూల నివేదిక అంచనా నెలకు ₹20,000–₹35,000. సంస్థ, అర్హతలను బట్టి మారుతుంది; అసలు Scientist ఉద్యోగాలకు ఎక్కువ చదువు అవసరమవచ్చు.</div></div>
+<div class="row"><div class="k">JRF — research fellowship</div><div class="v"><span class="money">₹37,000/month stipend</span><br/>CSIR పరిశోధన ఫెలోషిప్ మార్గదర్శకం ప్రకారం మొదటి రెండేళ్ల JRFకు నెలకు ₹37,000 స్టైపెండ్ (నిబంధనలు వర్తిస్తాయి). ఇది సాధారణ ఉద్యోగ జీతం కాదు; పరిశోధన ఫెలోషిప్.</div></div>
+<div class="row"><div class="k">SRF</div><div class="v"><span class="money">₹42,000/month stipend</span><br/>నిబంధనలు నెరవేర్చిన SRF లేదా అప్‌గ్రేడ్ ఫెలోషిప్ దశల్లో CSIR మూల నివేదిక పేర్కొన్న స్టైపెండ్ నెలకు ₹42,000.</div></div>
+<div class="row"><div class="k">పరిశోధన Associate</div><div class="v"><span class="money">₹58,000 – ₹67,000/month</span><br/>అర్హత, అనుభవాన్ని బట్టి CSIR Research Associateకు మూల నివేదికలో ₹58,000, ₹61,000 లేదా ₹67,000 నెలవారీ స్థాయిలు పేర్కొన్నారు.</div></div>
+<div class="row"><div class="k">ప్రభుత్వ Scientist — entry example</div><div class="v"><span class="money">₹56,100 basic/month + allowances</span><br/>ప్రభుత్వ Scientist ప్రారంభ ఉదాహరణగా DRDO Scientist B, Pay Level 10లో నెలకు ₹56,100 ప్రాథమిక జీతం + అలవెన్సులు. ISRO Scientist/Engineer SC కూడా సాధారణంగా Level 10 పరిధి ₹56,100–₹1,77,500 కావచ్చు; సంబంధిత నియామకాన్ని బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">అనుభవం గల scientist</div><div class="v"><span class="money">₹70,000 – ₹1,50,000+/month</span><br/>అనుభవం ఉన్న ప్రభుత్వ, ప్రైవేటు R&amp;D, ఫార్మా, బయోటెక్, మెటీరియల్స్, సెమీకండక్టర్లు, AI పరిశోధకులకు మూల నివేదికలో నెలకు ₹70,000–₹1,50,000 పైగా విస్తృత అంచనా ఉంది; ఉన్నత నాయకత్వానికి ఇంకా ఎక్కువ రావచ్చు.</div></div>
+<div class="row"><div class="k">Study cost &amp; support</div><div class="v">మంచి ప్రభుత్వ పరిశోధనా సంస్థల్లో సైన్స్ చదువు తక్కువ ఖర్చుతో ఉండవచ్చు; కొన్ని BS-MS/పరిశోధన కోర్సుల్లో స్కాలర్‌షిప్ ఉంటుంది. NISER/UM-DAE CEBS వంటి సంస్థలలో NEST ఎంపికైనవారికి నిబంధనల ప్రకారం ఆర్థిక సహాయం లభించే అవకాశాలను అధికారిక వెబ్‌సైట్‌లో చూడండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>కుటుంబానికి ఇంటర్ లేదా డిగ్రీ వెంటనే ఆదాయం అవసరమైతే MSc/Integrated Masters, PhD వరకు సమయం పట్టే పరిశోధన మార్గం గురించి ముందే ఆలోచించండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><strong>నాలుగు అంశాలూ సరిపోతే</strong> — ఈ వృత్తికి అవసరమైన శిక్షణ ఇప్పటి నుంచే మొదలుపెట్టండి.</p>
+<p><strong>ఒక అంశం సరిపోకపోతే</strong> — నిర్ణయం ముందు మళ్లీ ఆలోచించండి.</p>
+<p><strong>రెండు లేదా ఎక్కువ అంశాలు సరిపోకపోతే</strong> — కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ఇతర వృత్తులనూ చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఈ ఉద్యోగం కోసం ఎంతకాలం ప్రయత్నించాలో, ఎప్పుడు ప్రత్యామ్నాయ ప్రణాళికకు వెళ్లాలో ముందే నిర్ణయించుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచి ఏం చేయాలి?</h3><p class="lede">ఇప్పటి నుంచే చిన్న సాధనతో ఈ కెరీర్ మీకు నచ్చుతుందో పరీక్షించండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, పాఠశాలలో</div><ul>
+<li>భౌతికశాస్త్రం, రసాయనశాస్త్రం, జీవశాస్త్రం, గణితంలో మూలాలు బలంగా నేర్చుకోండి.</li>
+<li>చిన్న పరిశోధనా ప్రశ్న ఎంచుకుని దానికి ఆధారాలు సేకరించండి.</li>
+<li>ఏం ప్రయత్నించారు, ఏమి ఫలితం వచ్చిందో ప్రయోగ నోట్స్ రాయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>మీకు ఇష్టమైన రంగాన్ని బట్టి MPC, BiPC లేదా సాధ్యమైతే PCMB ఎంచుకోండి.</li>
+<li>IAT, NEST, IISc/విశ్వవిద్యాలయ ప్రవేశ మార్గాలు పరిశీలించండి.</li>
+<li>సైన్స్ పుస్తకాలు, గ్రాఫ్‌లు, గణాంకాలు, ప్రాథమిక కోడింగ్ నేర్చుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>కాలేజీ, శిక్షణ సమయంలో</div><ul>
+<li>డిగ్రీలో ల్యాబ్‌లు, ప్రాజెక్టులు, ఇంటర్న్‌షిప్‌లు చేయండి.</li>
+<li>BS-MS/BSc తర్వాత MSc, IIT JAM, PhD ప్రవేశ మార్గాలు పరిశీలించండి.</li>
+<li>పరిశోధనలో చేసిన పనిని స్పష్టంగా రాయడం, ప్రదర్శించడం అభ్యసించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">గమనించండి</span><span>“నీటి ఉష్ణోగ్రత మారితే చక్కెర కరిగే వేగం మారుతుందా?” లాంటి ప్రశ్నపై చిన్న ప్రయోగం చేయండి. కొలతలు తీసి గ్రాఫ్ గీయండి; ఆధారాల ఆధారంగా ఫలితం వివరించండి. ఇదే పరిశోధన ప్రారంభం.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శక సమాచారం మాత్రమే; అధికారిక ప్రవేశం, నియామకం, లైసెన్సు లేదా జీతాల ప్రకటన కాదు. అర్హతలు, పరీక్షలు, గుర్తింపు, ఫీజులు, వయస్సు, జీతాలు మారవచ్చు. దరఖాస్తుకు ముందు సంబంధిత అధికారిక ప్రకటనలు తనిఖీ చేయండి. ఈ నివేదికలోని ఆదాయాలు మూల ఫైలులో ఉన్న అంచనాలే.</p>
+
+</div><script>document.addEventListener('DOMContentLoaded',function(){const quiz=document.getElementById('quiz'),verdict=document.getElementById('verdict'),pip=document.getElementById('pip1');if(!quiz||!verdict)return;const qs=[...quiz.querySelectorAll('.q')];function update(){const selected=qs.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);if(selected.length<qs.length){verdict.className='verdict';verdict.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(pip)pip.className='pip';return;}const yes=selected.filter(b=>b.dataset.v==='y').length;if(yes>=5){verdict.className='verdict good';verdict.innerHTML='<strong>ఈ రంగం మీకు సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఈ వృత్తికి అవసరమైన ఆసక్తి, ఓపిక కనిపిస్తున్నాయి. నిజమైన పనిని దగ్గరగా చూసి, చదువు మార్గం తెలుసుకోండి.';if(pip)pip.className='pip done';}else if(yes>=3){verdict.className='verdict mixed';verdict.innerHTML='<strong>నిర్ణయం ముందు ప్రయత్నించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. రోజువారీ పనిని తెలుసుకొని, చిన్న సాధన చేసి తర్వాత నిర్ణయించండి.';if(pip)pip.className='pip warn';}else{verdict.className='verdict bad';verdict.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ వృత్తి రోజువారీ పని మీకు సరిపోకపోవచ్చు. ఇతర కెరీర్‌లను కూడా పోల్చి కౌన్సెలర్‌తో మాట్లాడండి.';if(pip)pip.className='pip stop';}}quiz.addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;b.closest('.toggle').querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked');});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');update();});});</script></body></html>

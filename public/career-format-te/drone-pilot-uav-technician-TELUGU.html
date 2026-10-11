@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — డ్రోన్ పైలట్ &amp; UAV టెక్నీషియన్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · భారతదేశం</div><h2>డ్రోన్ పైలట్ &amp; UAV టెక్నీషియన్</h2><p class="standfirst">డ్రోన్ కెరీర్‌లో రెండు ప్రధాన దారులు ఉన్నాయి. <b>Drone Pilot</b> వ్యవసాయం, సర్వే, పరిశ్రమల తనిఖీ, వీడియో వంటి అనుమతి ఉన్న పనులకు డ్రోన్‌ను సురక్షితంగా ఎగరేస్తారు. <b>UAV Technician</b> డ్రోన్ భాగాలు అమర్చడం, పరీక్షించడం, సమస్యలు గుర్తించడం, రిపేర్ చేయడం చేస్తారు. రెండూ నేర్చుకోవచ్చు; కానీ అర్హతలు, రోజువారీ పనులు వేరు.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · డ్రోన్ పైలట్ &amp; UAV టెక్నీషియన్ · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>ఎగరడమా? రిపేర్ చేయడమా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు దారి</b><em>స్కిల్ ట్రైనింగ్ దారులు</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>డ్రోన్ల వాడకం</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>సంపాదన</b><em>నైపుణ్యం + పని</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>డ్రోన్ కెరీర్ మీకు సరిపోతుందా?</h3><p class="lede">సరదాగా డ్రోన్ ఎగరేయడం వేరు, ఉద్యోగంగా ఎగరేయడం వేరు. Weather, Safety, Rules, Flight Planning, Field Repair వంటి విషయాలు తెలుసుకోవాలి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>Machines, Electronics, Gadgets, Remote Control పరికరాలు మీకు ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>డ్రోన్‌ను సరిగ్గా, సురక్షితంగా ఎగరగలిగే వరకు ఒకే ప్రాక్టీస్‌ను మళ్లీ మళ్లీ చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>త్వరగా పని పూర్తవుతుందని భద్రతా నియమాలు ఎప్పుడూ ఉల్లంఘించకుండా ఉంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Motor, Propeller, Battery, GPS లేదా Sensor ఎందుకు పనిచేయడం లేదో తెలుసుకోవడం మీకు నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పొలాలు, నిర్మాణ ప్రదేశాలు, సర్వే ప్రాంతాలు, పరిశ్రమల దగ్గర బయట పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Maps, Weather, Batteries, Basic Electronics, Computer-based Flight Planning నేర్చుకోవడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏ దారిలో వెళ్లాలి?</h3><p class="lede">10వ తరగతి తర్వాత తక్కువ కాలం Skill Trainingతో మొదలుపెట్టే అవకాశమున్న రంగాల్లో ఇది ఒకటి. అయితే Pilot, Technician దారులు వేరు.</p>
+<div class="flag green"><span class="mark">ముఖ్యమైన పదాలు</span><span><b>UAV</b> అంటే Unmanned Aerial Vehicle — మనిషి లోపల లేకుండా ఎగిరే విమాన పరికరం. <b>DGCA</b> అంటే Directorate General of Civil Aviation — పౌర విమానయాన నియంత్రణ సంస్థ. <b>RPTO</b> అంటే DGCA గుర్తింపు ఉన్న Remote Pilot Training Organisation. <b>RPC</b> అంటే అవసరమైన శిక్షణ, పరీక్ష తర్వాత ఇచ్చే Remote Pilot Certificate.</span></div>
+<div class="card">
+<div class="row"><div class="k">డ్రోన్ పైలట్ దారి</div><div class="v"><b>10వ తరగతిలో Science, Maths పాస్ → అందుబాటులో ఉంటే Drone Pilot (Junior) CTS కోర్సు → ఎగరడం, భద్రతా నైపుణ్యాలు → DGCA వయస్సు, ఇతర అర్హతలు వచ్చాక DGCA గుర్తింపు ఉన్న RPTOలో శిక్షణ → ప్రాక్టికల్ పరీక్ష → Remote Pilot Certificate (RPC) → డ్రోన్ పైలట్ పని.</b><br/><br/>DGT ప్రకారం Drone Pilot (Junior) అనేది <b>6 నెలలు / 600 గంటలు, NSQF Level 3</b> కోర్సు. 10వ తరగతి Science, Maths లేదా నిర్దేశించిన వృత్తి విద్య అర్హత అవసరం.</div></div>
+<div class="row"><div class="k">DGCA అర్హత</div><div class="v">భారత Drone Rules ప్రకారం సాధారణ ప్రొఫెషనల్ Remote Pilot దారిలో కనీసం <b>18 సంవత్సరాలు</b> వయస్సు, <b>10వ తరగతి పాస్</b>, సంబంధిత డ్రోన్ రకం కోసం <b>DGCA గుర్తింపు ఉన్న RPTO</b>లో శిక్షణ అవసరం.<br/><br/>అందుకే 10వ తరగతి విద్యార్థి ఇప్పుడే నేర్చుకోవచ్చు; కానీ 18 ఏళ్లు రాకముందే ప్రొఫెషనల్ DGCA పైలట్ అయిపోలేరు.</div></div>
+<div class="row"><div class="k">DGCA ట్రైనింగ్</div><div class="v">DGCA ట్రైనింగ్‌లో Drone Rules, ఎగరడానికి అనుమతించే ప్రదేశాలు, డ్రోన్ ఎలా ఎగురుతుంది, వాతావరణం, విమాన ప్రయాణ నియంత్రణ, అత్యవసర పరిస్థితులు, కెమెరా/ఇతర పరికరాలు, చిన్న మరమ్మతులు, ప్రమాదాల అంచనా, డేటా వంటి అంశాలు ఉంటాయి. తరువాత ప్రాక్టికల్ శిక్షణ, పరీక్ష ఉంటుంది.</div></div>
+<div class="row"><div class="k">డ్రోన్ టెక్నీషియన్ దారి</div><div class="v"><b>10వ తరగతి Science + Maths → DGT/ITI Drone Technician కోర్సు → డ్రోన్ భాగాలు అమర్చడం, Electronics, Motors, Batteries, Controllers, Testing, తప్పులు గుర్తించడం → Internship/Apprenticeship/Service Centre → Drone Technician.</b><br/><br/>DGTలో Drone Technician <b>6 నెలలు / 600 గంటలు, NSQF Level 3</b> ట్రేడ్‌గా ఉంది.</div></div>
+<div class="row"><div class="k">టెక్నీషియన్ ఏం నేర్చుకుంటారు?</div><div class="v">Drone Components, Wiring, Motors/ESC, Batteries, Flight Controllers, Electronics Testing, సమస్యల పరిష్కారం, రిపేర్, భద్రత, చేసిన పనికి రికార్డు నిర్వహించడం నేర్చుకుంటారు. అనుభవంతో Senior Technician/Supervisorగా లేదా సొంత Service Centre వైపు వెళ్లవచ్చు.</div></div>
+<div class="row"><div class="k">హైదరాబాద్‌లో అవకాశం</div><div class="v"><b>NSTI Hyderabad, Ramanthapur</b>లో Drone Pilot (Junior), Drone Technician అనే <b>6 నెలల</b> Skill Courses ఉన్నాయి అని అసలు రిపోర్టులో ఉంది. నాలుగేళ్ల డిగ్రీ బదులు ముందుగా ప్రభుత్వ స్కిల్ ట్రైనింగ్ చూడాలనుకునేవారికి ఇది ఒక ఉదాహరణ. ప్రస్తుత అడ్మిషన్ వివరాలు సంస్థ దగ్గర నిర్ధారించండి.</div></div>
+<div class="row"><div class="k">డిప్లొమా / ఇంజినీరింగ్ దారి</div><div class="v"><b>10వ తరగతి → Diploma</b> లేదా <b>12వ తరగతి MPC → B.Tech/B.E. (ECE, EEE, Mechanical, Aerospace, Mechatronics, Robotics, CSE)</b> → డ్రోన్ ప్రాజెక్టులు, Internship → UAV Engineering / Autopilot / Integration వంటి పనులు. డ్రోన్‌ను కేవలం నడపడం కాకుండా <b>డిజైన్ చేయాలంటే</b> ఈ దారి మరింత ఉపయోగం.</div></div>
+<div class="row"><div class="k">పైలట్ + టెక్నీషియన్</div><div class="v"><b>ఎగరడం, చిన్న సమస్యలను సరిచేయడం రెండూ తెలిసుంటే మంచిది.</b> వ్యవసాయం, సర్వే, తనిఖీ వంటి బయట పనుల్లో ఉపయోగపడుతుంది. అయితే RPC ఉంటేనే పూర్తి Repair Technician అయిపోరు; Technician Certificate ఉంటేనే ప్రొఫెషనల్‌గా డ్రోన్ ఎగరడానికి అనుమతి వచ్చినట్లు కాదు.</div></div>
+<div class="row"><div class="k">డిగ్రీ అవసరమా?</div><div class="v"><b>సాధారణ Drone Pilot, Drone Technician ఉద్యోగాలకు డిగ్రీ తప్పనిసరి కాకపోవచ్చు.</b> 10వ తరగతి తరువాత సరైన స్కిల్ ట్రైనింగ్ దారి ఉంటుంది. కానీ Drone Design, Engineering, R&amp;D పనులకు Diploma/B.Tech/B.E. ఎక్కువగా అడగవచ్చు.</div></div>
+<div class="row"><div class="k">పూర్తి దారి</div><div class="v"><b>పైలట్:</b> 10వ తరగతి → డ్రోన్ ప్రాథమిక నైపుణ్యాలు → కనీస DGCA వయస్సు → గుర్తింపు ఉన్న RPTOలో శిక్షణ → పరీక్ష → RPC → అనుమతితో డ్రోన్ పనులు.<br/><br/><b>టెక్నీషియన్:</b> 10వ తరగతి Science + Maths → Drone Technician CTS (6 నెలలు) లేదా సమానమైన ప్రాక్టికల్ కోర్సు → ప్రాజెక్టులు → Internship/Service Experience → ఉద్యోగం.</div></div>
+<div class="flag red"><span class="mark">చాలా ముఖ్యం</span><span>“DGCA Approved” అని ప్రైవేట్ సంస్థ చెప్పిందని వెంటనే ఫీజు కట్టకండి. DGCA/Digital Skyలో ప్రస్తుత గుర్తింపు, శిక్షణకు అనుమతించిన Drone Category/Class నిర్ధారించండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఎక్కడ పని చేయవచ్చు?</h3><p class="lede">డ్రోన్‌ను నడపడంతో పాటు Agriculture, Mapping, Inspection, Video లేదా Engineering వంటి మరో నైపుణ్యం ఉంటే అవకాశాలు బాగుంటాయి.</p>
+<div class="card">
+<div class="row"><div class="k">వ్యవసాయ డ్రోన్ పైలట్</div><div class="v"><b>పొలాల్లో డ్రోన్‌తో పిచికారీ, పంటను పరిశీలించడం, మ్యాపింగ్</b> వంటి అనుమతి ఉన్న పనులు చేస్తారు. వ్యవసాయంపై అవగాహన, మందుల భద్రతా నియమాలు, పొలం ప్రణాళిక తెలిసుంటే మరింత ఉపయోగం.<div class="chips"><span class="chip">Farms</span><span class="chip">Spraying</span><span class="chip">Crop Monitoring</span></div></div></div>
+<div class="row"><div class="k">సర్వే / మ్యాపింగ్ పైలట్</div><div class="v">భూమి సర్వేలు, రోడ్లు, నిర్మాణాలు, గనులు వంటి పనులకు క్రమంగా డ్రోన్ ఫొటోలు తీస్తారు. <b>GIS, Photogrammetry, Mapping Software</b> నైపుణ్యాలు కూడా చాలా ముఖ్యం.</div></div>
+<div class="row"><div class="k">తనిఖీ చేసే డ్రోన్ పైలట్</div><div class="v">Solar Plants, విద్యుత్ లైన్లు, Telecom Towers, ఇళ్ల పైకప్పులు, పరిశ్రమల పరికరాలను కెమెరా లేదా ప్రత్యేక Sensors‌తో పరిశీలిస్తారు.</div></div>
+<div class="row"><div class="k">వీడియోలు తీసే పైలట్</div><div class="v">సినిమాలు, పెళ్లిళ్లు, ప్రకటనలు, పర్యాటక వీడియోల కోసం పై నుంచి చిత్రీకరిస్తారు. డ్రోన్ సురక్షితంగా నడపడంతో పాటు Camera Movement, Editing, Creative Skills అవసరం.</div></div>
+<div class="row"><div class="k">UAV ఫీల్డ్ ఆపరేటర్</div><div class="v">కస్టమర్ ప్రదేశానికి డ్రోన్ తీసుకెళ్లడం, ఎగరడానికి ముందు తనిఖీలు చేయడం, నిర్దేశించిన పని చేయడం, Battery/Data నిర్వహించడం, Field Report ఇవ్వడం.</div></div>
+<div class="row"><div class="k">డ్రోన్ టెక్నీషియన్</div><div class="v">డ్రోన్లను పరిశీలించడం, భాగాలు అమర్చడం, పరీక్షించడం, రిపేర్ చేయడం. Motors, Propellers, Controllers, Wiring, Batteries, Sensors, Communication Systems‌లో సమస్యలు సరిచేస్తారు.</div></div>
+<div class="row"><div class="k">డ్రోన్ అసెంబ్లీ టెక్నీషియన్</div><div class="v">Factoryలో Drone Parts, చిన్న Units, పూర్తయిన డ్రోన్లు అమర్చడం; Hardware Test, తయారీ నాణ్యత రికార్డులు నిర్వహించడం.</div></div>
+<div class="row"><div class="k">ఫీల్డ్ సర్వీస్ టెక్నీషియన్</div><div class="v">కస్టమర్ ఉన్న ప్రాంతానికి వెళ్లి డ్రోన్‌లో సమస్య గుర్తించడం, Parts మార్చడం, Updates చేయడం, మళ్లీ సురక్షితంగా పనిచేసేలా చూడటం.</div></div>
+<div class="row"><div class="k">డ్రోన్ మ్యాపింగ్ టెక్నీషియన్</div><div class="v">డ్రోన్ ఫొటోల నుంచి Maps, Orthomosaics, Height Models, 3D Data తయారు చేస్తారు. Drone Knowledgeతో పాటు GIS/Software నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k">డ్రోన్ ట్రైనర్</div><div class="v">అనుభవం ఉన్న Remote Pilots తరువాత DGCA Instructor దారిలో వెళ్లవచ్చు. అందుకు చెల్లుబాటు అయ్యే RPC, Instructor Training, అనుమతులు వంటి అదనపు షరతులు ఉంటాయి.</div></div>
+<div class="row"><div class="k">UAV టెస్టింగ్ టెక్నీషియన్</div><div class="v">Autopilot, Sensors, Cameras/Payloads, Communication Links, Mechanical/Electrical Parts జోడించి Ground Testing, Flight Testingలో సహాయం చేస్తారు.</div></div>
+<div class="row"><div class="k">UAV ఇంజినీర్</div><div class="v">Diploma/B.Tech/B.E.తో పాటు మంచి నైపుణ్యాలు ఉంటే Flight Controls, Embedded Systems, Computer Vision, Autonomous Drones, Propulsion, Structure, Payload Design రంగాల్లో పని చేయవచ్చు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">పైలట్ vs టెక్నీషియన్</div><div class="v"><b>Drone Pilot:</b> డ్రోన్ ప్రయాణాన్ని ప్లాన్ చేసి సురక్షితంగా ఎగరేస్తారు.<br/><b>Drone Technician:</b> డ్రోన్‌ను పరీక్షించి, నిర్వహించి, రిపేర్ చేస్తారు. ఒక వ్యక్తి రెండూ నేర్చుకోవచ్చు; అయితే రెండింటి నైపుణ్యాలు వేరు.</div></div>
+<div class="row"><div class="k">పైలట్ vs ఇంజినీర్</div><div class="v"><b>Pilot</b> డ్రోన్‌ను నడుపుతారు. <b>Engineer</b> డ్రోన్ నిర్మాణం, Electronics, Software, Sensors, Controls తయారీలో పని చేస్తారు. Engineering పనులకు సాధారణంగా లోతైన Diploma/Engineering శిక్షణ అవసరం.</div></div>
+<div class="row"><div class="k">ఎక్కడ పనులుంటాయి?</div><div class="v">వ్యవసాయం, Land Survey, GIS, Construction, Mining, Solar/Wind Projects, విద్యుత్ శాఖ పనులు, పరిశ్రమల తనిఖీలు, మీడియా, విపత్తుల సహాయం, Manufacturing, Drone Servicesలో అవకాశాలు ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">కంపెనీలు చూసే నైపుణ్యాలు</div><div class="v"><b>Safe Flying, RPC, Troubleshooting, Mapping, Field Work, Documentation</b> వంటి ప్రాక్టికల్ నైపుణ్యాలు కంపెనీలు చూస్తాయి.<div class="chips"><span class="chip">Safe Flying</span><span class="chip">RPC</span><span class="chip">Troubleshooting</span><span class="chip">Mapping</span><span class="chip">Field Work</span><span class="chip">Documentation</span></div></div></div>
+<div class="row"><div class="k">AI యుగంలో అవకాశాలు</div><div class="v">Dronesకు Computer Vision, AI Object Detection, Autonomous Navigation, Crop Analysis, Automatic Inspection వంటివి జోడిస్తున్నారు. Drone + Data/GIS తెలిసిన పైలట్‌కు, Electronics/Software తెలిసిన టెక్నీషియన్‌కు భవిష్యత్తులో మరిన్ని అవకాశాలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">Plan B — ఇతర ఉద్యోగాలు</div><div class="v">Drone రంగంతో పాటు <b>Electronics Technician, GIS Technician, Robotics, Surveying, Agritech, Field Service</b> వంటి ఉద్యోగాలు Plan Bగా చూడవచ్చు.<div class="chips"><span class="chip">Electronics Technician</span><span class="chip">GIS Technician</span><span class="chip">Robotics</span><span class="chip">Surveying</span><span class="chip">Agritech</span><span class="chip">Field Service</span></div></div></div>
+<div class="flag"><span class="mark">వాస్తవం</span><span>డ్రోన్‌ను ఎగరేయడం ఒక్కటే కాకుండా, వ్యవసాయం/సర్వే/తనిఖీ వంటి ఉపయోగకరమైన రంగంలో నైపుణ్యం ఉంటే ఉద్యోగ అవకాశాలు మెరుగ్గా ఉంటాయి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఈ రంగంలో ఎంత సంపాదించవచ్చు?</h3><p class="lede">డ్రోన్ రంగం ఇంకా ఎదుగుతోంది. జీతం ప్రాంతం, పని రకం, RPC, ప్రయాణం, GIS/Agriculture వంటి అదనపు నైపుణ్యాలపై ఆధారపడి ఉంటుంది.</p>
+<div class="card">
+<div class="row"><div class="k">ట్రైనీ / కో-పైలట్</div><div class="v"><span class="money">₹12,000 – ₹18,000/నెల</span><br/>ట్రైనీగా ఉంటే తక్కువ జీతం ఉండవచ్చు; కంపెనీ, ప్రాంతం, పని విధానాన్ని బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">కొత్త డ్రోన్ పైలట్</div><div class="v"><span class="money">₹15,000 – ₹30,000/నెల</span><br/>కొత్తగా డ్రోన్ నడిపే ఉద్యోగాల జీతం. RPC, పని రకం, ప్రయాణాలు, అదనపు నైపుణ్యాలను బట్టి తేడా ఉంటుంది.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న పైలట్</div><div class="v"><span class="money">₹20,000 – ₹40,000+/నెల</span><br/>GIS, Survey, Inspection, Agriculture వంటి ప్రత్యేక నైపుణ్యాలు, అనుభవంతో జీతం పెరగవచ్చు.</div></div>
+<div class="row"><div class="k">కొత్త డ్రోన్ టెక్నీషియన్</div><div class="v"><span class="money">₹12,000 – ₹20,000/నెల</span><br/>కొత్త Drone Technician ఉద్యోగాల్లో సంస్థ, అనుభవం, ఎలక్ట్రానిక్స్ నైపుణ్యం బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న టెక్నీషియన్</div><div class="v"><span class="money">₹20,000 – ₹35,000+/నెల</span><br/>మంచి Repair, Field Service, Electronics నైపుణ్యం ఉన్నవారికి ఎక్కువ అవకాశాలు రావచ్చు.</div></div>
+<div class="row"><div class="k">సొంతంగా డ్రోన్ పని</div><div class="v"><span class="money">ఆదాయం పనిని బట్టి చాలా మారుతుంది</span><br/>సొంత Drone Services ద్వారా ఆదాయం రావచ్చు. కానీ Drone కొనుగోలు, Repairs, Batteries, Travel, Insurance, అనుమతులు, పనులు లేని రోజులు అన్నీ ఖర్చులే. వచ్చిన మొత్తం డబ్బును లాభం అనుకోకండి.</div></div>
+<div class="row"><div class="k">ట్రైనింగ్ ఖర్చు</div><div class="v">Drone Skill Training కోసం ఫీజులు సంస్థను బట్టి మారతాయి. <b>DGCA RPTO</b> గుర్తింపు, కోర్సు రకం, Drone Class, వసతి, అదనపు ఛార్జీలు అన్నీ ముందుగా చూసుకోండి. చెల్లించే ముందు అధికారిక సమాచారం నిర్ధారించండి.</div></div>
+<div class="flag red"><span class="mark">జాగ్రత్త</span><span>డ్రోన్ ఆపరేషన్‌కు చట్టపరమైన అనుమతులు, భద్రతా నియమాలు పాటించాలి. నిషేధిత ప్రాంతాల్లో డ్రోన్ ఎగరేయకండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్లు ఎలా అర్థం చేసుకోవాలి?</h4>
+<p>ఎగరడం ఇష్టమైతే Drone Pilot దారిని పరిశీలించండి.</p>
+<p>Electronics, Repairs ఇష్టమైతే Drone Technician దారిని పరిశీలించండి.</p>
+<p>డ్రోన్‌ను డిజైన్ చేయాలనుకుంటే Diploma/Engineering దారిని చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఏ దారిలో అయినా Safety, Legal Rules చాలా ముఖ్యం.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">ఇప్పటి నుంచి మీ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">చేసి నేర్చుకోవడం ఇష్టమైతే డ్రోన్ రంగం మంచి Skill-based అవకాశం. కానీ ముందుగా Safety, Legal Rules తప్పక తెలుసుకోవాలి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే, స్కూల్‌లో ఉన్నప్పుడు</div><ul>
+<li>Science, Maths, Computer ప్రాథమిక అంశాలు బాగా నేర్చుకోండి.</li>
+<li>Frame, Motor, Propeller, ESC, Battery, Flight Controller, GPS, Sensor వంటి Drone Parts ఏమిటో తెలుసుకోండి.</li>
+<li>ప్రమాదకరమైన నిజమైన ప్రయోగాల బదులు Simulator లేదా పర్యవేక్షణలో చిన్న డ్రోన్‌తో ప్రాక్టీస్ చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>త్వరగా స్కిల్ నేర్చుకోవాలంటే DGT 6 నెలల Drone Pilot (Junior), Drone Technician కోర్సులను పోల్చండి.</li>
+<li>Engineering వైపు వెళ్లాలంటే MPC/Diploma తరువాత ECE, EEE, Mechanical, Robotics వంటి కోర్సులను పరిశీలించండి.</li>
+<li>18 ఏళ్లు రాకపోతే ముందుగా టెక్నికల్ నైపుణ్యాలు నేర్చుకోండి; DGCA కనీస వయస్సు వచ్చిన తరువాత Pilot శిక్షణను కొనసాగించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> కాలేజీ / శిక్షణ సమయంలో</div><ul>
+<li>DGCA గుర్తింపు ఉన్న RPTO, ఏ రకం డ్రోన్ ట్రైనింగ్‌కు అనుమతి ఉందో తప్పక తనిఖీ చేయండి.</li>
+<li>అవసరమైన Remote Pilot Training, Practical Test పూర్తి చేసి RPC పొందండి.</li>
+<li>GIS/Mapping, Agriculture, Inspection, Video, Electronics Repair వంటి ఒక ప్రత్యేక నైపుణ్యం అదనంగా నేర్చుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదటి అడుగు</span><span>డ్రోన్ భాగాలను గుర్తించడం, Simulatorలో సురక్షితంగా ప్రాక్టీస్ చేయడం, అధికారిక Training Options పోల్చడం మొదలుపెట్టండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ సమాచారం మాత్రమే; అధికారిక DGCA అనుమతి లేదా జీతం హామీ కాదు. Drone Rules, RPTO జాబితా, కోర్సులు, అర్హతలు, ఫీజులు మారవచ్చు. చేరే ముందు DGCA/DGT ప్రస్తుత అధికారిక వివరాలు పరిశీలించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>డ్రోన్ పని మీకు బాగా సరిపోవచ్చు</strong>Technology, బయట ప్రదేశాల్లో పని, Safety, Repairs మీకు నచ్చుతున్నాయి. ఏ ప్రత్యేక పనిలో చేరాలనుకుంటున్నారో కూడా తెలుసుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>నిర్ణయానికి ముందు ప్రయత్నించండి</strong>డ్రోన్ పనిలో కొన్ని విషయాలు మీకు నచ్చుతున్నాయి. సురక్షితంగా Simulator Practice చేసి, Electronics, Fieldwork మీకు నచ్చుతాయో చూడండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>డ్రోన్‌లు ఇష్టమైనా బయట ప్రదేశాల్లో ప్రొఫెషనల్ పని చేయడం మీకు నచ్చకపోవచ్చు. Robotics, Electronics, Media వంటి ఇతర దారులు చూడండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

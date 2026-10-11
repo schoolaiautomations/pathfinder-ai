@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — పర్యావరణ సలహాదారు (Environmental Consultant)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · భారతదేశం</div><h2>పర్యావరణ సలహాదారు (Environmental Consultant)</h2><p class="standfirst">Factories, Roads, Mines, Infrastructure Projects, Government Organisations వంటి సంస్థలు గాలి, నీరు, నేల, చెట్లు, జంతువులు, ప్రజలపై చూపే ప్రభావాన్ని తగ్గించేందుకు Environmental Consultants సహాయం చేస్తారు. Science, Engineering, Site Visits, Data, Laws, Reports అన్నీ ఈ పనిలో భాగం. కేవలం ప్రకృతిని కాపాడడం కాదు; కాలుష్యాన్ని కొలవడం, Rules పాటించేలా చూడడం కూడా ముఖ్యమే.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · పర్యావరణ సలహాదారు (Environmental Consultant) · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>నిజమైన పని నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు దారి</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>విభిన్న పనులు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>సంపాదన</b><em>నైపుణ్యం ముఖ్యం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఈ కెరీర్ మీకు సరిపోతుందా?</h3><p class="lede">పర్యావరణం గురించి ఆలోచించడం మంచి మొదలు. కానీ Data Analysis, Environmental Laws, Reports రాయడం, కొన్నిసార్లు Clientకు నచ్చని నిజం చెప్పడం కూడా ఈ పనిలో భాగమే.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>Science మీకు నచ్చుతుందా? గాలి, నీటి కాలుష్యం, చెత్త, వాతావరణ మార్పు, అడవుల నష్టం ఎందుకు జరుగుతున్నాయో తెలుసుకోవాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Factories, Project Sitesకు వెళ్లి Field Data సేకరించడంతో పాటు Officeలో కూడా పనిచేయడం మీకు నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Numbers, Maps, Lab Results, Standards, Technical Reportsను ఓపిగ్గా పరిశీలించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పర్యావరణ ప్రమాదాలను Engineers, Managers, Government Officers, స్థానిక ప్రజలకు స్పష్టంగా వివరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>కేవలం ప్రకృతిలో తిరగడం కాకుండా Environmental Laws, Permissions, Rules నేర్చుకోవడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Clientకు త్వరగా, తక్కువ ఖర్చుతో పని కావాలన్నా నిజమైన ఆధారాలను వదలకుండా రిపోర్టు చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఎలా చేరాలి?</h3><p class="lede">Environmental Consultant అనే ఒక్క Degree లేదు. Science, Engineering, Ecology, Geology వంటి రంగాల నుంచి వస్తారు.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> Biology / Ecology</div><div class="v">చెట్లు, జంతువులు, పర్యావరణ వ్యవస్థలు, జీవవైవిధ్యం, Wildlife Surveys, అడవులు/భూమి పునరుద్ధరణ, ప్రాజెక్టుల ప్రభావం తెలుసుకునేందుకు ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> Chemistry</div><div class="v">నీటి నాణ్యత, గాలి కాలుష్యం, నేలలో విషపదార్థాలు, ప్రమాదకర చెత్త, Laboratory Testing, Pollution Monitoring కోసం Chemistry అవసరం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> Maths / Data</div><div class="v">పర్యావరణంపై నిర్ణయాలకు Statistics, Computer Models, Excel Sheets, GIS Maps, Monitoring Data, Calculations ఉపయోగిస్తారు.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>MPC:</b> Environmental/Civil/Chemical Engineering, Water Treatment, Technical Pollution Control చేయాలంటే మంచి దారి.<br/><b>BiPC:</b> Environmental Science, Ecology, Biology, Biodiversity, Conservation వంటి పనులకు మంచి దారి.<br/>మీకు ఏ రకం సమస్యలు పరిష్కరించాలనుందో బట్టి ఎంచుకోండి.</div></div>
+<div class="row"><div class="k">Science Degree దారి</div><div class="v"><b>12వ తరగతి Science → B.Sc. Environmental Science / Environmental Studies / Ecology / Geology / Chemistry / Life Sciences → అవసరమైతే M.Sc. Environmental Science / Ecology / Environmental Management → Consulting / Research / Compliance ఉద్యోగాలు.</b></div></div>
+<div class="row"><div class="k">Engineering దారి</div><div class="v"><b>MPC → B.Tech/B.E. Environmental / Civil / Chemical Engineering → Water, Waste, Pollution Control ఉద్యోగం → అవసరమైతే M.Tech లేదా ప్రత్యేక అనుభవం.</b><br/>ప్రతి కాలేజీలో Environmental Engineering ఉండకపోవచ్చు. Civil లేదా Chemical చదివి తరువాత Environmentపై ప్రత్యేకంగా నేర్చుకోవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రవేశ పరీక్షలు</div><div class="v"><b>Environmental Consultant కావడానికి ఒక్కటే జాతీయ Entrance Exam లేదు.</b><br/><b>AP EAPCET/JEE:</b> Engineering Admissions కోసం.<br/><b>CUET-UG:</b> కొన్ని Environmental Science లేదా ఇతర Science Degreesకు.<br/>మరికొన్ని యూనివర్సిటీలు 12వ తరగతి మార్కులు లేదా తమ పరీక్ష ఆధారంగా తీసుకుంటాయి.</div></div>
+<div class="row"><div class="k">పై చదువులు</div><div class="v"><b>M.Sc. Environmental Science / Management / Ecology / Climate Science / GIS, M.Tech Environmental Engineering / Water Resources / Waste Management</b> వంటి కోర్సులు మీ ప్రత్యేక రంగాన్ని బట్టి ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k">చట్టపరమైన అర్హతలు</div><div class="v">భారతదేశంలో “Environmental Consultant” అన్నది ఒక్క Licenseతో చేసే ఒకే వృత్తి కాదు. అయితే అధికారిక <b>Environmental Impact Assessment (EIA)</b> పనులకు ప్రత్యేక నియమాలు ఉంటాయి. <b>QCI/NABET గుర్తింపు ఉన్న EIA Consultant Organisations</b>, ప్రభుత్వ <b>PARIVESH</b> అనుమతుల ప్రక్రియలో పాత్ర ఉంటుంది.</div></div>
+<div class="row"><div class="k">పూర్తి దారి</div><div class="v"><b>10వ తరగతి → MPC లేదా BiPC → సంబంధిత B.Sc./B.Tech → Fieldwork, Data, Environmental Laws, Internships → Environmental Analyst / Engineer / EIA / Sustainability ఉద్యోగం → Environmental Consultant.</b><br/>Ecology, EIA, Climate వంటి ప్రత్యేక ఉద్యోగాలకు Master’s Degree ఉపయోగపడుతుంది.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన సూచన</span><span>Degree పేరులో “Environment” ఉందని మాత్రమే ఎంచుకోకండి. Sampling, Lab Analysis, GIS, EIA, Pollution Control, Environmental Laws, Statistics, Fieldwork నేర్పుతున్నారో పరిశీలించండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఎలాంటి Environmental Consultant కావచ్చు?</h3><p class="lede">మీరు ఏ డిగ్రీ, Technical Skills నేర్చుకున్నారనే దానిపై మీ పని ఆధారపడి ఉంటుంది.</p>
+<div class="card">
+<div class="row"><div class="k">EIA Consultant</div><div class="v"><b>Environmental Impact Assessment</b> అంటే కొత్త Mine, Factory, Road, Power Plant, Port, Building వలన గాలి, నీరు, నేల, జంతువులు, ప్రజలపై ఏ ప్రభావం ఉంటుందో అధ్యయనం చేసి నష్టాన్ని తగ్గించే మార్గాలు చెప్పడం.<div class="chips"><span class="chip">EIA</span><span class="chip">EMP</span><span class="chip">Clearances</span></div></div></div>
+<div class="row"><div class="k">Environmental Compliance</div><div class="v">పరిశ్రమలు Environmental Clearance నిబంధనలు, Pollution Control Board Permissions, Waste Rules, Monitoring, Reports సరిగ్గా పాటిస్తున్నాయో చూసి సహాయం చేస్తారు.</div></div>
+<div class="row"><div class="k">Air Quality</div><div class="v">గాలిలో కాలుష్య పదార్థాలను కొలవడం, Factory Emissionsను పరిశీలించడం, Monitoring Data అర్థం చేసుకోవడం, Pollution Control Systems సూచించడం.</div></div>
+<div class="row"><div class="k">Water &amp; Wastewater</div><div class="v">తాగునీరు, మురుగునీరు, పరిశ్రమల Wastewater, భూగర్భజలం, నీటి నిర్వహణపై పని చేస్తారు. <b>ETP</b> అంటే Effluent Treatment Plant; <b>STP</b> అంటే Sewage Treatment Plant. వాటి Design, Performance పరీక్షించవచ్చు.<div class="chips"><span class="chip">ETP</span><span class="chip">STP</span><span class="chip">Water Quality</span></div></div></div>
+<div class="row"><div class="k">Waste Management</div><div class="v">పట్టణ చెత్త, Hazardous Waste, Biomedical Waste, E-waste, Plastic, Recycling, Circular Economy పనులు. Audits, Facility Planning, Rules, Waste Reductionపై పని ఉంటుంది.</div></div>
+<div class="row"><div class="k">Contaminated Land / Remediation</div><div class="v">పరిశ్రమల పని, ప్రమాదవశాత్తు Chemicals కారడం, చెత్త పడేయడం వల్ల నేల, భూగర్భ జలం కలుషితమైతే పరీక్షించి శుభ్రపరిచే ప్రణాళిక తయారు చేస్తారు.</div></div>
+<div class="row"><div class="k">Ecology / Biodiversity</div><div class="v">చెట్లు, అడవి, Wildlife, Habitat, Biodiversity Surveys చేసి ప్రాజెక్టుల ప్రభావాన్ని గుర్తిస్తారు. పరిరక్షణ, పునరుద్ధరణ సూచిస్తారు. Biology/Ecology చదివిన వారికి బాగా ఉపయోగం.</div></div>
+<div class="row"><div class="k">GIS / Remote Sensing</div><div class="v">Maps, Satellite Images, Drones, Geo-data ఉపయోగించి అడవులు, నీటి వనరులు, భూమి వినియోగం, పరిశ్రమల ప్రభావం, పర్యావరణ మార్పులను పరిశీలిస్తారు.</div></div>
+<div class="row"><div class="k">Climate / Carbon</div><div class="v">Greenhouse Gas Emissions, Carbon Footprint, Climate Risks, Pollution తగ్గించే మార్గాలు, వాతావరణ మార్పులకు అనుగుణంగా మారే పద్ధతులపై పని.</div></div>
+<div class="row"><div class="k">ESG / Sustainability</div><div class="v">కంపెనీల Electricity, Water, Emissions, Waste, Supply Chain, Sustainability Reportsను కొలిచి మెరుగుపరచడంలో సహాయం. ఇది బయట అడవి సర్వే కంటే Business/Reporting ఎక్కువగా ఉండే పని.</div></div>
+<div class="row"><div class="k">Environmental Audit</div><div class="v">ఒక Factoryలో Environmental Permits, Emissions, Waste Handling, Compliance సరైనదో పరిశీలించి తప్పులు, మార్పుల అవసరం రిపోర్టు చేస్తారు.</div></div>
+<div class="row"><div class="k">Noise / Occupational Environment</div><div class="v">Industries, Roads, Infrastructure చుట్టూ శబ్దం, ఇతర పర్యావరణ పరిస్థితులు కొలిచి తగ్గించే చర్యలు సూచిస్తారు.</div></div>
+<div class="row"><div class="k">Environmental Modelling</div><div class="v">Air Dispersion, Water Systems, Floods, Hydrology, Climate, Noise వంటి విషయాలను Computer Modelsతో అంచనా వేస్తారు. మంచి Maths, Coding, GIS ఉపయోగపడతాయి.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Consultant vs Scientist</div><div class="v"><b>Environmental Scientist:</b> Science Measurements, Research, Data Analysis ఎక్కువగా చేస్తారు.<br/><b>Environmental Consultant:</b> ఒక Client ప్రాజెక్టు, Rules లేదా Business Problemకు Science/Engineering ఉపయోగించి సలహా ఇస్తారు. ఇద్దరి మధ్య పని మారే అవకాశం ఉంది.</div></div>
+<div class="row"><div class="k">Consultant vs Engineer</div><div class="v"><b>Environmental Engineer:</b> Water Treatment Plants, Pollution Control, Infrastructure వంటి Technical Systems Design చేస్తారు.<br/><b>Environmental Consultant:</b> EIA, Audits, Ecology, Monitoring, Laws, Sustainability వంటి విస్తృత పనులు చేస్తారు. Engineer కూడా Consultant కావచ్చు.</div></div>
+<div class="row"><div class="k">ప్రభుత్వ నియమాలు</div><div class="v">భారత Environmental Clearance అవసరమయ్యే ప్రాజెక్టులు <b>PARIVESH</b> ద్వారా Environment, Forest, Wildlife, CRZ అనుమతుల ప్రక్రియలో ఉండవచ్చు. అక్కడ EIA Notifications, గుర్తింపు ఉన్న Consultants వివరాలు చూడవచ్చు.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్‌లో పరిస్థితి</div><div class="v">ఆంధ్రప్రదేశ్‌లో పరిశ్రమలకు పరిస్థితిని బట్టి <b>AP Pollution Control Board</b> నుంచి <b>Consent to Establish</b>, <b>Consent to Operate</b> వంటి అనుమతులు అవసరం కావచ్చు. Environmental Professionals Reports, Monitoring, Complianceకు సహాయం చేస్తారు; <b>అనుమతిని Consultant ఇవ్వరు, Regulator ఇస్తారు.</b></div></div>
+<div class="row"><div class="k">ఎవరు ఉద్యోగాలు ఇస్తారు?</div><div class="v">Environmental Consulting Firms, EPC/Engineering Companies, Infrastructure, Mines, Manufacturing, Chemicals, Pharma, Power, Renewable Energy, Real Estate, Waste/Water Companies, ESG Teams, NGOs, Research Institutionsలో పని ఉంటుంది.</div></div>
+<div class="row"><div class="k">Plan B</div><div class="v">ఈ రంగం నుంచి <b>EHS, Water Engineering, GIS, Sustainability, Research, Government/PCB</b> వంటి ఇతర అవకాశాలు చూడవచ్చు.<div class="chips"><span class="chip">EHS</span><span class="chip">Water Engineering</span><span class="chip">GIS</span><span class="chip">Sustainability</span><span class="chip">Research</span><span class="chip">Government / PCB</span></div></div></div>
+<div class="flag"><span class="mark">నిజాయితీ నియమం</span><span>Consultant పని Pollutionని Reportsలో కనిపించకుండా చేయడం కాదు. నిజంగా కొలిచి, నష్టం తగ్గించే మార్గాలు చూపించి, సరైన Rules పాటించేందుకు సహాయం చేయాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">Science Graduate, Engineer, GIS Specialist, EIA Expert, Sustainability Consultant, Senior Project Managerలో జీతాల్లో చాలా తేడా ఉంటుంది.</p>
+<div class="card">
+<div class="row"><div class="k">Intern / Trainee</div><div class="v"><span class="money">₹8,000 – ₹20,000/నెల</span><br/>Field Sampling, Data Entry, Surveys, GIS, Labsతో Coordination, Report Writing వంటి Internship పనులు. పేరుకన్నా నిజంగా ఏం నేర్చుకున్నారో ముఖ్యం.</div></div>
+<div class="row"><div class="k">కొత్త ఉద్యోగం</div><div class="v"><span class="money">₹20,000 – ₹35,000/నెల</span><br/>Junior Environmental Analyst, Consultant, Engineer వంటి ఉద్యోగాలకు విస్తృత ప్రారంభ అంచనా. Engineering/GIS Skills ఉంటే మంచి అవకాశం ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">భారతదేశ సగటు అంచనా</div><div class="v"><span class="money">సగటు సుమారు ₹32,100/నెల</span><br/>అసలు రిపోర్టు ప్రకారం Indeed ఫిబ్రవరి 2026 అంచనా <b>₹32,102/నెల</b>. ఇది కేవలం <b>2 మంది వెల్లడించిన జీతాల</b> ఆధారంగా ఉన్నందున హామీలా కాకుండా చాలా సుమారు సూచనగా చూడండి.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న Consultant</div><div class="v"><span class="money">₹40,000 – ₹80,000+/నెల</span><br/>EIA, Environmental Laws, Modelling, Water, GIS, Climate, Project Managementలో అనుభవం పెరిగితే ఎక్కువ రావచ్చు.</div></div>
+<div class="row"><div class="k">Senior / Specialist</div><div class="v"><span class="money">₹70,000 – ₹1,50,000+/నెల</span><br/>Senior Consultants, Project Managers, NABET/EIA Experts, Sustainability Leads, Specialised Engineersకు కంపెనీ, బాధ్యత, రంగాన్ని బట్టి ఎక్కువ సంపాదించే అవకాశం.</div></div>
+<div class="row"><div class="k">స్వతంత్ర Consultant</div><div class="v"><span class="money">ఆదాయం పనిని బట్టి చాలా మారుతుంది</span><br/>అనుభవం ఉన్నవారు స్వతంత్రంగా Consulting చేయవచ్చు. కానీ Technical Credibility, Client Contacts, Laboratory/GIS Support, సరైన Team లేకపోతే కష్టం. ఆదాయం కస్టమర్లు, ప్రాజెక్టులపై ఆధారపడి మారుతుంది.</div></div>
+<div class="row"><div class="k">చదువు ఖర్చు</div><div class="v">Public B.Sc./B.Tech కోర్సులు కొన్ని తక్కువ ఫీజుతో ఉండవచ్చు; Private Engineering లేదా Postgraduate కోర్సులకు కొన్ని లక్షలు ఖర్చు కావచ్చు. Fees మాత్రమే కాకుండా Labs, Fieldwork, Internships, Jobs కూడా పోల్చండి.</div></div>
+<div class="flag red"><span class="mark">కెరీర్ జాగ్రత్త</span><span>Environmental Consulting మంచి ప్రత్యేక రంగం. కానీ Practical Skills లేకుండా సాధారణ Degree మాత్రమే ఉంటే ఉద్యోగం దొరకడం కష్టమవచ్చు. Field, GIS, Laws, Report Skills పెంచుకోండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>ఈ నాలుగు సర్కిళ్లు ఎలా ఉపయోగించాలి?</h4>
+<p>ప్రకృతిపై ప్రేమతో పాటు Science, Data, Fieldwork, Reports అంటే ఇష్టమైతే ఈ దారి సరిపోవచ్చు.</p>
+<p>Technical Systems Design అంటే ఇష్టమైతే Environmental Engineering దారి చూడండి.</p>
+<p>Biodiversity, Ecology ఆసక్తి అయితే Environmental Science/Ecology దారి చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఏ దారిలోనైనా నిజమైన Field Skills, Data Analysis, Laws ముఖ్యం.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">ఇప్పటి నుంచి మీ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">స్కూల్‌లో ఉన్నప్పుడే Environmental Laws అన్నీ నేర్చుకోవాల్సిన అవసరం లేదు. పర్యావరణ సమస్యలను కొలవడం, ఆధారాలతో వివరించడం మొదలుపెట్టండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే, స్కూల్‌లో ఉన్నప్పుడు</div><ul>
+<li>Science, Maths, Geography బాగా నేర్చుకోండి.</li>
+<li>మీ ఊరిలో చెత్త, నీరు, గాలి కాలుష్యం, వరద వంటి ఒక సమస్య ఎంచుకుని సురక్షితంగా వివరాలు సేకరించండి.</li>
+<li>Excel/Spreadsheets, Graphs, Basic Mapping నేర్చుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>Engineering వైపు అయితే MPC, Biology/Ecology వైపు అయితే BiPC ఎంచుకోవచ్చు.</li>
+<li>B.Sc. Environmental Science లేదా B.Tech Environmental/Civil/Chemical వంటి కోర్సులను పోల్చండి.</li>
+<li>మీరు ఎంచుకున్న సంస్థ CUET-UG, AP EAPCET, JEE, 12వ తరగతి మార్కులు లేదా తమ పరీక్షలో ఏది ఉపయోగిస్తుందో తెలుసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> కాలేజీ / శిక్షణ సమయంలో</div><ul>
+<li>GIS/QGIS, Excel, Sampling, Environmental Laws, Report Writing నేర్చుకోండి.</li>
+<li>Consulting Firms, Factories, Water/Waste Firms, NGOs, Research Organisationsలో Internships కోసం ప్రయత్నించండి.</li>
+<li>EIA పని చేయాలనుకుంటే EIA Notification, PARIVESH, QCI/NABET Accredited Organisations గురించి తెలుసుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదటి పరీక్ష</span><span>మీ ఊరిలో ఒక చెరువు, కాలువ లేదా చెత్త పేరుకునే ప్రదేశాన్ని సురక్షితంగా పరిశీలించండి. Map, Photos, సమస్య, సాధ్యమైన కారణాలు రాసి, మీరు ఏ వివరాలు కొలవాలనుకుంటున్నారో చెప్పండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే. Environmental Permissions, EIA Rules, College Eligibility, Salaries మారవచ్చు. అసలు రిపోర్టులోని Indeed Average కేవలం రెండు Salary Reports ఆధారంగా ఉంది; హామీ కాదు. ప్రస్తుత నియమాలు APPCB, PARIVESH, QCI/NABET వంటి అధికారిక వనరుల్లో చూడండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>పర్యావరణ Consulting మీకు సరిపోవచ్చు</strong>Science, Fieldwork, Data, Problems పరిష్కరించడం మీకు నచ్చుతున్నాయి. Degreeతో పాటు ఒక బలమైన Technical Skill నేర్చుకోండి.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>నిర్ణయానికి ముందు ప్రయత్నించండి</strong>పర్యావరణ సమస్యలపై ఆసక్తి ఉంది. కానీ Reports, Rules, Data Analysis కూడా మీకు నచ్చుతాయో పరీక్షించండి.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>మరోసారి ఆలోచించండి</strong>పర్యావరణాన్ని కాపాడాలనిపించినా Consulting Work నచ్చకపోవచ్చు. Ecology, Engineering, Geography, Sustainability, Public Policy వంటి దారులు కూడా చూడండి.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div></body></html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — డేటా సైంటిస్ట్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>డేటా సైంటిస్ట్ (Data Scientist)</h2><p class="standfirst">డేటా సైంటిస్ట్ అంటే డేటాలో దాగి ఉన్న విషయాలను గుర్తించి, వాటి ఆధారంగా అంచనాలు వేసి, సంస్థలకు మంచి నిర్ణయాలు తీసుకునేలా సహాయం చేసే వ్యక్తి. ఇందుకోసం Maths, Statistics, Programming, అలాగే ఆ రంగంపై అవగాహన అవసరం. AI వచ్చిన తర్వాత కేవలం గ్రాఫ్‌లు తయారు చేయడం కాకుండా Machine Learning, భవిష్యత్తు అంచనాలు, Recommendation Systems, AI ఆధారిత ఉత్పత్తులపై కూడా పని చేస్తున్నారు.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · డేటా సైంటిస్ట్ · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>లెక్కల్లో నమూనాలు గుర్తిస్తారా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు దారి</b><em>Maths + Coding</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>డేటాలో ఎన్నో పనులు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>సంపాదన</b><em>నైపుణ్యం పెరిగితే అవకాశాలు</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>డేటా సైన్స్ మీకు నిజంగా ఇష్టమేనా?</h3><p class="lede">డేటా సైన్స్ అంటే AIని వాడడం మాత్రమే కాదు. గందరగోళంగా ఉన్న డేటాను సరిచేయడం, లెక్కలు తనిఖీ చేయడం, కోడ్ రాయడం, ఆ ఫలితాల అర్థాన్ని వివరించడం కూడా రోజువారీ పని.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>మీకు Maths అంటే ఇష్టమా? ముఖ్యంగా సగటులు, Probability, గ్రాఫ్‌లు, డేటాలో కనిపించే నమూనాలు ఆసక్తిగా ఉంటాయా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Programming నేర్చుకోవడం, కోడ్ తప్పుగా పనిచేసినప్పుడు ఆ తప్పును వెతికి సరిచేయడం మీకు నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఎవరైనా ఒక కారణం చెప్పగానే నమ్మకుండా, “ఈ డేటా నిజంగా ఏమి చెబుతోంది?” అని ఆలోచిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>డేటాలో పొరపాట్లు ఉన్నా ఓపిగ్గా సరిచేసి, క్రమంగా అమర్చగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>కష్టమైన టెక్నికల్ విషయాన్ని కూడా సాధారణ వ్యక్తికి సులభంగా వివరించడం మీకు నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>మొదట మీ అంచనా తప్పినా బాధపడకుండా, కొత్త డేటాతో మళ్లీ పరీక్షించి నేర్చుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏ సబ్జెక్టులు చదవాలి? ఏ దారిలో వెళ్లాలి?</h3><p class="lede">డేటా సైంటిస్ట్ అవ్వడానికి ఒకే ఒక్క డిగ్రీ తప్పనిసరి కాదు. Computer Science, Statistics, Mathematics, Engineering, Data Science చదివినవారు ఈ రంగంలోకి వస్తారు.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Maths</div><div class="v">Maths‌లోని Probability, Statistics, Algebra, Calculus, Matrices వంటి అంశాలు డేటాను, Machine Learning మోడళ్లను అర్థం చేసుకోవడానికి పునాది.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span>Programming</div><div class="v">మొదట Python నేర్చుకోండి. డేటాబేస్‌ల నుంచి సమాచారం తీసుకోవడానికి SQL చాలా అవసరం. తరువాత Statistics, Machine Learning, గ్రాఫ్‌ల కోసం ఉపయోగించే Libraries నేర్చుకోవచ్చు.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span>మాట్లాడి వివరించడం</div><div class="v">మోడల్ ఏ విషయం గుర్తించింది, ఆ ఫలితం ఎంత నమ్మదగినది, దాని ఆధారంగా కంపెనీ ఏం చేయాలి అనే విషయాలను అందరికీ అర్థమయ్యేలా చెప్పాలి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>డేటా సైన్స్ లక్ష్యమైతే ఇంటర్‌లో MPC (Maths, Physics, Chemistry) తీసుకోవడం మంచిది.</b> Maths ఉంటే B.Tech CSE / AI / Data Science, అలాగే B.Sc. Statistics / Mathematics వంటి అవకాశాలు ఎక్కువగా ఉంటాయి.</div></div>
+<div class="row"><div class="k">ఇంజినీరింగ్ దారి</div><div class="v"><b>MPC → AP EAPCET / JEE / కాలేజీ అడ్మిషన్ → B.Tech/B.E. (CSE, Data Science, AI &amp; ML, IT, Mathematics &amp; Computing వంటి బ్రాంచీలు) → ప్రాజెక్టులు, ఇంటర్న్‌షిప్ → Data Analyst / Junior Data Scientist / ML ఉద్యోగం.</b></div></div>
+<div class="row"><div class="k">సైన్స్ డిగ్రీ దారి</div><div class="v"><b>12వ తరగతిలో Maths → B.Sc. Statistics / Mathematics / Computer Science / Data Science → నైపుణ్యాన్ని బట్టి ఉద్యోగం లేదా M.Sc.</b> కోడింగ్ కన్నా Statistics, లెక్కల ద్వారా సమస్యలు అర్థం చేసుకోవడం ఇష్టపడేవారికి ఇది మంచి దారి.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్ ప్రవేశ పరీక్ష</div><div class="v"><b>AP EAPCET</b> ఆంధ్రప్రదేశ్‌లో పాల్గొనే ఇంజినీరింగ్ కాలేజీలకు ముఖ్యమైన ప్రవేశ పరీక్ష. CSEలో AI, Machine Learning, Data Science వంటి ప్రత్యేక బ్రాంచీలు ఉండొచ్చు. వాటి పేర్లు, సీట్ల సంఖ్య ప్రతి సంవత్సరం మారవచ్చు.</div></div>
+<div class="row"><div class="k">జాతీయ స్థాయి దారి</div><div class="v"><b>JEE Main / JEE Advanced</b> ద్వారా అర్హతను బట్టి NIT, IIIT, IIT వంటి సంస్థల్లో ప్రవేశం పొందవచ్చు. B.Sc./B.S. కోసం కొన్ని యూనివర్సిటీలు <b>CUET-UG</b>, మరికొన్ని మార్కులు లేదా తమ పరీక్షను ఉపయోగిస్తాయి.</div></div>
+<div class="row"><div class="k">పై చదువులు</div><div class="v"><b>M.Sc. Data Science, Statistics, Mathematics, Computer Science, M.Tech AI/Data Science</b> వంటి పై చదువులు ప్రత్యేక పరిశోధన ఉద్యోగాలకు ఉపయోగపడతాయి. అయితే ప్రతి Data Scientist ఉద్యోగానికీ Master’s తప్పనిసరి కాదు.</div></div>
+<div class="row"><div class="k">నేర్చుకోవాల్సిన నైపుణ్యాలు</div><div class="v"><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Statistics</span><span class="chip">Excel</span><span class="chip">Machine Learning</span><span class="chip">డేటా గ్రాఫ్‌లు</span><span class="chip">Git</span></div></div></div>
+<div class="row"><div class="k">పూర్తి ప్రయాణం</div><div class="v"><b>10వ తరగతి → MPC → B.Tech/B.Sc.లో లెక్కలు, డేటాకు సంబంధించిన కోర్సు → Python + SQL + Statistics + Machine Learning ప్రాజెక్టులు → ఇంటర్న్‌షిప్ / మొదటి డేటా ఉద్యోగం → Data Scientist.</b></div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన సూచన</span><span>కేవలం బ్రాంచి పేరు “Data Science &amp; AI” అని ఉందని బలహీనమైన కాలేజీని ఎంచుకోకండి. మంచి Maths, Coding, Projects, Internships అన్నీ కోర్సు పేరు కంటే ముఖ్యం.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3 · డేటా రంగంలోని ఉద్యోగాలు</div><h3>డేటా రంగంలో ఎలాంటి ఉద్యోగాలు ఉన్నాయి?</h3><p class="lede">డేటా సైన్స్‌లో చాలా రకాల ఉద్యోగాలున్నాయి. కొన్ని పనులు ఒకదానితో ఒకటి కలుస్తాయి, కానీ అన్నీ ఒకటే కాదు.</p>
+<div class="card">
+<div class="row"><div class="k">Data Analyst</div><div class="v"><b>ఇప్పటికే ఉన్న డేటాను చూసి ఏమి జరిగిందో వివరిస్తారు.</b> Excel, SQL, Dashboards, Statistics, Reports ఎక్కువగా వాడతారు.<div class="chips"><span class="chip">SQL</span><span class="chip">Excel</span><span class="chip">Dashboards</span></div></div></div>
+<div class="row"><div class="k">Data Scientist</div><div class="v"><b>Statistics, Machine Learning ఉపయోగించి ఫలితాలను అర్థం చేసుకోవడం, అంచనాలు వేయడం, మెరుగైన నిర్ణయాలకు సహాయం చేయడం.</b> ఉదాహరణకు అమ్మకాలు అంచనా వేయడం, సిఫార్సులు చేయడం, పరీక్షలు నిర్వహించడం.</div></div>
+<div class="row"><div class="k">Machine Learning Engineer</div><div class="v">Machine Learning మోడల్‌ను నిజమైన యాప్ లేదా సేవలో సరిగా పనిచేసే సాఫ్ట్‌వేర్‌గా మారుస్తారు. సాధారణ Data Scientist కన్నా Software Engineering పని ఎక్కువగా ఉంటుంది.</div></div>
+<div class="row"><div class="k">Data Engineer</div><div class="v">డేటాను సేకరించడం, శుభ్రం చేయడం, నిల్వ చేయడం కోసం Databases, Pipelines, Platforms నిర్మిస్తారు. SQL, Cloud, Software నైపుణ్యాలు ముఖ్యం.</div></div>
+<div class="row"><div class="k">Business Intelligence Analyst</div><div class="v">Finance, Sales, Supply Chain, Management వంటి టీమ్‌లకు నిర్ణయాలు తీసుకోవడానికి ఉపయోగపడే Dashboards, Reports తయారు చేస్తారు.</div></div>
+<div class="row"><div class="k">Product Data Scientist</div><div class="v">ప్రజలు యాప్ లేదా ఉత్పత్తిని ఎలా వాడుతున్నారో చూస్తారు. ప్రయోగాలు చేసి, తరువాత ఏ ఫీచర్ తయారు చేయాలో కంపెనీకి సూచిస్తారు.</div></div>
+<div class="row"><div class="k">Marketing / Customer Data Scientist</div><div class="v">కస్టమర్లను విభజించడం, ఎవరెవరు సేవ మానేస్తారో అంచనా వేయడం, ప్రకటనలు ఎవరికి చూపాలో నిర్ణయించడం, ధరలు, సిఫార్సులపై పని చేస్తారు.</div></div>
+<div class="row"><div class="k">Risk / Fraud Data Scientist</div><div class="v">Banking, Fintech, Insurance రంగాల్లో మోసపూరిత లావాదేవీలు, రుణాల ప్రమాదాలు గుర్తించడానికి డేటా, ML వాడతారు.</div></div>
+<div class="row"><div class="k">Operations / Supply Chain Data Scientist</div><div class="v">ఏ వస్తువుకు ఎంత డిమాండ్ వస్తుంది, గోదాములో ఎంత స్టాక్ ఉంచాలి, సరుకులు ఏ దారిలో పంపాలి, సిబ్బంది ఎలా పనిచేయాలి వంటి నిర్ణయాలకు సహాయం చేస్తారు.</div></div>
+<div class="row"><div class="k">Healthcare Data Scientist</div><div class="v">హాస్పిటల్, వైద్యం, ప్రజారోగ్య డేటాను పరిశీలిస్తారు. కొన్ని పనులకు వైద్యరంగంపై ప్రత్యేక అవగాహన కూడా అవసరం.</div></div>
+<div class="row"><div class="k">AI / Applied Scientist</div><div class="v">అధునాతన Machine Learning, Language Models, Computer Vision, Recommendation Systems, Generative AIపై పని చేస్తారు. Maths, Research‌లో మంచి పట్టు అవసరం.</div></div>
+<div class="row"><div class="k">Research Data Scientist</div><div class="v">కొత్త Statistical/ML పద్ధతులను అభివృద్ధి చేసి పరిశోధనలు ప్రచురిస్తారు. కష్టమైన శాస్త్రీయ, పారిశ్రామిక సమస్యలపై పని చేస్తారు. చాలాసార్లు Master’s లేదా PhD అవసరమవుతుంది.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Data Scientist vs Data Analyst</div><div class="v"><b>Data Analyst:</b> గతంలో లేదా ప్రస్తుతం ఏమి జరిగిందో Reports, Dashboards ద్వారా వివరిస్తారు.<br/><b>Data Scientist:</b> Statistics, ప్రయోగాలు, Predictive Models ద్వారా ముందుకు ఏం జరగవచ్చో కూడా అధ్యయనం చేస్తారు.<br/>కొన్ని కంపెనీల్లో ఈ రెండు పేర్లకు చేసే పని దగ్గరగా ఉంటుంది.</div></div>
+<div class="row"><div class="k">Data Scientist vs ML Engineer</div><div class="v"><b>Data Scientist:</b> డేటాలో నమూనాలు కనిపెట్టడం, Models తయారు చేయడం, కంపెనీ ప్రశ్నలకు సమాధానాలు వెతకడం.<br/><b>ML Engineer:</b> ఆ మోడళ్లను నిజమైన సాఫ్ట్‌వేర్‌లో అమర్చడం, పెద్ద స్థాయిలో నడిపించడం, నిర్వహించడం.</div></div>
+<div class="row"><div class="k">ఎక్కడ ఉద్యోగాలు ఉంటాయి?</div><div class="v">Technology, Banking, Fintech, Online Shopping, Healthcare, Manufacturing, Consulting, Telecom, Retail, Logistics, Insurance, Media, Government Analytics, Sports, Research రంగాల్లో పని చేయవచ్చు.</div></div>
+<div class="row"><div class="k">AI వచ్చిన తర్వాత పరిస్థితి</div><div class="v"><b>AI కొన్ని సాధారణ లెక్కలు, Coding పనులను ఆటోమేటిక్‌గా చేస్తుంది.</b> అదే సమయంలో AI మోడళ్లను పరీక్షించడం, ఫలితాలు సరిగ్గా ఉన్నాయో చూడడం, మెరుగుపరచడం వంటి పనులు పెరుగుతాయి. బలమైన Data Scientists ఎక్కువగా అసలు సమస్యను గుర్తించడం, ప్రయోగాలు, నిర్ణయాలపై దృష్టిపెడతారు.</div></div>
+<div class="row"><div class="k">కంపెనీలు చూసే నైపుణ్యాలు</div><div class="v"><div class="chips"><span class="chip">Statistics</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">ML</span><span class="chip">ప్రాజెక్టులు</span><span class="chip">వివరించే నైపుణ్యం</span><span class="chip">రంగంపై అవగాహన</span></div></div></div>
+<div class="row"><div class="k">Plan B — ప్రత్యామ్నాయాలు</div><div class="v">ఈ రంగంలో నేర్చుకున్న నైపుణ్యాలతో <b>Data Analytics, Business Intelligence, Machine Learning, Data Engineering, Software, Research</b> రంగాల్లో కూడా అవకాశాలు చూసుకోవచ్చు.<div class="chips"><span class="chip">Data Analytics</span><span class="chip">Business Intelligence</span><span class="chip">Machine Learning</span><span class="chip">Data Engineering</span><span class="chip">Software</span><span class="chip">Research</span></div></div></div>
+<div class="flag"><span class="mark">వాస్తవం</span><span>Certificate తీసుకుంటేనే Data Scientist అయిపోరు. నిజమైన డేటాను విశ్లేషించి, కోడ్ రాసి, సరైన పద్ధతిని ఎంచుకుని ఫలితం వివరించగలరని కంపెనీకి చూపాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఈ రంగంలో ఎంత సంపాదించవచ్చు?</h3><p class="lede">జీతం బాగుండే అవకాశం ఉంది. అయితే మీ నైపుణ్యం, చదువు, కంపెనీ, నగరం, ఉద్యోగ స్వభావం బట్టి చాలా తేడా ఉంటుంది.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / ట్రైనీ</div><div class="v"><span class="money">₹10,000 – ₹30,000/నెల</span><br/>ఇంటర్న్‌షిప్ చెల్లింపు సంస్థను బట్టి బాగా మారుతుంది. పెద్ద కంపెనీలు ఎక్కువ ఇవ్వవచ్చు; చిన్న సంస్థలు తక్కువ ఇవ్వవచ్చు.</div></div>
+<div class="row"><div class="k">మొదటి డేటా ఉద్యోగం</div><div class="v"><span class="money">₹4 – ₹8 లక్షలు/సంవత్సరం</span><br/>కొత్తగా Data Analytics, Junior Data Science వంటి ఉద్యోగాల్లో చేరేవారికి విస్తృత అంచనా. మంచి Coding, Statistics, ఇంటర్న్‌షిప్ ఉంటే ఎక్కువ రావచ్చు.</div></div>
+<div class="row"><div class="k">భారతదేశ సగటు అంచనా</div><div class="v"><span class="money">సగటున సుమారు ₹12.34 లక్షలు/సంవత్సరం</span><br/>అసలు రిపోర్టు ప్రకారం Indeed సెప్టెంబర్ 2026 భారతదేశ అంచనా <b>₹12,33,675/సంవత్సరం</b>, <b>374 జీతాల</b> ఆధారంగా లెక్కించారు. ఇందులో అనుభవం ఉన్నవారు కూడా ఉన్నారు. కాబట్టి కొత్తగా చేరేవారు ₹12 లక్షల ప్రారంభ జీతం వస్తుందని అనుకోకూడదు.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న Data Scientist</div><div class="v"><span class="money">₹8 – ₹20 లక్షలు+/సంవత్సరం</span><br/>కొన్నేళ్ల అనుభవం, ML/Statistics నైపుణ్యం, కంపెనీకి ఉపయోగపడే పనితో జీతం పెరగవచ్చు.</div></div>
+<div class="row"><div class="k">సీనియర్ / ప్రత్యేక నైపుణ్యం</div><div class="v"><span class="money">₹15 – ₹35 లక్షలు+/సంవత్సరం</span><br/>Senior Data Scientists, Applied Scientists, ML Specialists, పెద్ద Product కంపెనీల్లో ఇంకా ఎక్కువ సంపాదించవచ్చు. కానీ ఇలాంటి ఉద్యోగాలకు పోటీ ఎక్కువ.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">ఖరీదైన ప్రైవేట్ “Data Science Bootcamp” తప్పనిసరి కాదు. మంచి B.Tech/B.Sc. పునాది, Python, SQL, Statistics, ప్రాజెక్టులతో ప్రారంభించవచ్చు. అప్పు తీసుకునే ముందు మొత్తం ఫీజు, బోధన, Placements పరిశీలించండి.</div></div>
+<div class="flag red"><span class="mark">జీతం గురించి జాగ్రత్త</span><span>“6 నెలల్లో ₹20 లక్షల Data Scientist ఉద్యోగం” అంటూ వచ్చే ప్రకటనలను నమ్మకండి. కొత్తవారికి పోటీ ఎక్కువ. చాలామంది ముందుగా Data Analyst, BI లేదా Software ఉద్యోగంలో చేరి, తరువాత Data Science వైపు వెళ్తారు.</span></div>
+</div></section>
+<div class="rule-box"><h4 data-translation-review="required">ఈ నాలుగు సర్కిళ్ల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p data-translation-review="required"><b>Maths + Coding + కొత్త విషయాలు తెలుసుకోవాలనే ఆసక్తి</b> ఉంటే Data Science మీకు మంచి ఎంపిక కావచ్చు.</p>
+<p data-translation-review="required"><b>Dashboards, Business Reports</b> ఎక్కువ ఇష్టమైతే Data Analyst / Business Intelligence ఉద్యోగాలను కూడా చూడండి.</p>
+<p data-translation-review="required"><b>Statistics కన్నా Coding</b> ఎక్కువ ఇష్టమైతే Software Engineering / ML Engineering / Data Engineeringలను పోల్చండి.</p>
+<p data-translation-review="required" style="margin-top:16px;color:#9FAAB9;font-size:14px">ఇంకో విషయం: మంచి Data Scientist “నేను Model తయారు చేయగలనా?” అని మాత్రమే కాదు; “ఇది సరైన సమస్యేనా? వచ్చిన జవాబును నమ్మవచ్చా?” అని కూడా ఆలోచిస్తారు.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">ఇప్పటి నుంచి మీ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">స్కూల్ విద్యార్థులు ఖరీదైన కోర్సు కొనకుండానే చిన్న Data Projectsతో తమ ఆసక్తిని పరీక్షించవచ్చు.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head" data-translation-review="required"><span class="stage-no">1</span> ఇప్పుడే, స్కూల్‌లో ఉన్నప్పుడే</div><ul>
+<li>Maths, గ్రాఫ్‌లు, శాతాలు, సగటులు, Probabilityలో పునాది బలపరచుకోండి.</li>
+<li>ప్రాథమిక Python నేర్చుకోవడం మొదలుపెట్టండి.</li>
+<li>Excel లేదా Google Sheetsలో చిన్న డేటాను పరిశీలించి గ్రాఫ్‌లు తయారు చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head" data-translation-review="required"><span class="stage-no">2</span> పదో తరగతి తర్వాత</div><ul>
+<li>ఇంటర్‌లో MPC తీసుకోండి.</li>
+<li>B.Tech CSE / AI / Data Science, B.Sc. Statistics / Mathematics కోర్సులను పోల్చండి.</li>
+<li>మీరు ఎంచుకున్న కోర్సుకు AP EAPCET / JEE / CUET లేదా యూనివర్సిటీ అడ్మిషన్ ఏది అవసరమో తెలుసుకుని సిద్ధం అవ్వండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head" data-translation-review="required"><span class="stage-no">3</span> కాలేజీలో చదువుతున్నప్పుడు</div><ul>
+<li>Python, SQL, Statistics, Machine Learning, Data Visualisation నేర్చుకోండి.</li>
+<li>నిజమైన డేటాతో 4–6 ప్రాజెక్టులు చేయండి. వీడియోల్లో చూపిన వాటినే కాపీ చేయకండి.</li>
+<li>Analytics, Product, Finance, Healthcare, Manufacturing వంటి రంగాల్లో ఇంటర్న్‌షిప్ కోసం ప్రయత్నించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదట ఇలా ప్రయత్నించండి</span><span>మీ క్లాస్ మార్కులు, క్రికెట్ స్కోర్లు, వాతావరణం లేదా ఇంటి కరెంట్ వినియోగం వంటి చిన్న డేటాను తీసుకోండి. అందులో తప్పులు సరిచేసి, మూడు గ్రాఫ్‌లు వేసి, ఒక ప్రశ్నకు ఆధారాలతో సమాధానం చెప్పండి. గందరగోళమైన లెక్కల నుంచి స్పష్టమైన విషయం తెలుసుకోవడం మీకు నచ్చితే ఈ రంగం మీకు సరిపోవచ్చు.</span></div>
+</section>
+<p class="note" data-translation-review="required">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక అడ్మిషన్ లేదా జీతం ప్రకటన కాదు. కోర్సులు, ప్రవేశ పరీక్షలు, అర్హతలు కాలేజీని, సంవత్సరాన్ని బట్టి మారుతాయి. ఆంధ్రప్రదేశ్ ఉదాహరణల్లో AP EAPCET 2026, జాతీయ ప్రవేశానికి JEE ఉన్నాయి. కొన్ని B.Sc./B.S. కోర్సులకు CUET-UG లేదా యూనివర్సిటీ ప్రత్యేక ప్రక్రియ ఉంటుంది. జీతాలు కేవలం అంచనాలు. Indeed సెప్టెంబర్ 2026లో చూపిన సుమారు ₹12.34 లక్షల భారత సగటు 374 జీతాల ఆధారంగా ఉంది; అది కొత్తవారి ప్రారంభ జీతానికి హామీ కాదు.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>డేటా సైన్స్ మీకు బాగా సరిపోవచ్చు</strong>మీకు Maths, Coding, ఆధారాలతో ఆలోచించడం, సమస్యలు పరిష్కరించడం నచ్చుతున్నాయి. AI టూల్స్ వెంటపడే ముందు పునాది నైపుణ్యాలు పెంచుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>నిర్ణయానికి ముందు ప్రయత్నించండి</strong>డేటా సైన్స్‌లోని కొన్ని పనులు మీకు నచ్చుతున్నాయి. నిర్ణయం తీసుకునే ముందు నిజమైన డేటాతో ఒక చిన్న Python ప్రాజెక్టు చేయండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>టెక్నాలజీ నచ్చినా లెక్కలు, డేటా పని మీకు అంతగా నచ్చకపోవచ్చు. Software Engineering, UI/UX, Cybersecurity, Business Management లాంటి ఇతర కెరీర్‌లను కూడా పోల్చండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

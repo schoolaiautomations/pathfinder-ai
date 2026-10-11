@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>కెరీర్‌లో నాలుగు అంశాలు — ఫోరెన్సిక్ సైంటిస్ట్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్ / భారతదేశం</div><h2>ఫోరెన్సిక్ సైంటిస్ట్</h2><p class="standfirst">నేరాలు, న్యాయ విచారణలకు సంబంధించిన ఆధారాలను సైన్స్ ద్వారా పరిశీలించే నిపుణులు ఫోరెన్సిక్ సైంటిస్టులు. DNA, రక్తం, మందులు, విషాలు, వేలిముద్రలు, పత్రాలు, తుపాకులు, డిజిటల్ పరికరాలు, వస్తువుల ఆనవాళ్లను విశ్లేషిస్తారు. సినిమాల్లో చూపినట్టు కేవలం మిస్టరీలు ఛేదించడం కాదు; ల్యాబ్ విధానాలు, రికార్డులు, నాణ్యత, శాస్త్రీయంగా నిరూపించగల నిర్ణయాలు చాలా ముఖ్యం.</p></div>
+<div class="printhead">కెరీర్ నాలుగు అంశాలు  ·  Forensic Scientist  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చిందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఏ మార్గం?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>సంపాదన</em></a>
+</nav>
+<section id="c1"><div class="num">అంశం 1 · ఆసక్తి</div><h3>ఫోరెన్సిక్ సైన్స్ మీకు నచ్చిందా?</h3><p class="lede">క్రైమ్ కథలు ఇష్టమైతే సరిపోదు. నిజమైన పని శాస్త్రీయంగా, జాగ్రత్తగా, రహస్యాలను కాపాడుతూ, పలుమార్లు అదే పరీక్ష చేస్తూ సాగుతుంది.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>Biology, Chemistry, Physics లేదా Computer Scienceను లోతుగా నేర్చుకోవడం మీకు ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>చిన్న తప్పు కూడా పోలీసు విచారణ లేదా కోర్టు కేసును ప్రభావితం చేస్తే, మీరు చాలా జాగ్రత్తగా పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సినిమా తరహా ఉత్కంఠ లేకపోయినా ల్యాబ్ పరీక్షలు, రికార్డులు చేయడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఎవరైనా ఆశించిన ఫలితం రాకపోయినా ఆధారాలు చెప్పేదే నిజాయితీగా నివేదిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>రక్తం, శరీర ద్రవాలు, కుళ్లిన పదార్థాలు, డ్రగ్స్ లేదా కలవరపెట్టే కేసుల ఆధారాలతో పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ప్రత్యేక పోస్టుకు అవసరమైతే డిగ్రీ తర్వాత M.Sc. వంటి ఉన్నత చదువు కొనసాగిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">అంశం 2 · చదువు మార్గం</div><h3>విషయాలు, చదువు మార్గాలు</h3><p class="lede">DNA/బయాలజీ, కెమిస్ట్రీ/విషపదార్థాలు, ఫిజిక్స్, డిజిటల్ ఫోరెన్సిక్స్ వంటి రంగాలకు వేర్వేరు చదువు మార్గాలు ఉంటాయి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>జీవశాస్త్రం</div><div class="v"><span>DNA, రక్తం, శరీర ద్రవాలు, వన్యప్రాణి ఆధారాలు, సూక్ష్మజీవులకు Biology ఉపయోగపడుతుంది.</span></div></div>
+<div class="row"><div class="k"><span class="subno">2</span>రసాయనశాస్త్రం</div><div class="v"><span>డ్రగ్స్, విషాలు, పేలుడు పదార్థాలు, రసాయన ఆనవాళ్లు, Toxicology, ల్యాబ్ పరికరాల విశ్లేషణకు Chemistry ముఖ్యం.</span></div></div>
+<div class="row"><div class="k"><span class="subno">3</span>Physics / Computing</div><div class="v"><span>Ballistics, పత్రాలు, పరికరాలు, ప్రమాదాల ఆధారాలు, Digital/Cyber Forensicsకు Physics, Computing ఉపయోగపడతాయి.</span></div></div>
+<div class="row"><div class="k">పదో తరగతి తర్వాత</div><div class="v"><span>పదో తరగతి తర్వాత Science తీసుకోండి. DNA, biological forensic పనుల కోసం BiPC; భౌతిక, డిజిటల్, ఇంజినీరింగ్ విశ్లేషణకు MPC; అవకాశం ఉంటే PCMB వల్ల మరిన్ని మార్గాలు తెరుస్తాయి.</span></div></div>
+<div class="row"><div class="k">Direct undergraduate route</div><div class="v"><span>ఇంటర్ Science → B.Sc. Forensic Science / B.Sc. (Hons.) Forensic Science / ఇంటిగ్రేటెడ్ B.Sc.–M.Sc. Forensic Science. ఆంధ్రప్రదేశ్ B.Sc. Honours పాఠ్యాంశాల్లో crime scene, fingerprints, documents, ballistics, DNA, chemistry, toxicology, forensic medicine వంటి అంశాలున్నాయి.</span></div></div>
+<div class="row"><div class="k">NFSU route</div><div class="v"><span>National Forensic Sciences University (NFSU) కేంద్ర హోం శాఖ పరిధిలోని జాతీయ ప్రాధాన్యం గల విశ్వవిద్యాలయం. మూల నివేదికలో 5 ఏళ్ల ఇంటిగ్రేటెడ్ B.Sc.–M.Sc. Forensic Science, 3 ఏళ్ల B.Sc. Criminology &amp; Forensic Science, ఇతర PG కోర్సులు ప్రస్తావించబడ్డాయి. ఇంటర్ Science మార్కుల అర్హతలు చూడాలి.</span></div></div>
+<div class="row"><div class="k">Alternative science route</div><div class="v"><span>ప్రత్యక్ష Forensic Science డిగ్రీ మాత్రమే మార్గం కాదు. B.Sc. Chemistry/Physics/Biotechnology/Microbiology/Zoology/Biochemistry/Computer Science లేదా సంబంధిత డిగ్రీ తర్వాత M.Sc. Forensic Science/ప్రత్యేక కోర్సు చేయవచ్చు. ప్రభుత్వ ల్యాబ్ పోస్టులు చాలాసార్లు విభాగం వారీగా ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">ప్రవేశ ప్రక్రియ</div><div class="v"><span>ప్రతి కాలేజీకి ఒకే ప్రవేశ పరీక్ష లేదు. మూల నివేదిక ప్రకారం NFSU జాతీయ ప్రవేశ స్కోర్లు, కొన్ని విశ్వవిద్యాలయాల్లో CUET, సొంత పరీక్ష లేదా ఇంటర్ మార్కుల ఆధారంగా ప్రవేశాలు ఉండవచ్చు. ముందుగా కాలేజీ ఎంచుకుని తాజా నిబంధనలు చూడండి.</span></div></div>
+<div class="row"><div class="k">Postgraduate route</div><div class="v"><span>NFSU M.Sc. Forensic Scienceకు Science, Medicine, Engineering, Pharmacy వంటి పలు నేపథ్యాల డిగ్రీధారులు అర్హులు కావచ్చు; CUET-PG 2026లో సంబంధిత పేపర్లు, అర్హతలు చూడాలి.</span></div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన మార్గం</div><div class="v"><span>పదో తరగతి → BiPC/MPC/PCMB → B.Sc. Forensic Science లేదా తగిన Science/Engineering/Computing డిగ్రీ → అవసరమైతే M.Sc. → ల్యాబ్ ఇంటర్న్‌షిప్, శిక్షణ → Forensic Scientist, Scientific Assistant, Forensic Analyst.</span></div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>ఫోరెన్సిక్ సైన్స్ చదివితే నేరుగా పోలీసు దర్యాప్తు అధికారి కారు. సైంటిస్ట్ ఆధారాలను విశ్లేషిస్తారు. పోలీసు అధికారులు విచారణ, సాక్షులను ప్రశ్నించడం, అరెస్టు, కేసు నిర్మాణం చేస్తారు.</span></div>
+</div></section>
+<section id="c3"><div class="num">అంశం 3 · ఉద్యోగాలు</div><h3>ఏ ఫోరెన్సిక్ విభాగంలో పనిచేయవచ్చు?</h3><p class="lede">ఫోరెన్సిక్ ల్యాబ్‌లలో ఒక్కో ప్రత్యేక శాస్త్రీయ విభాగం ఉంటుంది.</p>
+<div class="card">
+<div class="row"><div class="k">Forensic Biology / DNA</div><div class="v"><span>రక్తం, లాలాజలం, వీర్యం, వెంట్రుకలు, కణజాలం, DNA విశ్లేషణ చేసి వ్యక్తి గుర్తింపు, సంబంధాలు, సంఘటన స్థలంతో ఆధారాల అనుసంధానం తెలుసుకుంటారు.</span><div class="chips"><span class="chip">DNA</span><span class="chip">Serology</span><span class="chip">జీవశాస్త్రం</span></div></div></div>
+<div class="row"><div class="k">Forensic Chemistry</div><div class="v"><span>రసాయనాలు, తెలియని పదార్థాలు, మిగిలిన ఆనవాళ్లు, పెట్రోలియం పదార్థాలు, పెయింట్, ఫైబర్ వంటి వాటిని పరికరాలతో పరీక్షిస్తారు.</span></div></div>
+<div class="row"><div class="k">Forensic Toxicology</div><div class="v"><span>ఆల్కహాల్, మందులు, డ్రగ్స్, విషాలు, హానికర రసాయనాలను నమూనాల్లో గుర్తించి కేసుకు వాటి సంబంధాన్ని అర్థం చేసుకుంటారు.</span></div></div>
+<div class="row"><div class="k">Narcotics / Drug Analysis</div><div class="v"><span>డ్రగ్స్‌గా అనుమానించే పదార్థాలను రసాయన, ల్యాబ్ పరికరాల పద్ధతుల్లో పరిశీలిస్తారు.</span></div></div>
+<div class="row"><div class="k">Fingerprint Examination</div><div class="v"><span>వేలిముద్రలు, చర్మపు గీతల ఆనవాళ్లను వెలికితీసి పోల్చి విశ్లేషిస్తారు; కంప్యూటర్ సహాయం ఉన్నా నిపుణుల పరిశీలన ముఖ్యం.</span></div></div>
+<div class="row"><div class="k">Questioned Documents</div><div class="v"><span>చేతిరాత, సంతకాలు, మార్పులు చేసిన పత్రాలు, ప్రింటింగ్, ఇంకు, కాగితం, నకిలీ పత్రాలను పరిశీలిస్తారు.</span></div></div>
+<div class="row"><div class="k">Forensic Ballistics</div><div class="v"><span>తుపాకులు, బుల్లెట్లు, ఖాళీ కార్ట్రిడ్జ్‌లు, బుల్లెట్ దారులు, సంబంధిత భౌతిక ఆధారాలను పరిశీలిస్తారు. Physics ఉపయోగపడుతుంది.</span></div></div>
+<div class="row"><div class="k">Digital / Cyber Forensics</div><div class="v"><span>కంప్యూటర్లు, ఫోన్లు, స్టోరేజ్, నెట్‌వర్క్, డిజిటల్ ఖాతాల్లో ఉన్న ఆధారాలను వాటి అసలు స్థితి దెబ్బతినకుండా సేకరించి విశ్లేషిస్తారు.</span><div class="chips"><span class="chip">కంప్యూటర్లు</span><span class="chip">Mobile Devices</span><span class="chip">Cyber Evidence</span></div></div></div>
+<div class="row"><div class="k">Forensic Physics</div><div class="v"><span>గాజు, పెయింట్, ఫైబర్, గుర్తులు, కొలతలు వంటి భౌతిక ఆధారాలపై పనిచేస్తారు.</span></div></div>
+<div class="row"><div class="k">Forensic Engineering</div><div class="v"><span>భవనాలు, యంత్రాలు, విద్యుత్, మెటీరియల్స్ ఎందుకు విఫలమయ్యాయి, ప్రమాదం ఎలా జరిగిందో శాస్త్రీయంగా పరిశీలిస్తారు. సాధారణంగా Engineering డిగ్రీ అవసరం.</span></div></div>
+<div class="row"><div class="k">Forensic Anthropology</div><div class="v"><span>మానవ ఎముకలు, శరీర అవశేషాలను అధ్యయనం చేసి గుర్తింపు, వయసు లేదా ఇతర శాస్త్రీయ వివరాలను అంచనా వేస్తారు; ప్రత్యేక శిక్షణ అవసరం.</span></div></div>
+<div class="row"><div class="k">Wildlife Forensics</div><div class="v"><span>వన్యప్రాణులకు సంబంధించిన అక్రమ వ్యాపారం, జంతువుల శరీర భాగాలు, DNA వంటి ఆధారాలను శాస్త్రీయంగా పరిశీలిస్తారు.</span></div></div>
+<div class="row"><div class="k">Crime Scene Forensics</div><div class="v"><span>నేర స్థలంలో ఆధారాలు గుర్తించడం, సేకరించడం, ఫొటోలు తీయడం, సరైన ప్యాకింగ్, రికార్డులు నిర్వహించడం చేస్తారు.</span></div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Forensic Scientist vs Police Officer</div><div class="v"><span>Police Officer నేరాన్ని విచారించి వ్యక్తులను ప్రశ్నించడం, అరెస్టు వంటి చట్టపరమైన పనులు చేస్తారు; Forensic Scientist ఆధారాలను శాస్త్రీయంగా విశ్లేషిస్తారు.</span></div></div>
+<div class="row"><div class="k">Forensic Scientist vs Forensic Doctor</div><div class="v"><span>Forensic Doctor మృతదేహ పరీక్షలు, గాయాల వైద్యపరమైన విశ్లేషణ చేస్తారు; Forensic Scientist ల్యాబ్ శాస్త్రంపై పని చేస్తారు. అర్హతలు వేరు.</span></div></div>
+<div class="row"><div class="k">Forensic Scientist vs Forensic Psychologist</div><div class="v"><span>Forensic Psychologist ప్రవర్తన, మానసిక అంశాలపై నిపుణుడిగా పని చేస్తారు; Forensic Scientist భౌతిక, రసాయన, జీవ లేదా డిజిటల్ ఆధారాలపై పని చేస్తారు.</span></div></div>
+<div class="row"><div class="k">ఎక్కడ పని చేయవచ్చు?</div><div class="v"><span>రాష్ట్ర, కేంద్ర ఫోరెన్సిక్ ల్యాబ్‌లు, ప్రైవేటు విశ్లేషణ సంస్థలు, సైబర్ ఫోరెన్సిక్ బృందాలు, పరిశోధనా కేంద్రాలు, సంబంధిత విశ్వవిద్యాలయాలు ఉద్యోగ అవకాశాలు.</span></div></div>
+<div class="row"><div class="k">Andhra Pradesh — current opportunity</div><div class="v"><span>ఆంధ్రప్రదేశ్‌లో ఫోరెన్సిక్ ల్యాబ్ పోస్టులు ప్రభుత్వ ప్రకటనల ద్వారా వస్తాయి; అర్హతలు, అనుభవం, పరీక్షలు పోస్టును బట్టి మారవచ్చు. మూల నివేదికలో పేర్కొన్న ప్రస్తుత అవకాశాలను కొత్త నోటిఫికేషన్‌తో తప్పక పోల్చండి.</span></div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ మార్గం</div><div class="v"><span>ప్రత్యామ్నాయ అవకాశాలు: ల్యాబ్ అనలిస్టు, కెమిస్ట్రీ/బయాలజీ పరిశోధన, QA/QC, డిజిటల్ సెక్యూరిటీ, డేటా విశ్లేషణ, సైన్స్ బోధన.</span><div class="chips"><span class="chip">Analytical Chemistry</span><span class="chip">Biotechnology</span><span class="chip">Cybersecurity</span><span class="chip">Quality Labs</span><span class="chip">Research</span><span class="chip">Scientific Instrumentation</span></div></div></div>
+<div class="flag"><span class="mark">Evidence rule</span><span>ఫోరెన్సిక్ సైంటిస్ట్ ఎవరు దోషి అని నిరూపించాలని ముందే నిర్ణయించుకోకూడదు. ఆధారాలను నిష్పాక్షికంగా పరీక్షించి పద్ధతులు, ఫలితాలు నిజాయితీగా నివేదించాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">అంశం 4 · ఆదాయం</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">ఆదాయం ప్రభుత్వ పోస్టు, ప్రైవేటు ల్యాబ్, అనుభవం, ప్రత్యేకతపై ఆధారపడుతుంది.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / ట్రైనీ</div><div class="v"><span class="money">₹5,000 – ₹15,000/month</span><br/><span>ల్యాబ్ లేదా పరిశోధన ట్రైనీగా మొదటి దశలో భత్యం తక్కువగా ఉండవచ్చు.</span></div></div>
+<div class="row"><div class="k">Junior private / project role</div><div class="v"><span class="money">₹20,000 – ₹35,000/month</span><br/><span>ప్రైవేటు లేదా ప్రాజెక్టు ఆధారిత జూనియర్ సైన్స్ ఉద్యోగాలు; సంస్థ, విభాగాన్ని బట్టి జీతం మారుతుంది.</span></div></div>
+<div class="row"><div class="k">Government Scientific Assistant</div><div class="v"><span class="money">Often Pay Level 5–6 depending on recruitment</span><br/><span>ప్రభుత్వ Scientific Assistant పోస్టులకు నిర్దేశిత వేతన స్థాయి, ఎంపిక నిబంధనలు ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">Central Scientist 'B'</div><div class="v"><span class="money">₹56,100 basic/month</span><br/><span>కేంద్ర స్థాయి Scientist ‘B’ పోస్టుకు ఉన్నత అర్హతలు, నిర్దేశిత ప్రభుత్వ పే లెవెల్ ఉండవచ్చు.</span></div></div>
+<div class="row"><div class="k">AP Assistant Director — FSL</div><div class="v"><span class="money">₹57,100 – ₹1,47,760 pay scale</span><br/><span>AP Forensic Science Laboratoryలో Assistant Director పోస్టుకు ప్రత్యేక అర్హతలు, నియామక ప్రకటన, వేతన పట్టిక ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">Higher / specialist roles</div><div class="v"><span class="money">Can rise significantly</span><br/><span>అనుభవజ్ఞులు, ప్రత్యేక రంగాల్లో నిపుణులకు ఉన్నత పరిశోధన, సీనియర్ ప్రభుత్వ/ప్రైవేటు అవకాశాలు ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">చదువు ఖర్చు</div><div class="v"><span>B.Sc., M.Sc. ఫీజులు సంస్థను బట్టి మారుతాయి. కాలేజీలో నిజమైన ల్యాబ్, పరికరాలు, ప్రాక్టికల్స్, ఇంటర్న్‌షిప్ ఉంటాయో చూడండి.</span></div></div>
+<div class="flag red"><span class="mark">Money warning</span><span>ప్రభుత్వ FSL ఉద్యోగం ఖాయమని భావించి ఖరీదైన ప్రైవేటు డిగ్రీకి పెద్ద అప్పు చేయవద్దు. ఉద్యోగాలు పరిమితం, ప్రత్యేక అర్హతలు ఉంటాయి. Chemistry, Biology, Physics, Computing, ల్యాబ్ నైపుణ్యాలతో Plan B ఉండాలి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు అంశాల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">Science + evidence + precision</span> — Forensic Science may be a strong fit.</p>
+<p><span class="hi">Love crime investigation more than laboratory science</span> — compare Police / IPS / Investigation careers.</p>
+<p><span class="hi">Love computers and cybercrime</span> — compare Digital Forensics / Cybersecurity.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>ఫోరెన్సిక్ సైన్స్ అంటే మనం ఊహించిన సమాధానాన్ని వెతకడం కాదు; ఆధారాలు నిరూపించగల విషయాన్ని తెలుసుకోవడం.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్ దశ నుంచే ప్రారంభించగల పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే స్కూల్లో ఉన్నప్పుడు</div><ul>
+<li>Biology, Chemistry, Physics, ప్రాథమిక Mathsలో బలంగా తయారవండి.</li>
+<li>చూసిన విషయాలను, వాటి నుంచి మీరు తీసుకున్న నిర్ణయాలను వేరువేరుగా రాయడం అలవాటు చేసుకోండి.</li>
+<li>ఆధారాలు కలుషితం కాకుండా ఉంచడం, chain of custody, scientific controls ఎందుకు ముఖ్యమో తెలుసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>పదో తరగతి తర్వాత</div><ul>
+<li>ఆసక్తి బట్టి BiPC, MPC లేదా PCMB ఎంచుకోండి.</li>
+<li>B.Sc. Forensic Scienceతో పాటు Chemistry, Biotechnology, Physics, Computer Science డిగ్రీలను కూడా పరిశీలించండి.</li>
+<li>మీ లక్ష్య కాలేజీ CUET, NFSU ప్రవేశ పద్ధతి, మార్కులు లేదా వేరే పరీక్ష ఏది అనుసరిస్తుందో తెలుసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>ఇంటర్ / డిగ్రీ సమయంలో</div><ul>
+<li>ల్యాబ్ నైపుణ్యాలు, శాస్త్రీయ పరికరాల వాడకం నేర్చుకోండి.</li>
+<li>అనుమతి ఉన్నచోట Forensic, Analytical, Cyber లేదా Research ల్యాబ్‌లలో ఇంటర్న్‌షిప్/విజిట్ ప్రయత్నించండి.</li>
+<li>DNA, Chemistry, Toxicology, Digital, Physics, Documents, Ballistics వంటి ఒక ప్రత్యేక విభాగాన్ని ఎంచుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">Best first test</span><span>సురక్షితమైన ఇంటి వస్తువులతో ఊహాజనిత ఘటన స్థలం ఏర్పాటు చేయండి. ఫొటోలు తీసి, ప్రతి వస్తువు ఎక్కడ దొరికిందో రాసి, కలుషితం చేయకుండా చూసి observation → test → result → conclusionగా నమోదు చేయండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. వయసు, చదువు అర్హతలు, ప్రవేశ పరీక్షలు, ఫీజులు, జీతాలు మారవచ్చు. దరఖాస్తు ముందు తాజా అధికారిక నోటిఫికేషన్ పరిశీలించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>ఈ కెరీర్ మీకు బాగా సరిపోవచ్చు</strong>మీ ఆసక్తి బలంగా కనిపిస్తోంది. అయితే చదువు, అర్హతలు, రోజువారీ పని, ఖర్చులను కూడా తెలుసుకుని నిర్ణయించుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>ముందుగా ప్రయత్నించి చూడండి</strong>కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. చిన్న ప్రాజెక్టు లేదా సంబంధిత అనుభవంతో ఈ కెరీర్‌ను పరీక్షించుకోండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>కొన్ని ముఖ్యమైన అంశాలపై ఆసక్తి తక్కువగా ఉండవచ్చు. ప్రత్యామ్నాయ కెరీర్లు కూడా పరిశీలించి కౌన్సెలర్‌తో చర్చించండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

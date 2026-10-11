@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ గైడ్ — ఇంటీరియర్ డిజైనర్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap'); body,.row,.q,.stage,.flag,.verdict,.pip{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;} .mast h2,.pip b,.row .k,.stage-head,h3,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;line-height:1.4!important;}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ అవగాహన · ఆంధ్రప్రదేశ్</div><h2>ఇంటీరియర్ డిజైనర్</h2><p class="standfirst">ఇళ్లు, ఆఫీసులు వంటి లోపలి స్థలాలు అందంగా, సౌకర్యంగా, ఉపయోగకరంగా ఉండేలా రూపొందించడం. రంగులు మాత్రమే కాదు; కొలతలు, ఫర్నిచర్, లైటింగ్, సామగ్రి, బడ్జెట్, డ్రాయింగ్‌లు, సైట్ పని ఉంటాయి.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్  ·  ఇంటీరియర్ డిజైనర్  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>ఏ పని చేయాలి?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>జీతం, ఖర్చు</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఇంటీరియర్ డిజైన్ నచ్చుతుందా?</h3><p class="lede">ఇక్కడ ఉన్న ఆరు ప్రశ్నలకు మీ నిజమైన అభిప్రాయంతో అవును లేదా కాదు అని చెప్పండి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఒక గదిలోకి వెళ్లగానే వస్తువుల అమరిక, ఫర్నిచర్, లైటింగ్, రంగులు, నడిచే స్థలం గమనిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>కొత్త సృజనాత్మక ఆలోచనలు చేయడమూ, వాటిని నిజంగా అమలు చేసే సమస్యలు పరిష్కరించడమూ రెండూ ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>కొలతలు, స్కేలు, ఫ్లోర్ ప్లాన్, ఖచ్చితమైన డ్రాయింగ్‌లతో ఓపికగా పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>కస్టమర్ “నచ్చలేదు” అంటే ఒకే గదిని ఎన్నోసార్లు మళ్లీ డిజైన్ చేయడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>మెటీరియల్స్, ఫర్నిచర్, లైటింగ్, ప్లంబింగ్, ఎలక్ట్రికల్ సమన్వయం, సైట్‌లో నిర్మాణం ఎలా జరుగుతుందో నేర్చుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>కొన్ని రోజులు డిజైన్ కంటే కాంట్రాక్టర్ల ఫోన్లు, సైట్ సమస్యలు, ధర అంచనాలు, గడువులతోనే గడిచినా ఈ వృత్తి నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ సమాధానాల ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>చదువు, నైపుణ్యాలు</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అర్హతలు, ప్రవేశ పరీక్షలు, తదుపరి మార్గాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> డ్రాయింగ్, ఊహాశక్తి</div><div class="v">చిత్రాలు గీయడం, దూరం/లోతు చూపడం, కొలతల నిష్పత్తి, రంగులు, అమరిక నేర్చుకుంటే మీ డిజైన్ ఆలోచనలను ఇతరులకు వివరించగలరు.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> గణితం, కొలతలు</div><div class="v">గది పొడవు, వెడల్పు, స్కేలు, వైశాల్యం, సామగ్రి పరిమాణాలు, బడ్జెట్, ఖర్చుల లెక్కలు ప్రతిరోజూ ఉపయోగపడతాయి. క్లిష్టమైన గణితం కంటే ఖచ్చితత్వం ముఖ్యం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> మాట్లాడే నైపుణ్యం</div><div class="v">కస్టమర్‌కు నిజంగా ఏం కావాలో తెలుసుకోవాలి; డిజైన్ వివరించాలి; మార్పులపై చర్చించాలి; కార్పెంటర్లు, ఎలక్ట్రీషియన్లు, కాంట్రాక్టర్లు, సరఫరాదారులతో సమన్వయం చేయాలి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">ఇంటర్ MPC, BiPC, CEC, కామర్స్, హ్యుమానిటీస్ — ఏ గుర్తింపు పొందిన గ్రూప్ నుంచైనా ఇంటీరియర్ డిజైన్‌లోకి వెళ్లవచ్చు. ఇంటర్ తర్వాత కాలేజీని బట్టి B.Des., B.Sc., BA/B.Voc లేదా Interior Design, Interior &amp; Spatial Design, Furniture &amp; Interior Design డిప్లొమా ఎంచుకోవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రవేశ పరీక్షలు</div><div class="v">ప్రతి ఇంటీరియర్ డిజైన్ కాలేజీకి ఒకే జాతీయ ప్రవేశ పరీక్ష ఉండదు. NID B.Des కోసం NID DAT ఉంటుంది. NID Ahmedabadలో Furniture and Interior Design విభాగం ఉంది; 2026 B.Des అర్హతలో ఏ ఇంటర్ గ్రూప్ వారైనా అవకాశం ఉంది. ఇతర కాలేజీలు డిజైన్ ఆప్టిట్యూడ్ పరీక్ష, ఇంటర్వ్యూ, Portfolio లేదా ఇంటర్ మార్కులు చూడవచ్చు.</div></div>
+<div class="row"><div class="k">డిగ్రీనా, డిప్లొమానా?</div><div class="v">డిగ్రీలో డిజైన్ పునాది, ఇంటర్న్‌షిప్‌లు, దీర్ఘకాల వృత్తి ఎదుగుదలకు అవకాశం ఎక్కువగా ఉండవచ్చు. డిప్లొమా త్వరగా, ప్రాక్టికల్‌గా ఉండొచ్చు; కానీ కోర్సుల నాణ్యత మారుతుంది. సిలబస్, సాఫ్ట్‌వేర్, సైట్ అనుభవం, ప్లేస్‌మెంట్లు చూసి చేరాలి.</div></div>
+<div class="row"><div class="k">తప్పక నేర్చుకోవాల్సినవి</div><div class="v">Space Planning (గది స్థల వినియోగం), AutoCAD, SketchUp/3D, మెటీరియల్స్, లైటింగ్, ఫర్నిచర్, ఖర్చు అంచనా (Estimation), సైట్‌లో అమలు (Site Execution).<div class="chips"><span class="chip">స్థల ప్రణాళిక</span><span class="chip">AutoCAD</span><span class="chip">SketchUp / 3D</span><span class="chip">సామగ్రి</span><span class="chip">లైటింగ్</span><span class="chip">ఫర్నిచర్</span><span class="chip">ఖర్చు అంచనా</span><span class="chip">సైట్ పని</span></div></div></div>
+<div class="row"><div class="k">పూర్తి మార్గం</div><div class="v">ఏ ఇంటర్ గ్రూప్ అయినా → అవసరమైతే డిజైన్ ప్రవేశ పరీక్ష → Interior Design డిగ్రీ లేదా డిప్లొమా → మంచి Portfolio + CAD/3D నైపుణ్యాలు → ఇంటర్న్‌షిప్, సైట్ అనుభవం → Junior Interior Designer → Interior Designer.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>Interior Design, Architecture ఒకే అర్హత కాదు. Architect అనే నియంత్రిత బిరుదుకు గుర్తింపు పొందిన B.Arch, Council of Architecture నమోదు అవసరం.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఏయే రకాల పనులు చేయవచ్చు?</h3><p class="lede">ఈ వృత్తిలో చేసే పనులు, అవకాశాలు, పోటీ, పరిమితులు గురించి చదవండి.</p>
+<div class="card">
+<div class="row"><div class="k">ఇళ్ల ఇంటీరియర్ డిజైన్</div><div class="v">ఇళ్లు, అపార్ట్‌మెంట్లు, విల్లాలకు గదుల అమరిక, వంటగది, అలమారలు, ఫర్నిచర్, లైటింగ్, ఫినిషింగ్, కస్టమర్ అభిరుచికి సరిపోయే డిజైన్.<div class="chips"><span class="chip">ఇళ్లు</span><span class="chip">వంటగదులు</span><span class="chip">ఫర్నిచర్</span></div></div></div>
+<div class="row"><div class="k">వాణిజ్య స్థలాల డిజైన్</div><div class="v">ఆఫీసులు, బ్యాంకులు, క్లినిక్‌లు, వ్యాపార స్థలాల డిజైన్. పని సులభంగా జరగడం, ఉద్యోగుల అవసరాలు, బ్రాండ్, భద్రత, స్థల వినియోగం చూసుకోవాలి.</div></div>
+<div class="row"><div class="k">హోటల్, రెస్టారెంట్ డిజైన్</div><div class="v">హోటళ్లు, రిసార్టులు, రెస్టారెంట్లు, కేఫేలకు వాతావరణం, అతిథుల అనుభవం, మన్నిక, లైటింగ్, సామగ్రి, బ్రాండ్ గుర్తింపుకు తగిన ఇంటీరియర్స్.</div></div>
+<div class="row"><div class="k">షాపుల డిజైన్</div><div class="v">దుకాణాలు, షోరూమ్‌లు, షాపింగ్ స్థలాల్లో వస్తువుల ప్రదర్శన, కస్టమర్ల కదలిక, లైటింగ్, బ్రాండ్ అనుభవంపై దృష్టి.</div></div>
+<div class="row"><div class="k">కార్యాలయ స్థలాల డిజైన్</div><div class="v">కార్పొరేట్ ఆఫీసులు, Co-working ప్రదేశాలు, క్యాంపస్‌లలో పని టేబుళ్లు, మీటింగ్ గదులు, కలిసి పనిచేసే స్థలాలు, శబ్దం నియంత్రణ, ఉద్యోగుల సౌలభ్యం.</div></div>
+<div class="row"><div class="k">ఫర్నిచర్ డిజైన్</div><div class="v">కుర్చీలు, బల్లలు, స్టోరేజ్, మాడ్యులర్ ఫర్నిచర్, ప్రత్యేకంగా తయారుచేసే సామగ్రి డిజైన్. శరీర సౌకర్యం (Ergonomics), మెటీరియల్స్, జాయింట్లు, తయారీ పద్ధతులు తెలుసుకోవాలి.</div></div>
+<div class="row"><div class="k">కిచెన్, వార్డ్‌రోబ్ డిజైన్</div><div class="v">మాడ్యులర్ వంటగదులు, అలమారలు, హార్డ్‌వేర్, మనిషికి సౌకర్యంగా వినియోగం, ఖచ్చితమైన కొలతలు, నిర్మాణ వివరాల్లో ప్రత్యేకత.</div></div>
+<div class="row"><div class="k">లైటింగ్ డిజైన్</div><div class="v">సహజ కాంతి, కృత్రిమ లైట్లు ఉపయోగించి సౌలభ్యం, అందం, పనితీరును మెరుగుపరచడం. ఇందులో ఆర్కిటెక్చర్, ఎలక్ట్రికల్ డిజైన్, లైటింగ్ పరికరాల ఎంపిక కూడా ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">ఎగ్జిబిషన్ / అనుభవ డిజైన్</div><div class="v">మ్యూజియంలు, ప్రదర్శనలు, బ్రాండ్ డిస్‌ప్లేలు, ఈవెంట్లు, తాత్కాలిక నిర్మాణాల్లో ఇంటీరియర్, గ్రాఫిక్స్, కథ చెప్పడం, నిర్మాణం కలిపిన పని.</div></div>
+<div class="row"><div class="k">3D విజువలైజేషన్</div><div class="v">నిర్మాణానికి ముందే గది ఎలా ఉంటుందో నిజమైనట్టు కనిపించే 3D చిత్రాలు, వీడియో వాక్‌థ్రూలు తయారు చేయడం. 3D Modelling, Rendering ప్రత్యేక ఉద్యోగంగా మారవచ్చు; SketchUp, Blender/3ds Max, Enscape/Lumion వంటి సాధనాలు ఉపయోగిస్తారు.<div class="chips"><span class="chip">SketchUp</span><span class="chip">3ds Max / Blender</span><span class="chip">Enscape / Lumion</span><span class="chip">3D చిత్రం తయారీ</span></div></div></div>
+<div class="row"><div class="k">సైట్‌లో అమలు</div><div class="v">డ్రాయింగ్‌లో ఉన్న డిజైన్‌ను నిజంగా నిర్మించడం. కార్పెంటర్లు, ఎలక్ట్రీషియన్లు, పెయింటర్లు, సీలింగ్, ఫ్లోరింగ్ పనివారు, సరఫరాదారులను సమన్వయం చేసి కొలతలు, నాణ్యత, గడువు చూసుకోవాలి.</div></div>
+<div class="row"><div class="k">Turnkey / Design-Build</div><div class="v">కొంతమంది డిజైన్‌తోపాటు పూర్తి నిర్మాణ బాధ్యత తీసుకుంటారు. ఆదాయం పెరిగే అవకాశం ఉన్నా కొనుగోళ్లు, కూలీలు, బడ్జెట్, నాణ్యత, గడువు వల్ల నష్ట ప్రమాదం కూడా ఎక్కువ.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">ఇంటీరియర్ డిజైనర్, ఆర్కిటెక్ట్</div><div class="v">Interior Designer ప్రధానంగా గది అమరిక, ఫర్నిచర్, ఫినిషింగ్, లైటింగ్, లోపలి వినియోగం చూస్తారు. Architect పూర్తి భవనాలు, నిర్మాణ పరిసరాలపై గుర్తింపు పొందిన ఆర్కిటెక్చర్ అర్హతతో పనిచేస్తారు. భారతదేశంలో Architect అనే బిరుదు వాడాలంటే Council of Architectureలో నమోదు అవసరం. Interior Design చదువు ఒక్కటే దీనికి సరిపోదు.</div></div>
+<div class="row"><div class="k">ఇంటీరియర్ డిజైనర్, డెకరేటర్</div><div class="v">Interior Designer స్థల ప్రణాళిక, సాంకేతిక డ్రాయింగ్‌లు, ఫర్నిచర్ అమరిక, మెటీరియల్స్, సైట్ నిర్మాణంపై పని చేయగలరు. Interior Decorator ప్రధానంగా రంగులు, అలంకరణ, తెరలు, వస్తువులు, చివరి రూపంపై దృష్టి పెడతారు. పనులు కొంత కలిసినా సాంకేతిక నైపుణ్యం తేడా చూపిస్తుంది.</div></div>
+<div class="row"><div class="k">ఎవరు ఉద్యోగం ఇస్తారు?</div><div class="v">Interior Design స్టూడియోలు, ఆర్కిటెక్చర్ సంస్థలు, రియల్ ఎస్టేట్ డెవలపర్లు, ఫర్నిచర్/మాడ్యులర్ కంపెనీలు, హోమ్-ఇంటీరియర్ బ్రాండ్లు, రిటైల్, హోటల్ గ్రూపులు, ఆఫీసు డిజైన్ సంస్థలు, నిర్మాణ సంస్థలు, 3D స్టూడియోలు.</div></div>
+<div class="row"><div class="k">Portfolio ఎంత ముఖ్యం?</div><div class="v">మీ Portfolio ఉద్యోగానికి బలమైన ఆధారం. సమస్య ఏమిటి, ఫ్లోర్ ప్లాన్, స్కెచ్‌లు, మెటీరియల్ ఎంపిక, 3D దృశ్యాలు, చివరి నిర్మాణం చూపండి; అందమైన చిత్రాలే కాదు. మీరు ఆలోచించి అమలు చేయగలరా అని యజమానులు చూస్తారు.</div></div>
+<div class="row"><div class="k">ఫ్రీలాన్స్ / సొంత స్టూడియో</div><div class="v">అనుభవం ఉన్నవారు ఇళ్ల, వాణిజ్య స్థలాల ప్రాజెక్టులు స్వతంత్రంగా తీసుకోవచ్చు. ఆదాయం పెరిగే అవకాశం ఉన్నా కస్టమర్లను వెతకడం, కొటేషన్లు, కాంట్రాక్టర్లు, బిల్లులు వసూలు చేయడం, తప్పుల బాధ్యత కూడా మీదే.</div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ Plan B</div><div class="v">Furniture Design, 3D Visualisation, Retail Design, BIM/CAD, Set Design, Project Coordination వంటి రంగాలకు ఇంటీరియర్ డిజైన్ నైపుణ్యాలు ఉపయోగపడతాయి.<div class="chips"><span class="chip">ఫర్నిచర్ డిజైన్</span><span class="chip">3D దృశ్యాలు</span><span class="chip">దుకాణాల డిజైన్</span><span class="chip">BIM/CAD</span><span class="chip">సెట్ డిజైన్</span><span class="chip">ప్రాజెక్టు సమన్వయం</span></div></div></div>
+<div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>AutoCAD, SketchUp నేర్చుకున్నంత మాత్రాన డిజైనర్ కాలేరు. స్థల వినియోగం, కొలతలు, నిర్మాణం, కస్టమర్ అవసరాలు నిజంగా అర్థమవాలి.</span></div>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఖర్చు ఎంత?</h3><p class="lede">ఇక్కడి జీతాలు మూల నివేదికలోని అంచనాలు మాత్రమే; ఉద్యోగం, ప్రాంతం, కాలాన్ని బట్టి మారవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్</div><div class="v"><span class="money">నెలకు ₹5,000</span> –₹15,000. నిజమైన డ్రాయింగ్‌లు, సైట్ సందర్శనలు, మార్గదర్శకం, Portfolio అభివృద్ధి కూడా ఇంటర్న్‌షిప్‌లో ముఖ్యం.</div></div>
+<div class="row"><div class="k">జూనియర్ ఇంటీరియర్ డిజైనర్</div><div class="v"><span class="money">నెలకు ₹15,000</span> –₹25,000. మూల నివేదిక ప్రకారం 2026 Indeed భారత్ సగటు సుమారు ₹18,800; కంపెనీ, నగరాన్ని బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">ఇంటీరియర్ డిజైనర్</div><div class="v"><span class="money">నెలకు ₹20,000</span> –₹45,000 లేదా ఎక్కువ. మూల నివేదికలో Indeed భారత సగటు సుమారు ₹23,400. ప్రాజెక్టు అమలు, క్లయింట్ నిర్వహణ, 3D/BIM, పెద్ద నగరాల అనుభవంతో పెరగవచ్చు.</div></div>
+<div class="row"><div class="k">సీనియర్ / ప్రాజెక్టు డిజైనర్</div><div class="v"><span class="money">నెలకు ₹35,000</span> –₹80,000 లేదా ఎక్కువ. డిజైన్ నాయకత్వం, కస్టమర్ సమావేశాలు, సైట్ పర్యవేక్షణ, బృంద నిర్వహణ; కొన్ని ప్రకటనల్లో ₹30,000–₹70,000+ కనిపిస్తాయి.</div></div>
+<div class="row"><div class="k">ఫ్రీలాన్స్ / సొంత స్టూడియో ఆదాయం</div><div class="v"><span class="money">ఆదాయం స్థిరంగా ఉండదు</span>ఆదాయం స్థిరంగా ఉండదు. డిజైన్ ఫీజు, చదరపు అడుగు ఫీజు, సలహా ఫీజు లేదా Turnkey నిర్మాణ మార్జిన్ ద్వారా సంపాదించవచ్చు; ఎక్కువ ఆదాయంతోపాటు నష్టం, చెల్లించని బిల్లుల ప్రమాదమూ ఉంటుంది.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">B.Des, B.Sc, BA/B.Voc, డిప్లొమా, ప్రభుత్వ/ప్రైవేటు కాలేజీల్లో ఫీజులు వేరు. ప్రైవేటు కోర్సులు ఖరీదైనవి కావచ్చు. మొత్తం ఫీజు, అధ్యాపకులు, స్టూడియో నాణ్యత, Portfolio, సాఫ్ట్‌వేర్/సైట్ శిక్షణ, ప్లేస్‌మెంట్లు పోల్చండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>కోర్సు ఫీజు లక్షల్లో ఉంటే మంచి Portfolio, నిజమైన ఇంటర్న్‌షిప్, ఉద్యోగ అనుభవం ఇస్తుందో కుటుంబంతో పరిశీలించండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్ల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">నాలుగూ సరిపోతే</span> — నిజమైన ప్రణాళికతో ప్రయత్నం ప్రారంభించండి.</p>
+<p><span class="hi">ఒకటి సరిపోకపోతే</span> — నిర్ణయానికి ముందు ఆ అంశాన్ని ఆలోచించండి.</p>
+<p><span class="hi">రెండు లేదా అంతకంటే ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఒక గడువు పెట్టుకోండి: “___ వయసు వరకు ప్రయత్నించి, అవసరమైతే Plan Bకి మారతాను.”</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచే ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే ప్రారంభించగల పనులు, తర్వాత చేయాల్సిన పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul>
+<li>మీ గదిని కొలిచి సులభమైన ఫ్లోర్ ప్లాన్ గీయండి.</li>
+<li>ఫర్నిచర్, రంగులు, లైటింగ్ మార్చి రెండు వేర్వేరు డిజైన్ ఆలోచనలు గీయండి.</li>
+<li>ఉచిత SketchUp/డిజైన్ వీడియోలతో కొలతలు, 3D పునాదులు తెలుసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>మీకు సరిపోయే ఇంటర్ గ్రూప్ ఎంచుకోండి; అన్ని గ్రూపుల నుంచి ఇంటీరియర్ డిజైన్ సాధ్యమే.</li>
+<li>డిజైన్ డిగ్రీ, డిప్లొమా, NID వంటి ప్రవేశ మార్గాలు పోల్చండి.</li>
+<li>మీ పనుల ఫోటోలు, డ్రాయింగ్‌లు, నమూనాలను Portfolioగా భద్రపరచండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కోర్సు తర్వాత</div><ul>
+<li>Interior Design కోర్సులో AutoCAD, 3D, మెటీరియల్స్, బడ్జెట్ నేర్చుకోండి.</li>
+<li>కాంట్రాక్టర్లతో సైట్‌లో పనిచేసే ఇంటర్న్‌షిప్ చేయండి.</li>
+<li>కనీసం ఐదు బాగా పూర్తిచేసిన డిజైన్ ప్రాజెక్టులతో ఉద్యోగాలకు దరఖాస్తు చేయండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>₹50,000 బడ్జెట్‌తో నిజమైన ఒక గదిని మళ్లీ డిజైన్ చేయండి: కొలతలు, ప్లాన్, సామగ్రి, ధరలు, చివరి రూపం సిద్ధం చేయండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే. అర్హతలు, వయసు, పరీక్షలు, వేతనాలు మారవచ్చు; దరఖాస్తు చేసే సంవత్సరపు అధికారిక ప్రకటన చూడండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Interior Design fit</strong>You seem comfortable with both creative design and practical execution. Build one real room project and start a small portfolio.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>Some parts fit you, but test measurements, client revisions, budgeting and site work — not only mood boards and decoration.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>The technical/client/site side of Interior Design may not match what you enjoy. Compare Graphic Design, Fashion, Architecture, Visual Merchandising or other creative careers.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div><script>
+ document.addEventListener('DOMContentLoaded',function(){
+  const questions=[...document.querySelectorAll('#quiz .q')];
+  const v=document.querySelector('#verdict');
+  function update(){const picks=questions.map(q=>q.querySelector('button[aria-pressed="true"]'));
+   const done=picks.filter(Boolean).length;if(done<questions.length){v.className='verdict';v.innerHTML='<strong>'+done+' / '+questions.length+' ప్రశ్నలకు సమాధానం ఇచ్చారు</strong>మిగిలిన ప్రశ్నలకూ సమాధానం ఇవ్వండి.';return;}
+   const yes=picks.filter(b=>b.dataset.v==='y').length;
+   v.className='verdict '+(yes>=5?'good':yes>=3?'mixed':'bad');
+   v.innerHTML='<strong>'+yes+' / '+questions.length+' ప్రశ్నలకు అవును</strong>'+(yes>=5?'మీకు ఈ రంగంపై ఆసక్తి ఉండవచ్చు. మిగతా మూడు సర్కిళ్లు కూడా జాగ్రత్తగా చదవండి.':yes>=3?'మీకు కొన్ని అంశాలపై ఆసక్తి ఉంది. నిజమైన పని, అర్హతలు తెలుసుకొని నిర్ణయించండి.':'మీకు ఈ రంగంలోని కొన్ని పనులు అంతగా నచ్చకపోవచ్చు. ఇతర అవకాశాలనూ పరిశీలించండి.');
+  }
+  for(const q of questions){for(const b of q.querySelectorAll('.toggle button'))b.addEventListener('click',()=>{for(const x of q.querySelectorAll('.toggle button')){x.setAttribute('aria-pressed',x===b?'true':'false');x.removeAttribute('data-picked');}b.setAttribute('data-picked','1');update();});}
+ });</script></body></html>

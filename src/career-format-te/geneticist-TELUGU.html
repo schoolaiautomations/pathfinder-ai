@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>కెరీర్‌లో నాలుగు అంశాలు — జెనెటిసిస్ట్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్ / భారతదేశం</div><h2>జెనెటిసిస్ట్</h2><p class="standfirst">జెనెటిసిస్ట్‌లు genes, DNA, వారసత్వ లక్షణాలు, జన్యు మార్పులను అధ్యయనం చేస్తారు. కుటుంబాల ద్వారా వచ్చే వ్యాధులు, మొక్కలు/జంతువుల అభివృద్ధి, జీవ పరిణామం, బయోటెక్నాలజీ, DNA పరీక్షలపై పరిశోధన చేయవచ్చు. Research Geneticist, Medical Geneticist, Plant Geneticist, Computational Geneticistలకు చదువు మార్గాలు వేరు.</p></div>
+<div class="printhead">కెరీర్ నాలుగు అంశాలు  ·  Geneticist  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చిందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఏ మార్గం?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>సంపాదన</em></a>
+</nav>
+<section id="c1"><div class="num">అంశం 1 · ఆసక్తి</div><h3>జెనెటిక్స్ మీకు సరిపోతుందా?</h3><p class="lede">DNA అంటే ఆసక్తి ఉండటం మంచి ప్రారంభం. నిజమైన పరిశోధనలో ల్యాబ్ పనులు, గణాంకాలు, ప్రయోగాలు, డేటా విశ్లేషణ, జాగ్రత్తగా ఫలితాలు అర్థం చేసుకోవడం అవసరం.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>Biology, కణాలు, DNA, వారసత్వ లక్షణాలు, పరిణామం మీకు నిజంగా ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>DNA extraction, PCR, sequencing, microscopy వంటి ల్యాబ్ పనులు చేయడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>జన్యు డేటాను అర్థం చేసుకోవడానికి statistics, basic programming నేర్చుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పరిశోధనలో ప్రయోగాలు విఫలమైనా ఓపికగా మళ్లీ చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సైన్స్ పరిశోధన పత్రాలు చదివి ఒక ఫలితం ఎందుకు వచ్చిందో తెలుసుకోవడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>మీ లక్ష్య ఉద్యోగానికి M.Sc., PhD లేదా Medical Specialisation అవసరమైతే ఉన్నత చదువు కొనసాగిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">అంశం 2 · చదువు మార్గం</div><h3>ఏ చదువు మార్గాన్ని ఎంచుకోవాలి?</h3><p class="lede">Geneticist కావడానికి ఒకే ప్రవేశ పరీక్ష లేదు. పరిశోధన, బయోటెక్, వ్యవసాయం, కంప్యూటర్ జెనెటిక్స్, వైద్య జెనెటిక్స్ కోసం మార్గాలు వేరు.</p>
+<div class="flag green"><span class="mark">ముఖ్యమైన పదాలు</span><span>Genetics అంటే genes, వారసత్వ లక్షణాల అధ్యయనం. Genomics అంటే చాలా genes లేదా పూర్తి genome అధ్యయనం. Bioinformatics అంటే కంప్యూటర్, గణాంకాలతో జీవ సంబంధిత డేటా విశ్లేషణ. PCR అంటే Polymerase Chain Reaction—DNAలోని ఎంచుకున్న భాగాన్ని ల్యాబ్‌లో అనేక ప్రతులుగా తయారు చేసే పద్ధతి.</span></div>
+<div class="card">
+<div class="row"><div class="k">పదో తరగతి తర్వాత</div><div class="v"><span>పదో తరగతి తర్వాత BiPC అత్యంత ప్రత్యక్ష మార్గం. Genetics, Biotechnology, Life Sciences, Biomedical Scienceలో Biology, Chemistry ముఖ్యం. PCMB అందుబాటులో ఉండి చదవగలిగితే Maths, Bioinformatics అవకాశాలు పెరుగుతాయి. MPCతో కొన్ని బయోటెక్/కంప్యూటేషనల్ కోర్సులకు అవకాశం ఉండవచ్చు; సంస్థ అర్హత చూడాలి.</span></div></div>
+<div class="row"><div class="k">Route A — B.Sc. Genetics / Life Sciences</div><div class="v"><span>పదో తరగతి → BiPC → B.Sc. Genetics/Human Genetics/Biotechnology/Biochemistry/Microbiology/Zoology/Life Sciences → M.Sc. Genetics/Genomics/Biotechnology → పరిశోధన లేదా పరిశ్రమ ఉద్యోగం. జీవశాస్త్రం, ల్యాబ్ జెనెటిక్స్ ఇష్టపడేవారికి ఇది మంచి మార్గం.</span></div></div>
+<div class="row"><div class="k">Route B — B.Tech Biotechnology</div><div class="v"><span>పదో తరగతి → తగిన ఇంటర్ Science → B.Tech Biotechnology లేదా సంబంధిత కోర్సు → జన్యుశాస్త్ర పాఠాలు, ల్యాబ్ ప్రాజెక్టులు → M.Tech/MS/పరిశోధన/పరిశ్రమ. MPC, BiPC అర్హత కాలేజీని బట్టి మారుతుంది.</span></div></div>
+<div class="row"><div class="k">Route C — Research-first science route</div><div class="v"><span>BiPC/PCMB → IISER, NISER లేదా బలమైన B.Sc./BS Science కోర్సు → Biological Sciencesలో ప్రత్యేకత → Genetics/Genomics పరిశోధన ప్రాజెక్టులు → Integrated PhD/PhD. స్వతంత్ర Research Geneticist లక్ష్యమైతే ఉపయోగకరం.</span></div></div>
+<div class="row"><div class="k">CUET route</div><div class="v"><span>కొన్ని విశ్వవిద్యాలయాలు CUET-UG ద్వారా Science కోర్సులకు ప్రవేశం ఇస్తాయి; 2026లో Biology/Biological Science/Biotechnology/Biochemistry డొమైన్ ప్రస్తావించబడింది. ప్రతి Genetics కోర్సుకు CUET తప్పనిసరి కాదు; కొన్ని సంస్థల్లో మార్కులు/సొంత పరీక్ష.</span></div></div>
+<div class="row"><div class="k">Postgraduate specialisation</div><div class="v"><span>M.Sc. Human Genetics, Genetics, Genomics, Molecular Biology, Biotechnology, Biomedical Science, Bioinformatics, Computational Biology వంటి కోర్సుల్లో ప్రత్యేకత పొందవచ్చు. మూల నివేదిక SDM University రెండు ఏళ్ల M.Sc. Human Geneticsని ఉదాహరణగా పేర్కొంది.</span></div></div>
+<div class="row"><div class="k">Biomedical Genomics route</div><div class="v"><span>National Institute of Biomedical Genomics (NIBMG) మానవ జన్యు పరిశోధనలో ప్రత్యేక శిక్షణ ఇస్తుంది. మూల నివేదిక ప్రకారం 2026లో Biomedical Genomics ప్రత్యేకతతో Integrated MS-PhD Biotechnology ప్రవేశాలు ప్రకటించారు.</span></div></div>
+<div class="row"><div class="k">PhD route</div><div class="v"><span>B.Sc./B.Tech → M.Sc./M.Tech లేదా Integrated PhD → Genetics/Genomics/Molecular Biologyలో PhD → Research Geneticist/Scientist. స్వతంత్ర పరిశోధన, విశ్వవిద్యాలయ ఉద్యోగాలకు సాధారణంగా PhD అవసరమవుతుంది.</span></div></div>
+<div class="row"><div class="k">Research entrance examples</div><div class="v"><span>కోర్సు, సంస్థను బట్టి GAT-B, BET, CSIR-UGC NET/JRF, GATE, DBT/ICMR fellowships లేదా ప్రత్యేక పరీక్ష/ఇంటర్వ్యూ అవసరమవచ్చు. అందరికీ ఒకే పరీక్ష లేదు.</span></div></div>
+<div class="row"><div class="k">Medical Genetics route</div><div class="v"><span>రోగుల్లో జన్యుపరమైన వ్యాధులు నిర్ధారించి చికిత్స చేయాలంటే వైద్య మార్గం కావాలి: BiPC → NEET-UG → MBBS → సంబంధిత వైద్య PG/Super-specialty. B.Sc./M.Sc./PhD పరిశోధకుడు వైద్యుడు కాదు.</span></div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన మార్గం</div><div class="v"><span>Research: పదో తరగతి → BiPC/PCMB → Genetics/Life Sciences/Biotechnology డిగ్రీ → M.Sc./Integrated PhD → PhD → Scientist. Industry: డిగ్రీ → Molecular/Genomics skills → అవసరమైతే M.Sc. → biotech lab. Medical: BiPC → NEET-UG → MBBS → గుర్తించిన స్పెషలిస్ట్ శిక్షణ.</span></div></div>
+<div class="flag red"><span class="mark">చాలా ముఖ్యమైన విషయం</span><span>Research Geneticist, Genetic Counsellor, Medical Geneticist వేర్వేరు అర్హతలున్న వృత్తులు. Genetics డిగ్రీ ఉన్నంత మాత్రాన డాక్టర్‌లా రోగాలను నిర్ధారించి చికిత్స చేయరాదు.</span></div>
+</div></section>
+<section id="c3"><div class="num">అంశం 3 · ఉద్యోగాలు</div><h3>ఏ రకమైన Geneticist కావచ్చు?</h3><p class="lede">జన్యువులు వైద్యం, వ్యవసాయం, జీవ పరిణామం, బయోటెక్నాలజీలో ముఖ్యం. ఏ విభాగాన్ని ఎంచుకుంటారో దాన్ని బట్టి ఉద్యోగాలు ఉంటాయి.</p>
+<div class="card">
+<div class="row"><div class="k">Human Geneticist</div><div class="v"><span>మానవుల్లో జన్యు మార్పులు, వారసత్వ లక్షణాలు, వ్యాధుల సంబంధం పరిశోధిస్తారు.</span><div class="chips"><span class="chip">Human DNA</span><span class="chip">Disease</span><span class="chip">Genomics</span></div></div></div>
+<div class="row"><div class="k">Molecular Geneticist</div><div class="v"><span>DNA replication, gene expression, mutations, జన్యు నియంత్రణ వంటి కణస్థాయి ప్రక్రియలను అధ్యయనం చేస్తారు.</span></div></div>
+<div class="row"><div class="k">Genomics Scientist</div><div class="v"><span>DNA sequencing, కంప్యూటర్ పద్ధతులతో పెద్ద మొత్తంలో genome డేటా విశ్లేషిస్తారు. ల్యాబ్, Bioinformatics రెండూ ముఖ్యం.</span></div></div>
+<div class="row"><div class="k">Cancer Geneticist / Cancer Genomics Researcher</div><div class="v"><span>క్యాన్సర్‌కు సంబంధించిన జన్యు మార్పులు అధ్యయనం చేసి నిర్ధారణ, చికిత్స పరిశోధన, precision medicineకు తోడ్పడతారు.</span></div></div>
+<div class="row"><div class="k">Population Geneticist</div><div class="v"><span>జనాభాల్లో జన్యు మార్పులు, వారసత్వ లక్షణాలు, తరాల మధ్య తేడాలను అధ్యయనం చేస్తారు.</span></div></div>
+<div class="row"><div class="k">Plant Geneticist</div><div class="v"><span>పంటలలో జన్యు లక్షణాలు, దిగుబడి, వ్యాధి నిరోధకత, మెరుగైన రకాల అభివృద్ధిపై పనిచేస్తారు.</span></div></div>
+<div class="row"><div class="k">Animal Geneticist</div><div class="v"><span>జంతువుల్లో జన్యు లక్షణాలు, ఆరోగ్యం, సంతానోత్పత్తి, అభివృద్ధి, సంరక్షణకు సంబంధించిన పరిశోధన చేస్తారు.</span></div></div>
+<div class="row"><div class="k">Microbial Geneticist</div><div class="v"><span>బ్యాక్టీరియా వంటి సూక్ష్మజీవుల genes, మార్పులు, వాటి ఉపయోగాలను పరిశోధిస్తారు.</span></div></div>
+<div class="row"><div class="k">Developmental Geneticist</div><div class="v"><span>జీవులు అభివృద్ధి చెందే సమయంలో జన్యువులు ఎలా పనిచేస్తాయో అధ్యయనం చేస్తారు.</span></div></div>
+<div class="row"><div class="k">Computational Geneticist</div><div class="v"><span>Programming, Statistics, Bioinformatics ద్వారా పెద్ద జన్యు డేటాసెట్లు విశ్లేషిస్తారు.</span><div class="chips"><span class="chip">Python / R</span><span class="chip">Statistics</span><span class="chip">Sequencing Data</span></div></div></div>
+<div class="row"><div class="k">Forensic Genetics Scientist</div><div class="v"><span>నేర విచారణలు, వ్యక్తి గుర్తింపు వంటి సందర్భాల్లో DNA ఆధారాలను శాస్త్రీయంగా పరిశీలిస్తారు.</span></div></div>
+<div class="row"><div class="k">Conservation Geneticist</div><div class="v"><span>అడవి జంతువులు, అరుదైన జాతుల జన్యు వైవిధ్యాన్ని అధ్యయనం చేసి సంరక్షణకు సహాయం చేస్తారు.</span></div></div>
+<div class="row"><div class="k">Gene-editing Researcher</div><div class="v"><span>CRISPR వంటి gene-editing పద్ధతులపై పరిశోధన చేస్తారు. ఖచ్చితత్వం, భద్రత, నైతికత చాలా ముఖ్యం.</span></div></div>
+<div class="row"><div class="k">Medical Geneticist</div><div class="v"><span>Medical Geneticist గుర్తింపు ఉన్న వైద్య నిపుణుడు; రోగులను నిర్ధారించి చికిత్స మార్గాలు సూచించేందుకు MBBS తర్వాత ప్రత్యేక అర్హత అవసరం.</span></div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Geneticist vs Genetic Counsellor</div><div class="v"><span>Geneticist సాధారణంగా genesపై పరిశోధన చేస్తారు; Genetic Counsellor కుటుంబాలకు జన్యు పరీక్షలు, వాటి అర్థం, అవకాశాల గురించి తమ అర్హత పరిధిలో సలహా ఇస్తారు.</span></div></div>
+<div class="row"><div class="k">Geneticist vs Biotechnologist</div><div class="v"><span>Geneticist genes, heredityపై ఎక్కువ దృష్టి పెడతారు; Biotechnologist జీవవ్యవస్థలతో ఉపయోగకరమైన ఉత్పత్తులు, సాంకేతిక పద్ధతులు అభివృద్ధి చేస్తారు. పనుల్లో కొంత పోలిక ఉంటుంది.</span></div></div>
+<div class="row"><div class="k">Geneticist vs Bioinformatician</div><div class="v"><span>Geneticist బయాలజీ ఆధారంగా జన్యు ప్రశ్నలు పరిశోధిస్తారు; Bioinformatician కంప్యూటింగ్, గణాంకాలతో జీవ డేటాను విశ్లేషిస్తారు.</span></div></div>
+<div class="row"><div class="k">ఎక్కడ పని చేయవచ్చు?</div><div class="v"><span>విశ్వవిద్యాలయాలు, పరిశోధన సంస్థలు, biotech/pharma, genomics labs, agriculture, healthcare research, డేటా సంస్థల్లో అవకాశాలు ఉన్నాయి.</span></div></div>
+<div class="row"><div class="k">AI కాలంలో అవకాశాలు</div><div class="v"><span>AI, అధిక స్థాయి DNA sequencing వల్ల విశ్లేషణ వేగం పెరిగింది; మంచి Genetics అవగాహన, గణాంకాలు, కంప్యూటింగ్ తెలిసినవారికి అవకాశాలు మెరుగవుతాయి.</span></div></div>
+<div class="row"><div class="k">ఉద్యోగదాతలకు ముఖ్యమైనవి</div><div class="v"><span>Employers ల్యాబ్ నైపుణ్యాలు, PCR, sequencing, genetics, data analysis, research records, communicationకు విలువ ఇస్తారు.</span><div class="chips"><span class="chip">Molecular Biology</span><span class="chip">PCR</span><span class="chip">Sequencing</span><span class="chip">Statistics</span><span class="chip">Bioinformatics</span><span class="chip">Research Skills</span></div></div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ మార్గం</div><div class="v"><span>మరిన్ని మార్గాలు: Biotechnology, Molecular Biology, Bioinformatics, Agriculture Genetics, Laboratory Analysis, Research, Teaching.</span><div class="chips"><span class="chip">Biotechnology</span><span class="chip">Bioinformatics</span><span class="chip">Molecular Biology</span><span class="chip">Clinical Research</span><span class="chip">Agriculture</span><span class="chip">Data Science</span></div></div></div>
+<div class="flag"><span class="mark">వాస్తవ పరిస్థితి</span><span>ఒకే gene అన్నింటికీ కారణమని అనుకోవద్దు. మంచి శాస్త్రవేత్తలు ఆధారాలు, పర్యావరణం, అవకాశాలు, జీవశాస్త్ర పరిస్థితులు పరిశీలిస్తారు.</span></div>
+</div></section>
+<section id="c4"><div class="num">అంశం 4 · ఆదాయం</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">జీతం చదువు, ఉద్యోగం, అనుభవం, పరిశోధన నిధులు, ప్రత్యేకతపై ఆధారపడుతుంది.</p>
+<div class="card">
+<div class="row"><div class="k">Lab / research trainee</div><div class="v"><span class="money">₹10,000 – ₹25,000/month</span><br/><span>ల్యాబ్/పరిశోధన Traineeగా మొదట భత్యం తక్కువ ఉండవచ్చు; సంస్థను బట్టి మారుతుంది.</span></div></div>
+<div class="row"><div class="k">Early-career private research / genomics</div><div class="v"><span class="money">₹25,000 – ₹50,000/month</span><br/><span>ప్రైవేటు genomics/research రంగంలో ప్రారంభ ఉద్యోగాలకు డిగ్రీ, పరికరాల అనుభవం, నగరం ముఖ్యమైనవి.</span></div></div>
+<div class="row"><div class="k">PhD — JRF stage</div><div class="v"><span class="money">₹37,000/month + applicable HRA</span><br/><span>PhDలో JRF దశలో వర్తించే fellowship నియమాల ప్రకారం నెలవారీ stipend ఉండవచ్చు.</span></div></div>
+<div class="row"><div class="k">PhD — SRF stage</div><div class="v"><span class="money">₹42,000/month + applicable HRA</span><br/><span>PhD పరిశోధనలో SRF దశలో సంబంధించిన fellowship ప్రకారం ఎక్కువ stipend ఉండవచ్చు.</span></div></div>
+<div class="row"><div class="k">Experienced scientist / genomics specialist</div><div class="v"><span class="money">₹50,000 – ₹1,00,000+/month</span><br/><span>అనుభవజ్ఞులైన Scientist/Genomics Specialistకు పెద్ద ల్యాబ్‌లు, కంపెనీలు, పరిశోధన సంస్థల్లో అవకాశాలు ఉన్నాయి.</span></div></div>
+<div class="row"><div class="k">Medical Genetics</div><div class="v"><span class="money">Different medical salary pathway</span><br/><span>Medical Genetics జీతం MBBS, PG/Super-specialty అర్హతలు, ఆస్పత్రి, అనుభవాన్ని బట్టి మారుతుంది; Research Geneticistతో పోల్చకూడదు.</span></div></div>
+<div class="row"><div class="k">చదువు ఖర్చు</div><div class="v"><span>B.Sc., M.Sc., PhD, వైద్య చదువు ఖర్చులు, స్కాలర్‌షిప్‌లు వేరు. మంచి ల్యాబ్ శిక్షణ, research అవకాశాలు ఉన్న సంస్థను ఎంచుకోండి.</span></div></div>
+<div class="flag red"><span class="mark">Money warning</span><span>B.Sc. అయిపోగానే భారీ జీతం వస్తుందనుకుని ఖరీదైన Genetics డిగ్రీ తీసుకోవద్దు. చాలా పరిశోధన ఉద్యోగాల్లో M.Sc./PhD ముఖ్యం. ల్యాబ్, Bioinformatics నైపుణ్యాలతో Plan B కూడా ఉంటుంది.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు అంశాల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">Biology + experiments + DNA</span> — Genetics may be a strong fit.</p>
+<p><span class="hi">Love Biology but dislike laboratory/research work</span>— ఆరోగ్య సంరక్షణ, పోషకాహారం, వ్యవసాయం, ఇతర జీవశాస్త్ర రంగాలను కూడా పరిశీలించండి.</p>
+<p><span class="hi">Love genes + computers</span> — compare Bioinformatics / Computational Biology.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>జన్యు శాస్త్రవేత్త పిల్లలు తల్లిదండ్రులను ఎందుకు పోలి ఉంటారో మాత్రమే కాదు; DNA, గణాంకాలు, కంప్యూటర్లతో జన్యు సమాచారం ఎలా పనిచేస్తుందో అధ్యయనం చేస్తారు.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్ దశ నుంచే ప్రారంభించగల పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే స్కూల్లో ఉన్నప్పుడు</div><ul>
+<li>Biologyలో కణాలు, chromosomes, DNA, inheritance అంశాలు బాగా నేర్చుకోండి.</li>
+<li>Mathsను వదలకండి; probability, statistics తర్వాత చాలా అవసరం.</li>
+<li>వీలు చిక్కినప్పుడు Python వంటి basic coding నేర్చుకోండి; genomicsలో పెద్ద డేటా ఉపయోగిస్తారు.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>పదో తరగతి తర్వాత</div><ul>
+<li>జెనెటిక్స్ కోసం BiPC అనుకూలం; computational మార్గాలు కూడా కావాలంటే PCMB పరిశీలించండి.</li>
+<li>ఇంటర్ తర్వాత Genetics, Biotechnology, Biochemistry, Microbiology, Life Sciences, Biomedical Science, BS పరిశోధన కోర్సులను పోల్చండి.</li>
+<li>ముందుగా కాలేజీలు ఎంచుకుని CUET, సొంత పరీక్ష, మార్కులు—ఏ విధంగా ప్రవేశం ఇస్తారో చూడండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>ఇంటర్ / డిగ్రీ సమయంలో</div><ul>
+<li>Molecular Biology, PCR, Genetics, Statistics, Bioinformatics పునాదులు నేర్చుకోండి.</li>
+<li>ల్యాబ్/పరిశోధన ఇంటర్న్‌షిప్‌లు చేసి ప్రయోగాల రికార్డులు సరిగ్గా నిర్వహించండి.</li>
+<li>చివరి ఏడాదికి Research Genetics, Genomics/Bioinformatics, Agriculture Genetics, Biotechnology, Medical Geneticsలో మీకు నచ్చిన ప్రత్యేకత నిర్ణయించుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">Best first test</span><span>మొక్కల లక్షణాలు లేదా ఊహాత్మక కుటుంబ gene డేటాతో చిన్న అధ్యయనం చేయండి. వారసత్వ విధానాన్ని అంచనా వేసి డేటా దానికి మద్దతిస్తుందో చూడండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. వయసు, చదువు అర్హతలు, ప్రవేశ పరీక్షలు, ఫీజులు, జీతాలు మారవచ్చు. దరఖాస్తు ముందు తాజా అధికారిక నోటిఫికేషన్ పరిశీలించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>ఈ కెరీర్ మీకు బాగా సరిపోవచ్చు</strong>మీ ఆసక్తి బలంగా కనిపిస్తోంది. అయితే చదువు, అర్హతలు, రోజువారీ పని, ఖర్చులను కూడా తెలుసుకుని నిర్ణయించుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>ముందుగా ప్రయత్నించి చూడండి</strong>కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. చిన్న ప్రాజెక్టు లేదా సంబంధిత అనుభవంతో ఈ కెరీర్‌ను పరీక్షించుకోండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>కొన్ని ముఖ్యమైన అంశాలపై ఆసక్తి తక్కువగా ఉండవచ్చు. ప్రత్యామ్నాయ కెరీర్లు కూడా పరిశీలించి కౌన్సెలర్‌తో చర్చించండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

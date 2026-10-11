@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — పోలీస్ అధికారి</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap"><div class="mast"><div class="eyebrow">కెరీర్ పరిశీలన · ఆంధ్రప్రదేశ్</div><h2>పోలీస్ అధికారి</h2><p class="standfirst">ప్రజలను కాపాడటం, చట్టాన్ని అమలు చేయటం, ఆంధ్రప్రదేశ్‌కు సేవ చేయటం ఈ ఉద్యోగం ముఖ్య ఉద్దేశం. ఆసక్తి, నైపుణ్యాలు, ఉద్యోగ అవకాశాలు, ఆదాయాన్ని నిజాయితీగా పరిశీలించండి.</p></div><div class="printhead">కెరీర్‌కు నాలుగు సర్కిళ్లు  ·  Police Officer  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div><nav class="strip"><a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు ఆసక్తి ఉందా?</em></a><a class="pip" href="#c2"><div class="ring">2</div><b>నైపుణ్యాలు</b><em>అర్హత సాధించగలరా?</em></a><a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>జాగ్రత్త</em></a><a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>సరిపోతుందా?</em></a></nav><section id="c1"><div class="num">సర్కిల్ 1</div><h3>పోలీస్ ఉద్యోగం నిజంగా ఇష్టమా?</h3><p class="lede">యూనిఫామ్‌తో పాటు రోజువారీ కష్టమైన డ్యూటీని కూడా దృష్టిలో పెట్టుకుని జవాబివ్వండి.</p><div class="card"><div id="quiz"><div class="q" data-i="0"><p>ఎండ, వాన, చలిలో గంటల తరబడి నిలబడి డ్యూటీ చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="1"><p>డ్యూటీ కారణంగా పండుగలు, కుటుంబ కార్యక్రమాలకు వెళ్లలేకపోయినా అంగీకరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="2"><p>ఎదుటివారు కోపంగా మాట్లాడినా, గొడవ చేసినా, అబద్ధం చెప్పినా ప్రశాంతంగా ఉండగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="3"><p>బయట డ్యూటీ పూర్తయ్యాక కూడా సుదీర్ఘ రిపోర్టులు రాయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="4"><p>మీ అభిప్రాయం వేరైనా చట్టబద్ధమైన క్రమశిక్షణ నియమాలు పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="5"><p>సినిమాల్లో మాత్రమే కాదు, నిజజీవితంలో కూడా ప్రమాదం ఎదురయ్యే ఉద్యోగమని అర్థం చేసుకున్నారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div></div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానమివ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section><section id="c2"><div class="num">సర్కిల్ 2</div><h3>చదవాల్సిన విషయాలు, నైపుణ్యాలు</h3><p class="lede">పాఠశాలలో ఏ విషయాలపై దృష్టి పెట్టాలో, తర్వాత ఏ మార్గం ఎంచుకోవాలో తెలుసుకోండి.</p><div class="card"><div class="row"><div class="k"><span class="subno">1</span> శారీరక విద్య</div><div class="v">శారీరక అర్హత పరీక్షలు కఠినంగా ఉండవచ్చు. మొదటి నుంచే బలం, ఓర్పు పెంపొందించుకోవాలి.</div></div><div class="row"><div class="k"><span class="subno">2</span> సాంఘికశాస్త్రం</div><div class="v">చట్టాలు, పౌరశాస్త్రం, ప్రభుత్వ వ్యవస్థ ఎలా పనిచేస్తుందో తెలుసుకోవడానికి ఉపయోగపడుతుంది.</div></div><div class="row"><div class="k"><span class="subno">3</span> ఇంగ్లీష్</div><div class="v">రిపోర్టులు, కోర్టు పత్రాలు, అధికారిక ఉత్తరాలను ఇంగ్లీష్‌లో స్పష్టంగా రాయాల్సి ఉంటుంది.</div></div><div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">10వ తరగతి తర్వాత ఇంటర్ CEC లేదా MEC తీసుకుంటే తర్వాత BA, పోలీస్/సివిల్ సర్వీసెస్ సన్నద్ధతకు ఉపయోగపడుతుంది. కానీ పోలీస్ నియామకాలకు నిర్దిష్ట ఇంటర్ గ్రూప్ అవసరం లేని మార్గాలూ ఉన్నాయి. డిగ్రీ అర్హతకు దృష్టి పెట్టండి.</div></div><div class="row"><div class="k">ఈ అలవాట్లు మొదలుపెట్టండి</div><div class="v">రోజూ పరుగు; పుష్‌అప్‌లు, సిట్‌అప్‌లు; తెలుగు పత్రిక చదవడం; ప్రాథమిక చట్టపదాలు; వార్త సారాంశాలు రాయడం; NCC లేదా స్కౌట్స్.<div class="chips"><span class="chip">రోజూ పరుగు</span><span class="chip">పుష్‌అప్‌లు, సిట్‌అప్‌లు</span><span class="chip">తెలుగు పత్రిక చదవండి</span><span class="chip">చట్టపదాలు నేర్చుకోండి</span><span class="chip">సారాంశం రాయండి</span><span class="chip">NCC / స్కౌట్స్</span></div></div></div></div><div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">తర్వాత కావాల్సిన అర్హతలు</div><div class="row"><div class="k">AP పోలీస్ కానిస్టేబుల్</div><div class="v">మూల నివేదిక ప్రకారం కానిస్టేబుల్‌కు ఇంటర్ ఉత్తీర్ణత, 18–25 ఏళ్ల వయస్సు, రాత పరీక్ష, శారీరక పరీక్ష. తాజా ప్రకటనలో నిబంధనలు చూసుకోవాలి.</div></div><div class="row"><div class="k">సబ్ ఇన్‌స్పెక్టర్ (SI)</div><div class="v">SI కోసం డిగ్రీ, మూల నివేదికలో పేర్కొన్న 21–28 ఏళ్ల వయస్సు; SLPRB పరీక్ష, శారీరక పరీక్ష, పేర్కొన్న ఎంపిక దశలు.</div></div><div class="row"><div class="k">DSP / IPS ప్రవేశ మార్గాలు</div><div class="v">DSP కోసం డిగ్రీ తర్వాత APPSC గ్రూప్-1 మార్గం; IPS కోసం UPSC సివిల్ సర్వీసెస్ వేరు మార్గం. మూల నివేదిక 21–32 ఏళ్ల పరిధి తెలిపింది; పోటీ చాలా ఎక్కువ.</div></div><div class="row"><div class="k">ఈ దశలు పూర్తి చేయాలి</div><div class="v">చదువు → ఇంటర్ → అవసరమైన డిగ్రీ → SLPRB/APPSC వంటి సంబంధిత నియామకానికి దరఖాస్తు → రాత పరీక్ష → శారీరక పరీక్ష → వైద్య పరీక్ష → శిక్షణ → పోస్టింగ్.</div></div><div class="flag red"><span class="mark">ముందుగా చేయాల్సింది</span><span>వైద్య, శారీరక అర్హతలు కఠినమైనవి. చూపు, ఎత్తు, ఫిట్‌నెస్ ప్రమాణాలను ముందే పరిశీలించండి.</span></div></div></section><section id="c3"><div class="num">సర్కిల్ 3 · ప్రమాదం</div><h3>నియామకాలు ఎంత తరచుగా వస్తాయి?</h3><p class="lede">నియామకాలు క్రమం తప్పవచ్చు. ముందుగానే ప్లాన్ B ఉంచుకోండి.</p><div class="card"><div class="row"><div class="k">ఎవరు ఉద్యోగం ఇస్తారు?</div><div class="v">ఆంధ్రప్రదేశ్ పోలీసులకు రాష్ట్ర ప్రభుత్వం; CBI, BSF, CRPF, IPS వంటి కేంద్ర విభాగాలకు కేంద్ర ప్రభుత్వం. అసలు పోలీసు అధికార విధులకు ప్రైవేటు సంస్థలు నియామకం చేయవు.</div></div><div class="row"><div class="k">ఎంత తరచుగా?</div><div class="v">మూల నివేదిక ప్రకారం AP పోలీస్ నియామకాలు ప్రతి ఏడాది కాకుండా 2–4 ఏళ్ల విరామంతో రావచ్చు. అందుకే మధ్యలో అవకాశాలు లేకపోయినా ఉపయోగపడే ప్రణాళిక అవసరం.</div></div><div class="row"><div class="k">పోటీ ఎంత?</div><div class="v">కొన్ని వేల పోస్టులకు లక్షల మంది పోటీ పడవచ్చు. ముఖ్యంగా SI, ఉన్నత పోస్టులకు పోటీ చాలా ఎక్కువ.</div></div><div class="flag"><span class="mark">జాగ్రత్త</span><span>పోలీస్ నియామకం కోసం ఎదురు చూస్తూ చదువు ఆపవద్దు; మరో డిగ్రీ లేదా ఉద్యోగ మార్గం ఉంచుకోండి.</span></div><div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">మీ ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">అదే సన్నద్ధత ఉపయోగపడే ఇతర మార్గాలు: APPSC రెవెన్యూ/పంచాయతీ ఉద్యోగాలు; సైన్యం; న్యాయవాదం/లీగల్ అసిస్టెంట్; DSC ద్వారా ఉపాధ్యాయ వృత్తి; అగ్నిమాపక, సివిల్ డిఫెన్స్.<div class="chips"><span class="chip">APPSC రెవెన్యూ / పంచాయతీ</span><span class="chip">సైన్యం / రక్షణ దళాలు</span><span class="chip">న్యాయవాది / లీగల్ అసిస్టెంట్</span><span class="chip">DSC ఉపాధ్యాయుడు</span><span class="chip">అగ్నిమాపక / సివిల్ డిఫెన్స్</span></div></div></div></div></section><section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">ఉద్యోగానికి ముందు చదువు, శిక్షణ ఖర్చును కూడా ఆలోచించండి.</p><div class="card"><div class="row"><div class="k">కానిస్టేబుల్ ప్రారంభ జీతం</div><div class="v"><span class="money">Rs 22,000 - 28,000</span><br/>కానిస్టేబుల్ ప్రారంభ ఆదాయం; ప్రభుత్వ అలవెన్సులు అదనంగా ఉండవచ్చు (మూల నివేదిక అంచనా).</div></div><div class="row"><div class="k">హెడ్ కానిస్టేబుల్ / SI</div><div class="v"><span class="money">Rs 35,000 - 55,000</span><br/>5–10 ఏళ్ల సేవ తర్వాత హెడ్ కానిస్టేబుల్ లేదా SI స్థాయి ఆదాయం (అంచనా).</div></div><div class="row"><div class="k">ఇన్‌స్పెక్టర్ / DSP</div><div class="v"><span class="money">Rs 60,000 - 1,00,000</span><br/>పదోన్నతి లేదా ప్రత్యక్ష పరీక్ష ద్వారా ఇన్‌స్పెక్టర్/DSP స్థాయిలో సాధ్యమయ్యే ఆదాయం (అంచనా).</div></div><div class="row"><div class="k">ఉద్యోగం వచ్చే వరకు ఖర్చు</div><div class="v">మూల నివేదికలో ఇంటర్, డిగ్రీ చదువులకు ఐదేళ్లలో సుమారు ₹20,000–₹60,000 ఖర్చు అంచనా; కోచింగ్ ఖర్చు అదనం. సంపాదన మొదలయ్యే వరకు 5–6 ఏళ్ల ఖర్చు అవసరమవచ్చు.</div></div><div class="flag"><span class="mark">ఇంట్లో చర్చించండి</span><span>కుటుంబ ఖర్చు, చదువు ఖర్చులను ముందే చర్చించి సంపాదనకు ప్రత్యామ్నాయ ప్రణాళిక ఉంచుకోండి.</span></div></div></section><div class="rule-box"><h4>మీ నాలుగు సర్కిళ్ల ఫలితం ఎలా చదవాలి?</h4><p>నాలుగు సర్కిళ్లూ సరిపోతే — ఈరోజు నుంచే పట్టుదలతో సన్నద్ధత మొదలుపెట్టండి.</p><p>ఒకటి సరిపోకపోతే — నిర్ణయానికి ముందు జాగ్రత్తగా మరోసారి ఆలోచించండి.</p><p>రెండు లేదా ఎక్కువ సరిపోకపోతే — ఈ వృత్తిని ఎందుకు ఎంచుకుంటున్నారో కౌన్సెలర్‌తో చర్చించండి.</p><p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఈరోజే ఒక గడువు రాసుకోండి: “___ ఏళ్లలోపు ఎంపిక కాకపోతే నా Plan B వైపు వెళ్తాను.”</p></div><section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">ఇప్పటి నుంచే చిన్నచిన్న పనులు చేసి ఈ కెరీర్ మీకు సరిపోతుందో తెలుసుకోండి.</p><div class="card plan"><div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, పాఠశాలలో</div><ul><li>శక్తి, ఓర్పు పెరగడానికి రోజూ సురక్షితంగా పరుగుపై సాధన మొదలుపెట్టండి.</li><li>ప్రతిరోజూ చట్టం లేదా నేరాలకు సంబంధించిన ఒక వార్త చదవండి.</li><li>మీ పాఠశాలలో NCC ఉంటే చేరండి.</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul><li>ఇంటర్‌లో మీకు సరిపడే గ్రూప్ ఎంచుకుని అన్ని విషయాల్లో బాగా చదవండి.</li><li>AP పోలీస్ అధికారిక వెబ్‌సైట్‌లో ఎత్తు, శారీరక అర్హతలు పరిశీలించండి.</li><li>యోగా, బలాన్ని పెంచే వ్యాయామాలు క్రమంగా చేయండి.</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">3</span>ఇంటర్ లేదా డిప్లొమా తర్వాత</div><ul><li>గుర్తింపు పొందిన విశ్వవిద్యాలయంలో BA లేదా BSc డిగ్రీ పూర్తి చేయండి.</li><li>నియామక ప్రకటన వచ్చినప్పుడు SLPRB AP పోర్టల్‌లో దరఖాస్తు చేయండి.</li><li>ఉచితంగా లేదా తక్కువ ఖర్చుతో పరీక్షల సన్నద్ధతకు లైబ్రరీ లేదా గ్రూప్ ఉపయోగించుకోండి.</li></ul></div></div><div class="flag"><span class="mark">గుర్తుంచుకోండి</span><span>ఇప్పటి నుంచే సాధన మొదలుపెడితే తర్వాత సమయం ఆదా అవుతుంది.</span></div></section><p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే, అధికారిక నోటిఫికేషన్ కాదు. అర్హతలు, వయస్సు, ఖాళీలు, జీతాలు మారవచ్చు. దరఖాస్తు చేసే ముందు అధికారిక వెబ్‌సైట్‌లో పరిశీలించండి. సీటు కోసం ఏజెంట్‌కు డబ్బు ఇవ్వవద్దు.</p></div><script>document.addEventListener("DOMContentLoaded",function(){const qs=[...document.querySelectorAll("#quiz .q")],v=document.getElementById("verdict"),pip=document.getElementById("pip1");if(!qs.length||!v)return;document.getElementById("quiz").addEventListener("click",function(e){const b=e.target.closest(".toggle button");if(!b)return;const wrap=b.closest(".toggle");wrap.querySelectorAll("button").forEach(x=>{x.setAttribute("aria-pressed","false");x.removeAttribute("data-picked")});b.setAttribute("aria-pressed","true");b.setAttribute("data-picked","1");const picked=qs.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);if(picked.length<qs.length){v.className="verdict";v.innerHTML="<strong>ఆరు ప్రశ్నలకు సమాధానమివ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";return}const yes=picked.filter(x=>x.dataset.v==="y").length;const good=yes>=5,mixed=yes>=3;v.className="verdict "+(good?"good":mixed?"mixed":"bad");v.innerHTML=good?"<strong>మీకు ఆసక్తి ఉన్నట్లు కనిపిస్తోంది</strong>ఈ కెరీర్‌లో రోజూ చేసే పనిని దగ్గరగా చూసి, చదువు మార్గం తెలుసుకోండి.":mixed?"<strong>మరింత పరిశీలించండి</strong>కొన్ని అంశాలు సరిపోతున్నాయి. నిర్ణయానికి ముందు ఈ వృత్తిలో పని చేసే వారితో మాట్లాడండి.":"<strong>మరోసారి ఆలోచించండి</strong>ఈ వృత్తిలో కొన్ని ముఖ్యమైన పనులు మీకు నచ్చకపోవచ్చు. ఇతర కెరీర్లతో పోల్చండి.";if(pip)pip.className="pip "+(good?"done":mixed?"warn":"stop")})});</script></body></html>

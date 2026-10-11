@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — ఇంజినీర్ (Engineer)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · భారతదేశం</div><h2>ఇంజినీర్ (Engineer)</h2><p class="standfirst">ఇంజినీర్లు Maths, Science, Design, Technology ఉపయోగించి నిజజీవిత సమస్యలకు పరిష్కారాలు కనుగొంటారు. కానీ “Engineer” ఒక్క ఉద్యోగం కాదు. Civil, Mechanical, Electrical, Electronics, Computer Science, Chemical, Biotechnology వంటి బ్రాంచీల్లో రోజువారీ పని చాలా వేరు. ముందుగా Engineering మీకు సరిపోతుందో, తరువాత ఏ బ్రాంచీ నచ్చుతుందో చూడండి.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · ఇంజినీర్ (Engineer) · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నిజంగా ఇష్టమా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>అర్హతలు</b><em>చదువుకోగలరా?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>బ్రాంచీలు</b><em>ఏ పని నచ్చుతుంది?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>సంపాదన</b><em>ఖర్చుకు తగ్గ విలువ?</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>మీకు నిజంగానే Engineering ఇష్టమా?</h3><p class="lede">పేరు, జీతం చూసి మాత్రమే Engineering ఎంచుకోకండి. Engineers సమస్యలను పరిష్కరించడం, లెక్కించడం, Testing, Designing, మళ్లీ సరిచేయడం చేస్తుంటారు.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఏదైనా పాడైతే అది <b>ఎందుకు</b> పనిచేయడం లేదో తెలుసుకోవాలని అనిపిస్తుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>సమాధానం వెంటనే రాకపోయినా Maths, Physics, Logic, Technical Diagramsతో ఓపిగ్గా పని చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>కొత్తవి తయారు చేయడం, Coding, Designing, Experiments, Repairing లేదా ఇప్పటికే ఉన్నవి మెరుగుపరచడం మీకు ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>మొదటి Design పనిచేయకపోయినా మళ్లీ పరీక్షించి సరిచేయడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>కాలేజీ పూర్తయిన తర్వాత కూడా కొత్త Software, Tools, Technology నేర్చుకోవడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>మీకు నచ్చిన బ్రాంచీలో ఎక్కువ జీతం ప్రకటన లేకపోయినా Engineeringనే ఎంచుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏ సబ్జెక్టులు చదవాలి? ఎలా చేరాలి?</h3><p class="lede">విస్తృత Engineering Branch అవకాశాలు కావాలనుకునే విద్యార్థికి సాధారణమైన దారి ఇది.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> గణితం (Maths)</div><div class="v">దాదాపు అన్ని ఇంజినీరింగ్ బ్రాంచీలకు Maths చాలా ముఖ్యం. Algebra, Trigonometry, Calculus, Vectors, Probability, Problem Solving మళ్లీ మళ్లీ ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> భౌతిక శాస్త్రం (Physics)</div><div class="v">వస్తువులు ఎలా కదులుతాయి, Electricity, Heat, Waves, Forces, Electronics వంటి అంశాలు Civil, Mechanical, Electrical, ECE, Aerospace వంటి బ్రాంచీలకు పునాది.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> Chemistry &amp; Computing</div><div class="v">Chemical, Materials, Biotechnology, Environmental, Process Industriesలో Chemistry ముఖ్యం. ఇప్పుడు దాదాపు అన్ని ఇంజినీరింగ్ బ్రాంచీల్లో కొంత Coding కూడా ఉపయోగపడుతోంది.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">ఎక్కువ ఇంజినీరింగ్ బ్రాంచీలకు వెళ్లే అవకాశం ఉంచుకోవాలంటే <b>ఇంటర్‌లో MPC (Maths, Physics, Chemistry)</b> సాధారణంగా మంచి దారి. 12వ తరగతి తర్వాత మీకు నచ్చిన పనికి సరిపోయే బ్రాంచీలో <b>4 ఏళ్ల B.E./B.Tech</b> చదవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రవేశ పరీక్షలు</div><div class="v"><b>AP EAPCET:</b> ఆంధ్రప్రదేశ్‌లో పాల్గొనే ఇంజినీరింగ్ కాలేజీల ప్రవేశానికి ప్రధాన పరీక్ష.<br/><b>JEE Main:</b> NIT, IIIT, ఇతర పాల్గొనే సంస్థలకు; అర్హులైన వారికి JEE Advanced దారికీ ఉపయోగపడుతుంది.<br/><b>JEE Advanced:</b> అవసరమైన అర్హతలతో IIT ప్రవేశానికి.<br/><b>Private Universities:</b> కొన్ని తమ పరీక్షలు లేదా JEE మార్కుల ఆధారంగా అడ్మిషన్ ఇస్తాయి.</div></div>
+<div class="row"><div class="k">డిప్లొమా దారి</div><div class="v">10వ తరగతి తర్వాత <b>Polytechnic Diploma in Engineering</b> కూడా ఒక దారి. ఆంధ్రప్రదేశ్‌లో అర్హులైన Diploma విద్యార్థులు <b>AP ECET</b> ద్వారా B.Techలో Lateral Entry అవకాశాలు పొందవచ్చు. ముందుగా ప్రాక్టికల్ పని నేర్చుకోవాలనుకునేవారికి ఇది ఒక ఎంపిక.</div></div>
+<div class="row"><div class="k">పూర్తి రోడ్‌మ్యాప్</div><div class="v"><b>ప్రధాన దారి:</b> 10వ తరగతి → MPC → AP EAPCET / JEE / కాలేజీ ప్రవేశ ప్రక్రియ → 4 ఏళ్ల B.E./B.Tech → Projects, Internships, Branch Skills → ఇంజినీరింగ్ ఉద్యోగం.<br/><br/><b>Diploma దారి:</b> 10వ తరగతి → Polytechnic Diploma → AP ECET / Lateral Entry → B.Tech → ఉద్యోగం.</div></div>
+<div class="flag red"><span class="mark">తొందరపడకండి</span><span>అందరూ “CSEలో Scope ఉంది” అంటున్నారని, లేదా Cutoff ఎక్కువ ఉందని బ్రాంచీ ఎంచుకోకండి. ఆ బ్రాంచీ ఉద్యోగంలో ప్రతిరోజూ ఏమి చేస్తారో ముందుగా తెలుసుకోండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఏ రకం Engineer కావచ్చు?</h3><p class="lede">మీ బ్రాంచీతో మీరు ఏమి చదువుతారు, ఏమి తయారు చేస్తారు, ఎక్కడ పనిచేస్తారు అన్నీ మారతాయి.</p>
+<div class="card">
+<div class="row"><div class="k">Civil Engineering</div><div class="v"><b>భవనాలు, బ్రిడ్జీలు, రోడ్లు, రైల్వేలు, నీటి వ్యవస్థలు నిర్మించే రంగం.</b><br/><b>ఉద్యోగాలు:</b> Site Engineer, Structural Engineer, Transportation Engineer, Geotechnical Engineer, Water Resources Engineer, Planning/Project Engineer.<br/><b>ఎక్కడ:</b> Construction, Infrastructure, Real Estate, Consulting, Government Departments.<div class="chips"><span class="chip">Structures</span><span class="chip">Construction</span><span class="chip">Roads</span><span class="chip">Water</span></div></div></div>
+<div class="row"><div class="k">Mechanical Engineering</div><div class="v"><b>యంత్రాలు తయారు చేయడం, డిజైన్ మెరుగుపరచడం.</b> Engines, Vehicles, Factory Equipment, HVAC, Heat Systems.<br/><b>ఉద్యోగాలు:</b> Design Engineer, Manufacturing Engineer, Maintenance Engineer, Automotive Engineer, Thermal/HVAC Engineer, Reliability Engineer.<br/><b>ఎక్కడ:</b> Automobile, Manufacturing, Energy, Aerospace, Factories.<div class="chips"><span class="chip">Machines</span><span class="chip">CAD</span><span class="chip">Manufacturing</span><span class="chip">Automotive</span></div></div></div>
+<div class="row"><div class="k">Electrical Engineering / EEE</div><div class="v"><b>విద్యుత్ శక్తి, యంత్రాలపై పని.</b> Power Generation, Transmission, Motors, Transformers, EV Electrical Systems, Renewable Energy.<br/><b>ఉద్యోగాలు:</b> Electrical Design, Power Systems, Maintenance, Renewable Energy, EV, Protection Engineer.<br/><b>ఎక్కడ:</b> Power, Railways, EV, Factories, Infrastructure.<div class="chips"><span class="chip">Power</span><span class="chip">Motors</span><span class="chip">EV</span><span class="chip">Renewables</span></div></div></div>
+<div class="row"><div class="k">Electronics &amp; Communication — ECE</div><div class="v"><b>చిప్‌లు, సర్క్యూట్లు, కమ్యూనికేషన్ పరికరాలు తయారు చేయడం.</b> Embedded Systems, Telecom, Sensors, IoT, Digital Hardware.<br/><b>ఉద్యోగాలు:</b> Embedded Engineer, VLSI/Chip Design Engineer, Hardware Engineer, Telecom Engineer, Firmware Engineer, Electronics Test Engineer.<br/><b>ఎక్కడ:</b> Semiconductor, Telecom, Electronics, Automotive, Defence.<div class="chips"><span class="chip">Semiconductors</span><span class="chip">Embedded</span><span class="chip">Telecom</span><span class="chip">IoT</span></div></div></div>
+<div class="row"><div class="k">Computer Science / IT</div><div class="v"><b>యాప్‌లు, వెబ్‌సైట్లు, Cloud, AI, Data, Cybersecurity వంటి సాఫ్ట్‌వేర్ వ్యవస్థలు.</b><br/><b>ఉద్యోగాలు:</b> Software Engineer, AI/ML Engineer, Data Engineer, Cybersecurity Engineer, Cloud/DevOps Engineer, Backend/Frontend Engineer.<br/><b>ఎక్కడ:</b> IT Companies, Banks, Startups, Product Companies, Consulting, మరెన్నో రంగాలు.<div class="chips"><span class="chip">Software</span><span class="chip">AI</span><span class="chip">Data</span><span class="chip">Cybersecurity</span></div></div></div>
+<div class="row"><div class="k">Chemical Engineering</div><div class="v"><b>ముడి పదార్థాల నుంచి ఉపయోగకరమైన వస్తువులను పెద్ద స్థాయిలో సురక్షితంగా తయారు చేయడం.</b> Chemicals, Fuels, Medicines, Food, Batteries, Materials.<br/><b>ఉద్యోగాలు:</b> Process Engineer, Production Engineer, Process Design Engineer, Process Safety Engineer, Operations/Project Engineer.<br/><b>ఎక్కడ:</b> Pharma, Refining, Oil &amp; Gas, Batteries, Fertilisers, Chemicals, Food.<div class="chips"><span class="chip">Process plants</span><span class="chip">Pharma</span><span class="chip">Energy</span><span class="chip">Batteries</span></div></div></div>
+<div class="row"><div class="k">Biotechnology Engineering</div><div class="v"><b>Biologyని Engineeringతో కలిపి పని చేస్తారు.</b> Fermentation, Bioprocessing, Diagnostics, Vaccines, Food Biotech, Biomanufacturing.<br/><b>ఉద్యోగాలు:</b> Bioprocess Engineer, Fermentation Engineer, Production Associate, Quality/Validation, Bioinformatics/Research.<br/><b>ఎక్కడ:</b> Biotech, Pharma, Vaccines, Diagnostics, Food, Research.<br/><b>గమనిక:</b> కొన్ని Research Jobsకు M.Tech/M.Sc./PhD లేదా ప్రత్యేక అనుభవం అడగవచ్చు.<div class="chips"><span class="chip">Bioprocess</span><span class="chip">Pharma</span><span class="chip">Fermentation</span><span class="chip">Biology</span></div></div></div>
+<div class="row"><div class="k">Instrumentation &amp; Control</div><div class="v"><b>ఫ్యాక్టరీల పనిని కొలవడం, నియంత్రించడం.</b> Sensors, PLC, DCS, Automation, Calibration, Control Loops.<br/><b>ఉద్యోగాలు:</b> Instrumentation Engineer, Control Engineer, Automation Engineer, PLC/DCS Engineer, Commissioning Engineer.<br/><b>ఎక్కడ:</b> Process Plants, Pharma, Oil &amp; Gas, Power, Manufacturing.<div class="chips"><span class="chip">Sensors</span><span class="chip">PLC/DCS</span><span class="chip">Automation</span><span class="chip">Control</span></div></div></div>
+<div class="row"><div class="k">Mechatronics / Robotics</div><div class="v"><b>Mechanical + Electronics + Control + Coding కలిపి Robots, Automatic Machines తయారు చేస్తారు.</b><br/><b>ఉద్యోగాలు:</b> Robotics Engineer, Automation Engineer, Mechatronics Engineer, Controls Engineer, Manufacturing Automation Engineer.<br/><b>ఎక్కడ:</b> Robotics, Factories, Automotive, Warehouse Automation.<div class="chips"><span class="chip">Robots</span><span class="chip">Automation</span><span class="chip">Controls</span><span class="chip">Coding</span></div></div></div>
+<div class="row"><div class="k">Aerospace / Aeronautical</div><div class="v"><b>విమానాలు, అంతరిక్ష వాహనాలపై పని.</b> Aerodynamics, Engines/Propulsion, Structures, Flight Controls.<br/><b>ఉద్యోగాలు:</b> Aerospace Design, Structures, Propulsion, Flight/Systems, Manufacturing Engineer.<br/><b>ఎక్కడ:</b> Aerospace, Defence, Aviation, Space Organisations, Research Labs.<br/><b>వాస్తవం:</b> Mechanical లేదా CSEతో పోలిస్తే ఇవి కొన్ని ప్రాంతాలు, సంస్థల్లోనే ఎక్కువగా ఉంటాయి.<div class="chips"><span class="chip">Aircraft</span><span class="chip">Space</span><span class="chip">Aerodynamics</span><span class="chip">Defence</span></div></div></div>
+<div class="row"><div class="k">Environmental Engineering</div><div class="v"><b>నీరు, చెత్త, కాలుష్యానికి ఇంజినీరింగ్ పరిష్కారాలు.</b> Water Treatment, Wastewater, Air Pollution, Waste Management, Environmental Rules.<br/><b>ఉద్యోగాలు:</b> Environmental Engineer, Water/Wastewater Engineer, EHS/Environmental Consultant, Sustainability Engineer.<br/><b>ఎక్కడ:</b> Water Utilities, Industries, Consulting, Infrastructure, Government.<div class="chips"><span class="chip">Water</span><span class="chip">Waste</span><span class="chip">Pollution</span><span class="chip">Sustainability</span></div></div></div>
+<div class="row"><div class="k">Industrial / Production</div><div class="v"><b>ఫ్యాక్టరీ పని వేగంగా, నాణ్యతతో, తక్కువ వృథాతో సాగేందుకు సహాయం.</b> Production, Quality, Lean Manufacturing, Supply Chain, Operations.<br/><b>ఉద్యోగాలు:</b> Production Engineer, Industrial Engineer, Quality Engineer, Manufacturing Engineer, Continuous Improvement Engineer, Operations.<br/><b>ఎక్కడ:</b> Manufacturing, Automobile, Electronics, Logistics.<div class="chips"><span class="chip">Production</span><span class="chip">Quality</span><span class="chip">Lean</span><span class="chip">Operations</span></div></div></div>
+<div class="row"><div class="k">Materials / Metallurgical</div><div class="v"><b>వస్తువులు ఏ పదార్థంతో తయారయ్యాయి, ఎందుకు విరిగిపోయాయి, ఎలా మెరుగుపరచాలి?</b> Metals, Alloys, Polymers, Ceramics, Battery Materials.<br/><b>ఉద్యోగాలు:</b> Materials Engineer, Metallurgist, Quality/Failure Analysis Engineer, Process Engineer, Battery/Materials Research.<br/><b>ఎక్కడ:</b> Steel, Automotive, Aerospace, Batteries, Semiconductor, Materials.<div class="chips"><span class="chip">Metals</span><span class="chip">Materials</span><span class="chip">Failure analysis</span><span class="chip">Batteries</span></div></div></div>
+<div class="row"><div class="k">Biomedical Engineering</div><div class="v"><b>వైద్య రంగానికి ఉపయోగపడే పరికరాలు, సాంకేతికత.</b> Medical Devices, Sensors, Imaging, Artificial Limbs, Hospital Technology.<br/><b>ఉద్యోగాలు:</b> Biomedical Engineer, Medical Equipment Engineer, Clinical Engineer, R&amp;D, Quality/Regulatory Roles.<br/><b>ఎక్కడ:</b> Hospitals, Medical Device Companies, Diagnostics, Healthcare Technology.<div class="chips"><span class="chip">Medical devices</span><span class="chip">Healthcare</span><span class="chip">Sensors</span><span class="chip">Imaging</span></div></div></div>
+<div class="row"><div class="k">Agricultural / Food Engineering</div><div class="v"><b>వ్యవసాయం, ఆహార తయారీలో ఇంజినీరింగ్.</b> Farm Machines, Irrigation, Storage, Food Processing, Post-harvest Systems.<br/><b>ఉద్యోగాలు:</b> Agricultural Engineer, Farm Machinery Engineer, Food Process Engineer, Irrigation/Storage/Quality Roles.<br/><b>ఎక్కడ:</b> Agritech, Food Companies, Farm Equipment, Processing Factories.<div class="chips"><span class="chip">Farm tech</span><span class="chip">Food</span><span class="chip">Irrigation</span><span class="chip">Processing</span></div></div></div>
+</div>
+<div class="flag green"><span class="mark">బ్రాంచీ ఎంపిక సూత్రం</span><span>మీకు ఏ సమస్యలు పరిష్కరించడం ఇష్టమో దాని ఆధారంగా ఎంచుకోండి: Buildings → Civil; Machines → Mechanical; Power → Electrical; Chips → ECE; Software → CSE; Processes → Chemical.</span></div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">బ్రాంచీలు ఒకదానితో ఒకటి కలుస్తాయా?</div><div class="v">అవును. Mechanical చదివినవారు EV/Roboticsకి, ECE వాళ్లు Software/Chip Designకి, Chemical వాళ్లు Batteries/Materialsకి వెళ్లవచ్చు. అయితే బ్రాంచీ మార్చాలంటే అవసరమైన కొత్త Skills నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k">ప్రభుత్వ ఉద్యోగాలు / పై చదువులు</div><div class="v">B.Tech తర్వాత నేరుగా ఉద్యోగం, ప్రభుత్వ Technical Recruitment, లేదా M.Tech/MS/MBA వంటి పై చదువులు. <b>GATE</b> కొన్ని PG Admissions, PSU/Technical ఉద్యోగాలకు ఉపయోగపడుతుంది; ప్రతీ ప్రభుత్వ ఉద్యోగానికీ GATE అవసరం లేదు. సంబంధిత నోటిఫికేషన్ చూడాలి.</div></div>
+<div class="row"><div class="k">Plan B — ఇతర అవకాశాలు</div><div class="v">Engineering చదివినవారు నైపుణ్యాన్ని బట్టి <b>Data/Software, Product, Consulting, Operations, Technical Sales, Government Exams, MBA</b> వంటి రంగాలకు కూడా వెళ్లవచ్చు.<div class="chips"><span class="chip">Data / software</span><span class="chip">Product</span><span class="chip">Consulting</span><span class="chip">Operations</span><span class="chip">Technical sales</span><span class="chip">Government exams</span></div></div></div>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం ఎంత ఉండవచ్చు?</h3><p class="lede">కంపెనీ, బ్రాంచీ, కాలేజీ, నగరం, Skills బట్టి Engineers జీతాల్లో చాలా తేడా ఉంటుంది.</p>
+<div class="card">
+<div class="row"><div class="k">కోర్ ఇంజినీరింగ్ — ప్రారంభ జీతం</div><div class="v"><span class="money">₹20,000 – ₹45,000/నెల</span><br/>Civil, Mechanical, Electrical, Chemical, Production, Instrumentation వంటి కోర్ రంగాల్లో కొత్తవారికి విస్తృత అంచనా. కంపెనీ, కాలేజీ, Skills బట్టి తేడా.</div></div>
+<div class="row"><div class="k">సాఫ్ట్‌వేర్ — ప్రారంభ జీతం</div><div class="v"><span class="money">₹25,000 – ₹80,000+/నెల</span><br/>Software/CSE ఉద్యోగాల్లో చాలా తేడా ఉంటుంది. Top Product Companies చాలా ఎక్కువ ఇవ్వవచ్చు; పెద్ద సంఖ్యలో నియామకాలు చేసే కంపెనీల్లో తక్కువ ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రత్యేక టెక్నాలజీ ఉద్యోగాలు</div><div class="v"><span class="money">₹30,000 – ₹70,000+/నెల</span><br/>Semiconductor/VLSI, Automation, Controls, EV, Energy, Advanced Manufacturing వంటి ప్రత్యేక నైపుణ్య ఉద్యోగాల్లో మంచి అవకాశాలు ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">5–10 ఏళ్ల అనుభవం తర్వాత</div><div class="v"><span class="money">₹60,000 – ₹2,00,000+/నెల</span><br/>5–10 సంవత్సరాలు పనిచేసిన Design, Project, Software, Manufacturing, Process, Semiconductor, Energy, Management నిపుణుల్లో కొందరికి ఈ స్థాయి ఆదాయం ఉండవచ్చు. అందరికీ ఒకేలా రాదు.</div></div>
+<div class="row"><div class="k">కాలేజీ ఖర్చు</div><div class="v">Government, IIT/NIT, University, Private Colleges మధ్య ఫీజుల్లో చాలా తేడా ఉంటుంది. ఒక్క Highest Package చూసి కాలేజీ నిర్ణయించకండి. <b>మొత్తం ఫీజు, Placement అవకాశాలు, Branch-wise Outcomes, Internship, అప్పుల భారం</b> కూడా పోల్చండి.</div></div>
+<div class="flag red"><span class="mark">ఇంట్లో చర్చించండి</span><span>ఒక కాలేజీ ఫీజు ఇంకో కాలేజీ కంటే కొన్ని లక్షలు ఎక్కువైతే ఆ అదనపు డబ్బుకు ఏమి వస్తుందో అడగండి — Teaching, Labs, Placements, Industry Links, Location?</span></div>
+</div>
+</section>
+<div class="rule-box"><h4>ఈ నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p>Engineering, Branch రెండూ మీకు సరిపోతే నిజమైన Technical Skills పెంచుకుని ముందుకు వెళ్లండి.</p>
+<p>Engineering నచ్చినా బ్రాంచీ స్పష్టంగా తెలియకపోతే ఆందోళన వద్దు. 3–4 బ్రాంచీలను Mini Projectsతో పరీక్షించండి.</p>
+<p>Maths/Science దారి మీకు సరిపోకపోతే Engineering కంటే మీకు బాగా సరిపోయే మరో కెరీర్ ఉండవచ్చు.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఎక్కువ Cutoff ఉన్న బ్రాంచీనే ఉత్తమం కాదు; మీరు బాగా నేర్చుకుని మంచి పని చేయగలిగిన బ్రాంచీనే ఉత్తమం.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">ఇప్పటి నుంచి మీ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">8–10 తరగతిలోనే 15 Engineering Branchల మధ్య తుది నిర్ణయం అవసరం లేదు. ఏ రకం సమస్యలు పరిష్కరించడం మీకు నచ్చుతుందో చిన్న ప్రయోగాలతో తెలుసుకోండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే, స్కూల్‌లో ఉన్నప్పుడు</div><ul>
+<li>Maths, Physics పునాదులు అర్థం చేసుకుని చదవండి; ఫార్ములాలు కేవలం బట్టీ పట్టకండి.</li>
+<li>Coding, Basic Electronics, Simple Design వంటి మూడు రకాల టెక్నికల్ పనులను ప్రయత్నించండి.</li>
+<li>Bridge, Machine, Mobile, Power Line, Factory, App చూసినప్పుడు “దీనిని ఎవరు ఎలా తయారు చేశారు?” అని ఆలోచించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>ఎక్కువ Engineering Options కావాలంటే MPC ఎంచుకోండి.</li>
+<li>ఆంధ్రప్రదేశ్ కాలేజీలకు AP EAPCET; జాతీయ స్థాయిలో ప్రయత్నించాలంటే JEE ప్రవేశ మార్గాలను తెలుసుకుని సిద్ధం అవ్వండి.</li>
+<li>10వ తరగతి తర్వాత ప్రాక్టికల్ దారి ఇష్టమైతే Polytechnic Diploma ఎంపికను కూడా పోల్చండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> కాలేజీ / శిక్షణ సమయంలో</div><ul>
+<li>3–5 బ్రాంచీలకు సంబంధించిన మొదటి సంవత్సరం Subjects, Core Subjects, Daily Work, Job Types పోల్చండి.</li>
+<li>నచ్చిన బ్రాంచీకి చిన్న Project చేయండి — CSEకి Coding, ECEకి Arduino, Mechanicalకి CAD, Civilకి Basic Structure వంటివి.</li>
+<li>మీరు చూసే ప్రతి కాలేజీలో Branch-wise Placements, Fees, Internships నిజంగా ఎలా ఉన్నాయో పరిశీలించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">చిన్న పరీక్ష</span><span>రోజూ వాడే ఒక Smartphone ఎంచుకోండి. దాని తయారీకి Materials, Electronics, Software, Mechanical, Manufacturing వంటి ఎన్ని రకాల Engineers అవసరమో రాయండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ గైడ్ మాత్రమే; అధికారిక Admission, Eligibility, Placement లేదా Salary ప్రకటన కాదు. Exam Rules, Subjects, Branch Names, Fees, Jobs మారవచ్చు. ప్రవేశానికి AP EAPCET/JEE ప్రస్తుత అధికారిక నియమాలు చూసుకోండి. జీతాలు అంచనాలు మాత్రమే.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Engineering మీకు బాగా సరిపోవచ్చు</strong>సమస్యలు పరిష్కరించడం, కొత్తవాటిని తయారు చేయడం మీకు నచ్చుతున్నాయి. ఇప్పుడు మీకు ఏ బ్రాంచీ సరిపోతుందో కనుగొనాలి.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>నిర్ణయానికి ముందు ప్రయత్నించండి</strong>Engineeringలో కొన్ని విషయాలు మీకు నచ్చుతున్నాయి. Coding, Electronics, Design, చిన్న Projects ప్రయత్నించి తరువాత నిర్ణయం తీసుకోండి.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>మరోసారి ఆలోచించండి</strong>Engineering రోజువారీ పని మీకు అంతగా నచ్చకపోవచ్చు. ఇతరులు చెబుతున్నారని MPC/B.Tech తీసుకోకుండా ఇతర కెరీర్‌లు కూడా చూడండి.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div></body></html>

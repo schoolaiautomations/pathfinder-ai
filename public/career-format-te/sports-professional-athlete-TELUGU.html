@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ మార్గదర్శకం — క్రీడాకారుడు / ప్రొఫెషనల్ అథ్లెట్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>క్రీడాకారుడు / ప్రొఫెషనల్ అథ్లెట్</h2><p class="standfirst">ఎంచుకున్న క్రీడలో ఉన్నత స్థాయికి చేరేందుకు శరీరానికి, మనసుకు ప్రతిరోజూ శిక్షణ ఇవ్వాలి. పతకాలు, గుర్తింపు సాధ్యమే; కానీ చాలా కొద్దిమందికే స్థిరమైన పూర్తి సమయ ఆదాయం లభిస్తుంది. క్రమశిక్షణ, పోటీలు, విశ్రాంతి, నిరంతర ఒత్తిడి నిజమైన రోజువారీ జీవితం.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · క్రీడాకారుడు / ప్రొఫెషనల్ అథ్లెట్ · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>నిజంగా ఇష్టమా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు ఏమిటి?</em></a>
+<a class="pip warn" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>ఖర్చు, జీతం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఈ పని నిజంగా మీకు ఇష్టమా?</h3><p class="lede">ఆరు ప్రశ్నలకు నిజాయితీగా సమాధానం ఇవ్వండి. ఉద్యోగం పేరు మాత్రమే కాదు, రోజువారీ పని కూడా మీకు నచ్చాలి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>నెలల తరబడి పతకం రాకపోయినా వారానికి 5–6 రోజులు గంభీరంగా శిక్షణ కొనసాగిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>ఒక చిన్న టెక్నిక్ మెరుగుపర్చడానికి ఒకే వ్యాయామాన్ని వందలసార్లు చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>ఓటమి, జట్టులో చోటు రాకపోవడం, ఎంపిక కాకపోవడం ఎదురైనా తిరిగి సాధనకు వస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>శిక్షణ, పోటీలను బట్టి నిద్ర, ఆహారం, చదువు, స్నేహితులకు సమయం సర్దుబాటు చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>కోచ్ సలహా, విమర్శ అంగీకరించి మీ ఆటతీరును మార్చుకోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>ప్రసిద్ధి రాకపోయినా, కొన్ని ఏళ్లు ఆదాయం స్థిరంగా లేకపోయినా క్రీడ కొనసాగించాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఎలా చేరాలి?</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అవసరమైన ప్రవేశ పరీక్షలు, అర్హతలు, శిక్షణ మార్గాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> Choose one primary sport</div><div class="v">గంభీరంగా శిక్షణ మొదలయ్యే సమయానికి సాధారణంగా ఒక ప్రధాన క్రీడను, మంచి కోచ్‌ను ఎంచుకోవాలి. చిన్నప్పుడే అనేక ఆటలు ఆడటం మంచిదే; ఉన్నత స్థాయిలో మాత్రం ప్రత్యేక సాధన అవసరమవుతుంది.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> Train under a coach</div><div class="v">అవకాశమున్న చోట మంచి పాఠశాల, క్లబ్, జిల్లా అకాడమీ, గుర్తింపు పొందిన క్రీడా సంఘం, SAI కేంద్రం లేదా అకాడమీలో శిక్షణ తీసుకోండి. ఖరీదైన పరికరాలకంటే మంచి కోచ్ ముఖ్యం.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> Compete regularly</div><div class="v">సమయం, ర్యాంకు, మ్యాచ్ ప్రదర్శన, సెలక్షన్ ట్రయల్స్, నైపుణ్య పరీక్షలు, గుర్తింపు పొందిన పోటీ ఫలితాల ఆధారంగా ఎంపిక ఉంటుంది. కేవలం సాధన వీడియోలు సరిపోవు; నిజమైన పోటీ రికార్డు కావాలి.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">క్రీడాకారుడయ్యేందుకు నిర్దిష్ట ఇంటర్ గ్రూప్ తప్పనిసరి కాదు. మీ చదువు, ప్రత్యామ్నాయ కెరీర్‌ను బట్టి MPC, BiPC, CEC, Commerce లేదా Humanities ఎంచుకోండి. శిక్షణ, పోటీలకు సమయం దొరికేలా చదువు ప్రణాళిక ఉండాలి.</div></div>
+<div class="row"><div class="k">ప్రవేశం / ఎంపిక</div><div class="v">అన్ని ఆటలకు ఒకే ప్రవేశ పరీక్ష లేదు. ఆయా క్రీడల్లో జిల్లా → రాష్ట్ర → జాతీయ పోటీలు, ఫెడరేషన్ ట్రయల్స్, ర్యాంకింగులు, స్కౌటింగ్, ఎంపిక క్యాంపుల ద్వారా ముందుకు వెళ్తారు. ప్రతి క్రీడ నియమాలు వేరు.</div></div>
+<div class="row"><div class="k">Khelo India / SAI</div><div class="v">గుర్తింపు ఉన్న పోటీల్లో రాణించే వారిని Khelo India, SAI శిక్షణకు గుర్తించవచ్చు. మూల నివేదికలో Foundation → Grassroots → Intermediate → Elite దశల మార్గం వివరించారు. ఎంపికైన వారికి అకాడమీ లేదా SAI National Centres of Excellenceలో అవకాశం రావచ్చు.</div></div>
+<div class="row"><div class="k">SAI centres</div><div class="v">Sports Authority of India దేశవ్యాప్తంగా National Centres of Excellence (NCOE), SAI Training Centres తదితర కేంద్రాలు నిర్వహిస్తుంది. కొన్ని కేంద్రాల్లో ప్రత్యేక కోచింగ్, స్పోర్ట్స్ సైన్స్, పోషణ అందుతాయి. మీ క్రీడకు ఏ కేంద్రం ఉందో తాజా SAI జాబితాలో చూడండి.</div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన దశలు</div><div class="v">ఒక క్రీడ ఎంపిక → అర్హత గల కోచ్ వద్ద సాధన → జిల్లా/గుర్తింపు పొందిన పోటీలు → రాష్ట్రం → జాతీయ ఛాంపియన్‌షిప్‌లు/Khelo India/ఫెడరేషన్ → Elite Academy/SAI/NCOE లేదా ప్రొఫెషనల్ క్లబ్ → జాతీయ/అంతర్జాతీయ పోటీలు. ఖచ్చితమైన మార్గం క్రీడను బట్టి మారుతుంది.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>AP PECET అనేది క్రీడాకారుడిగా ఎంపికయ్యే పరీక్ష కాదు. APలో D.P.Ed., B.P.Ed. Physical Education కోర్సుల ప్రవేశానికి ఉపయోగిస్తారు. క్రీడాకారుల ఎంపిక పోటీ ప్రదర్శన, ట్రయల్స్‌పై ఆధారపడుతుంది.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఉద్యోగాలు, ప్రత్యేక అవకాశాలు ఏమిటి?</h3><p class="lede">వేర్వేరు ప్రత్యేక రంగాలు, వాస్తవ ఉద్యోగ అవకాశాలు, ప్రత్యామ్నాయ మార్గాలను పరిశీలించండి.</p>
+<div class="card">
+<div class="row"><div class="k">Cricket</div><div class="v">భారతదేశంలో పెద్ద ప్రొఫెషనల్ మార్కెట్ ఉన్న ఆటల్లో క్రికెట్ ఒకటి. స్కూల్/క్లబ్ → జిల్లా, రాష్ట్ర వయో విభాగాల జట్లు → ఉన్నత లీగ్‌లు, ప్రొఫెషనల్ అవకాశాలు. పోటీ చాలా ఎక్కువ.<div class="chips"><span class="chip">Club</span><span class="chip">District</span><span class="chip">State</span><span class="chip">Domestic / League</span></div></div></div>
+<div class="row"><div class="k">Badminton / Tennis / Table Tennis</div><div class="v">బ్యాడ్మింటన్, టెన్నిస్, టేబుల్ టెన్నిస్‌లో ర్యాంకింగ్, టోర్నమెంట్లు ప్రధానమైనవి. మంచి కోచింగ్, నిరంతర పోటీలు, ప్రయాణం, వ్యక్తిగత ప్రదర్శన అవసరం.</div></div>
+<div class="row"><div class="k">Athletics</div><div class="v">అథ్లెటిక్స్‌లో స్ప్రింట్లు, దూర పరుగు, జంప్స్, త్రోస్ వంటి విభాగాలున్నాయి. సమయం, దూరం, అర్హత మార్కుల ద్వారా పురోగతి స్పష్టంగా కొలవవచ్చు.<div class="chips"><span class="chip">Running</span><span class="chip">Jumps</span><span class="chip">Throws</span></div></div></div>
+<div class="row"><div class="k">Football</div><div class="v">ఫుట్‌బాల్‌లో అకాడమీ, క్లబ్‌లు, జిల్లా/రాష్ట్ర పోటీలు, యూత్ లీగ్‌లు, ప్రొఫెషనల్ జట్లు మార్గాలు. మ్యాచ్ ప్రదర్శన, జట్టు అవసరాలు, స్థానంపై ఎంపిక ఉంటుంది.</div></div>
+<div class="row"><div class="k">Hockey</div><div class="v">హాకీలో పాఠశాల/అకాడమీ నుంచి రాష్ట్ర, జాతీయ స్థాయి; SAI, ఫెడరేషన్ మార్గాలున్నాయి. సంస్థాగత, ప్రొఫెషనల్ జట్లు అవకాశాలు ఇవ్వవచ్చు.</div></div>
+<div class="row"><div class="k">Kabaddi / Kho-Kho</div><div class="v">కబడ్డీ, ఖో-ఖో వంటి భారతీయ జట్టు ఆటలకు పాఠశాల, విశ్వవిద్యాలయం, రాష్ట్ర, జాతీయ పోటీలు ఉన్నాయి. లీగ్‌ల వల్ల గుర్తింపు పెరిగినా స్థిర ఆదాయం అందరికీ ఉండదు.</div></div>
+<div class="row"><div class="k">Volleyball / Basketball</div><div class="v">వాలీబాల్, బాస్కెట్‌బాల్‌లో స్కూల్, అకాడమీ, జిల్లా, కాలేజీ, రాష్ట్ర, క్లబ్ మార్గాలున్నాయి. కొన్ని స్థానాల్లో ఎత్తు ఉపయోగపడినా నైపుణ్యం, కదలిక, వ్యూహం, జట్టు పని అవసరం.</div></div>
+<div class="row"><div class="k">Boxing / Wrestling / Judo / Taekwondo</div><div class="v">బాక్సింగ్, రెజ్లింగ్, జూడో, తైక్వాండో పోటీల్లో బరువు వర్గాల ప్రకారం పోటీలు, ఫెడరేషన్ ఎంపికలు ఉంటాయి. బలం, సాంకేతికత, భద్రత, క్రమశిక్షణ ముఖ్యం.</div></div>
+<div class="row"><div class="k">Weightlifting</div><div class="v">వెయిట్‌లిఫ్టింగ్‌లో బరువు వర్గాల ప్రకారం సరైన పద్ధతితో బరువులు ఎత్తడమే ప్రదర్శన. ప్రత్యేక కోచ్, బలం, సాంకేతికత, SAI వంటి ఉన్నత శిక్షణ కేంద్రాలు ముఖ్యం.</div></div>
+<div class="row"><div class="k">Shooting / Archery</div><div class="v">షూటింగ్, ఆర్చరీలో లక్ష్యాన్ని ఖచ్చితంగా గురి చేయడం, మనోనిగ్రహం, నిరంతర స్కోర్లు ముఖ్యం. పరికరాలు, సురక్షిత శిక్షణ కేంద్రాలు ఖరీదైనవిగా ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">Swimming / Aquatics</div><div class="v">ఈతలో చిన్న వయస్సులోనే శిక్షణ మొదలయ్యే అవకాశం ఎక్కువ. నిరంతరం పూల్ అందుబాటు కావాలి. అధికారిక సమయాలు, ఛాంపియన్‌షిప్ ఫలితాలతో అభివృద్ధి కొలుస్తారు.</div></div>
+<div class="row"><div class="k">Cycling / Rowing / Canoeing</div><div class="v">సైక్లింగ్, రోయింగ్, కానోయింగ్ అధిక ఓర్పు, ప్రత్యేక పరికరాలు లేదా వేదికలు అవసరమయ్యే ఒలింపిక్ క్రీడలు. కొన్ని విభాగాలకు SAI NCOE మద్దతు ఉంటుంది.</div></div>
+<div class="row"><div class="k">Para Sports</div><div class="v">అర్హత గల దివ్యాంగ క్రీడాకారులకు కూడా ఉన్నత స్థాయి Para Sports మార్గాలున్నాయి. క్రీడను బట్టి వర్గీకరణ నియమాలు ఉంటాయి; Khelo India, SAI వంటి కార్యక్రమాల ద్వారా అవకాశాలు చూడవచ్చు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Team sport</div><div class="v">జట్టు ఆటల్లో మీ ప్రదర్శనతో పాటు ఆటస్థానం, వ్యూహం, జట్టు అవసరాలు, కోచ్ నిర్ణయం కూడా ఎంపికను ప్రభావితం చేస్తాయి. క్రికెట్, ఫుట్‌బాల్, హాకీ ఉదాహరణలు.</div></div>
+<div class="row"><div class="k">Individual sport</div><div class="v">వ్యక్తిగత ఆటల్లో ర్యాంకులు, సమయాలు, దూరాలు, స్కోర్లు, బరువు వంటి ఫలితాలతో ప్రదర్శనను కొలవడం సులభం. అథ్లెటిక్స్, ఈత, షూటింగ్ ఉదాహరణలు.</div></div>
+<div class="row"><div class="k">క్రీడాకారుడు వర్సెస్ క్రీడా డిగ్రీ</div><div class="v">ప్రొఫెషనల్ క్రీడాకారుడిగా అవకాశాలు పోటీల్లో చూపిన ప్రదర్శన ద్వారా వస్తాయి. B.P.Ed/D.P.Ed అనేవి Physical Education లేదా బోధన/కోచింగ్ సంబంధిత చదువు మార్గాలు; క్రీడాకారుడిగా ఎంపిక పరీక్షలు కావు.</div></div>
+<div class="row"><div class="k">మీ ప్రత్యామ్నాయ మార్గం</div><div class="v">ఉన్నత స్థాయి పోటీలు సాధ్యంకాకపోతే క్రీడా రంగంలోనే Coach, Physical Education Teacher, Sports Management, Strength &amp; Conditioning, Sports Science వంటి ప్రత్యామ్నాయాలు.<div class="chips"><span class="chip">Coach</span><span class="chip">Physical Education</span><span class="chip">Sports Management</span><span class="chip">Strength &amp; Conditioning</span><span class="chip">Sports Analytics</span><span class="chip">Commentary / Media</span></div></div></div>
+<div class="flag"><span class="mark">గమనించండి</span><span>మీ స్కూల్‌లో ఉత్తమ ఆటగాడిగా ఉండటం మంచి మొదలే; ప్రొఫెషనల్ అవకాశం ఖాయం కాదు. జిల్లా, రాష్ట్ర, జాతీయ స్థాయుల్లో మీ ప్రదర్శనను క్రమంగా పోల్చుకోండి.</span></div>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఖర్చు ఎంత?</h3><p class="lede">మొదటి జీతం వచ్చే వరకు చదువు ఖర్చులు, తర్వాత సాధ్యమయ్యే ఆదాయం గురించి ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">School / district athlete</div><div class="v"><span class="money">Usually ₹0 salary</span><br/>పాఠశాల/జిల్లా స్థాయి క్రీడాకారుడికి సాధారణంగా స్థిర జీతం ₹0. శిక్షణ, పరికరాలు, ప్రయాణం, ఆహారం, పోటీలపై కుటుంబమే డబ్బు ఖర్చు చేయవచ్చు. స్కూల్ ఆటలనే వృత్తి ఆదాయంగా భావించవద్దు.</div></div>
+<div class="row"><div class="k">State / developing athlete</div><div class="v"><span class="money">Income often irregular</span><br/>రాష్ట్ర స్థాయిలో అభివృద్ధి చెందే క్రీడాకారులకు స్కాలర్‌షిప్‌లు, సంస్థ మద్దతు, బహుమతులు, స్పోర్ట్స్ కోటా అవకాశాలు ఉండవచ్చు. కానీ చాలామందికి ఆదాయం క్రమం తప్పకుండా రాదు.</div></div>
+<div class="row"><div class="k">Khelo India Athlete</div><div class="v"><span class="money">≈ ₹10,000/month OPA if selected</span><br/>Khelo Indiaలో ఎంపికైన అర్హత గల క్రీడాకారులకు మూల నివేదిక ప్రకారం నెలకు సుమారు ₹10,000 Out-of-Pocket Allowance (OPA) ఉండవచ్చు; అదనపు శిక్షణ మద్దతు పథకం నిబంధనలను బట్టి ఉంటుంది. ఇది అన్ని క్రీడాకారులకు ఇచ్చే జీతం కాదు.</div></div>
+<div class="row"><div class="k">Professional / elite athlete</div><div class="v"><span class="money">No standard range</span><br/>ఉన్నత ప్రొఫెషనల్ క్రీడాకారులకు ఒకే ప్రామాణిక జీతం లేదు. క్లబ్ ఒప్పందాలు, మ్యాచ్ ఫీజులు, లీగ్ చెల్లింపులు, టోర్నమెంట్ బహుమతులు, స్పాన్సర్లు, క్రీడను బట్టి ఆదాయం బాగా మారుతుంది.</div></div>
+<div class="row"><div class="k">ప్రభుత్వ support</div><div class="v">ఉన్నత క్రీడాకారులకు ప్రభుత్వ కేంద్ర/రాష్ట్ర విధానాల ప్రకారం నగదు బహుమతులు, స్కాలర్‌షిప్‌లు, స్పోర్ట్స్ కోటా నియామకాలు ఉండవచ్చు. ఆంధ్రప్రదేశ్ Sports Policy 2024–29లో గుర్తింపు పొందిన National Games, Khelo India పతకాలపై బహుమతులు ఉదాహరణగా ఉన్నాయి. బహుమతి డబ్బు నెల జీతం కాదు.</div></div>
+<div class="row"><div class="k">The cost</div><div class="v">ఖర్చు క్రీడను బట్టి మారుతుంది. పరుగుకు తక్కువ పరికరాలు సరిపోవచ్చు; టెన్నిస్, షూటింగ్, స్విమ్మింగ్, అంతర్జాతీయ పోటీలకు ఎక్కువ ఖర్చు. కోచ్ ఫీజు, పరికరాలు, పోటీ, ప్రయాణం, పోషణ, ఫిజియోథెరపీ, కోలుకునే ఖర్చులతో వార్షిక బడ్జెట్ తయారు చేయండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>కుటుంబం కొన్నేళ్లు సాధన, ప్రయాణ ఖర్చులు భరించగలదా? గాయం లేదా ఎంపిక కాకపోతే చదువు Plan B ఏమిటి? మంచి క్రీడాకారుడికి క్రీడా ప్రణాళికతో పాటు చదువు ప్రణాళిక ఉండాలి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><strong>నాలుగు అంశాలూ సరిపోతే</strong> — ఈ వృత్తికి అవసరమైన శిక్షణ ఇప్పటి నుంచే మొదలుపెట్టండి.</p>
+<p><strong>ఒక అంశం సరిపోకపోతే</strong> — నిర్ణయం ముందు మళ్లీ ఆలోచించండి.</p>
+<p><strong>రెండు లేదా ఎక్కువ అంశాలు సరిపోకపోతే</strong> — కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ఇతర వృత్తులనూ చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఈ ఉద్యోగం కోసం ఎంతకాలం ప్రయత్నించాలో, ఎప్పుడు ప్రత్యామ్నాయ ప్రణాళికకు వెళ్లాలో ముందే నిర్ణయించుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచి ఏం చేయాలి?</h3><p class="lede">ఇప్పటి నుంచే చిన్న సాధనతో ఈ కెరీర్ మీకు నచ్చుతుందో పరీక్షించండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, పాఠశాలలో</div><ul>
+<li>మీకు అత్యంత ఇష్టమైన క్రీడను ఎంచుకుని నిజమైన సాధన మొదలుపెట్టండి.</li>
+<li>శిక్షణ ఇచ్చే అర్హతగల కోచ్ లేదా గుర్తింపు ఉన్న క్లబ్‌ను సంప్రదించండి.</li>
+<li>మీ సమయాలు, స్కోర్లు, పోటీ ఫలితాలను ప్రతిరోజూ నమోదు చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>మీ చదువుకు సరిపోయే ఇంటర్ గ్రూప్ ఎంచుకుని క్రీడా శిక్షణ సమయం కేటాయించండి.</li>
+<li>జిల్లా, రాష్ట్ర పోటీలు, క్రీడా సంఘం ఎంపిక పద్ధతి తెలుసుకోండి.</li>
+<li>కోచ్‌తో కలిసి ఆహారం, నిద్ర, గాయాల నివారణ, వార్షిక బడ్జెట్ ప్రణాళిక చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>కాలేజీ, శిక్షణ సమయంలో</div><ul>
+<li>గుర్తింపు ఉన్న పోటీల్లో పాల్గొని ప్రదర్శన మెరుగుపరచండి.</li>
+<li>అర్హత ఉంటే Khelo India, SAI, అకాడమీ అవకాశాలను పరిశీలించండి.</li>
+<li>చదువును కొనసాగిస్తూ కోచింగ్, స్పోర్ట్స్ సైన్స్ వంటి Plan B సిద్ధం ఉంచుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">గమనించండి</span><span>మంచి కోచ్ వద్ద 90 రోజులు క్రమంగా సాధన చేసి కనీసం ఒక పోటీలో పాల్గొనండి. ముందు/తర్వాత ప్రదర్శన పోల్చుకోండి. రోజువారీ సాధన నిజంగా ఇష్టమో, జిల్లా/రాష్ట్ర స్థాయికి పురోగతి ఉందో చూడండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శక సమాచారం మాత్రమే; అధికారిక ప్రవేశం, నియామకం, లైసెన్సు లేదా జీతాల ప్రకటన కాదు. అర్హతలు, పరీక్షలు, గుర్తింపు, ఫీజులు, వయస్సు, జీతాలు మారవచ్చు. దరఖాస్తుకు ముందు సంబంధిత అధికారిక ప్రకటనలు తనిఖీ చేయండి. ఈ నివేదికలోని ఆదాయాలు మూల ఫైలులో ఉన్న అంచనాలే.</p>
+
+</div><script>document.addEventListener('DOMContentLoaded',function(){const quiz=document.getElementById('quiz'),verdict=document.getElementById('verdict'),pip=document.getElementById('pip1');if(!quiz||!verdict)return;const qs=[...quiz.querySelectorAll('.q')];function update(){const selected=qs.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);if(selected.length<qs.length){verdict.className='verdict';verdict.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(pip)pip.className='pip';return;}const yes=selected.filter(b=>b.dataset.v==='y').length;if(yes>=5){verdict.className='verdict good';verdict.innerHTML='<strong>ఈ రంగం మీకు సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఈ వృత్తికి అవసరమైన ఆసక్తి, ఓపిక కనిపిస్తున్నాయి. నిజమైన పనిని దగ్గరగా చూసి, చదువు మార్గం తెలుసుకోండి.';if(pip)pip.className='pip done';}else if(yes>=3){verdict.className='verdict mixed';verdict.innerHTML='<strong>నిర్ణయం ముందు ప్రయత్నించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. రోజువారీ పనిని తెలుసుకొని, చిన్న సాధన చేసి తర్వాత నిర్ణయించండి.';if(pip)pip.className='pip warn';}else{verdict.className='verdict bad';verdict.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ వృత్తి రోజువారీ పని మీకు సరిపోకపోవచ్చు. ఇతర కెరీర్‌లను కూడా పోల్చి కౌన్సెలర్‌తో మాట్లాడండి.';if(pip)pip.className='pip stop';}}quiz.addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;b.closest('.toggle').querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked');});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');update();});});</script></body></html>

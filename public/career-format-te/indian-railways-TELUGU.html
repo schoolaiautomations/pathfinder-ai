@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — భారతీయ రైల్వే ఉద్యోగాలు</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}
+/* Telugu readability */ body,.row,.q,.stage,.flag,.verdict{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;} .row .k,.stage-head,h3,.mast h2,.pip b,.flag .mark,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;line-height:1.35!important;}
+</style><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>భారతీయ రైల్వే ఉద్యోగాలు</h2><p class="standfirst">రైల్వే అనేది ఒకే ఉద్యోగం కాదు. స్టేషన్లు, రైళ్లు నడపడం, టికెట్లు, కార్యాలయాలు, టెక్నీషియన్, ఇంజినీరింగ్, ఆరోగ్య సేవలు వంటి ఉద్యోగాలకు వేర్వేరు పరీక్షలు ఉంటాయి. 10వ తరగతి, ITI, ఇంటర్, డిప్లొమా, డిగ్రీ ఆధారంగా మార్గం మారుతుంది.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · భారతీయ రైల్వే ఉద్యోగాలు · పేరు: <span class="fill"></span> · తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>ఈ పని నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>పని అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>జీతం, ఖర్చు</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>రైల్వే పని మీకు సరిపోతుందా?</h3><p class="lede">మీ నిజమైన ఆసక్తి, రోజూ చేయాల్సిన పని గురించి ఆలోచించి ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>అదే పని మళ్లీ చేసినా భద్రతా నియమాలు కచ్చితంగా పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఉదయం త్వరగా, రాత్రి, వారాంతం లేదా మారే షిఫ్టుల్లో పని చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ప్రయాణికులు, రైళ్లు, యంత్రాలు లేదా భద్రతా నిర్ణయాల వల్ల ఒత్తిడి వచ్చినా ప్రశాంతంగా ఉండగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>గణితం, Reasoning, జనరల్ నాలెడ్జ్, సాంకేతిక సబ్జెక్టుల పరీక్షలకు సిద్ధమవుతారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>కొన్ని పోస్టులకు చూపు, రంగులు గుర్తించడం, వినికిడి తదితర కఠిన ఆరోగ్య ప్రమాణాలుంటాయని అర్థమైందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఖాళీలు, జోన్‌ను బట్టి స్వగ్రామానికి దూరంగా పోస్టింగ్ వచ్చినా అంగీకరిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>రైల్వే ఉద్యోగాలకు వేర్వేరు మార్గాలు</h3>
+<p class="lede">10వ తరగతి తర్వాత ఏ గ్రూప్, ఏ కోర్సు, ఏ పరీక్ష అవసరమో జాగ్రత్తగా చదవండి.</p>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>CBT అంటే Computer Based Test — కంప్యూటర్లో రాసే పరీక్ష. CBT-1 మొదటి దశ, CBT-2 రెండో దశ. CBAT అంటే Computer Based Aptitude Test; ALP, Station Master వంటి నిర్దేశిత పోస్టులకు ప్రత్యేక సామర్థ్య పరీక్ష.</span></div>
+<div class="card">
+<div class="row"><div class="k">10వ తరగతి తర్వాత — Level 1</div><div class="v">మార్గం A: రైల్వే ఫీల్డ్, నిర్వహణ, సహాయక ఉద్యోగాలు. 10వ తరగతి → తాజా Level-1 ప్రకటనలో అర్హత చూడండి → CBT కంప్యూటర్ రాత పరీక్ష → అవసరమైతే శారీరక సామర్థ్య పరీక్ష → ధృవపత్రాల పరిశీలన → వైద్య పరీక్ష → ఉద్యోగం. ఫీల్డ్ పనికి సిద్ధంగా ఉండేవారికి అనుకూలం.</div></div>
+<div class="row"><div class="k">10వ తరగతి + ITI — ALP</div><div class="v">మార్గం B: Assistant Loco Pilot (ALP) సాంకేతిక రైలు నిర్వహణ ఉద్యోగం. 10వ తరగతి → ప్రకటనలో అర్హమైన ITI ట్రేడ్/Act Apprenticeship/డిప్లొమా → RRB ALP దరఖాస్తు → CBT-1 → CBT-2 → అవసరమైన Computer Based Aptitude Test → ధృవపత్రాలు → కఠిన వైద్య పరీక్ష → ALP.</div></div>
+<div class="row"><div class="k">ITI / డిప్లొమా — Technician</div><div class="v">మార్గం C: ఎలక్ట్రికల్, మెకానికల్, ఎలక్ట్రానిక్స్, సిగ్నలింగ్, వర్క్‌షాప్ ఉద్యోగాలు. 10వ తరగతి → తగిన ITI/డిప్లొమా → RRB Technician ప్రకటన → CBT → ధృవపత్రాల పరిశీలన → వైద్య పరీక్ష → టెక్నీషియన్ ఉద్యోగం. అర్హత పోస్టును బట్టి ఉంటుంది.</div></div>
+<div class="row"><div class="k">ఇంటర్ తర్వాత — NTPC UG</div><div class="v">మార్గం D: Commercial cum Ticket Clerk, Accounts Clerk cum Typist, Junior Clerk cum Typist, Trains Clerk వంటి పోస్టులు. 10వ తరగతి → అర్హమైన ఏ ఇంటర్ గ్రూప్ అయినా → RRB NTPC Undergraduate → CBT-1 → CBT-2 → Typist పోస్టుకైతే మాత్రమే టైపింగ్ టెస్ట్ → ధృవపత్రాలు → వైద్య పరీక్ష → పోస్టు కేటాయింపు.</div></div>
+<div class="row"><div class="k">డిప్లొమా / Engineering — JE</div><div class="v">మార్గం E: Civil, Mechanical, Electrical, Electronics వంటి శాఖల్లో Junior Engineer. 10వ తరగతి → అవసరమైన Engineering Diploma/B.E./B.Tech → RRB JE ప్రకటన → CBT-1 → CBT-2 → ధృవపత్రాలు → వైద్య పరీక్ష → JE లేదా ఇతర కేటాయించిన సాంకేతిక పోస్టు.</div></div>
+<div class="row"><div class="k">డిగ్రీ తర్వాత — NTPC Graduate</div><div class="v">మార్గం F: Station Master, Goods Train Manager, Chief Commercial cum Ticket Supervisor, Junior Accounts Assistant cum Typist, Senior Clerk cum Typist వంటి పోస్టులు. 10వ తరగతి → ఇంటర్ → డిగ్రీ → RRB NTPC Graduate → CBT-1 → CBT-2 → సంబంధిత పోస్టుకే Aptitude/Typing test → ధృవపత్రాలు → వైద్య పరీక్ష.</div></div>
+<div class="row"><div class="k">Station Master మార్గం</div><div class="v">మార్గం G: రైళ్ల సురక్షిత రాకపోకలు, స్టేషన్ కార్యకలాపాల బాధ్యత. 10వ తరగతి → ఇంటర్ → అర్హ డిగ్రీ → RRB NTPC Graduate → CBT-1 → CBT-2 → Station Master కోసం CBAT → ధృవపత్రాల పరిశీలన → నిర్దేశిత వైద్య పరీక్ష → Station Master.</div></div>
+<div class="row"><div class="k">Section Controller మార్గం</div><div class="v">మార్గం H: ఒక రైల్వే సెక్షన్‌లో రైళ్ల కదలికలను నియంత్రించడం, సమన్వయం చేయడం. 10వ తరగతి → ఇంటర్ → డిగ్రీ → Section Controller ప్రకటనకు దరఖాస్తు → నిర్దేశిత CBT/అప్టిట్యూడ్ దశలు → ధృవపత్రాలు → వైద్యం → ఉద్యోగం.</div></div>
+<div class="row"><div class="k">రైల్వే హెల్త్‌కేర్</div><div class="v">మార్గం I: NTPCకు వేరు Paramedical నియామకాలు. Nursing Superintendent, Pharmacist, Lab ఉద్యోగాలు, Dialysis Technician, Radiographer వంటి పోస్టులు ఉండవచ్చు. 10వ తరగతి → అవసరమైన సైన్స్ సబ్జెక్టులతో ఇంటర్ → సంబంధిత ఆరోగ్య డిగ్రీ/డిప్లొమా → అవసరమైతే రిజిస్ట్రేషన్ → RRB Paramedical పరీక్ష, ధృవపత్రాలు, వైద్యం.</div></div>
+<div class="row"><div class="k">రైల్వే భద్రతా దళం</div><div class="v">మార్గం J: Railway Protection Force (RPF) నియామకాలు NTPC, సాంకేతిక పరీక్షలకు వేరు. Constable, Sub-Inspector వంటి పోస్టులకు ప్రత్యేక విద్య, రాత, శారీరక, వైద్య అర్హతలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">ఏ మార్గం ఎంచుకోవాలి?</div><div class="v">10వ తరగతితో ఆగితే Level-1/ITI మార్గాలు చూడండి. ITI చేస్తే ALP, Technician పోల్చండి. ఇంటర్ అయితే NTPC Undergraduate; డిప్లొమా/Engineering అయితే JE; డిగ్రీ అయితే NTPC Graduate/Station Master వంటి పోస్టులు చూడండి. ఎంపిక చేసిన పోస్టుకు సరిపోయే చదువు పూర్తి చేయండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>రైల్వే పోస్టుల వైద్య ప్రమాణాలు వేరు. ALP, భద్రత సంబంధిత పోస్టుల్లో చూపు, రంగులు గుర్తించడం వంటి పరీక్షలు కఠినంగా ఉంటాయి. ముందుగానే చూడండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>రైల్వేల్లో ఏ పనులు ఉంటాయి?</h3><p class="lede">ఈ వృత్తిలో పనులు, అర్హత, పోటీ, ప్రత్యామ్నాయ అవకాశాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k">Station Master</div><div class="v">స్టేషన్‌లో రైళ్ల రాకపోకలు, భద్రత, ఆపరేషనల్ సమాచారం, సిబ్బంది సమన్వయం చూడటం. బాధ్యత ఎక్కువ; షిఫ్టులు ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">Section Controller</div><div class="v">రైల్వే కంట్రోల్‌లో ఒక సెక్షన్ మీద రైళ్ల కదలికలను గమనించి సమన్వయం చేసే ఉద్యోగం. వేగంగా నిర్ణయాలు, భద్రత ముఖ్యమైనవి.</div></div>
+<div class="row"><div class="k">Assistant Loco Pilot</div><div class="v">ఇంజిన్, రైలు నడిపే కార్యకలాపాలకు సాంకేతిక సహాయం; నిర్దేశిత నియమాలు, భద్రత, షిఫ్ట్ పనికి ప్రాధాన్యం.</div></div>
+<div class="row"><div class="k">Goods Train Manager</div><div class="v">గూడ్స్/సరుకు రైళ్ల కార్యకలాపాలు, కేటాయించిన రైళ్ల ఆపరేషనల్ బాధ్యతల్లో పని.</div></div>
+<div class="row"><div class="k">Commercial / Ticketing</div><div class="v">Ticket Clerk వంటి పోస్టుల్లో ప్రయాణికులతో పని, టికెట్ బుకింగ్, వసూళ్లు, వ్యాపార సంబంధిత రైల్వే సేవలు.</div></div>
+<div class="row"><div class="k">Clerical / Accounts</div><div class="v">Accounts Clerk, Junior/Senior Clerk, Junior Accounts Assistant వంటి పోస్టుల్లో రికార్డులు, బిల్లులు, డేటా, కార్యాలయ ఖాతాల పని.</div></div>
+<div class="row"><div class="k">Junior Engineer</div><div class="v">Civil, Mechanical, Electrical, Electronics, Signalling వంటి సాంకేతిక శాఖల్లో ఇంజినీరింగ్ పర్యవేక్షణ, నిర్వహణ.</div></div>
+<div class="row"><div class="k">Technician</div><div class="v">ఎలక్ట్రికల్, మెకానికల్, ఎలక్ట్రానిక్స్, సిగ్నలింగ్, వర్క్‌షాప్ పరికరాల మరమ్మతులు, తనిఖీలు.</div></div>
+<div class="row"><div class="k">Depot Material Superintendent</div><div class="v">ఇంజినీరింగ్ సామగ్రి స్టోర్లు, నిల్వ లెక్కలు, సరఫరాలను చూసే పని; ప్రస్తుత JE/DMS నియామకాలలో ప్రత్యేక అర్హతలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">Chemical / Metallurgical Assistant</div><div class="v">రైల్వే పదార్థాల నాణ్యత పరీక్షలు, ల్యాబ్ విశ్లేషణ వంటి పనులు; సైన్స్/సాంకేతిక విద్య అవసరం.</div></div>
+<div class="row"><div class="k">Level-1 ఫీల్డ్ ఉద్యోగాలు</div><div class="v">ట్రాక్, వర్క్‌షాప్, ఎలక్ట్రికల్, మెకానికల్, సిగ్నలింగ్, కార్యకలాపాల సహాయక నిర్వహణ పనులు.</div></div>
+<div class="row"><div class="k">Paramedical ఉద్యోగాలు</div><div class="v">రైల్వే ఆసుపత్రుల్లో నర్సింగ్, డయాలిసిస్, ఫార్మసీ, ల్యాబ్, ఇతర ఆరోగ్య సేవా నిపుణులకు అవకాశాలు ఉన్నాయి.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Station Master, ALP తేడా</div><div class="v">Station Master: స్టేషన్, రైళ్ల సమన్వయం; డిగ్రీతో NTPC మార్గం. ALP: ఇంజిన్‌కు సంబంధించిన సాంకేతిక పని; ITI/సాంకేతిక అర్హత మార్గం.</div></div>
+<div class="row"><div class="k">JE, Technician తేడా</div><div class="v">Junior Engineer: ఇంజినీరింగ్ పర్యవేక్షణ, ఎక్కువ సాంకేతిక బాధ్యత, సాధారణంగా డిప్లొమా/డిగ్రీ అర్హత. Technician: చేతితో చేసే నిర్వహణ, మరమ్మతు పని; సంబంధిత ITI/సాంకేతిక అర్హత.</div></div>
+<div class="row"><div class="k">Ticket Clerk, Accounts Clerk తేడా</div><div class="v">Commercial Ticket Clerkకు ప్రయాణికులు, టికెట్లతో నేరుగా పని ఎక్కువ. Accounts/Junior Clerkకు కార్యాలయ రికార్డులు, లెక్కలు ఎక్కువ.</div></div>
+<div class="row"><div class="k">షిఫ్టుల వాస్తవం</div><div class="v">రైల్వేలు 24 గంటలూ నడుస్తాయి. Station, Locomotive, Control, Maintenance, ఫీల్డ్ పోస్టుల్లో రాత్రి, సెలవు రోజుల్లో కూడా పని ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">బదిలీల వాస్తవం</div><div class="v">పోస్టింగ్ RRB, రైల్వే జోన్, Production Unit, పోస్టు ప్రాధాన్యత, ఖాళీలను బట్టి ఉంటుంది. స్వగ్రామంలోనే ఉద్యోగం వస్తుందని అనుకోవద్దు.</div></div>
+<div class="row"><div class="k">పోటీ వాస్తవం</div><div class="v">రైల్వే పరీక్షలకు చాలా మంది దరఖాస్తు చేస్తారు. కనీస చదువు అర్హత మాత్రమే; పరీక్షలో ఎంపికకు మంచి మార్కులు, వైద్య అర్హత అవసరం.</div></div>
+<div class="row"><div class="k">Plan B — ప్రత్యామ్నాయం</div><div class="v">రైల్వే బయటకూ పనికొచ్చేలా ITI Trade, Diploma Engineering, B.Tech, Accounting, Computer Skills వంటి చదువు, నైపుణ్యాలను ఎంచుకోండి.<div class="chips"><span class="chip">ITI Trade</span><span class="chip">Diploma Engineering</span><span class="chip">B.Tech</span><span class="chip">Accounting</span><span class="chip">Computer Skills</span><span class="chip">Healthcare</span></div></div></div>
+<div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>ముందు రైల్వే పరీక్ష కోసం చదివి, తర్వాత అర్హత నిర్ణయించవద్దు. మంచి విద్య/టెక్నికల్ అర్హత సంపాదించి ఆ అర్హతకు సరిపోయే పోస్టులను లక్ష్యంగా పెట్టుకోండి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతాలు ఎంత?</h3><p class="lede">మూల నివేదికలోని వేతన వివరాలు సూచనలు మాత్రమే; సంస్థ, స్థాయి, కాలాన్ని బట్టి మారవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">Level-1 పోస్టులు</div><div class="v"><span class="money">₹18,000 basic/month</span><br/>ప్రారంభ మూల వేతనం నెలకు ₹18,000. మూల నివేదికలో CEN 09/2025 ప్రకారం Pay Level 1.</div></div>
+<div class="row"><div class="k">ALP / Level-2</div><div class="v"><span class="money">₹19,900 basic/month</span><br/>ప్రారంభ మూల వేతనం నెలకు ₹19,900. ALP CEN 01/2026కి Level 2; కొన్ని Clerk పోస్టులకు కూడా ఈ స్థాయి ఉంటుంది.</div></div>
+<div class="row"><div class="k">Commercial cum Ticket Clerk</div><div class="v"><span class="money">₹21,700 basic/month</span><br/>ప్రారంభ మూల వేతనం నెలకు ₹21,700. NTPC Undergraduate CEN 07/2025లో Pay Level 3.</div></div>
+<div class="row"><div class="k">Graduate NTPC — Level 5</div><div class="v"><span class="money">₹29,200 basic/month</span><br/>ప్రారంభ మూల వేతనం నెలకు ₹29,200. Goods Train Manager, Junior Accounts Assistant వంటి కొన్ని NTPC Graduate పోస్టులకు ఉదాహరణ.</div></div>
+<div class="row"><div class="k">Station Master / JE / Section Controller</div><div class="v"><span class="money">₹35,400 basic/month</span><br/>ప్రారంభ మూల వేతనం నెలకు ₹35,400. Station Master, కొన్ని Commercial, JE/DMS/CMA, Section Controller పోస్టులకు Pay Level 6 ఉదాహరణ.</div></div>
+<div class="row"><div class="k">అలవెన్సులు</div><div class="v">నిబంధనలు, పోస్టింగ్‌ను బట్టి DA, HRA, Transport, రైల్వే ప్రత్యేక భత్యాలు ఉండవచ్చు. చేతికి వచ్చే మొత్తం మూల వేతనం కంటే భిన్నంగా ఉంటుంది.</div></div>
+<div class="row"><div class="k">సిద్ధత ఖర్చు</div><div class="v">ఖరీదైన రైల్వే కోచింగ్ తప్పనిసరి కాదు. ఎంచుకున్న పోస్టుకు సరైన విద్య, ఉచిత సిలబస్, పాత ప్రశ్నపత్రాలు, క్రమమైన సాధన ముఖ్యమైనవి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>రైల్వే ఉద్యోగం ఇప్పిస్తామని ఏ ఏజెంట్, మధ్యవర్తికి డబ్బు ఇవ్వవద్దు. అధికారిక RRB ప్రకటనలు, మెరిట్ ప్రక్రియలను మాత్రమే నమ్మండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు సర్కిళ్ల ఫలితం ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">నాలుగూ సరిపోతే</span> — మంచి చదువు, ప్రణాళికతో మీ లక్ష్యానికి ముందడుగు వేయండి.</p>
+<p><span class="hi">ఒక్కటి సరిపోకపోయినా</span> — నిర్ణయం తీసుకునే ముందు ఆ అంశాన్ని జాగ్రత్తగా ఆలోచించండి.</p>
+<p><span class="hi">రెండు లేదా ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ప్రత్యామ్నాయాలు చూడండి.</p>
+<p>లక్ష్యం కోసం ఎంతకాలం ప్రయత్నించాలో, అవసరమైతే Plan Bకి ఎప్పుడు మారాలో ముందే ప్రణాళిక పెట్టుకోండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>there is no single “best Railway job.” The right job depends on qualification, medical fitness, shift tolerance and whether you prefer field, technical, operations or office work.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే మొదలుపెట్టగల విషయాలు ఇవి. ఖరీదైన కోచింగ్ అవసరం లేదు.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul>
+<li>గణితం, Reasoning, ఇంగ్లీష్/హిందీ, జనరల్ నాలెడ్జ్ పునాది మెరుగుపరచండి.</li>
+<li>రైల్వేల్లో టెక్నికల్, ఆపరేషన్స్, క్లర్క్, ఇంజినీరింగ్ ఉద్యోగాలు నిజంగా ఏం చేస్తాయో తెలుసుకోండి.</li>
+<li>ALPకు ఆసక్తి ఉంటే చూపు, ముఖ్యంగా రంగుల గుర్తింపు పరీక్ష ముందుగానే చేయించుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>Technician/ALP ఉద్యోగం ఇష్టమైతే ఉపయోగకరమైన ITI ట్రేడ్ ఎంచుకోండి.</li>
+<li>ఇంటర్ చదువుతూ Plan Bకు కూడా ఉపయోగపడే గ్రూప్ ఎంచుకొని NTPC Undergraduateకు సిద్ధమవ్వండి.</li>
+<li>JE ఉద్యోగం ఇష్టమైతే Polytechnic Diploma లేదా MPC తర్వాత Engineering మార్గాన్ని పరిశీలించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కాలేజీ / శిక్షణ తర్వాత</div><ul>
+<li>అధికారిక RRB/RRC వెబ్‌సైట్లలో మాత్రమే నియామక ప్రకటనలు చూడండి; పూర్తి CEN చదవండి.</li>
+<li>దరఖాస్తుకు ముందు చదువు అర్హత, వయసు, వైద్య ప్రమాణాలు, పరీక్ష దశలు చూసుకోండి.</li>
+<li>ఎంచుకున్న పోస్టుకు Typing Test ఉంటేనే టైపింగ్ సాధన; PET ఉంటేనే ఆ పరీక్షకు సాధన చేయండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>ALP, Station Master, Junior Engineer వంటి మూడు పోస్టులు ఎంచుకొని ఒక్కోదానికి కనీస చదువు, వయసు, పరీక్ష దశలు, వైద్య అర్హత, పని స్వభావం రాసి పోల్చండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. అర్హతలు, వయసు, సీట్లు, పరీక్ష విధానం, జీతాలు మారవచ్చు. దరఖాస్తు సమయంలో అధికారిక తాజా ప్రకటన తప్పక చదవండి.</p>
+
+</div><script>document.addEventListener('DOMContentLoaded',function(){const q=document.querySelectorAll('#quiz .q'), v=document.getElementById('verdict'), p=document.getElementById('pip1');if(!q.length||!v)return;function show(){let selected=[...q].map(x=>x.querySelector('button[data-picked="1"]'));if(selected.some(x=>!x)){v.className='verdict';v.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(p)p.className='pip';return;}let yes=selected.filter(x=>x.dataset.v==='y').length;if(yes>=5){v.className='verdict good';v.innerHTML='<strong>ఈ వృత్తి బాగా సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఆసక్తి కనిపిస్తోంది. చదువు మార్గం, రోజువారీ పని నిజంగా ఎలా ఉంటాయో కూడా తెలుసుకోండి.';if(p)p.className='pip done';}else if(yes>=3){v.className='verdict mixed';v.innerHTML='<strong>మరింత పరిశీలించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు నచ్చుతున్నాయి. నిర్ణయం ముందు పని వాతావరణం, చదువు, నైపుణ్యాలు తెలుసుకోండి.';if(p)p.className='pip warn';}else{v.className='verdict bad';v.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ పని మీకు అంతగా సరిపోకపోవచ్చు. ప్రత్యామ్నాయ కెరీర్లను కూడా పోల్చి చూడండి.';if(p)p.className='pip stop';}}document.querySelector('#quiz').addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;const group=b.closest('.toggle');group.querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked')});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');show()});show()});</script></body></html>

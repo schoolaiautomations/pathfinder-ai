@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>కెరీర్‌లో నాలుగు అంశాలు — ప్రభుత్వ ఉద్యోగాలు</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్ / భారతదేశం</div><h2>ప్రభుత్వ ఉద్యోగాలు</h2><p class="standfirst">కేంద్ర ప్రభుత్వం, ఆంధ్రప్రదేశ్ ప్రభుత్వం, రైల్వేలు, ప్రభుత్వ సంస్థలు, సాంకేతిక శాఖల్లో పని చేసే అవకాశాలు ఉన్నాయి. ‘ప్రభుత్వ ఉద్యోగం’ అనేది ఒకే కెరీర్ కాదు; అందరికీ ఒకే పరీక్ష ఉండదు. పదో తరగతి, ఇంటర్, ITI/డిప్లొమా, డిగ్రీ, వృత్తి విద్య అర్హతను బట్టి మార్గాలు వేరు.</p></div>
+<div class="printhead">కెరీర్ నాలుగు అంశాలు  ·  Government Jobs  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చిందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఏ మార్గం?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>సంపాదన</em></a>
+</nav>
+<section id="c1"><div class="num">అంశం 1 · ఆసక్తి</div><h3>ప్రభుత్వ ఉద్యోగం నిజంగా కావాలా?</h3><p class="lede">కేవలం ‘ఉద్యోగ భద్రత’ కోసం నిర్ణయించవద్దు. అసలు పని, తీవ్రమైన పోటీ రెండూ ఆలోచించండి.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఎంపిక అవుతామో తెలియకపోయినా నెలల తరబడి క్రమంగా పోటీ పరీక్షలకు చదవగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>రూల్స్, ఫైళ్లు, ప్రజా సేవ, రికార్డులు, సాధారణ కార్యాలయ పనులు చేయడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>మీరు కోరుకోని జిల్లా లేదా నగరంలో పోస్టింగ్ వచ్చినా అంగీకరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>General Awareness, Maths, Reasoning, English/Telugu, Computers మళ్లీ మళ్లీ సాధన చేస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>ప్రారంభ జీతం మామూలుగా ఉన్నా అలవెన్సులు, స్థిరత్వం కోసం పనిచేయడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>ఒక్క నోటిఫికేషన్ కోసం ఏళ్లు వేచి ఉండకుండా డిగ్రీ, నైపుణ్యం, ప్రైవేటు ఉద్యోగం Plan Bగా ఉంచుతారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">అంశం 2 · చదువు మార్గం</div><h3>ఏ మార్గాన్ని ఎంచుకోవాలి?</h3><p class="lede">ముందుగా మీ విద్యార్హత, కోరుకున్న పని నిర్ణయించుకోకుండా ఏ పరీక్ష రాయాలో అడగడం సరైన పద్ధతి కాదు.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span>Maths &amp; Reasoning</div><div class="v"><span>శాతాలు, నిష్పత్తులు, లెక్కలు, logical reasoning, data interpretation అనేక SSC, Railway, Banking, రాష్ట్ర పరీక్షల్లో అవసరం.</span></div></div>
+<div class="row"><div class="k"><span class="subno">2</span>English / Telugu</div><div class="v"><span>చదివి అర్థం చేసుకోవడం, grammar, vocabulary ముఖ్యం. ఆంధ్రప్రదేశ్ పోస్టులను బట్టి తెలుగు పరిజ్ఞానం అవసరం కావచ్చు.</span></div></div>
+<div class="row"><div class="k"><span class="subno">3</span>General Awareness</div><div class="v"><span>ప్రస్తుత సంఘటనలు, రాజ్యాంగం, చరిత్ర, భూగోళం, ఆర్థిక వ్యవస్థ, సైన్స్, కంప్యూటర్ ప్రాథమికాంశాలు అనేక పరీక్షల్లో వస్తాయి.</span></div></div>
+<div class="row"><div class="k">పదో తరగతి తర్వాత</div><div class="v"><span>పదో తరగతి తర్వాత ప్రభుత్వ ఉద్యోగాల కోసం ఒకే తప్పనిసరి గ్రూప్ లేదు. MPC, BiPC, CEC, Commerce, Humanities—మీకు నచ్చిన ఉద్యోగం, Plan B బట్టి ఎంచుకోండి. ఇంటర్, ముఖ్యంగా డిగ్రీ పూర్తి చేస్తే అవకాశాలు పెరుగుతాయి.</span></div></div>
+<div class="row"><div class="k">th-level exams</div><div class="v"><span>పదో తరగతి అర్హతతో SSC MTS, కొన్ని Selection Posts, Railway Level-1/Group-D వంటి పోస్టులు నోటిఫికేషన్ వచ్చినప్పుడు ప్రయత్నించవచ్చు. వయసు, ఫిజికల్ టెస్ట్, ఇతర అర్హతలు పోస్టును బట్టి మారుతాయి.</span></div></div>
+<div class="row"><div class="k">th-level exams</div><div class="v"><span>ఇంటర్ అర్హతతో SSC CHSL ద్వారా LDC/JSA, Data Entry పోస్టులు; RRB NTPC Undergraduate ద్వారా కొన్ని Railway non-technical పోస్టులు; Stenographer, ఇతర శాఖల పోస్టులు ప్రయత్నించవచ్చు.</span></div></div>
+<div class="row"><div class="k">Graduate-level exams</div><div class="v"><span>డిగ్రీతో SSC CGL ద్వారా కేంద్ర Group B/C పోస్టులు; RRB NTPC Graduate ద్వారా Station Master, Goods Train Manager, Accounts/Clerk పోస్టులు; APPSC Group-I/II, ఇతర APPSC పోస్టులు నోటిఫికేషన్ బట్టి ప్రయత్నించవచ్చు.</span></div></div>
+<div class="row"><div class="k">Technical route</div><div class="v"><span>ITI, డిప్లొమా, ఇంజినీరింగ్ ద్వారా Railway ALP/Technician/JE, SSC Junior Engineer, APPSC AE/AEE వంటి సాంకేతిక పోస్టులకు మార్గం ఉంటుంది. ఈ అర్హతలు ప్రైవేటు ఉద్యోగాలకు కూడా పనికొస్తాయి.</span></div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన మార్గం</div><div class="v"><span>ఒకే మార్గం లేదు. పదో తరగతి → అర్హత ఉన్న SSC/Railway పోస్టుకు పరీక్ష, అవసరమైన skill/physical → పత్రాల తనిఖీ → నియామకం. ఇంటర్ → SSC CHSL/RRB NTPC UG → పరీక్ష, typing/medical అవసరమైతే → నియామకం. డిగ్రీ → SSC CGL/APPSC/RRB NTPC Graduate → ఎంపిక దశలు → నియామకం. ITI/డిప్లొమా/డిగ్రీ → Technical recruitment → అవసరమైన పరీక్షలు → ఉద్యోగం.</span></div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>‘అన్ని ప్రభుత్వ పరీక్షలు’ అంటూ ఒకేసారి అన్నింటికీ సిద్ధం కావద్దు. ఒకే విధమైన సిలబస్, అర్హతలున్న SSC + Railways లేదా APPSC + SSC వంటి 2–3 పరీక్షా కుటుంబాలను ఎంచుకోండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">అంశం 3 · ఉద్యోగాలు</div><h3>ఏ ప్రభుత్వ ఉద్యోగాలు ఉన్నాయి?</h3><p class="lede">పరిపాలన, ఫైనాన్స్, రైల్వేలు, ఇంజినీరింగ్, క్లరికల్, తనిఖీలు, బోధన, ఆరోగ్యం, భద్రత వంటి అనేక ఉద్యోగాలు ఉన్నాయి.</p>
+<div class="card">
+<div class="row"><div class="k">SSC CGL — Central Government</div><div class="v"><span>SSC CGL డిగ్రీ అభ్యర్థులకు కేంద్ర శాఖల్లో Assistant Section Officer, Income Tax Inspector, Customs/Excise Inspector, Audit, Accounts, Auditor వంటి Group B/C పోస్టులకు మార్గం; పోస్టుల జాబితా సంవత్సరాన్ని బట్టి మారుతుంది.</span><div class="chips"><span class="chip">Ministries</span><span class="chip">Tax</span><span class="chip">Audit</span><span class="chip">Administration</span></div></div></div>
+<div class="row"><div class="k">SSC CHSL — 12th level</div><div class="v"><span>SSC CHSL ఇంటర్ అర్హతతో కేంద్ర కార్యాలయాల్లో Lower Division Clerk, Junior Secretariat Assistant, Data Entry Operator వంటి Group C పోస్టులకు మార్గం.</span></div></div>
+<div class="row"><div class="k">SSC MTS / Selection Posts</div><div class="v"><span>SSC MTS వంటి ప్రారంభ పోస్టులు, Selection Postsలో పదో తరగతి/ఇంటర్/డిగ్రీ అర్హతల పోస్టులు ఉండవచ్చు.</span></div></div>
+<div class="row"><div class="k">Railways — NTPC</div><div class="v"><span>Railway NTPC non-technical విభాగం. డిగ్రీ స్థాయిలో Station Master, Chief Commercial cum Ticket Supervisor, Goods Train Manager, Junior Accounts Assistant cum Typist, Senior Clerk cum Typist వంటి పోస్టులు; ఇంటర్ స్థాయికి వేరే ప్రకటన.</span><div class="chips"><span class="chip">Station Master</span><span class="chip">Operations</span><span class="chip">Accounts</span><span class="chip">Commercial</span></div></div></div>
+<div class="row"><div class="k">Railways — Technical</div><div class="v"><span>Assistant Loco Pilot, Technician, Junior Engineer వంటి రైల్వే సాంకేతిక పోస్టులకు పోస్టును బట్టి ITI, డిప్లొమా లేదా ఇంజినీరింగ్ అర్హతలు ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">APPSC Group-I</div><div class="v"><span>APPSC Group-I ఆంధ్రప్రదేశ్ ఉన్నత స్థాయి పరిపాలన సేవల మార్గం. తీవ్రమైన పోటీ ఉంటుంది; నోటిఫికేషన్ ప్రకారం పోస్టులు మారతాయి.</span></div></div>
+<div class="row"><div class="k">APPSC Group-II</div><div class="v"><span>APPSC Group-II ద్వారా రాష్ట్ర Executive, Non-executive పోస్టులు భర్తీ చేస్తారు. పోస్టులు, అర్హతలు ప్రతిసారి ప్రకటనలో చూడాలి.</span></div></div>
+<div class="row"><div class="k">APPSC Specific Posts</div><div class="v"><span>APPSC కొన్ని శాఖలలో ప్రత్యేక నియామకాలు నిర్వహిస్తుంది. ఏ పోస్టుకైనా సంబంధిత డిగ్రీ, వయసు, సిలబస్ వేరు కావచ్చు.</span></div></div>
+<div class="row"><div class="k">Government Engineering</div><div class="v"><span>డిప్లొమా లేదా ఇంజినీరింగ్ చదివితే రాష్ట్ర శాఖలు, కేంద్ర సంస్థలలో Engineer/Technical పోస్టులకు అవకాశం ఉంటుంది; APPSC, SSC JE వంటి పరీక్షలు సంబంధించినవి.</span></div></div>
+<div class="row"><div class="k">Teaching / Education</div><div class="v"><span>Teacher, Lecturer, Education విభాగాల్లో ఉద్యోగాలకు సాధారణ డిగ్రీతో పాటు పోస్టుకు నిర్దేశిత B.Ed./D.El.Ed./TET/NET వంటి అర్హతలు అవసరమవచ్చు.</span></div></div>
+<div class="row"><div class="k">Public Sector / PSU</div><div class="v"><span>Public Sector Undertakings (PSU)లో ఇంజినీరింగ్, ఫైనాన్స్, మేనేజ్‌మెంట్, ఇతర రంగాల ఉద్యోగాలు ఉంటాయి. కొన్ని GATE/ప్రత్యేక నియామకాలు ఉపయోగిస్తాయి.</span></div></div>
+<div class="row"><div class="k">Already separate careers</div><div class="v"><span>IAS, IPS, Income Tax, Railways వంటి కెరీర్లు ఒక్కొక్కటి ప్రత్యేక మార్గం, పరీక్ష, అర్హత కలిగి ఉంటాయి; అన్నింటిని ఒకే ఉద్యోగంగా భావించవద్దు.</span><div class="chips"><span class="chip">IAS</span><span class="chip">IPS</span><span class="chip">Police</span><span class="chip">Army / Navy / Air Force</span><span class="chip">Bank PO</span><span class="chip">Agriculture Officer</span></div></div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">How often do jobs come?</div><div class="v"><span>నియామక నోటిఫికేషన్లు నిర్ణీతంగా ప్రతి సంవత్సరం రావని గుర్తుంచుకోండి. ఖాళీలు, ప్రభుత్వ నిర్ణయాలు, ఎంపిక ప్రక్రియ ఆధారంగా సమయం మారుతుంది.</span></div></div>
+<div class="row"><div class="k">పోటీ</div><div class="v"><span>పోటీ ఎక్కువ. ఒకే పరీక్షపై ఆధారపడకుండా సమాన సిలబస్ ఉన్న 2–3 పరీక్షా కుటుంబాలపై దృష్టి పెట్టండి.</span></div></div>
+<div class="row"><div class="k">మోసాలు</div><div class="v"><span>‘ఉద్యోగం ఖాయం’, ‘డబ్బు ఇస్తే ఎంపిక’ వంటి మోసాలను నమ్మవద్దు. అధికారిక నియామక వెబ్‌సైట్లనే చూడండి.</span></div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ మార్గం</div><div class="v"><span>మీ డిగ్రీ లేదా ITI/డిప్లొమా నైపుణ్యంతో ప్రైవేటు ఉద్యోగాలు, ఇతర ప్రభుత్వ పరీక్షలు, సాంకేతిక పనులు Plan Bగా ఉంచండి.</span><div class="chips"><span class="chip">Private-sector job</span><span class="chip">Technical skill</span><span class="chip">Teaching</span><span class="chip">Accounting</span><span class="chip">IT / Data</span><span class="chip">Higher study</span></div></div></div>
+</div>
+</section>
+<section id="c4"><div class="num">అంశం 4 · ఆదాయం</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">ప్రభుత్వ వేతనాలు పోస్టు, పే లెవెల్, అలవెన్సులు, సర్వీసును బట్టి మారుతాయి.</p>
+<div class="card">
+<div class="row"><div class="k">th / entry-level posts</div><div class="v"><span class="money">Often around ₹18,000+ basic/month</span><br/><span>పదో తరగతి అర్హత ప్రభుత్వ ప్రారంభ స్థాయి పోస్టుల్లో వేతనం పే లెవెల్, పని ప్రదేశాన్ని బట్టి మారుతుంది.</span></div></div>
+<div class="row"><div class="k">th-level clerical posts</div><div class="v"><span class="money">₹19,900+ basic/month</span><br/><span>ఇంటర్ స్థాయి clerical పోస్టులకు నిర్దేశిత basic pay, DA, HRA తదితర అలవెన్సులు ఉండవచ్చు.</span></div></div>
+<div class="row"><div class="k">Railway graduate NTPC</div><div class="v"><span class="money">₹29,200 – ₹35,400 initial basic/month</span><br/><span>Railway NTPC Graduate పోస్టుల్లో Station Master వంటి పోస్టులకు వేర్వేరు pay levels ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">SSC CGL graduate posts</div><div class="v"><span class="money">పోస్టును బట్టి మారుతుంది — కొన్ని ఉన్నత CGL పోస్టుల్లో ప్రారంభ మూలవేతనం ₹47,600 వరకు</span><br/><span>SSC CGLలో Inspector, Assistant, Auditor వంటి పోస్టులకు వేర్వేరు basic pay స్కేలు ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">AP Government</div><div class="v"><span>ఆంధ్రప్రదేశ్ రాష్ట్ర పోస్టుల వేతనాలు సంబంధిత రాష్ట్ర pay revision, పోస్టు, ప్రభుత్వ ఉత్తర్వుల ప్రకారం ఉంటాయి.</span></div></div>
+<div class="row"><div class="k">ఉద్యోగంలో ఇతర ప్రయోజనాలు</div><div class="v"><span>ప్రభుత్వ ఉద్యోగాల్లో basic payతో పాటు అర్హత ప్రకారం DA, HRA, ఇతర అలవెన్సులు, సెలవులు, పెన్షన్/రిటైర్మెంట్ పథకం నిబంధనలు వర్తించవచ్చు.</span></div></div>
+<div class="flag red"><span class="mark">Do the maths</span><span>ఉద్యోగం స్థిరంగా ఉంటుంది అన్న ఒక్క కారణంతో 3–5 ఏళ్లు కేవలం పరీక్షలకే వెచ్చించవద్దు. మీ డిగ్రీతో ప్రైవేటు రంగంలో పొందగల ఆదాయంతో పోల్చండి. ప్రత్యామ్నాయ నైపుణ్యం ఉంచుకోండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు అంశాల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">Want public service + value stability</span> — Government jobs may fit you.</p>
+<p><span class="hi">Want very fast salary growth</span> — compare strong private-sector careers too.</p>
+<p><span class="hi">Only reason is “job security”</span>— ఏళ్ల తరబడి పరీక్షలకు సిద్ధమయ్యే ముందు అసలు పని ఎలా ఉంటుందో తెలుసుకోండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>‘ప్రభుత్వ ఉద్యోగం’ అనే సాధారణ లక్ష్యం సరిపోదు. మీరు రాయాల్సిన పరీక్ష, కోరుకున్న పోస్టులను స్పష్టంగా ఎంచుకోండి.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్ దశ నుంచే ప్రారంభించగల పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే స్కూల్లో ఉన్నప్పుడు</div><ul>
+<li>లెక్కలు, reasoning, తెలుగు/ఇంగ్లిష్ చదవడం, General Awareness మెరుగుపరచుకోండి.</li>
+<li>Typing, spreadsheets, documents, ఇంటర్నెట్ ద్వారా సమాచారం వెతకడం నేర్చుకోండి.</li>
+<li>ఏళ్ల తర్వాత రాసే పరీక్ష కోసం ఇప్పుడే current affairs కంఠస్థం చేయకుండా ప్రపంచంలో ఏమి జరుగుతుందో అర్థం చేసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>పదో తరగతి తర్వాత</div><ul>
+<li>ప్రభుత్వ ఉద్యోగంతో పాటు మరో ఉద్యోగ మార్గానికీ పనికొచ్చే ఇంటర్ గ్రూప్ ఎంచుకోండి.</li>
+<li>వీలైతే కనీసం ఇంటర్, సాధ్యమైతే డిగ్రీ పూర్తి చేయండి; SSC, APPSC, Railway అవకాశాలు పెరుగుతాయి.</li>
+<li>ప్రాక్టికల్ పని ఇష్టమైతే ITI/Polytechnic Diploma ద్వారా ప్రభుత్వం, ప్రైవేటు రెండింటికీ అవకాశాలు ఉండవచ్చు.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>ఇంటర్ / డిగ్రీ సమయంలో</div><ul>
+<li>అర్హత, కోరుకున్న పోస్టుల ప్రకారం SSC, Railways, APPSC, Technical వంటి 2–3 పరీక్షా కుటుంబాలను ఎంచుకోండి.</li>
+<li>కోచింగ్ ఫీజు చెల్లించే ముందు అధికారిక సిలబస్, గత ప్రశ్నపత్రాలు చదవండి.</li>
+<li>ssc.gov.in, అధికారిక RRB వెబ్‌సైట్లు, APPSC, నియామక శాఖ వెబ్‌సైట్లనే నమ్మండి; ఉద్యోగం ఇప్పిస్తామని చెప్పేవారికి డబ్బు ఇవ్వవద్దు.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">Best first test</span><span>SSC Assistant Section Officer, Railway Station Master, APPSC Group-II Officer వంటి మూడు నిజమైన ఉద్యోగాలను ఎంచుకుని వాటి అర్హతలు, పరీక్షలు, రోజువారీ పని, పోస్టింగ్, జీతం, పదోన్నతులను పోల్చండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. వయసు, చదువు అర్హతలు, ప్రవేశ పరీక్షలు, ఫీజులు, జీతాలు మారవచ్చు. దరఖాస్తు ముందు తాజా అధికారిక నోటిఫికేషన్ పరిశీలించండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>ఈ కెరీర్ మీకు బాగా సరిపోవచ్చు</strong>మీ ఆసక్తి బలంగా కనిపిస్తోంది. అయితే చదువు, అర్హతలు, రోజువారీ పని, ఖర్చులను కూడా తెలుసుకుని నిర్ణయించుకోండి.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>ముందుగా ప్రయత్నించి చూడండి</strong>కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. చిన్న ప్రాజెక్టు లేదా సంబంధిత అనుభవంతో ఈ కెరీర్‌ను పరీక్షించుకోండి.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>మరోసారి ఆలోచించండి</strong>కొన్ని ముఖ్యమైన అంశాలపై ఆసక్తి తక్కువగా ఉండవచ్చు. ప్రత్యామ్నాయ కెరీర్లు కూడా పరిశీలించి కౌన్సెలర్‌తో చర్చించండి.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div></body></html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — భారత సైన్యం — సైనికుడు / ఆఫీసర్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}
+/* Telugu readability */ body,.row,.q,.stage,.flag,.verdict{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;} .row .k,.stage-head,h3,.mast h2,.pip b,.flag .mark,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;line-height:1.35!important;}
+</style><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/></head><body><div class="wrap"><div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>భారత సైన్యం — సైనికుడు / ఆఫీసర్</h2><p class="standfirst">ప్రతి రోజూ క్రమశిక్షణ, ధైర్యం, శారీరక దృఢత్వంతో దేశానికి సేవ చేయడం. నాలుగు సర్కిళ్లను నిజాయితీగా పరిశీలించండి; కేవలం యూనిఫాం ఆకర్షణతో నిర్ణయం తీసుకోకండి.</p></div><div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · భారత సైన్యం — సైనికుడు / ఆఫీసర్ · పేరు: <span class="fill"></span> · తేదీ: <span class="fill" style="min-width:90px"></span></div><nav class="strip"><a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>ఈ పని నచ్చుతుందా?</em></a><a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a><a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>పని అవకాశాలు</em></a><a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>జీతం, ఖర్చు</em></a></nav><section id="c1"><div class="num">సర్కిల్ 1</div><h3>సైనిక జీవితం నిజంగా ఇష్టమా?</h3><p class="lede">మీ నిజమైన ఆసక్తి, రోజూ చేయాల్సిన పని గురించి ఆలోచించి ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి.</p><div class="card"><div id="quiz"><div class="q" data-i="0"><p>ప్రతి రోజూ ఉదయం 5 గంటలకు లేచి నియమంగా ఉండగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="1"><p>నెలల తరబడి కుటుంబానికి దూరంగా ఉండడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="2"><p>ఏకీభవించకపోయినా చట్టబద్ధమైన క్రమశిక్షణ ఆదేశాలు పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="3"><p>ఎండ, వాన, చలిలో శారీరక శిక్షణ చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="4"><p>ప్రమాదం ఎదురైనా ప్రశాంతంగా ఉండగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div><div class="q" data-i="5"><p>మీ ఇష్టానికి సంబంధం లేకుండా పోస్టింగ్ ప్రాంతం మారినా అంగీకరిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div></div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section><section id="c2"><div class="num">సర్కిల్ 2</div><h3>చదువులు, అర్హతలు</h3><p class="lede">10వ తరగతి తర్వాత ఏ గ్రూప్, ఏ కోర్సు, ఏ పరీక్ష అవసరమో జాగ్రత్తగా చదవండి.</p><div class="card"><div class="row"><div class="k"><span class="subno">1</span> శారీరక విద్య</div><div class="v">సైనిక ఎంపికలో శారీరక దృఢత్వం కీలకం. పాఠశాలలో ఆటలు, వ్యాయామం వల్ల బలం, ఓర్పు పెరుగుతాయి.</div></div><div class="row"><div class="k"><span class="subno">2</span> ఇంగ్లీష్</div><div class="v">సైనిక ఆదేశాలు, నివేదికలు, ఆఫీసర్ పరీక్షల్లో ఇంగ్లీష్ ఉపయోగపడుతుంది. చదవడం, రాయడం నేర్చుకోండి.</div></div><div class="row"><div class="k"><span class="subno">3</span> గణితం</div><div class="v">సాంకేతిక ఉద్యోగాలు, ఆఫీసర్ ఎంపిక పరీక్షల్లో లెక్కలు, తార్కిక ఆలోచన అవసరం.</div></div><div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">ఆఫీసర్ అవ్వాలంటే ఇంటర్ MPC చదివి NDA పరీక్షకు సిద్ధమవ్వవచ్చు. మరో మార్గం: అర్హత ఉన్న ఇంటర్ విద్యార్థులు 17½–21 ఏళ్ల వయసులో Agniveer సైనిక నియామకానికి దరఖాస్తు చేయవచ్చు.</div></div><div class="row"><div class="k">ఇప్పటి నుంచే అలవాట్లు</div><div class="v">రోజూ సాధ్యమైనంత పరుగుప్రాక్టీస్, పుష్‌అప్స్, పుల్‌అప్స్; వార్తాపత్రిక చదవడం; NDA నమూనా ప్రశ్నలు సాధన; NCCలో చేరడం; సరైన నిద్ర సమయం పాటించడం.<div class="chips"><span class="chip">Daily 5 km run</span><span class="chip">Daily push-ups and pull-ups</span><span class="chip">Read a newspaper daily</span><span class="chip">Practise NDA sample papers</span><span class="chip">Join NCC in school</span><span class="chip">Follow a sleep schedule strictly</span></div></div></div></div><div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">తదుపరి చదువు, పరీక్షలు, అర్హతలు</div><div class="row"><div class="k">Agniveer సైనికుడు</div><div class="v">10వ తరగతి ఉత్తీర్ణత, సాధారణంగా 17½–21 ఏళ్ల వయసు; రాత పరీక్ష, శారీరక పరీక్షలో అర్హత సాధించాలి. అసలు నోటిఫికేషన్‌లో షరతులు చూడండి.</div></div><div class="row"><div class="k">NDA — ఆఫీసర్ మార్గం</div><div class="v">12వ తరగతి ఉత్తీర్ణత; సుమారు 16½–19½ ఏళ్ల అర్హత; UPSC NDA రాత పరీక్ష, SSB ఇంటర్వ్యూ, వైద్య పరీక్ష అవసరం.</div></div><div class="row"><div class="k">TES — సాంకేతిక ప్రవేశం</div><div class="v">ఇంటర్ MPCలో కనీసం 70% మార్కులు, సాధారణంగా 16½–19½ ఏళ్ల వయసు; మూల నివేదిక ప్రకారం రాత పరీక్ష లేకుండా SSB ఎంపిక మార్గం.</div></div><div class="row"><div class="k">దాటాల్సిన దశలు</div><div class="v">ఆన్‌లైన్ దరఖాస్తు → అవసరమైతే రాత పరీక్ష → శారీరక సామర్థ్య పరీక్ష → వైద్య పరీక్ష → ఆఫీసర్ అభ్యర్థులకు SSB → మెరిట్ జాబితా → శిక్షణ.</div></div><div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>సైన్యంలో వైద్య ప్రమాణాలు కఠినంగా ఉంటాయి. చూపు, పాదాల నిర్మాణం, దీర్ఘకాల ఆరోగ్య సమస్యలు అర్హతను ప్రభావితం చేయవచ్చు. ముందుగానే వైద్య పరీక్ష చేయించుకోండి.</span></div></div></section><section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఉద్యోగాలు ఎంత తరచుగా వస్తాయి?</h3><p class="lede">ఈ వృత్తిలో పనులు, అర్హత, పోటీ, ప్రత్యామ్నాయ అవకాశాలను తెలుసుకోండి.</p><div class="card"><div class="row"><div class="k">ఎవరు ఉద్యోగం ఇస్తారు?</div><div class="v">భారత రక్షణ మంత్రిత్వ శాఖ పరిధిలోని ఇండియన్ ఆర్మీ. ప్రైవేటు సైన్యం కాదు; కేంద్ర ప్రభుత్వమే జీతం చెల్లిస్తుంది.</div></div><div class="row"><div class="k">నియామకాలు ఎప్పుడు?</div><div class="v">Agniveer ప్రకటనలు సాధారణంగా ఏడాదికి ఒకటి లేదా రెండు సార్లు రావచ్చు. NDA పరీక్ష ఏడాదికి రెండు సార్లు ఉంటుంది. ఇతర ఆఫీసర్ ప్రవేశాలు విడిగా ఉంటాయి.</div></div><div class="row"><div class="k">పోటీ ఎంత?</div><div class="v">కొన్ని వేల స్థానాల కోసం లక్షల మంది పోటీ పడవచ్చు. ముఖ్యంగా ఆఫీసర్ ఉద్యోగాలకు పోటీ చాలా ఎక్కువ.</div></div><div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>క్రమంగా ఫిట్‌నెస్ పెంచుకొని NDA సిద్ధత మొదలుపెట్టండి. Plan Bగా రాష్ట్ర, కేంద్ర ప్రభుత్వ పరీక్షలను కూడా పరిశీలించండి.</span></div><div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">ప్రత్యామ్నాయ ప్రణాళిక (Plan B)</div><div class="v">ఇదే శిక్షణతో CRPF/BSF వంటి కేంద్ర సాయుధ పోలీసు దళాలు, నేవీ, ఎయిర్ ఫోర్స్, ఆంధ్రప్రదేశ్ పోలీసు, NCC సంబంధిత పనులు, రైల్వే లేదా రక్షణ శాఖ పౌర ఉద్యోగాలు కూడా పరిశీలించండి.<div class="chips"><span class="chip">Central Armed Police Forces (CRPF, BSF)</span><span class="chip">Indian Navy or Air Force</span><span class="chip">State Police in Andhra Pradesh</span><span class="chip">NCC officer or defence lecturer</span><span class="chip">Government railway or defence civilian job</span></div></div></div></div></section><section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">మూల నివేదికలోని వేతన వివరాలు సూచనలు మాత్రమే; సంస్థ, స్థాయి, కాలాన్ని బట్టి మారవచ్చు.</p><div class="card"><div class="row"><div class="k">Agniveer — ప్రారంభ వేతనం</div><div class="v"><span class="money">Rs 30,000 – 40,000</span><br/>₹30,000–₹40,000; నాలుగేళ్ల సేవా ఒప్పందం. ఆ తర్వాత మూల నివేదిక ప్రకారం గరిష్ఠంగా 25% మందిని రెగ్యులర్ సైన్యంలో కొనసాగించే అవకాశం ఉంది.</div></div><div class="row"><div class="k">హవల్దార్ / జూనియర్ కమిషన్డ్ ఆఫీసర్</div><div class="v"><span class="money">Rs 45,000 – 65,000</span><br/>₹45,000–₹65,000; మూల నివేదికలో పేర్కొన్నట్లుగా దాదాపు 8–15 ఏళ్ల సేవ తర్వాత చేరుకునే స్థాయి.</div></div><div class="row"><div class="k">కల్నల్ / బ్రిగేడియర్</div><div class="v"><span class="money">Rs 1,30,000 – 2,00,000</span><br/>₹1,30,000–₹2,00,000; కమిషన్డ్ ఆఫీసర్‌గా దాదాపు 20 లేదా అంతకంటే ఎక్కువ సంవత్సరాల సేవ తర్వాత సాధ్యమయ్యే ఉన్నత స్థాయి.</div></div><div class="row"><div class="k">ముందుగా అయ్యే ఖర్చు</div><div class="v">సైనిక మార్గానికి పాఠశాల, ఇంటర్ చదువు ఖర్చులు. NDA కోచింగ్ సుమారు ₹20,000–₹60,000 కావచ్చు, కానీ తప్పనిసరి కాదు. NDA ద్వారా ఎంపికైతే శిక్షణను ప్రభుత్వం అందిస్తుంది.</div></div><div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>మీరు సంపాదించడం మొదలయ్యేవరకు కుటుంబం ఖర్చులు భరించగలదా? ముందుగా ఆదాయం అవసరమైతే చదువుతోపాటు సాధ్యమైన ఉపాధి ప్రణాళిక ఉంచుకోండి.</span></div></div></section><div class="rule-box"><h4>మీ నాలుగు సర్కిళ్ల ఫలితం ఎలా అర్థం చేసుకోవాలి?</h4><p><span class="hi">నాలుగూ సరిపోతే</span> — మంచి చదువు, ప్రణాళికతో మీ లక్ష్యానికి ముందడుగు వేయండి.</p><p><span class="hi">ఒక్కటి సరిపోకపోయినా</span> — నిర్ణయం తీసుకునే ముందు ఆ అంశాన్ని జాగ్రత్తగా ఆలోచించండి.</p><p><span class="hi">రెండు లేదా ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ప్రత్యామ్నాయాలు చూడండి.</p><p style="margin-top:16px;color:#9FAAB9;font-size:14px">లక్ష్యం కోసం ఎంతకాలం ప్రయత్నించాలో, అవసరమైతే Plan Bకి ఎప్పుడు మారాలో ముందే ప్రణాళిక పెట్టుకోండి.</p></div><section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే మొదలుపెట్టగల విషయాలు ఇవి. ఖరీదైన కోచింగ్ అవసరం లేదు.</p><div class="card plan"><div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul><li>స్కూల్‌లో NCC ఉంటే చేరండి.</li><li>ఆరోగ్యానికి తగిన విధంగా రోజూ పరుగు, శారీరక వ్యాయామం ప్రారంభించండి.</li><li>పాత NDA లేదా Agniveer నమూనా ప్రశ్నపత్రాలను ఆన్‌లైన్‌లో ఉచితంగా చూసి సాధన చేయండి.</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul><li>ఆఫీసర్ మార్గానికి ఇంటర్ MPC, Agniveer అర్హతకు తగిన గ్రూప్ ఎంచుకోండి.</li><li>అవసరమైతే NDA కోచింగ్ లేదా ఉచిత వీడియో పాఠాల సహాయం తీసుకోండి.</li><li>చూపు, మొత్తం వైద్య ఫిట్‌నెస్ పరీక్షించుకొని తగిన ఆరోగ్య అలవాట్లు పాటించండి.</li></ul></div><div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కాలేజీ / శిక్షణ తర్వాత</div><ul><li>అర్హత వచ్చినప్పుడు NDA లేదా Agniveer అధికారిక నియామకానికి దరఖాస్తు చేయండి.</li><li>గ్రూప్ చర్చలు, తార్కిక సాధన ద్వారా SSB ఇంటర్వ్యూ నైపుణ్యాలు మెరుగుపరచండి.</li><li>Plan Bగా CAPF లేదా రాష్ట్ర పోలీసు పరీక్షల ఎంపికలను కూడా సిద్ధంగా ఉంచుకోండి.</li></ul></div></div><div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>మీరు ఇంకా స్కూల్‌లోనే ఉన్నారు; ఇప్పుడు నుంచే సరైన అలవాట్లు నేర్చుకునే అవకాశం మీకు ఉంది. ముందస్తు ప్రయత్నం తర్వాత సమయం ఆదా చేస్తుంది.</span></div></section><p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. అర్హతలు, వయసు, సీట్లు, పరీక్ష విధానం, జీతాలు మారవచ్చు. దరఖాస్తు సమయంలో అధికారిక తాజా ప్రకటన తప్పక చదవండి.</p></div><script>document.addEventListener('DOMContentLoaded',function(){const q=document.querySelectorAll('#quiz .q'), v=document.getElementById('verdict'), p=document.getElementById('pip1');if(!q.length||!v)return;function show(){let selected=[...q].map(x=>x.querySelector('button[data-picked="1"]'));if(selected.some(x=>!x)){v.className='verdict';v.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(p)p.className='pip';return;}let yes=selected.filter(x=>x.dataset.v==='y').length;if(yes>=5){v.className='verdict good';v.innerHTML='<strong>ఈ వృత్తి బాగా సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఆసక్తి కనిపిస్తోంది. చదువు మార్గం, రోజువారీ పని నిజంగా ఎలా ఉంటాయో కూడా తెలుసుకోండి.';if(p)p.className='pip done';}else if(yes>=3){v.className='verdict mixed';v.innerHTML='<strong>మరింత పరిశీలించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు నచ్చుతున్నాయి. నిర్ణయం ముందు పని వాతావరణం, చదువు, నైపుణ్యాలు తెలుసుకోండి.';if(p)p.className='pip warn';}else{v.className='verdict bad';v.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ పని మీకు అంతగా సరిపోకపోవచ్చు. ప్రత్యామ్నాయ కెరీర్లను కూడా పోల్చి చూడండి.';if(p)p.className='pip stop';}}document.querySelector('#quiz').addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;const group=b.closest('.toggle');group.querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked')});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');show()});show()});</script></body></html>

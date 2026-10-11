@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — శాసన పరిశోధకుడు (Epigraphist)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · భారతదేశం</div><h2>శాసన పరిశోధకుడు (Epigraphist)</h2><p class="standfirst">పాత రాతి శాసనాలు, రాగి పలకలు, దేవాలయ గోడలు, స్తంభాలు, నాణేల మీద ఉన్న రాతలను అధ్యయనం చేసే వ్యక్తిని Epigraphist అంటారు. వారు పాత లిపి, భాష గుర్తించి, చెరిగిన అక్షరాలు చదివి, శాసనం ఏ కాలానికి చెందినదో తెలుసుకుని, రాజులు, సమాజం, పన్నులు, వ్యాపారం, సంస్కృతి గురించి చరిత్రకు ఆధారాలు అందిస్తారు. ఇది History, Archaeology, Languagesతో సంబంధమున్న ప్రత్యేక పరిశోధన కెరీర్.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · శాసన పరిశోధకుడు (Epigraphist) · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>లిపులు + చరిత్ర</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు దారి</b><em>History → ప్రత్యేక శిక్షణ</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>పని</b><em>పాత శాసనాలు చదవడం</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>సంపాదన</b><em>ప్రత్యేక Research రంగం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>శాసన పరిశోధన మీకు సరిపోతుందా?</h3><p class="lede">పాత అక్షరాలను ఓపిగ్గా, ఆధారాలతో పరిశీలించి చరిత్ర తెలుసుకోవడం ఇష్టమైతే ఈ రంగం మీకు సరిపోవచ్చు.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>History మీకు బాగా ఇష్టమా? పాత రాజ్యాలు, దేవాలయాలు, శాసనాలు, అసలు చారిత్రక ఆధారాల గురించి చదవాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Brahmi, Telugu-Kannada, Grantha, Nagari వంటి పాత లిపులను నేర్చుకోవడం మీకు ఆసక్తిగా ఉంటుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పాత శాసనంలోని చిన్న చిన్న అక్షరాల తేడాలు, తేదీలు, చెరిగిన పదాలను ఓపిగ్గా పోల్చగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>దేవాలయాలు, చారిత్రక కట్టడాలు, గుహలు, గ్రామాలకు వెళ్లి శాసనాల వివరాలు రికార్డు చేయడం నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>Telugu, Sanskrit, Prakrit, Tamil, Kannada లేదా ప్రాంతాన్ని బట్టి Persian/Arabic వంటి భాషలపై ఆసక్తి ఉందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఈ ప్రత్యేక కెరీర్‌లో Higher Studies, Research Experience అవసరమయ్యే అవకాశాన్ని అంగీకరిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏ దారిలో చదవాలి?</h3><p class="lede">అందరికీ ఒకే “Epigraphist Entrance Exam” లేదు. సాధారణంగా History/Archaeology → Epigraphy Specialisation → Research లేదా Government Recruitment దారి ఉంటుంది.</p>
+<div class="flag green"><span class="mark">ముఖ్యమైన పదాలు</span><span><b>Epigraphy</b> అంటే రాయి, రాగి పలక వంటి వాటిపై రాసిన శాసనాలను అధ్యయనం చేయడం. <b>Palaeography</b> అంటే పాత లిపులు, అక్షరాలను అధ్యయనం చేయడం. <b>ASI</b> అంటే Archaeological Survey of India — భారత పురావస్తు శాఖ.</span></div>
+<div class="card">
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>Historyతో కూడిన Humanities / CEC</b> ఈ రంగానికి నేరుగా సంబంధించిన దారి. Science లేదా Commerce చదివినా కొన్ని యూనివర్సిటీ నిబంధనల ప్రకారం తరువాత History/Archaeology చేరవచ్చు. కానీ History ముందే చదివితే ప్రాచీన, మధ్యయుగ భారతదేశం గురించి మంచి పునాది వస్తుంది.</div></div>
+<div class="row"><div class="k">12వ తరగతి తర్వాత</div><div class="v"><b>BA History, BA Archaeology, Ancient History, Anthropology, Classical Languages</b> మంచి డిగ్రీ ఎంపికలు. కేవలం Bachelor’s పూర్తిచేసిన వెంటనే Epigraphist ఉద్యోగం రావడం సాధారణం కాదు. తరువాత ప్రత్యేక శిక్షణ అవసరం.<div class="chips"><span class="chip">BA History</span><span class="chip">BA Archaeology</span><span class="chip">Ancient History</span><span class="chip">Anthropology</span><span class="chip">Classical Languages</span></div></div></div>
+<div class="row"><div class="k">MA / PG దారి</div><div class="v"><b>BA / సంబంధిత డిగ్రీ → MA Ancient Indian History, Culture &amp; Archaeology / Archaeology / History → Epigraphy &amp; Palaeography కోర్సులు → Research / Field Experience → Epigraphist / Archaeology Research.</b><br/><br/>ఆంధ్రప్రదేశ్‌లోని <b>Sri Venkateswara University (SVU), Tirupati</b>లో అసలు రిపోర్టు ప్రకారం <b>2 ఏళ్ల MA Ancient Indian History, Culture &amp; Archaeology</b>, <b>1 ఏడాది PG Diploma in Epigraphy</b> ఉన్నాయి.</div></div>
+<div class="row"><div class="k">Epigraphy కోర్సులో ఏం నేర్పుతారు?</div><div class="v">SVU Epigraphy &amp; Palaeography Syllabusలో <b>Brahmi, Kharoshthi, Nagari, Telugu-Kannada లిపి ఎలా మారింది, శాసనాల రకాలు, కాలం గుర్తించే పద్ధతులు, పాత సంఖ్యలు, Prakrit, Sanskrit, ప్రాంతీయ భాషల శాసనాలు</b> వంటి అంశాలు ఉంటాయి. ఆధునిక తెలుగు చదవడం ఒక్కటే ఈ పని కాదు.</div></div>
+<div class="row"><div class="k">భాషలపై ప్రత్యేక శిక్షణ</div><div class="v">మీరు ఏ ప్రాంతం శాసనాలు చదవాలనుకుంటున్నారో బట్టి భాషలు నేర్చుకోవాలి. దక్షిణ భారత శాసనాలకు <b>Telugu, Kannada, Tamil, Sanskrit, Prakrit</b> ఉపయోగపడవచ్చు. ASIలో <b>Arabic &amp; Persian</b> శాసనాలకు కూడా ప్రత్యేక విభాగం ఉంది. కనీసం ఒక ప్రాచీన/చారిత్రక భాష బాగా చదవగలిగితే ఉపయోగం.</div></div>
+<div class="row"><div class="k">PhD దారి</div><div class="v"><b>MA → అందుబాటులో ఉన్న నియమాల ప్రకారం PhD / ఇతర Research దారి → శాసనాలు, లిపులు, రాజవంశాలు, దేవాలయాలు, Historical Geography</b> వంటి అంశంపై ప్రత్యేక పరిశోధన. University Teaching, Senior Research, Specialist Postsకు PhD ప్రత్యేకంగా ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k">ప్రభుత్వం / ASI దారి</div><div class="v"><b>Archaeological Survey of India (ASI)</b>లో Mysuruలో <b>Sanskrit &amp; Dravidian Inscriptions కోసం Epigraphy Branch</b>, Zonal Offices, అలాగే Arabic &amp; Persian Inscriptions విభాగం ఉన్నాయి. ప్రభుత్వ Epigraphy ఉద్యోగాలు చాలా ప్రత్యేకమైనవి; Postను బట్టి Direct Recruitment లేదా Promotion ఉంటుంది. కొన్నింటికి ప్రత్యేక Master’s, భాషలు, Archaeology/Epigraphy Experience, Diplomas అవసరం.</div></div>
+<div class="row"><div class="k">అధ్యాపక / Research దారి</div><div class="v"><b>MA → అవసరమైన చోట UGC-NET / SET → PhD → University Teaching / Research.</b> Epigraphyని ప్రత్యేక పెద్ద డిపార్ట్‌మెంట్‌గా కాకుండా Ancient History, Archaeology, History, Culture, Sanskrit, Regional Languages విభాగాల్లో ఎక్కువగా బోధిస్తారు.</div></div>
+<div class="row"><div class="k">పూర్తి రోడ్‌మ్యాప్</div><div class="v"><b>10వ తరగతి → సాధ్యమైతే Historyతో Humanities/CEC → BA History / Archaeology / Ancient History → MA Ancient Indian History &amp; Archaeology → PG Diploma లేదా Epigraphy &amp; Palaeographyలో మంచి శిక్షణ → Field Documentation + Languages/Scripts → ASI / University / Museum / Research Project → Epigraphist.</b></div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన సూచన</span><span>Epigraphy చాలా ప్రత్యేకమైన చిన్న రంగం. Degree తరువాత వెంటనే శాశ్వత Epigraphist Vacancy వస్తుందని ఆశించకండి. History/Archaeologyలో మంచి పునాది పెట్టి Teaching, Museums, Heritage Research వంటి ఇతర దారులు కూడా ఉంచుకోండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>Epigraphist నిజంగా ఏ పనులు చేస్తారు?</h3><p class="lede">శాసనాలను ఫొటోలు, కాపీలు, భాషల ఆధారంగా చదివి, అనువదించి, చరిత్రకు పనికొచ్చే సమాచారంగా మార్చడం వీరి పని.</p>
+<div class="card">
+<div class="row"><div class="k">శాసనాలు ఎక్కడున్నాయో కనుగొనడం</div><div class="v"><b>దేవాలయాలు, చారిత్రక కట్టడాలు, గుహలు, పొలాలు, రాతి పలకలు</b> వంటి ప్రదేశాల్లో పాత శాసనాలు ఉన్నాయో పరిశీలిస్తారు.</div></div>
+<div class="row"><div class="k">శాసనం కాపీ తీసుకోవడం</div><div class="v">శాసనాన్ని దెబ్బతీయకుండా ఫొటోలు, Digital Records లేదా సంప్రదాయ <b>Estampage</b> (శాసనంపై ఉన్న అక్షరాల ముద్రను రికార్డు చేసే పద్ధతి) తయారు చేస్తారు. తరువాత కట్టడం దగ్గర లేకపోయినా అధ్యయనం చేయవచ్చు.</div></div>
+<div class="row"><div class="k">పాత లిపి చదవడం</div><div class="v">పాత అక్షరాల రూపాలను గుర్తించి ఇప్పుడు చదవగలిగే అక్షరాలుగా మారుస్తారు. ఒకే భాష కొన్ని శతాబ్దాల తేడాలో వేర్వేరు లిపుల్లా కనిపించవచ్చు.</div></div>
+<div class="row"><div class="k">అక్షరాలు సరిగా రాయడం</div><div class="v">శాసనంలో ఉన్న మాటలను చదవగలిగే పద్ధతిలో జాగ్రత్తగా రాస్తారు. విరిగిన, చెరిగిపోయిన, అనుమానం ఉన్న అక్షరాలను కూడా సరైన గుర్తులతో చూపిస్తారు.</div></div>
+<div class="row"><div class="k">అనువాదం</div><div class="v">శాసనంలోని విషయాన్ని చారిత్రక అర్థం, ప్రత్యేక పదాలు మారిపోకుండా ఆధునిక పరిశోధన భాషలోకి అనువదిస్తారు.</div></div>
+<div class="row"><div class="k">శాసనం కాలం గుర్తించడం</div><div class="v">రాజుల పాలనా సంవత్సరాలు, పాత Calendar విధానాలు, లిపి రూపాలు, రాజుల పేర్లు, వంశాల వివరాలు, చారిత్రక ఆధారాలు చూసి శాసనం ఏ కాలానికి చెందినదో అంచనా వేస్తారు లేదా నిర్ధారిస్తారు.</div></div>
+<div class="row"><div class="k">చరిత్ర అర్థం చేసుకోవడం</div><div class="v">శాసనాల ద్వారా <b>భూదానాలు, పన్నులు, రాజులు, దేవాలయాలు, పరిపాలన, వ్యాపారం, సామాజిక వర్గాలు, మతం, భాష, స్థానిక చరిత్ర</b> గురించి తెలుసుకుంటారు.</div></div>
+<div class="row"><div class="k">పరిశోధన ప్రచురించడం</div><div class="v">చదివిన శాసనాలు, అనువాదాలు, ఆధారాలతో కూడిన వివరణలు, Research Notesను Journals, Catalogues, Reports, Epigraphy Publicationsలో ప్రచురిస్తారు.</div></div>
+<div class="row"><div class="k">Digital Epigraphy</div><div class="v">ఇప్పుడు పాత శాసనాలను రికార్డు చేసి అధ్యయనం చేయడానికి <b>High-resolution Photos, 3D Imaging, GIS, Databases, Digital Archives, Image Enhancement</b> వాడుతున్నారు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Epigraphist vs Archaeologist</div><div class="v"><b>Epigraphist:</b> శాసనాలు, పాత లిపులు, వాటి చారిత్రక అర్థంపై ప్రత్యేకంగా పని చేస్తారు.<br/><b>Archaeologist:</b> తవ్వకాలు, వస్తువులు, కట్టడాలు, Surveys, Scientific Methods ద్వారా గతాన్ని విస్తృతంగా అధ్యయనం చేస్తారు. Epigraphy అనేది Archaeology/Historyలో ఒక ప్రత్యేక విభాగం.</div></div>
+<div class="row"><div class="k">Epigraphist vs Historian</div><div class="v"><b>Historian:</b> గతాన్ని తెలుసుకోవడానికి పుస్తకాలు, పత్రాలు, ఇతర రకాల ఆధారాలు ఉపయోగిస్తారు.<br/><b>Epigraphist:</b> శాసనాలే ప్రధాన ఆధారంగా తీసుకుని, వాటిలోని లిపి, భాషను చదివి చరిత్ర తెలుసుకుంటారు.</div></div>
+<div class="row"><div class="k">Epigraphist vs Linguist</div><div class="v"><b>Linguist:</b> భాష ధ్వనులు, వ్యాకరణం, నిర్మాణం, మార్పులను శాస్త్రీయంగా అధ్యయనం చేస్తారు.<br/><b>Epigraphist:</b> భాషతో పాటు పాత లిపి, చరిత్ర, కాలం, Archaeology ఆధారంగా శాసనాలను అర్థం చేసుకుంటారు.</div></div>
+<div class="row"><div class="k">ఎక్కడ పనిచేయవచ్చు?</div><div class="v"><b>Archaeological Survey of India, State Archaeology &amp; Museums Departments, Universities, Museums, Manuscript/Heritage Institutes, Temple History Projects, Research Institutions, Heritage Documentation Projects</b>లో పని చేయవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రస్తుత ASI పని</div><div class="v">ASI Epigraphy Directorate ఇప్పటికీ Field Surveys చేస్తోంది. అసలు రిపోర్టులోని <b>2025 ASI Activity Report</b> ప్రకారం ఆంధ్రప్రదేశ్ సహా వివిధ రాష్ట్రాల్లో శాసనాల కాపీలు తీయడం, చదవడం, రాయడం, ప్రచురణకు సిద్ధం చేయడం జరిగింది.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్‌లో ప్రత్యేక అవకాశం</div><div class="v">ఆంధ్రప్రదేశ్‌లో ప్రాచీన, మధ్యయుగ రాజవంశాల శాసనాలు ఎన్నో ఉన్నాయి. <b>Telugu-Kannada Script History</b>, Sanskrit/Prakrit, ప్రాంతీయ చరిత్ర నేర్చుకుంటే South Indian Epigraphyలో ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k">Plan B</div><div class="v">ఈ చదువుతో పాటు <b>Archaeology, Museums, History Teaching, Heritage Research, Archives, Cultural Tourism</b> రంగాలను Plan Bగా చూడవచ్చు.<div class="chips"><span class="chip">Archaeology</span><span class="chip">Museums</span><span class="chip">History Teaching</span><span class="chip">Heritage Research</span><span class="chip">Archives</span><span class="chip">Cultural Tourism</span></div></div></div>
+<div class="flag"><span class="mark">వాస్తవం</span><span>శాసనంలోని పాత అక్షరాలను ఊహించి చెప్పడం కాదు Epigraphy. లిపి, భాష, తేదీ, పోలికలు, చారిత్రక నేపథ్యం వంటి ఆధారాలతోనే చదవాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఈ రంగంలో ఎంత సంపాదించవచ్చు?</h3><p class="lede">Epigraphy చిన్న ప్రత్యేక రంగం. జీతం Government Archaeology, University, Museum, Research Project, Heritage Documentation ఉద్యోగాన్ని బట్టి మారుతుంది.</p>
+<div class="card">
+<div class="row"><div class="k">Research / Project Assistant</div><div class="v"><span class="money">₹15,000 – ₹30,000/నెల</span><br/>కొన్ని తాత్కాలిక Archaeology, History, Heritage Research Projectsలో అర్హత, Funds, Projectను బట్టి ఈ స్థాయి ఆదాయం ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">Research Fellowship</div><div class="v"><span class="money">పై చదువుల్లో Fellowship ఆధారంగా</span><br/>UGC/CSIR లేదా ఇతర Research Funding దారుల్లో అర్హులైన PhD విద్యార్థులకు సంబంధిత పథకం ప్రకారం JRF/SRF Stipend రావచ్చు.</div></div>
+<div class="row"><div class="k">ASI Assistant Superintending Epigraphist</div><div class="v"><span class="money">Pay Level 7 · ప్రారంభ Basic ₹44,900</span><br/>అసలు రిపోర్టులో పేర్కొన్న <b>2025 ASI Promotion Order</b> ప్రకారం Assistant Superintending Epigraphist అనేది <b>Group B Gazetted</b>, <b>Level 7: ₹44,900–₹1,42,400</b> Pay Rangeలో ఉంది.</div></div>
+<div class="row"><div class="k">ASI Deputy Superintending Epigraphist</div><div class="v"><span class="money">Pay Level 10 · ప్రారంభ Basic ₹56,100</span><br/>అసలు రిపోర్టులోని 2025 ASI Seniority సమాచారం ప్రకారం Deputy Superintending Epigraphist (Dravidian Inscriptions)కి <b>Pay Level 10</b> ఉంది. ఇది కొత్తవారి మొదటి ఉద్యోగం కాదు; ఎక్కువ Qualification/Experience అవసరమయ్యే Senior Specialist Post.</div></div>
+<div class="row"><div class="k">University Teaching / Research</div><div class="v"><span class="money">జీతం ఉద్యోగం, సంస్థను బట్టి మారుతుంది</span><br/>Assistant Professor, Project Researcher, University Research ఉద్యోగాల్లో జీతం సంస్థ, Post, Recruitment Rulesపై ఆధారపడి ఉంటుంది. ఉద్యోగాన్ని బట్టి NET/SET/PhD అర్హతలు అవసరం కావచ్చు.</div></div>
+<div class="row"><div class="k">చదువు ఖర్చు</div><div class="v">ఈ కెరీర్ కోసం తప్పనిసరిగా ఖరీదైన Private Degree అవసరం లేదు. మంచి BA/MA History/Archaeology, తరువాత Epigraphy/Palaeography Diploma లేదా University Course ద్వారా కూడా చదవవచ్చు. Language Learning, Field Practice ముఖ్యమైనవి.</div></div>
+<div class="flag red"><span class="mark">ఉద్యోగాలపై జాగ్రత్త</span><span>Epigraphyలో చాలా ఎక్కువ ఉద్యోగ ప్రకటనలు ఉంటాయని అనుకుని ఈ రంగాన్ని ఎంచుకోకండి. చరిత్ర తెలుసుకోవడానికి విలువైన రంగమైనా ఇది Specialist Career. Plan B అవసరం.</span></div>
+</div></section>
+<div class="rule-box"><h4>ఈ నాలుగు సర్కిళ్ల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p>History, Languages, పాత Scripts, ఓపికగా పరిశోధన చేయడం మీకు నచ్చితే Epigraphy సరిపోవచ్చు.</p>
+<p>కేవలం చారిత్రక ప్రదేశాలకు వెళ్లడం ఇష్టమైతే Archaeology, History, Heritage Careers కూడా పోల్చండి.</p>
+<p>Research, Language Learning, Field Documentationకు ఎక్కువ సమయం కేటాయించాలి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఉద్యోగాలు తక్కువగా ఉండే ప్రత్యేక రంగం కాబట్టి Teaching, Museums, Archives వంటి Plan B తప్పక ఉంచుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">ఇప్పటి నుంచి మీ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">8–10 తరగతి విద్యార్థి ఇప్పుడే Specialist Degree ఎంచుకోవాల్సిన అవసరం లేదు. History, Languages, పాత ఆధారాలను ఓపిగ్గా పరిశీలించడం మొదలు పెట్టండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే, స్కూల్‌లో ఉన్నప్పుడు</div><ul>
+<li>History, Telugu, English బాగా నేర్చుకోండి. ఆసక్తి, అవకాశం ఉంటే Sanskrit కూడా మొదలుపెట్టండి.</li>
+<li>Museums, దేవాలయాలు, చారిత్రక కట్టడాలు సందర్శించి అక్కడి వివరాలను జాగ్రత్తగా చదవండి.</li>
+<li>Primary Source అంటే ఏమిటో తెలుసుకోండి — ఆ కాలంలోనే తయారైన నిజమైన చారిత్రక ఆధారం.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>అవకాశముంటే Historyతో కూడిన Humanities/CEC ఎంచుకోండి.</li>
+<li>12వ తరగతి తర్వాత BA History, Archaeology, Ancient History, సంబంధిత Language Coursesను పోల్చండి.</li>
+<li>Telugu/Sanskritతో పాటు పరిశోధనకు పనికొచ్చే మరో ప్రాంతీయ లేదా ప్రాచీన భాష నేర్చుకుంటూ ఉండండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> కాలేజీ / శిక్షణ సమయంలో</div><ul>
+<li>MA Ancient Indian History &amp; Archaeology / Archaeology / History పూర్తి చేయండి.</li>
+<li>Epigraphy &amp; Palaeographyలో PG Diploma లేదా ప్రత్యేక శిక్షణ తీసుకోండి; SVU Tirupati ఆంధ్రప్రదేశ్‌లో ఒక ఉదాహరణ.</li>
+<li>శాసనాల Documentation, Estampage/Digital Recording, Research/Heritage Projectsలో Field Experience సంపాదించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదటి పరీక్ష</span><span>శాసనం ఉన్న చారిత్రక దేవాలయం లేదా కట్టడాన్ని సందర్శించండి. అనుమతి ఉన్న చోట మాత్రమే ఫొటోలు తీయండి. దానికి సంబంధించిన ప్రచురిత పాఠాన్ని చదివి, అక్షరాలు, చరిత్ర ఎలా నిర్ధారించారో తెలుసుకోవడానికి ప్రయత్నించండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే. Courses, ASI Vacancies, Recruitment Qualifications, University Admissions, Fellowships మారవచ్చు. అసలు రిపోర్టు పేర్కొన్న ASI Pay Levels, SVU Courses వివరాలను సంబంధిత అధికారిక ప్రకటనలో తనిఖీ చేయాలి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>శాసన పరిశోధన మీకు సరిపోవచ్చు</strong>History, Languages, చిన్న వివరాలను ఓపిగ్గా పరిశీలించడం మీకు నచ్చుతున్నాయి. పాత లిపులు, Research నైపుణ్యాలు పెంచుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>నిర్ణయానికి ముందు ప్రయత్నించండి</strong>ఈ రంగంలోని కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. ఒక పాత లిపి నేర్చుకుని, ప్రచురిత శాసనం చదవడానికి ప్రయత్నించండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>History ఇష్టమైనా పాత లిపులపై Research మీకు నచ్చకపోవచ్చు. Archaeology, Museums, History Teaching వంటి ఇతర కెరీర్‌లు కూడా చూడండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

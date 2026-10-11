@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — సైకాలజిస్ట్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ పరిశీలన · ఆంధ్రప్రదేశ్</div><h2>సైకాలజిస్ట్</h2><p class="standfirst">ప్రజలు ఎలా ఆలోచిస్తారు, భావిస్తారు, ప్రవర్తిస్తారో అర్థం చేసుకొని కౌన్సెలింగ్, పాఠశాలలు, ఆసుపత్రులు, పరిశోధన, కార్యాలయాల్లో పనిచేయవచ్చు. సలహా ఇవ్వడం మాత్రమే కాదు; ఓపిక, వినడం, నైతికత, సుదీర్ఘ చదువు అవసరం.</p></div>
+<div class="printhead">కెరీర్‌కు నాలుగు సర్కిళ్లు  ·  Psychologist  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు ఆసక్తి ఉందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>నైపుణ్యాలు</b><em>అర్హత సాధించగలరా?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>జాగ్రత్త</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>సరిపోతుందా?</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>నిజంగా సైకాలజీ ఇష్టమా?</h3><p class="lede">ప్రజలకు సాయం చేయాలనే కోరిక మాత్రమే సరిపోదు. వృత్తికి తగిన పనులు చేయగలరా?</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఎదుటివారిని మధ్యలో ఆపకుండా, తీర్పు చెప్పకుండా, వెంటనే సలహా ఇవ్వకుండా ఓపికగా వినగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>వేర్వేరు వ్యక్తులు ఎందుకు భిన్నంగా ఆలోచిస్తారు, భావిస్తారు, ప్రవర్తిస్తారు అనేది తెలుసుకోవాలని ఆసక్తి ఉందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>మార్పు నెమ్మదిగా వచ్చినా ఓపికగా ఉండగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>కౌన్సెలింగ్‌తో పాటు పరిశోధన పద్ధతులు, గణాంకాలు, మానవ అభివృద్ధి, ప్రవర్తన సిద్ధాంతాలు చదవగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>ఇతరుల వ్యక్తిగత విషయాలను రహస్యంగా ఉంచి వృత్తి నైతికత పాటించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>ముఖ్యంగా క్లినికల్ సైకాలజీ కోసం అనేక సంవత్సరాలు చదవడానికి సిద్ధంగా ఉన్నారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానమివ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>విషయాలు, చదువు మార్గం</h3><p class="lede">10వ తరగతి తర్వాత చదువుకోవాల్సిన విషయాలు, సరైన మార్గం తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> ఇంగ్లీష్</div><div class="v">సైకాలజిస్టులు పరిశోధనలు చదువుతారు, నివేదికలు రాస్తారు, ఇంటర్వ్యూలు చేస్తారు. స్పష్టంగా చదవడం, రాయడం, మాట్లాడడం తప్పనిసరి.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> Biology &amp; Social Science</div><div class="v">మెదడు, వ్యక్తి అభివృద్ధి, ఆరోగ్యం, కుటుంబం, సమాజం, ప్రవర్తన గురించి అవగాహన అవసరం. సైకాలజీ అంటే జీవశాస్త్రం ఒక్కటే కాదు.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> Maths &amp; Statistics</div><div class="v">సైకాలజీ ఒక శాస్త్రం. పరిశోధన పద్ధతులు, సర్వేలు, ప్రయోగాలు, పరీక్ష స్కోర్లు, గణాంకాలు డిగ్రీలో భాగం.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">ఇంటర్‌లో సైకాలజీ అందుబాటులో ఉంటే హ్యూమానిటీస్/CEC అనుకూలం. అయితే MPC, BiPC లేదా గుర్తింపు ఉన్న ఏ గ్రూప్ నుంచైనా తర్వాత BA/BSc Psychology చేరవచ్చు.</div></div>
+<div class="row"><div class="k">ఈ అలవాట్లు మొదలుపెట్టండి</div><div class="v">మధ్యలో ఆపకుండా వినడం; చదవడం; రాయడం; గణాంకాలు; పరిశీలన; పరిశోధన.<div class="chips">
+<span class="chip">శ్రద్ధగా వినడం</span><span class="chip">చదవడం</span><span class="chip">రాయడం</span><span class="chip">గణాంకాలు</span><span class="chip">పరిశీలన</span><span class="chip">పరిశోధన</span>
+</div></div></div>
+</div>
+<div class="card" style="margin-top:12px"><div class="num" style="margin-bottom:6px">తర్వాత కావాల్సిన అర్హతలు</div>
+<div class="row"><div class="k">ప్రవేశ పరీక్షలు</div><div class="v">ప్రతి సైకాలజీ కాలేజీకి ఒకే ప్రవేశ పరీక్ష లేదు. కొన్ని డిగ్రీ కోర్సులు CUET-UG ద్వారా, మరికొన్ని ఇంటర్ మార్కులు లేదా సొంత పరీక్ష ద్వారా ప్రవేశం ఇస్తాయి. MA/MSc కోసం కొన్ని చోట్ల CUET-PG ఉంటుంది.</div></div>
+<div class="row"><div class="k">బ్యాచిలర్ డిగ్రీ</div><div class="v">BA Psychology, BA (Hons) Psychology, BSc Psychology వంటి కోర్సులు ఉన్నాయి. అభివృద్ధి, సామాజిక, జ్ఞాన, అసాధారణ, జీవసంబంధ, పరిశోధన సైకాలజీ వంటి అంశాలు చదువుతారు.</div></div>
+<div class="row"><div class="k">మాస్టర్స్ డిగ్రీ</div><div class="v">చాలా వృత్తిపరమైన సైకాలజీ ఉద్యోగాలకు MA/MSc Psychology లేదా సరైన స్పెషలైజేషన్ ఉపయోగపడుతుంది. కౌన్సెలింగ్, క్లినికల్, ఎడ్యుకేషనల్, ఆర్గనైజేషనల్, డెవలప్‌మెంటల్, రీసెర్చ్ విభాగాలు ఉన్నాయి.</div></div>
+<div class="row"><div class="k">క్లినికల్ సైకాలజిస్ట్</div><div class="v">Clinical Psychologist అవ్వడానికి ప్రత్యేక నియంత్రిత మార్గం ఉంది. Rehabilitation Council of India (RCI) ఆమోదించిన క్లినికల్ సైకాలజీ కోర్సు పూర్తిచేసి Central Rehabilitation Register (CRR) నమోదు అవసరం. మూల నివేదిక ప్రకారం RCI గుర్తించిన రెగ్యులర్ కోర్సుల్లో నాలుగేళ్ల Bachelor in Clinical Psychology, రెండేళ్ల Master in Clinical Psychology ఉన్నాయి. ప్రవేశానికి ముందు తాజా గుర్తింపు తనిఖీ చేయాలి.</div></div>
+<div class="row"><div class="k">Important difference</div><div class="v">Psychiatrist, Psychologist ఒకటి కాదు. Psychiatrist ముందు MBBS చేసి తర్వాత Psychiatry చదివే వైద్యుడు. Psychologist సైకాలజీ చదువుతారు. సైకాలజీని డాక్టర్ కావడానికి చిన్న మార్గంగా భావించవద్దు.</div></div>
+<div class="row"><div class="k">ఈ దశలు పూర్తి చేయాలి</div><div class="v">ఇంటర్ ఏ గ్రూప్ అయినా → BA/BSc Psychology → MA/MSc Psychology లేదా తగిన ప్రత్యేక కోర్సు → ఇంటర్న్‌షిప్/పర్యవేక్షణలో అనుభవం → సంబంధిత ఉద్యోగం. Clinical Psychologist కోసం మాత్రం RCI ఆమోదిత కోర్సు, CRR నమోదు తప్పనిసరి మార్గం.</div></div>
+<div class="flag red"><span class="mark">ముందుగా పరిశీలించండి</span><span>Clinical Psychologist కావాలంటే కోర్సు పేరులో Clinical అని ఉందని మాత్రమే చేరవద్దు; RCI గుర్తింపు ఉన్న సంస్థ, కోర్సు తనిఖీ చేయండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3 · ప్రమాదం</div><h3>ఉద్యోగ అవకాశాల వాస్తవం</h3><p class="lede">మానసిక ఆరోగ్య సేవలు అవసరమైనప్పటికీ సైకాలజీ ఉద్యోగాల అర్హతలు ఒక్కో రకంగా ఉంటాయి.</p>
+<div class="card">
+<div class="row"><div class="k">ఎవరు ఉద్యోగం ఇస్తారు?</div><div class="v">ఆసుపత్రులు, మానసిక ఆరోగ్య కేంద్రాలు, పునరావాస సంస్థలు, పాఠశాలలు, కళాశాలలు, NGOలు, బాలల అభివృద్ధి కేంద్రాలు, పరిశోధన సంస్థలు, విశ్వవిద్యాలయాలు, కంపెనీల HR/వెల్‌బీయింగ్ బృందాలు.</div></div>
+<div class="row"><div class="k">వివిధ ఉద్యోగాలు</div><div class="v">Psychologist, Clinical Psychologist, Counselling Psychologist, School/Educational Psychologist, Organisational Psychologist, Research Assistant, Behavioural Researcher, Student Counsellor, HR/Wellbeing ఉద్యోగాలకు అర్హతలు ఒకేలా ఉండవు.</div></div>
+<div class="row"><div class="k">ఎంత తరచుగా?</div><div class="v">ప్రారంభ అవకాశాలు ఉన్నా చాలా సంస్థలు MA/MSc, పర్యవేక్షణలో అనుభవం, కౌన్సెలింగ్/పరిశోధన నైపుణ్యాలు కోరతాయి. డిగ్రీ మాత్రమే ఉంటే సహాయక, HR, పరిశోధన, సపోర్ట్ ఉద్యోగాలు లేదా ఉన్నత చదువు ఎక్కువగా సాధ్యమవుతాయి.</div></div>
+<div class="row"><div class="k">పెద్ద ప్రమాదం</div><div class="v">సాధారణ Psychology డిగ్రీ చేస్తే స్వయంగా థెరపిస్ట్ లేదా Clinical Psychologist అవుతామని అనుకోవడమే పెద్ద ప్రమాదం. ప్రతి ఉద్యోగానికి అవసరమైన అర్హత వేరు; క్లినికల్ మార్గానికి RCI నియమాలు అదనంగా వర్తిస్తాయి.</div></div>
+<div class="flag"><span class="mark">జాగ్రత్త</span><span>బాధ, దుఃఖం, హింస, కుటుంబ సమస్యలు వంటి కఠిన అనుభవాలు వినాల్సి ఉంటుంది. వృత్తిపరమైన హద్దులు, పర్యవేక్షణ, మీ మానసిక దృఢత్వం ముఖ్యం.</span></div>
+<div class="row" style="border-top:1px solid var(--rule);margin-top:14px;padding-top:14px"><div class="k">మీ ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">సైకాలజీ నైపుణ్యాలతో HR/People Operations, UX Research, Behavioural Research, Student Support, Market Research, Social Sector వంటి ఇతర వృత్తుల్లోనూ పని చేయవచ్చు.<div class="chips"><span class="chip">HR / ఉద్యోగుల నిర్వహణ</span><span class="chip">UX Research</span><span class="chip">Behavioural Research</span><span class="chip">విద్యార్థుల సహాయం</span><span class="chip">మార్కెట్ పరిశోధన</span><span class="chip">సామాజిక రంగం</span></div></div></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">జీతం చదువు, ప్రత్యేకత, నగరం, సంస్థ, అనుభవంపై ఆధారపడుతుంది.</p>
+<div class="card">
+<div class="row"><div class="k">ప్రారంభ ఉద్యోగాలు</div><div class="v"><span class="money">₹15,000 – ₹30,000/month</span><br/>నెలకు: ప్రారంభ సైకాలజీ, కౌన్సెలింగ్ సపోర్ట్, స్కూల్, NGO, పరిశోధన పాత్రల అంచనా. మూల నివేదికలో Indeed 2026 భారత సగటు ₹20,255/నెల అని ఉంది.</div></div>
+<div class="row"><div class="k">క్లినికల్ సైకాలజిస్ట్</div><div class="v"><span class="money">₹25,000 – ₹60,000+/month</span><br/>నెలకు: RCI గుర్తింపు పొందిన Clinical Psychologist ఉద్యోగాల్లో సంస్థ, అనుభవంపై ఆధారపడి ఉంటుంది. మూల నివేదికలో Indeed 2026 సగటు ₹31,876/నెల అని ఉంది.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న నిపుణులు</div><div class="v"><span class="money">₹40,000 – ₹1,00,000+/month</span><br/>నెలకు: అనుభవం ఉన్న క్లినికల్, ఆర్గనైజేషనల్, కౌన్సెలింగ్, పరిశోధన, ప్రైవేటు ప్రాక్టీస్ పాత్రల్లో సాధ్యమయ్యే అంచనా; హామీ కాదు.</div></div>
+<div class="row"><div class="k">సొంత ప్రాక్టీస్</div><div class="v">అవసరమైన అర్హతలు, అనుభవం ఉన్నవారు సొంత కౌన్సెలింగ్/ప్రాక్టీస్ ద్వారా సంపాదించవచ్చు. ఆదాయం గుర్తింపు, నగరం, పేరు, క్లయింట్లపై ఆధారపడి ఉంటుంది. డిగ్రీ వెంటనే పూర్తి చేసి భారీ ఆదాయం ఆశించకండి.</div></div>
+<div class="row"><div class="k">ఉద్యోగం వచ్చే వరకు ఖర్చు</div><div class="v">ప్రభుత్వ విశ్వవిద్యాలయాల్లో ఫీజులు తక్కువగా ఉండవచ్చు; ప్రైవేటు BA/BSc, MA/MSc ఖర్చులు ఎక్కువవచ్చు. మెరుగైన ఉద్యోగాలకు 5–6 ఏళ్ల చదువు అవసరమయ్యే అవకాశం ఉంది. ఫీజులతో పాటు కోర్సు గుర్తింపు కూడా తప్పక చూడండి.</div></div>
+<div class="flag red"><span class="mark">ఇంట్లో చర్చించండి</span><span>తొలి జీతం ₹15,000–₹30,000 ఉండవచ్చని భావించి కుటుంబం సుదీర్ఘ చదువు ఖర్చు భరించగలదో చూడండి. Clinical Psychology కోసం RCI ఆమోదిత కోర్సే ఎంచుకోండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు సర్కిళ్ల ఫలితం ఎలా చదవాలి?</h4>
+<p>నాలుగూ సరిపోతే — సైకాలజీలో ఏ ప్రత్యేక విభాగం ఎంచుకోవాలో జాగ్రత్తగా ఆలోచించండి.</p>
+<p>ఒకటి సరిపోకపోతే — నిర్ణయానికి ముందు మరోసారి ఆలోచించండి.</p>
+<p>రెండు లేదా ఎక్కువ సరిపోకపోతే — వృత్తిలో రోజూ చేసే పని మీకు సరిపోతుందో కౌన్సెలర్‌తో మాట్లాడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">అదనపు నియమం: ఇతరుల బాధ అర్థం చేసుకోవడం ముఖ్యం. కానీ సైకాలజీ వృత్తికి చదువు, నైతికత, పర్యవేక్షణలో శిక్షణ అవసరం.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">ఇప్పటి నుంచే చిన్నచిన్న పనులు చేసి ఈ కెరీర్ మీకు సరిపోతుందో తెలుసుకోండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, పాఠశాలలో</div><ul>
+<li>ఇంగ్లీష్ చదవడం, రాయడం మెరుగుపర్చుకొని జీవశాస్త్రం, సాంఘికశాస్త్రం, గణితంపై దృష్టి పెట్టండి.</li>
+<li>జ్ఞాపకశక్తి, అభ్యాసం, భావోద్వేగాలు, అభివృద్ధి, ప్రవర్తనపై నమ్మదగిన ప్రారంభ పాఠాలు చదవండి.</li>
+<li>ఎదుటివారిని ఆపకుండా వినడం అలవాటు చేసుకోండి; తోటి విద్యార్థులకు రోగనిర్ధారణ లేదా చికిత్స చేయవద్దు.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>మీకు సరిపోతే సైకాలజీ ఉన్న హ్యూమానిటీస్/CEC ఎంచుకోండి; MPC, BiPC నుంచీ సైకాలజీ చదవవచ్చు.</li>
+<li>రచన, మాట్లాడే నైపుణ్యం, గణాంకాలు, పరిశోధన నేర్చుకోండి.</li>
+<li>BA/BSc సైకాలజీ కళాశాలల్లో CUET-UG లేదా ఇతర ప్రవేశ విధానం ఉందో పరిశీలించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>ఇంటర్, డిగ్రీ తర్వాత</div><ul>
+<li>మంచి డిగ్రీ కోర్సు పూర్తి చేసి కౌన్సెలింగ్, పాఠశాల, పరిశోధన, సంస్థాగత విభాగాల్లో ఇంటర్న్‌షిప్ చేయండి.</li>
+<li>MA/MSc ప్రత్యేక విభాగాన్ని ఎంచుకుని అవసరమైతే CUET-PG లేదా విశ్వవిద్యాలయ పరీక్షకు సిద్ధం కండి.</li>
+<li>Clinical Psychologist కావాలంటే RCI ఆమోదం పొందిన కోర్సు, సంస్థను పరిశీలించి CRR నమోదు మార్గాన్ని అనుసరించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదట చేసి చూడండి</span><span>ఒక చిన్న సైకాలజీ పరిశోధన చదవండి. ఏ ప్రశ్న అడిగారు? ఎలా పరీక్షించారు? ఏమి కనుగొన్నారు? అని మీ మాటల్లో చెప్పండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే. సైకాలజీ ప్రవేశం, RCI గుర్తింపు, వృత్తి నమోదు, ఉద్యోగాలు, జీతాలు మారవచ్చు. చేరేముందు విశ్వవిద్యాలయం, నియామక సంస్థ, RCI అధికారిక వివరాలు పరిశీలించండి.</p>
+</div><script>document.addEventListener("DOMContentLoaded",function(){const qs=[...document.querySelectorAll("#quiz .q")],v=document.getElementById("verdict"),pip=document.getElementById("pip1");if(!qs.length||!v)return;document.getElementById("quiz").addEventListener("click",function(e){const b=e.target.closest(".toggle button");if(!b)return;const wrap=b.closest(".toggle");wrap.querySelectorAll("button").forEach(x=>{x.setAttribute("aria-pressed","false");x.removeAttribute("data-picked")});b.setAttribute("aria-pressed","true");b.setAttribute("data-picked","1");const picked=qs.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);if(picked.length<qs.length){v.className="verdict";v.innerHTML="<strong>ఆరు ప్రశ్నలకు సమాధానమివ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";return}const yes=picked.filter(x=>x.dataset.v==="y").length;const good=yes>=5,mixed=yes>=3;v.className="verdict "+(good?"good":mixed?"mixed":"bad");v.innerHTML=good?"<strong>మీకు ఆసక్తి ఉన్నట్లు కనిపిస్తోంది</strong>ఈ కెరీర్‌లో రోజూ చేసే పనిని దగ్గరగా చూసి, చదువు మార్గం తెలుసుకోండి.":mixed?"<strong>మరింత పరిశీలించండి</strong>కొన్ని అంశాలు సరిపోతున్నాయి. నిర్ణయానికి ముందు ఈ వృత్తిలో పని చేసే వారితో మాట్లాడండి.":"<strong>మరోసారి ఆలోచించండి</strong>ఈ వృత్తిలో కొన్ని ముఖ్యమైన పనులు మీకు నచ్చకపోవచ్చు. ఇతర కెరీర్లతో పోల్చండి.";if(pip)pip.className="pip "+(good?"done":mixed?"warn":"stop")})});</script></body></html>

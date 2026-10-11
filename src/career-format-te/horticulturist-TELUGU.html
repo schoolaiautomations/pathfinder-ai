@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్లు — ఉద్యాన పంటల నిపుణుడు (Horticulturist)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}
+/* Telugu readability */ body,.row,.q,.stage,.flag,.verdict{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;} .row .k,.stage-head,h3,.mast h2,.pip b,.flag .mark,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",system-ui,sans-serif!important;line-height:1.35!important;}
+</style><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>ఉద్యాన పంటల నిపుణుడు (Horticulturist)</h2><p class="standfirst">పండ్లు, కూరగాయలు, పూలు, సుగంధ ద్రవ్యాలు, నర్సరీలు, తోటల నిర్వహణ, పాలీహౌస్ సాగులో పనిచేసే నిపుణులు. మొక్కల ఆరోగ్యం, నీరు, దిగుబడి, కోత తర్వాత నిల్వ, రైతు లాభాలను మెరుగుపరుస్తారు. ప్రభుత్వ, పరిశోధన, ప్రైవేటు, వ్యాపార మార్గాలు ఉన్నాయి.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · ఉద్యాన పంటల నిపుణుడు (Horticulturist) · పేరు: <span class="fill"></span> · తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>ఈ పని నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>పని అవకాశాలు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>జీతం, ఖర్చు</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>నిజంగా ఉద్యాన పంటల పని ఇష్టమా?</h3><p class="lede">మీ నిజమైన ఆసక్తి, రోజూ చేయాల్సిన పని గురించి ఆలోచించి ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>మొక్కలు కొన్ని ఎందుకు బాగా పెరుగుతాయి, మరికొన్ని ఎందుకు పెరగవు అని తెలుసుకోవాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పొలాలు, తోటలు, నర్సరీలు లేదా పాలీహౌస్‌లలో బయట పనిచేయడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>జీవశాస్త్రం, మొక్కల తెగుళ్లు, నేల, నీటి నిర్వహణ, పోషకాలపై ఆసక్తి ఉందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఫలితం రావడానికి వారాలు, నెలలు పట్టినా పంటను ఓపికగా గమనించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పురుగులు, పూత రాకపోవడం, తక్కువ దిగుబడి, కోత తర్వాత నష్టం వంటి సమస్యలు పరిష్కరించాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పంట ఎంపిక, కూలీల ఖర్చు, నాణ్యత, మార్కెట్ డిమాండ్ వంటి వ్యాపార నిర్ణయాలకూ సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>విషయాలు, చదువు మార్గాలు</h3><p class="lede">10వ తరగతి తర్వాత ఏ గ్రూప్, ఏ కోర్సు, ఏ పరీక్ష అవసరమో జాగ్రత్తగా చదవండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> జీవశాస్త్రం</div><div class="v">మొక్కల నిర్మాణం, పెరుగుదల, కొత్త రకాల అభివృద్ధి, పురుగులు, తెగుళ్లు అర్థం చేసుకోవడానికి Biology ముఖ్యం.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> రసాయనశాస్త్రం</div><div class="v">నేల సారం, మొక్కల పోషకాలు, ఎరువులు, పురుగుమందులు, కోత తర్వాత మార్పులు, ల్యాబ్ పనులకు Chemistry ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> వ్యాపారం, డేటా</div><div class="v">ఆధునిక ఉద్యాన పంటలకు ఖర్చుల లెక్కలు, మార్కెట్ ధరలు, వ్యవసాయ రికార్డులు, దిగుబడి వివరాలు, డిజిటల్ నైపుణ్యాలు కూడా అవసరం.</div></div>
+<div class="row"><div class="k">మార్గం A — 10వ తరగతి తర్వాత</div><div class="v">ఇంటర్‌లో BiPC లేదా Physical Sciencesతో Biological/Natural Sciences చదవండి. ఆంధ్రప్రదేశ్‌లో B.Sc. (Hons.) Horticultureకి ఇది నేరుగా ఉపయోగపడే మార్గం.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్ డిగ్రీ ప్రవేశం</div><div class="v">Dr. Y.S.R. Horticultural University, సంబంధిత కాలేజీల్లో రాష్ట్ర కోటా B.Sc. (Hons.) Horticulture ప్రవేశానికి AP EAPCET ప్రధాన మార్గం. ప్రస్తుతం ఇంటర్‌లో Physical Sciencesతో Biological/Natural Sciences ఉండాలి.</div></div>
+<div class="row"><div class="k">డిగ్రీ</div><div class="v">B.Sc. (Hons.) Horticulture — నాలుగేళ్లు. తరగతి పాఠాలతో పాటు తోటల్లో పని, ఫీల్డ్ విజిట్లు, చేతితో చేసే శిక్షణ ఉంటుంది. ఆంధ్రప్రదేశ్‌లో Dr.YSRHUకు చెందిన కాలేజీల్లో అందుబాటులో ఉంది.</div></div>
+<div class="row"><div class="k">జాతీయ ICAR మార్గం</div><div class="v">CUET (ICAR-UG) ద్వారా ICAR కోటాలో B.Sc. (Hons.) Horticulture వంటి వ్యవసాయ అనుబంధ కోర్సుల ప్రవేశం. 2026లో పాల్గొనే వ్యవసాయ విశ్వవిద్యాలయాల్లో 20% సీట్లకు CUET పద్ధతి అని మూల నివేదిక చెబుతోంది; కాలేజీ అర్హత చూడాలి.</div></div>
+<div class="row"><div class="k">మార్గం B — 10వ తరగతి తర్వాత డిప్లొమా</div><div class="v">10వ తరగతి → Dr.YSRHU లేదా అనుబంధ పాలిటెక్నిక్‌లో రెండేళ్ల Diploma in Horticulture. ఇది ప్రాక్టికల్ మార్గం. 2026–27 నియమాల ప్రకారం ఇప్పటికే ఇంటర్ పాసైనవారు లేదా ఉన్నత చదువులు చదువుతున్నవారు ఈ డిప్లొమాకు అర్హులు కారు.</div></div>
+<div class="row"><div class="k">HORTICET</div><div class="v">Diploma in Horticulture → HORTICET → B.Sc. (Hons.) Horticulture. ప్రస్తుతం అర్హ డిప్లొమా విద్యార్థులకు B.Sc. సీట్లలో 15% కేటాయింపు ఉంది. ఎంపికైతే నాలుగేళ్ల డిగ్రీ మొదటి సంవత్సరంలోనే చేరాలి; రెండో ఏడాదికి నేరుగా ప్రవేశం కాదు.</div></div>
+<div class="row"><div class="k">ఉన్నత చదువు</div><div class="v">M.Sc. Horticultureలో పండ్ల శాస్త్రం, కూరగాయలు, పూలు, Landscape, తోట పంటలు, సుగంధ ద్రవ్యాలు, కోత తర్వాత సాంకేతికత వంటి ప్రత్యేక రంగాలు ఉన్నాయి. పరిశోధన, బోధనకు PhD చేయవచ్చు.</div></div>
+<div class="row"><div class="k">పూర్తి అర్హత మార్గం</div><div class="v">AP మార్గం: 10వ తరగతి → BiPC → AP EAPCET → నాలుగేళ్ల B.Sc. (Hons.) Horticulture → ఉద్యాన నిపుణుడు, Horticulture Officer లేదా ప్రైవేటు ఉద్యోగం. డిప్లొమా మార్గం: 10వ తరగతి → రెండేళ్ల డిప్లొమా → HORTICET → B.Sc. డిగ్రీ.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>Diploma in Horticulture, B.Sc. (Hons.) Horticulture ఒకటే కాదు. డిప్లొమాతో ఫీల్డ్ ఉద్యోగాలు రావచ్చు; డిగ్రీ అవసరమైన Officer, Research పోస్టులకు డిప్లొమా ఒక్కటే సరిపోదు.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఏ రకమైన ఉద్యాన నిపుణుడు కావచ్చు?</h3><p class="lede">ఈ వృత్తిలో పనులు, అర్హత, పోటీ, ప్రత్యామ్నాయ అవకాశాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k">పండ్ల తోట నిపుణుడు</div><div class="v">మామిడి, అరటి, నిమ్మజాతి, జామ, బొప్పాయి, ద్రాక్ష తదితర పండ్ల రకాలు, నాటడం, కొమ్మల కత్తిరింపు, నీరు, పోషకాలు, పురుగుల నియంత్రణ, దిగుబడిపై పని.<div class="chips"><span class="chip">Fruit Crops</span><span class="chip">Orchards</span><span class="chip">Production</span></div></div></div>
+<div class="row"><div class="k">కూరగాయల ఉద్యాన నిపుణుడు</div><div class="v">టమాటా, మిర్చి, వంకాయ, బెండ, సొరకాయల వంటి కూరగాయలు; నర్సరీ, షేడ్ నెట్, పాలీహౌస్ పద్ధతులు చూసుకోవడం.</div></div>
+<div class="row"><div class="k">పూల సాగు నిపుణుడు</div><div class="v">కట్ ఫ్లవర్స్, పూజ పూలు, అలంకార మొక్కలు, తోటలు, కార్యక్రమాలు, వ్యాపార మార్కెట్ల కోసం పూలు పెంచడం.</div></div>
+<div class="row"><div class="k">నర్సరీ మేనేజర్</div><div class="v">విత్తన మొలకలు, అంటు మొక్కలు, పండ్ల, అలంకార మొక్కల ఉత్పత్తి; మట్టిమిశ్రమం, నీరు, నిల్వ, మొక్కల ఆరోగ్యం, వినియోగదారుల సరఫరా చూసుకోవడం.</div></div>
+<div class="row"><div class="k">ల్యాండ్‌స్కేప్ ఉద్యాన నిపుణుడు</div><div class="v">పార్కులు, పాఠశాల ప్రాంగణాలు, రిసార్టులు, ఇళ్ల సముదాయాలు, వాణిజ్య తోటల్లో సరైన మొక్కలు ఎంపిక చేసి సంరక్షించడం; డిజైన్, నిర్వహణలో పని.</div></div>
+<div class="row"><div class="k">నియంత్రిత సాగు నిపుణుడు</div><div class="v">Polyhouse, Shade Net, Fertigation (నీటితో పోషకాలు), Drip Irrigation వంటి పద్ధతులతో విలువైన కూరగాయలు, పూలు, నర్సరీ మొక్కలు పెంచడం.</div></div>
+<div class="row"><div class="k">తోట, సుగంధ ద్రవ్య పంటలు</div><div class="v">కొబ్బరి, జీడిమామిడి, కోకో, మిరియాలు, పసుపు, ఔషధ మొక్కల వంటి పంటలపై ప్రాంతాన్ని బట్టి పని.</div></div>
+<div class="row"><div class="k">కోత తర్వాత నిపుణుడు</div><div class="v">పండ్లు, కూరగాయలు పాడైపోకుండా గ్రేడింగ్, ప్యాకింగ్, నిల్వ, చల్లని రవాణా (Cold Chain), పండించడం, ప్రాసెసింగ్, నాణ్యత చూసుకోవడం.</div></div>
+<div class="row"><div class="k">Horticulture Officer</div><div class="v">ప్రభుత్వ ఉద్యాన శాఖలో రైతు పథకాలు, పంట అభివృద్ధి, సాంకేతిక సహాయం, ఫీల్డ్ పర్యవేక్షణ, నివేదికలు వంటి బాధ్యతలు.</div></div>
+<div class="row"><div class="k">పరిశోధన శాస్త్రవేత్త</div><div class="v">M.Sc./PhD వంటి ఉన్నత చదువులతో మెరుగైన పంట రకాలు, సాగు విధానాలు, పురుగుల నియంత్రణ, కోత తర్వాత సాంకేతికతపై పరిశోధన చేయవచ్చు.</div></div>
+<div class="row"><div class="k">విత్తనాలు, నాటే మొక్కల పరిశ్రమ</div><div class="v">విత్తన కంపెనీలు, నర్సరీలు, Tissue Culture సంస్థల్లో మొక్కల ఉత్పత్తి, నాణ్యత, సరఫరా, సాంకేతిక సేవల్లో పని.</div></div>
+<div class="row"><div class="k">సాంకేతిక ఉద్యాన సాగు</div><div class="v">సెన్సర్లు, డ్రోన్లు, వాతావరణ డేటా, Fertigation, GIS, AI ఆధారిత పంట పరిశీలనతో వనరులు ఆదా చేసి దిగుబడి పెంచే పని.</div></div>
+<div class="row"><div class="k">ఉద్యాన వ్యాపారవేత్త</div><div class="v">సొంత నర్సరీ, పండ్ల/కూరగాయల పొలం, పూల సాగు, ల్యాండ్‌స్కేపింగ్, పాలీహౌస్, మొక్కల సరఫరా వంటి వ్యాపారాలు ప్రారంభించవచ్చు. పెట్టుబడి, మార్కెట్ ప్రమాదాలు అర్థం చేసుకోవాలి.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Horticulturist, Agriculturist తేడా</div><div class="v">Horticulture ప్రధానంగా పండ్లు, కూరగాయలు, పూలు, సుగంధ ద్రవ్యాలు, అలంకార మొక్కలు, వాటి నిల్వపై ఉంటుంది. Agriculture అనేది ధాన్యాలు, పప్పులు, విస్తృత వ్యవసాయ వ్యవస్థలను కూడా కవర్ చేస్తుంది.</div></div>
+<div class="row"><div class="k">Horticulturist, Gardener తేడా</div><div class="v">Gardener సాధారణంగా తోట సంరక్షణ, నాటడం, కత్తిరింపు వంటి ప్రాక్టికల్ పని చేస్తారు. Horticulturist పంట శాస్త్రం, ప్రణాళిక, సమస్యల విశ్లేషణ, ఉత్పత్తి నిర్వహణలో ప్రత్యేక విద్య కలిగి ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్‌కు సంబంధించిన అవకాశాలు</div><div class="v">ఆంధ్రప్రదేశ్‌లో మామిడి, అరటి, మిర్చి, నిమ్మజాతి, కూరగాయలు, కొబ్బరి, పూలు వంటి వాణిజ్య పంటల సాగు ఉంది. వీటిలో ఉత్పత్తి, మార్కెటింగ్, నర్సరీ ఉద్యోగాలు, వ్యాపారం చేయవచ్చు.</div></div>
+<div class="row"><div class="k">ఎక్కడ పని చేయవచ్చు?</div><div class="v">ఉద్యాన శాఖ, ఉద్యాన విశ్వవిద్యాలయాలు, పరిశోధన కేంద్రాలు, నర్సరీలు, విత్తన కంపెనీలు, పాలీహౌస్‌లు, వ్యవసాయ సంస్థలు, ల్యాండ్‌స్కేపింగ్, సొంత పొలాలు.</div></div>
+<div class="row"><div class="k">యజమానులు చూసే నైపుణ్యాలు</div><div class="v">మొక్కల గుర్తింపు, పంట ఉత్పత్తి, పురుగులు/తెగుళ్లు, నీటి నిర్వహణ, నర్సరీ పనులు, ఫీల్డ్ రికార్డులు.<div class="chips"><span class="chip">Plant ID</span><span class="chip">Crop Production</span><span class="chip">Pest / Disease</span><span class="chip">Irrigation</span><span class="chip">Nursery Skills</span><span class="chip">Field Records</span></div></div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ మార్గం Plan B</div><div class="v">Agriculture Officer, నర్సరీ వ్యాపారం, Landscaping, వ్యవసాయ ఉత్పత్తుల విక్రయాలు, Food Processing, పంట సలహా సేవలు వంటి మార్గాలు కూడా ఉన్నాయి.<div class="chips"><span class="chip">Agriculture Officer</span><span class="chip">Nursery Business</span><span class="chip">Landscaping</span><span class="chip">Agri Sales</span><span class="chip">Food Processing</span><span class="chip">Research</span></div></div></div>
+<div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>ఉద్యాన శాస్త్రంలో పుస్తక పరిజ్ఞానం మాత్రమే సరిపోదు. మొక్కలను గమనించడం, పంట సమస్యలు గుర్తించడం, పొలంలో పరిష్కరించడం నేర్చుకోవాలి.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">మూల నివేదికలోని వేతన వివరాలు సూచనలు మాత్రమే; సంస్థ, స్థాయి, కాలాన్ని బట్టి మారవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">డిప్లొమా / ఫీల్డ్ ట్రైనీ</div><div class="v"><span class="money">₹12,000 – ₹20,000/month</span><br/>నెలకు ₹12,000–₹20,000. నర్సరీ, పంట ఫీల్డ్ సూపర్‌విజన్, ఇతర ప్రాక్టికల్ ప్రారంభ ఉద్యోగాల్లో ఈ స్థాయి ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">డిగ్రీ పూర్తిచేసిన ఉద్యాన నిపుణుడు</div><div class="v"><span class="money">₹15,000 – ₹30,000/month</span><br/>నెలకు ₹15,000–₹30,000. ప్రైవేటు నర్సరీ, తోటలు, ల్యాండ్‌స్కేపింగ్, అగ్రిబిజినెస్ సంస్థల్లో ప్రారంభ ఉద్యోగాల విస్తృత అంచనా.</div></div>
+<div class="row"><div class="k">భారత వేతన సగటు సూచిక</div><div class="v"><span class="money">≈ ₹18,980/month</span><br/>సుమారు ₹18,980 నెలకు. Indeed 2026 జనవరి అంచనా కేవలం 8 నమోదైన జీతాల ఆధారంగా ఉంది; ఇది హామీ ఇచ్చే వేతనం కాదు.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న నిపుణుడు</div><div class="v"><span class="money">₹25,000 – ₹50,000+/month</span><br/>నెలకు ₹25,000–₹50,000 లేదా ఎక్కువ. పాలీహౌస్, నర్సరీ, ల్యాండ్‌స్కేపింగ్, పంట ఉత్పత్తి నిర్వహణ, సాంకేతిక సలహాలో అనుభవంతో అవకాశాలు మెరుగవుతాయి.</div></div>
+<div class="row"><div class="k">AP Horticulture Officer</div><div class="v"><span class="money">₹54,060 – ₹1,40,540 pay scale</span><br/>₹54,060–₹1,40,540 వేతన శ్రేణి. APPSC Notification No.18/2025లో ఆంధ్రప్రదేశ్ ఉద్యాన శాఖ Horticulture Officer పోస్టుకు ఈ పే స్కేల్ అని మూల నివేదిక పేర్కొంది.</div></div>
+<div class="row"><div class="k">సొంత నర్సరీ / ఫారం వ్యాపారం</div><div class="v"><span class="money">Highly variable</span><br/>ఆదాయం స్థిరంగా ఉండదు. మంచి వ్యాపారం ఉద్యోగం కంటే ఎక్కువ సంపాదించవచ్చు; కానీ భూమి, కూలీలు, నీరు, మొక్కల ఖర్చు, మార్కెట్ నష్టాలు కూడా ఉంటాయి.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">Dr.YSRHU తన B.Sc. Horticulture / Forestry ఫీజులను ప్రతి విద్యా సంవత్సరానికి విడిగా ప్రకటిస్తుంది. దరఖాస్తు చేసే సంవత్సరపు తాజా ఫీజులు, హాస్టల్, ఇతర ఖర్చులు తప్పక చూసుకోండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>ఉద్యాన డిగ్రీ చేస్తే ప్రభుత్వ Horticulture Officer ఉద్యోగం ఖాయం కాదు. ఖాళీలు తక్కువగా లేదా ఎప్పుడో ఒకసారి రావచ్చు; ప్రాక్టికల్ నైపుణ్యాలు, ప్రైవేటు అవకాశాలు పెంచుకోండి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు సర్కిళ్ల ఫలితం ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">నాలుగూ సరిపోతే</span> — మంచి చదువు, ప్రణాళికతో మీ లక్ష్యానికి ముందడుగు వేయండి.</p>
+<p><span class="hi">ఒక్కటి సరిపోకపోయినా</span> — నిర్ణయం తీసుకునే ముందు ఆ అంశాన్ని జాగ్రత్తగా ఆలోచించండి.</p>
+<p><span class="hi">రెండు లేదా ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ప్రత్యామ్నాయాలు చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">లక్ష్యం కోసం ఎంతకాలం ప్రయత్నించాలో, అవసరమైతే Plan Bకి ఎప్పుడు మారాలో ముందే ప్రణాళిక పెట్టుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచి ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే మొదలుపెట్టగల విషయాలు ఇవి. ఖరీదైన కోచింగ్ అవసరం లేదు.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul>
+<li>మీరు స్వయంగా 3–5 మొక్కలు పెంచి నీరు, పెరుగుదల, పురుగులు, పూత/కాయలను నమోదు చేయండి.</li>
+<li>మొక్కలు గుర్తించడం, కొత్త మొక్కలు తయారు చేయడం, కంపోస్ట్, నేల సంరక్షణ నేర్చుకోండి.</li>
+<li>నర్సరీ, మామిడి తోట, కూరగాయల పొలం లేదా పాలీహౌస్ సందర్శించి ఇంటి తోటతో తేడా గమనించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>డిగ్రీ మార్గానికి BiPC తీసుకొని AP EAPCETకు సిద్ధమవ్వండి.</li>
+<li>అర్హత ఉండి ఆసక్తి ఉంటే Dr.YSRHU రెండేళ్ల ఉద్యాన డిప్లొమాను పోల్చి చూడండి.</li>
+<li>డిప్లొమా సులభం అనిపించిందని మాత్రమే ఎంచుకోవద్దు; అధికార, పరిశోధన ఉద్యోగాలకు B.Sc. కావచ్చు.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కాలేజీ / శిక్షణ తర్వాత</div><ul>
+<li>నర్సరీ, పండ్ల తోటలు, పాలీహౌస్, పంట సమస్యలు గుర్తించడంలో నిజమైన అనుభవం పొందండి.</li>
+<li>Drip Irrigation, Fertigation, వ్యవసాయ ఖర్చుల లెక్కలు, డిజిటల్ రికార్డులు నేర్చుకోండి.</li>
+<li>ప్రభుత్వ ఉద్యాన శాఖ, పరిశోధన కేంద్రాలు, విత్తన/నర్సరీ సంస్థలు, వ్యవసాయ కంపెనీలలో ఇంటర్న్‌షిప్‌లను పరిశీలించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>ఒకే మొక్కను రెండు పద్ధతుల్లో పెంచి తేడాలు నమోదు చేయండి. ఉదాహరణకు మట్టిమిశ్రమం లేదా నీటి షెడ్యూల్ మార్చి పెరుగుదల పోల్చండి. ఇదే చిన్న ఉద్యాన పరిశోధన.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే; అధికారిక నియామక ప్రకటన కాదు. అర్హతలు, వయసు, సీట్లు, పరీక్ష విధానం, జీతాలు మారవచ్చు. దరఖాస్తు సమయంలో అధికారిక తాజా ప్రకటన తప్పక చదవండి.</p>
+
+</div><script>document.addEventListener('DOMContentLoaded',function(){const q=document.querySelectorAll('#quiz .q'), v=document.getElementById('verdict'), p=document.getElementById('pip1');if(!q.length||!v)return;function show(){let selected=[...q].map(x=>x.querySelector('button[data-picked="1"]'));if(selected.some(x=>!x)){v.className='verdict';v.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(p)p.className='pip';return;}let yes=selected.filter(x=>x.dataset.v==='y').length;if(yes>=5){v.className='verdict good';v.innerHTML='<strong>ఈ వృత్తి బాగా సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఆసక్తి కనిపిస్తోంది. చదువు మార్గం, రోజువారీ పని నిజంగా ఎలా ఉంటాయో కూడా తెలుసుకోండి.';if(p)p.className='pip done';}else if(yes>=3){v.className='verdict mixed';v.innerHTML='<strong>మరింత పరిశీలించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు నచ్చుతున్నాయి. నిర్ణయం ముందు పని వాతావరణం, చదువు, నైపుణ్యాలు తెలుసుకోండి.';if(p)p.className='pip warn';}else{v.className='verdict bad';v.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ పని మీకు అంతగా సరిపోకపోవచ్చు. ప్రత్యామ్నాయ కెరీర్లను కూడా పోల్చి చూడండి.';if(p)p.className='pip stop';}}document.querySelector('#quiz').addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;const group=b.closest('.toggle');group.querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked')});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');show()});show()});</script></body></html>

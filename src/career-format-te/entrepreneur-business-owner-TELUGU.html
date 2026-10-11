@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — వ్యాపారవేత్త / బిజినెస్ ఓనర్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ మీకు సరిపోతుందా? · భారతదేశం</div><h2>వ్యాపారవేత్త / బిజినెస్ ఓనర్</h2><p class="standfirst">కస్టమర్లు డబ్బు ఇచ్చి కొనాలనుకునే వస్తువు లేదా సేవను తయారు చేసి వ్యాపారం నడపడం. Shop, Service, Factory, Farm Business, Restaurant, Online Brand, Technology Product — ఏదైనా కావచ్చు. ఇందులో నెలనెలా స్థిరమైన జీతం, ప్రమోషన్ హామీ లేదు. స్వయంగా నిర్ణయాలు తీసుకోవడం, సమస్యలు పరిష్కరించడం, నష్టాలను ఎదుర్కోవడం అవసరం.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · వ్యాపారవేత్త / బిజినెస్ ఓనర్ · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>బాధ్యత తీసుకుంటారా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>నైపుణ్యాలు</b><em>ఎలా మొదలుపెడతారు?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>వ్యాపార రకాలు</b><em>ఏ వ్యాపారం?</em></a>
+<a class="pip warn" href="#c4"><div class="ring">4</div><b>డబ్బు</b><em>లాభం, నష్టం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>మీకు నిజంగా వ్యాపారం చేయాలనుందా?</h3><p class="lede">మీరు Boss అయితే అమ్మకాలు తగ్గినా, కస్టమర్లు ఫిర్యాదు చేసినా, సిబ్బందికి జీతం ఇవ్వాల్సినా బాధ్యత మీదే.</p>
+<div class="card"><div id="quiz">
+<div class="q" data-i="0"><p>ఒక సమస్య కనిపిస్తే దాన్ని ఇంకా బాగా ఎలా పరిష్కరించాలా అని ఆలోచిస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="1"><p>పరిచయం లేని వాళ్లతో మాట్లాడి వారి అవసరం తెలుసుకొని, మీరు చేసిన వస్తువు/సేవకు డబ్బు అడగగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="2"><p>Teacher, Manager ఎవరూ చెప్పకపోయినా మీరే ఒక నిర్ణయం తీసుకోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="3"><p>వస్తువు ఐడియాతో పాటు ఖర్చులు, అమ్మకాలు, లాభాలు, Stock, Cash కూడా చూసుకోడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="4"><p>మొదటి ఐడియా పనిచేయకపోతే కస్టమర్లను తప్పుపట్టకుండా వారి మాట విని మార్చగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q" data-i="5"><p>మొదటి కొన్ని సంవత్సరాలు ఉద్యోగం కంటే ఎక్కువ కష్టపడి, తక్కువ డబ్బు వచ్చినా వ్యాపారం చేయాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి?</h3><p class="lede">వ్యాపారవేత్త అవ్వడానికి తప్పనిసరి Degree లేదా Entrance Exam లేదు. మీ చదువు నిజమైన Skill, Industry Knowledge, Plan B ఇవ్వాలి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> మాట్లాడటం, అమ్మడం</div><div class="v">ఎవరైనా కొంటేనే వ్యాపారం నడుస్తుంది. కస్టమర్లు చెప్పేది వినడం, మనం ఇచ్చే వస్తువు/సేవ ఎందుకు ఉపయోగపడుతుందో చెప్పడం, ధరపై చర్చించడం, మళ్లీ సంప్రదించడం నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> Maths &amp; Money</div><div class="v">శాతాలు, అమ్మకం ధర, ఖర్చు, మార్జిన్, వడ్డీ, ప్రాథమిక పన్నులు, స్టాక్, నగదు రాకపోకలు (Cash Flow) తెలుసుకోవాలి. అమ్మకాలు ఎక్కువ జరిగినా వ్యాపారానికి నష్టం రావచ్చు.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> ఒక ఉపయోగపడే నైపుణ్యం</div><div class="v">Coding, Design, Food Production, Agriculture, Engineering, Accounts, Marketing, Manufacturing, Photography వంటి ఏ ఉపయోగకరమైన నైపుణ్యమైనా వ్యాపారానికి పునాది కావచ్చు.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>ఏ గుర్తింపు ఉన్న ఇంటర్ గ్రూప్ నుంచి అయినా వ్యాపారం చేయవచ్చు.</b><br/><b>CEC/Commerce:</b> Accounts, Economics, Business విషయాలకు.<br/><b>MPC:</b> Engineering, Technology, Manufacturing, Technical Startupలకు.<br/><b>BiPC:</b> Agriculture, Food, Healthcare, Life Sciencesకి.<br/><b>Humanities:</b> Media, Design, Law, Communication, Social Enterprisesకి ఉపయోగం. వ్యాపారం కోసం Commerce తప్పనిసరి కాదు.</div></div>
+<div class="row"><div class="k">12వ తరగతి తర్వాత</div><div class="v"><b>Entrepreneur అవ్వడానికి తప్పనిసరి Degree లేదు.</b> B.Com, BBA, Economics, MBA వ్యాపారం గురించి నేర్పవచ్చు. కానీ Engineering, Agriculture, Design, Pharmacy, Computer Science, Hotel Management, Law వంటి చదువులు కూడా ఆయా రంగాల్లో మంచి వ్యాపారం ప్రారంభించడానికి ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k">ప్రవేశ పరీక్ష</div><div class="v"><b>వ్యాపారం చేయడానికి ప్రత్యేక Entrance Exam లేదు.</b> మీరు చేరాలనుకున్న కాలేజీ/డిగ్రీ కోసం మాత్రమే AP EAPCET/JEE, CUET లేదా ఇతర పరీక్షలు రాయాల్సి రావచ్చు.</div></div>
+<div class="row"><div class="k">నిజమైన వ్యాపార దారి</div><div class="v"><b>ఒక సమస్య గుర్తించడం → ఆ సమస్య ఉన్నవారితో మాట్లాడడం → చిన్న పరిష్కారం తయారు చేయడం → డబ్బు ఇచ్చి కొంటారా పరీక్షించడం → మెరుగుపరచడం → మళ్లీ మళ్లీ అమ్మకాలు చేయడం → ఖర్చు, లాభం తెలుసుకోవడం → అవసరమైనప్పుడు రిజిస్ట్రేషన్ → జాగ్రత్తగా విస్తరించడం.</b></div></div>
+<div class="row"><div class="k">ఏ పరీక్ష పాస్ కావాలి?</div><div class="v"><b>NEET, UPSC, CA వంటి పరీక్షలు తప్పనిసరి కావు.</b> నిజమైన పరీక్ష: మీరు సమస్య పరిష్కరిస్తున్నారా? డబ్బు ఇచ్చే కస్టమర్ దొరికారా? ఇచ్చిన మాట ప్రకారం వస్తువు/సేవ అందిస్తున్నారా? ఖర్చు కంటే ఎక్కువ ఆదాయం వస్తుందా?</div></div>
+<div class="flag green"><span class="mark">మంచి పద్ధతి</span><span>మొదట Customerను సంపాదించండి; Company Registrationను కాదు. Logo, Instagram Page, Visiting Card ఉంటేనే వ్యాపారం ఉన్నట్టు కాదు. డబ్బు ఇచ్చే కస్టమర్ ఉంటే అది మంచి ఆధారం.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఏ రకమైన వ్యాపారం చేయవచ్చు?</h3><p class="lede">వ్యాపారం అంటే Technology Startup మాత్రమే కాదు. మన దేశంలో Shops, Manufacturing, Services, Agriculture వంటి ఎన్నో చిన్న వ్యాపారాలున్నాయి.</p>
+<div class="card">
+<div class="row"><div class="k">చిన్న / స్థానిక వ్యాపారం</div><div class="v"><b>మీ ఊరు, చుట్టుపక్కల ప్రజల అవసరాలను తీర్చడం.</b> Shop, Repair Centre, Salon, Tuition Centre, Printing, Building Materials, Pharmacy, Catering వంటి వ్యాపారాలు.<br/><b>విజయం దేనిపై?</b> ప్రదేశం, మళ్లీ వచ్చే కస్టమర్లు, ధర, Stock, మంచి పేరు.<div class="chips"><span class="chip">Retail</span><span class="chip">Local service</span><span class="chip">Repeat customers</span></div></div></div>
+<div class="row"><div class="k">సేవల వ్యాపారం</div><div class="v"><b>వస్తువు కాకుండా మీ నైపుణ్యాన్ని అమ్మడం.</b> Design Studio, Digital Marketing, Accounts, Software, Photography, Consulting, Tuition, Repairs.<br/><b>లాభం:</b> చాలా సేవల వ్యాపారాలను తక్కువ పెట్టుబడితో మొదలుపెట్టవచ్చు.<div class="chips"><span class="chip">Agency</span><span class="chip">Consulting</span><span class="chip">Freelance → Team</span></div></div></div>
+<div class="row"><div class="k">తయారీ వ్యాపారం</div><div class="v"><b>వస్తువులను తయారు చేసి అమ్మడం.</b> Food Products, Furniture, Packaging, Engineering Parts, Chemicals, Textiles, Electronics వంటివి.<br/><b>అవసరం:</b> Machines, Quality Control, Suppliers, Daily Running Capital, Safety, Licences, Production Discipline.</div></div>
+<div class="row"><div class="k">Food / Restaurant</div><div class="v">Restaurant, Bakery, Cloud Kitchen, Snacks, Packaged Food, Catering. కేవలం రుచి ఉంటే సరిపోదు. Food Safety, ఒకే నాణ్యత, వృథా, Workers, Shop Location, Delivery Charges, లాభం ఎంత మిగులుతుందో చూడాలి.</div></div>
+<div class="row"><div class="k">వ్యవసాయ వ్యాపారం</div><div class="v">మొక్కల నర్సరీ, విత్తనాలు, వ్యవసాయ సామగ్రి, Food Processing, Cold Storage, Dairy, Aquaculture, Farm Machinery, Farm Services, నేరుగా కస్టమర్‌కు అమ్మకాలు.<br/><b>ఆంధ్రప్రదేశ్‌లో:</b> Agriculture, Horticulture, Aquaculture, Food Processingలో స్థానిక అవకాశాలు ఉన్నాయి.</div></div>
+<div class="row"><div class="k">Online / D2C Brand</div><div class="v"><b>ఇంటర్నెట్ ద్వారా నేరుగా వస్తువులు అమ్మడం.</b> Products తెప్పించడం/తయారు చేయడం, Brand, Photos, Website, Packaging, Delivery, Returns, Customers సంపాదించడం నేర్చుకోవాలి.<br/><b>జాగ్రత్త:</b> Online Sales బాగా ఉన్నా Ads, Delivery ఖర్చులు ఎక్కువైతే లాభం తక్కువ కావచ్చు.</div></div>
+<div class="row"><div class="k">Technology Startup</div><div class="v"><b>చాలామందికి ఉపయోగపడే, పెద్ద స్థాయికి ఎదగగల Technology Product.</b> Software, AI, Fintech, Healthtech, Edtech, Agritech, SaaS వంటి రంగాలు. ఒకే సమస్యను చాలా మంది కస్టమర్లకు మళ్లీ మళ్లీ పరిష్కరించగల విధానం తయారు చేయడం లక్ష్యం.<div class="chips"><span class="chip">Software</span><span class="chip">AI</span><span class="chip">SaaS</span><span class="chip">Deep Tech</span></div></div></div>
+<div class="row"><div class="k">కుటుంబ వ్యాపారం</div><div class="v"><b>ఇప్పటికే ఇంట్లో ఉన్న వ్యాపారాన్ని మెరుగుపరచడం లేదా పెంచడం.</b> Accounts పద్ధతి మార్చడం, కొత్త Technology, Branding, కొత్త Products, కొత్త Markets తీసుకురావడం కూడా Entrepreneurshipనే.</div></div>
+<div class="row"><div class="k">Franchise</div><div class="v"><b>ఇప్పటికే ఉన్న Brand పేరుతో, దాని పద్ధతిలో వ్యాపారం నడపడం.</b> సాధారణంగా Franchise Fee/Investment అవసరం; Brand Rules పాటించాలి.<br/><b>లాభం:</b> పరిచయమైన పేరు, కొంత పరీక్షించబడిన విధానం.<br/><b>ప్రమాదం:</b> ఎక్కువ పెట్టుబడి పెట్టినా లాభానికి హామీ లేదు. Agreement, ఖర్చు-ఆదాయం బాగా చూడాలి.</div></div>
+<div class="row"><div class="k">సామాజిక సమస్యల వ్యాపారం</div><div class="v"><b>సామాజిక లేదా పర్యావరణ సమస్యకు నిలబడగల వ్యాపార పరిష్కారం.</b> Waste, Education, Rural Jobs, Disability Support, Healthcare, Clean Energy ఉదాహరణలు. ప్రజలకు ఉపయోగం చేసినా సంస్థ నడవడానికి సరైన ఆదాయం/నిధుల విధానం కావాలి.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Business Owner vs Startup Founder</div><div class="v"><b>Business Owner:</b> వేగంగా పెద్దదవ్వకపోయినా లాభం వచ్చే స్థానిక సంస్థ నడపవచ్చు.<br/><b>Startup Founder:</b> కొత్త ఆలోచనతో చాలా వేగంగా పెరిగే విధానం తయారు చేయాలనుకుంటారు.<br/><b>రెండూ వ్యాపారమే.</b> Investors నుంచి డబ్బు తీసుకోలేదని లాభదాయకమైన స్థానిక వ్యాపారం చిన్నది అయిపోదు.</div></div>
+<div class="row"><div class="k">Freelancer vs Entrepreneur</div><div class="v"><b>Freelancer:</b> తన సమయం, నైపుణ్యంతో వ్యక్తిగతంగా సేవలు చేసి డబ్బు సంపాదిస్తారు.<br/><b>Entrepreneur:</b> ఒక వ్యక్తిపైనే ఆధారపడకుండా ఎక్కువ కస్టమర్లకు సేవ అందించేందుకు System, Team, Product నిర్మిస్తారు.</div></div>
+<div class="row"><div class="k">Founder vs Manager</div><div class="v"><b>Founder:</b> అవకాశం గుర్తించి వ్యాపార యజమానిగా ప్రమాదం తీసుకుంటారు.<br/><b>Manager:</b> కంపెనీలో ఉద్యోగులు, పనుల నిర్వహణ చూస్తారు. మంచి వ్యాపారవేత్తకు ఆలోచనతో పాటు Management కూడా నేర్చుకోవాలి.</div></div>
+<div class="row"><div class="k">వ్యాపార నమోదు</div><div class="v">వ్యాపారం నిజంగా ప్రారంభించినప్పుడు Proprietorship, Partnership, LLP, Private Limited Company వంటి ఏ విధానంలో నమోదు చేయాలో నిర్ణయించాలి. వ్యాపారాన్ని బట్టి GST, FSSAI, స్థానిక Trade Permissions, ఇతర Licences అవసరం కావచ్చు. ఇతరుల విధానాన్ని కాపీ చేయకుండా అవసరమైతే CA/CS/న్యాయ నిపుణుడిని అడగండి.</div></div>
+<div class="row"><div class="k">MSME / Udyam</div><div class="v"><b>Udyam</b> భారత ప్రభుత్వ అధికారిక MSME Registration. అధికారిక పోర్టల్ ప్రకారం <b>ఉచితం, పేపర్ అవసరం లేదు.</b> అసలు రిపోర్టులో ఉన్న ప్రస్తుత వర్గీకరణ ప్రకారం Micro Enterprise పెట్టుబడి <b>₹2.5 కోట్ల వరకు</b>, Turnover <b>₹10 కోట్ల వరకు</b>; Small, Mediumలకు వేరు పరిమితులు ఉంటాయి.</div></div>
+<div class="row"><div class="k">DPIIT Startup Recognition</div><div class="v"><b>ప్రతి వ్యాపారానికి DPIIT Startup Recognition అవసరం లేదు.</b> అర్హత ఉన్న Innovative/Scalable Private Limited, Registered Partnership, LLP, Cooperative Society వంటి సంస్థలకు దరఖాస్తు అవకాశం ఉంటుంది. అసలు రిపోర్టులో పేర్కొన్న సాధారణ కేంద్ర నిర్వచనం ప్రకారం <b>10 సంవత్సరాల వరకు</b>, గత ఆర్థిక సంవత్సరంలో Turnover <b>₹200 కోట్లలోపు</b> వంటి నిబంధనలు ఉన్నాయి; DeepTechకు ప్రత్యేక నిబంధనలు. కొన్ని ప్రయోజనాలకు అర్హత ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్ సహాయం</div><div class="v">ఆంధ్రప్రదేశ్‌లో అసలు రిపోర్టు ప్రకారం <b>Innovation &amp; Startup Policy 4.0 (2024–29)</b> ఉంది. <b>AP MSME ONE</b>లో Enterprise Profiles, Udyam/Startup సమాచారం, పథకాల వివరాలు చూడవచ్చు. ఏ పథకానికి అర్హత ఉందో ప్రారంభించే సమయంలో అధికారికంగా పరిశీలించండి.</div></div>
+<div class="row"><div class="k">Plan B</div><div class="v">వ్యాపారాన్ని ప్రయత్నిస్తూనే ఉద్యోగానికి ఉపయోగపడే <b>Sales, Accounting, Coding, Design, Operations, Digital Marketing</b> నేర్చుకోండి. వ్యాపారం అనుకున్నట్టు జరగకపోయినా ఈ Skills ఉపయోగపడతాయి.<div class="chips"><span class="chip">Sales</span><span class="chip">Accounting</span><span class="chip">Coding</span><span class="chip">Design</span><span class="chip">Operations</span><span class="chip">Digital Marketing</span></div></div></div>
+<div class="flag red"><span class="mark">మోసాలపై జాగ్రత్త</span><span>ప్రభుత్వ Udyam Registration కోసం ప్రైవేట్ ఏజెంట్‌కు డబ్బు ఇవ్వాల్సిన అవసరం లేదు; అధికారిక Udyam సేవ ఉచితం. Fake Grants, Guaranteed Loans, చెల్లింపు “Startup Certificates” విషయంలో కూడా జాగ్రత్త.</span></div>
+</div>
+</section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">వ్యాపారవేత్తలకు ఒక Salary Scale అంటూ ఉండదు. ₹0 రావచ్చు, నష్టం రావచ్చు, ఉద్యోగం కంటే తక్కువ ఆదాయం ఉండొచ్చు, కొందరు కాలక్రమంలో పెద్ద కంపెనీ నిర్మించవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">ఆలోచన దశ</div><div class="v"><span class="money">₹0 ఆదాయం రావడం సాధారణమే</span><br/>కస్టమర్లు డబ్బు ఇచ్చే వరకు అది కేవలం Idea లేదా Project. మొదటి ప్రయోగాలకు వీలైనంత తక్కువ డబ్బు ఖర్చు పెట్టండి.</div></div>
+<div class="row"><div class="k">మొదటి కస్టమర్లు</div><div class="v"><span class="money">Revenue ≠ Profit</span><br/>ఒక నెలలో ₹50,000 అమ్మకాలు చేశారంటే ₹50,000 సంపాదించారని కాదు. వస్తువు ఖర్చు, జీతాలు, అద్దె, కరెంట్, డెలివరీ, Ads, వడ్డీ, Returns, Tax తీసేయాలి.</div></div>
+<div class="row"><div class="k">లాభం (Profit)</div><div class="v"><span class="money">Sales − Expenses = Profit</span><br/>భారీ అమ్మకాలున్నా ఎప్పుడూ నష్టపోయే కంపెనీ కంటే తక్కువ అమ్మకాలతో క్రమంగా లాభం, Cash Flow ఉన్న చిన్న వ్యాపారం బలంగా ఉండవచ్చు.</div></div>
+<div class="row"><div class="k">యజమాని ఆదాయం</div><div class="v"><span class="money">₹0 నుంచి చాలా ఎక్కువ వరకు</span><br/>Owners జీతం తీసుకోవచ్చు లేదా లాభం మళ్లీ వ్యాపారంలో పెట్టవచ్చు. కష్టకాలంలో సిబ్బంది, Suppliers, Lendersకు ముందుగా చెల్లించాల్సి రావడంతో యజమానికి చివరగా డబ్బు మిగలవచ్చు.</div></div>
+<div class="row"><div class="k">పెట్టుబడి / Funding</div><div class="v"><b>Investor ఇచ్చే డబ్బు మీ వ్యక్తిగత ఆదాయం కాదు.</b> Startupకు ₹1 కోటి Funding వస్తే అది కంపెనీకి చెందిన డబ్బు. Operations, Growthకు ఖర్చు చేస్తారు. బదులుగా Investors కంపెనీలో Ownership Share తీసుకోవచ్చు.</div></div>
+<div class="row"><div class="k">రుణాలు</div><div class="v"><b>వ్యాపారం కష్టాల్లో ఉన్నా లోన్ తిరిగి చెల్లించాలి.</b> Idea నచ్చిందని పెద్ద అప్పు తీసుకోకండి. ముందుగా తక్కువ ఖర్చుతో కస్టమర్ల అవసరం పరీక్షించండి; Margins, Repayment Plan, తక్కువ అమ్మకాలు జరిగితే ఏమవుతుందో ఆలోచించండి.</div></div>
+<div class="row"><div class="k">మొదలుపెట్టడానికి ఎంత డబ్బు?</div><div class="v">వ్యాపారాన్ని బట్టి పెట్టుబడి మారుతుంది. Tuition, Design Service దాదాపు పెట్టుబడి లేకుండా మొదలుపెట్టవచ్చు. Restaurant, Factory, Franchiseకు లక్షలు లేదా కోట్లు కూడా అవసరం కావచ్చు. మొదట సాధ్యమైనంత చిన్న రూపంలో పరీక్షించండి.</div></div>
+<div class="flag red"><span class="mark">కుటుంబం కోసం నియమం</span><span>ఇంటివాళ్లు కోల్పోలేని డబ్బును వ్యాపారంలో రిస్క్ చేయకండి. చదువు ఫీజులు, అత్యవసర పొదుపు, ఇంటి అవసరాల డబ్బుతో పెద్ద ప్రయోగాలు చేయవద్దు.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీకు వ్యాపారం సరిపోతుందో ఇలా చూడండి</h4>
+<p>సమస్యలు గుర్తించడం, కస్టమర్లతో మాట్లాడడం, బాధ్యత తీసుకోవడం మీకు నచ్చితే వ్యాపారం ప్రయత్నించవచ్చు.</p>
+<p>కేవలం “నేనే Boss” అనుకోవడం సరిపోదు; అమ్మకాలు తక్కువైనా సమస్యలను ఎదుర్కోవాలి.</p>
+<p>నైపుణ్యం, ఉద్యోగానికి పనికొచ్చే చదువు, Plan B కూడా పెంచుకోండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">తొందరగా పెద్ద Loan, పెద్ద Shop కాకుండా ముందుగా ఒక Paid Customerతో పరీక్షించండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">ఇప్పటి నుంచి మీ ప్రణాళిక</div><h3>ఈ రోజు నుంచే ఏం చేయాలి?</h3><p class="lede">8–10 తరగతి విద్యార్థికి Investors, Company Registration, ₹10 లక్షల Idea అవసరం లేదు. ఒక చిన్న నిజమైన వ్యాపార ప్రయోగమే మంచి పాఠం.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే, స్కూల్‌లో ఉన్నప్పుడు</div><ul>
+<li>మీ స్కూల్, ఇల్లు, ఊరి దుకాణాల్లో కనిపించే 20 సమస్యలను రాసుకోండి.</li>
+<li>ఆ సమస్యల్లో ఒకటి ఎదుర్కొనే కనీసం ఐదుగురితో మాట్లాడి వారు ఇప్పుడెలా పరిష్కరిస్తున్నారో తెలుసుకోండి.</li>
+<li>మీ పరిష్కారం ముందుగానే చెప్పకుండా వారి అసలు అవసరాన్ని అర్థం చేసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>Service, Sample Product, Simple Website వంటి అత్యంత చిన్న రూపంలో పరిష్కారం తయారు చేయండి.</li>
+<li>నిజమైన కస్టమర్‌ను డబ్బు చెల్లించి కొనమని అడగండి; Likes, పొగడ్తలు మాత్రమే సరిపోవు.</li>
+<li>అమ్మిన ప్రతి రూపాయి, ఖర్చైన ప్రతి రూపాయి రాసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> కాలేజీ / శిక్షణ సమయంలో</div><ul>
+<li>Quality, Price, Delivery మెరుగుపరచండి. Customers ఎందుకు మళ్లీ వస్తున్నారో, ఎందుకు వెళ్లిపోతున్నారో తెలుసుకోండి.</li>
+<li>వ్యక్తిగత డబ్బు, వ్యాపార లెక్కలను వేరుగా ఉంచండి. Basic Bookkeeping నేర్చుకోండి.</li>
+<li>నిజమైన అమ్మకాలు క్రమంగా మొదలైన తరువాత అవసరమైన Registration, Tax, Legal Rules గురించి నిపుణుడిని సంప్రదించండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదటి పరీక్ష</span><span>Tuition, Poster Design, Local Service, Handmade Product వంటి చిన్న పని చేసి మీరు తయారు చేసిన దానితో మొదటి ₹500 సంపాదించడానికి ప్రయత్నించండి. వచ్చిన డబ్బుతో పాటు ఖర్చులను కూడా రాయండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ గైడ్ మాత్రమే; వ్యాపారం ప్రారంభించే ముందు ప్రస్తుత Registration, GST, FSSAI, Licences, Funding Eligibility అధికారికంగా నిర్ధారించండి. ప్రభుత్వం పథకాలు, MSME/DPIIT నియమాలు మారవచ్చు. వ్యాపారానికి లాభం లేదా రుణం హామీ లేదు.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>వ్యాపారం మీకు బాగా సరిపోవచ్చు</strong>కస్టమర్లు, అనిశ్చితి, వ్యాపార బాధ్యతలు మీకు నచ్చే అవకాశముంది. పెద్ద అప్పుతో కాకుండా ముందుగా చిన్న Paid Customer ప్రయోగంతో మొదలుపెట్టండి.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>ముందుగా పరీక్షించండి</strong>వ్యాపారంలోని కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. చిన్న Business Project చేసి, అమ్మడం, Accounts, కస్టమర్ల సమస్యలు కూడా నచ్చుతాయో చూడండి.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>మరో దారినీ చూడండి</strong>ముందుగా Specialist లేదా Managerగా మంచి ఉద్యోగం చేసి తరువాత అనుభవంతో వ్యాపారం చేయడం కూడా ఒక మంచి దారి.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div></body></html>

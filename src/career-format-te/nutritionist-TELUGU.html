@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ గైడ్ — పోషకాహార నిపుణుడు / డైటీషియన్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap'); body,.row,.q,.stage,.flag,.verdict,.pip{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;} .mast h2,.pip b,.row .k,.stage-head,h3,.rule-box h4{font-family:"Noto Sans Telugu","Gautami",sans-serif!important;line-height:1.4!important;}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ అవగాహన · ఆంధ్రప్రదేశ్</div><h2>పోషకాహార నిపుణుడు / డైటీషియన్</h2><p class="standfirst">మనిషి ఆరోగ్యం, వ్యాధి నివారణ, చికిత్స సమయంలో కోలుకోవడం, క్రీడలు, జీవన దశలకు తగ్గ ఆహారం గురించి శాస్త్రీయ సలహా ఇచ్చే రంగం. కేవలం బరువు తగ్గించే డైట్ చార్టులు కాదు.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్  ·  పోషకాహార నిపుణుడు / డైటీషియన్  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>మీకు నచ్చుతుందా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>ఏ పని చేయాలి?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>జీతం, ఖర్చు</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>పోషకాహార రంగం మీకు నచ్చుతుందా?</h3><p class="lede">ఇక్కడ ఉన్న ఆరు ప్రశ్నలకు మీ నిజమైన అభిప్రాయంతో అవును లేదా కాదు అని చెప్పండి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>Biology ఇష్టమా? మనం తినే ఆహారం శరీరంపై ఎలా ప్రభావం చూపుతుందో తెలుసుకోవాలనుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సోషల్ మీడియా డైట్ ట్రెండ్స్‌ను మాత్రమే నమ్మకుండా కెమిస్ట్రీ, శరీర పనితీరు, మెటబాలిజం, గణాంకాలు నేర్చుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వ్యక్తి ఆహార అలవాట్లు, సంస్కృతి, బడ్జెట్ మీవాటికి భిన్నంగా ఉన్నా విమర్శించకుండా వినగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>త్వరగా మారిపోతారని మాట ఇవ్వకుండా నెలల తరబడి చిన్న చిన్న ఆహార మార్పులకు సహాయం చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఫలితాలు కొలిచి, పరిశోధన చదివి, మంచి కొత్త ఆధారాలు వస్తే మీ సలహా మార్చుకుంటారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>డాక్టర్ అర్హత లేకుండా వ్యాధి నిర్ధారణ, మందులు ఇవ్వకుండా మీ వృత్తి పరిధిలోనే పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div>
+<div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకు సమాధానం ఇవ్వండి</strong>మీ సమాధానాల ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>చదువు, కోర్సు మార్గాలు</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అర్హతలు, ప్రవేశ పరీక్షలు, తదుపరి మార్గాలను తెలుసుకోండి.</p>
+<div class="card">
+<div class="row"><div class="k"><span class="subno">1</span> జీవశాస్త్రం</div><div class="v">మనిషి శరీర నిర్మాణం, శరీర పనితీరు, జీర్ణక్రియ, హార్మోన్లు, వ్యాధులు, వివిధ వయసుల్లో పోషణ అన్నిటికీ Biology పునాది.</div></div>
+<div class="row"><div class="k"><span class="subno">2</span> రసాయన శాస్త్రం</div><div class="v">Biochemistry, Food Chemistryతో కార్బోహైడ్రేట్లు, కొవ్వులు, ప్రోటీన్లు, విటమిన్లు, ఖనిజాలు శరీరంలో ఎలా ఉపయోగపడతాయో అర్థమవుతుంది.</div></div>
+<div class="row"><div class="k"><span class="subno">3</span> సంభాషణ, కౌన్సెలింగ్</div><div class="v">వ్యక్తి పాటించలేని డైట్ ప్లాన్ ఎంత శాస్త్రీయంగా ఉన్నా ఉపయోగం లేదు. ఓపికగా వినడం, అలవాట్ల మార్పు, సులభంగా వివరించడం ముఖ్యం.</div></div>
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">హాస్పిటల్ డైటీషియన్ / Clinical Nutrition లక్ష్యానికి BiPC అత్యంత నేరుగా ఉపయోగపడే మార్గం. కొన్ని విశ్వవిద్యాలయాలు ఇతర సైన్స్ గ్రూపులనూ అంగీకరించవచ్చు; కోర్సు అర్హతలు మారుతాయి. రోగులతో పనిచేయాలంటే Biology కొనసాగించడం మంచిది.</div></div>
+<div class="row"><div class="k">ఇంటర్ తర్వాత</div><div class="v">B.Sc Nutrition &amp; Dietetics, B.Sc Clinical Nutrition &amp; Dietetics, B.Sc Food &amp; Nutrition లేదా Home Science / Community Scienceలో Food &amp; Nutrition స్పెషలైజేషన్ వంటి డిగ్రీలు ఉన్నాయి. పేరుకన్నా అసలు సిలబస్ పోల్చండి.</div></div>
+<div class="row"><div class="k">ప్రవేశం / అడ్మిషన్</div><div class="v">అన్ని Nutrition డిగ్రీలకు ఒకే జాతీయ ప్రవేశ పరీక్ష లేదు. కొన్ని విశ్వవిద్యాలయాల్లో CUET-UG ద్వారా ప్రవేశం; అనేక కాలేజీల్లో ఇంటర్ మార్కులు లేదా సొంత ప్రవేశ విధానం. మీరు ఎంచుకున్న కాలేజీ సబ్జెక్టు అర్హతలు తప్పక చూడండి.</div></div>
+<div class="row"><div class="k">హాస్పిటల్ క్లినికల్ మార్గం</div><div class="v">వ్యాధులున్న రోగులకు పోషకాహార సలహా ఇవ్వాలంటే మంచి Clinical సబ్జెక్టులు, ఆసుపత్రిలో పర్యవేక్షణలో ఇంటర్న్‌షిప్ ఉన్న డిగ్రీ ఎంచుకోండి. M.Sc Clinical Nutrition, Nutrition &amp; Dietetics, Food &amp; Nutrition, Dietetics &amp; Food Service Management వంటి PG చదువును యజమానులు విలువగా చూడవచ్చు.</div></div>
+<div class="row"><div class="k">వృత్తి గుర్తింపు</div><div class="v">భారత National Commission for Allied and Healthcare Professions Act, 2021లో Nutrition Science Professional విభాగం ఉంది. ఇందులో Clinical/Food Service Dietician, Public Health/Sports Nutritionist వంటి పాత్రలు పేర్కొన్నారు. నమోదు, అర్హత నియమాలు మారుతున్నందున మీరు పట్టా పొందే సమయంలో అమలులో ఉన్న ప్రమాణాలు నిర్ధారించండి.</div></div>
+<div class="row"><div class="k">ఉన్నత చదువు</div><div class="v">M.Sc ద్వారా Clinical Nutrition, Sports Nutrition, Public Health, Research, Teaching, ప్రత్యేక ఆసుపత్రి ఉద్యోగాలకు మార్గాలు ఉంటాయి. ఉదాహరణకు IGNOU అర్హ అభ్యర్థులకు రెండేళ్ల M.Sc Dietetics &amp; Food Service Management అందిస్తోందని మూల నివేదిక చెబుతోంది.</div></div>
+<div class="row"><div class="k">పూర్తి అర్హత మార్గం</div><div class="v">10వ తరగతి → BiPC సిఫారసు → B.Sc Nutrition &amp; Dietetics / Clinical Nutrition / Food &amp; Nutrition → ఇంటర్న్‌షిప్, ప్రాక్టికల్ శిక్షణ → Nutritionist / ప్రారంభ Dietitian ఉద్యోగం → ప్రత్యేక Clinical రంగాలకు M.Sc లేదా ఉన్నత శిక్షణ.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>చిన్న ఆన్‌లైన్ Nutrition Certificate, శాస్త్రీయ Nutrition &amp; Dietetics డిగ్రీకి సమానం కాదు. రోగులతో పనిచేయాలంటే మంచి చదువు, పర్యవేక్షణలో క్లినికల్ శిక్షణ అవసరం.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఏయే పోషణ ఉద్యోగాలు ఉన్నాయి?</h3><p class="lede">ఈ వృత్తిలో చేసే పనులు, అవకాశాలు, పోటీ, పరిమితులు గురించి చదవండి.</p>
+<div class="card">
+<div class="row"><div class="k">Clinical Dietitian</div><div class="v">ఆసుపత్రులు, క్లినిక్‌ల్లో రోగులతో పని. డాక్టర్లు, వైద్య బృందంతో కలిసి మధుమేహం, కిడ్నీ, గుండె, క్యాన్సర్, జీర్ణ సమస్యలు, శస్త్రచికిత్స తర్వాత కోలుకునే రోగులకు పోషణ ప్రణాళికలు అందించవచ్చు.<div class="chips"><span class="chip">ఆసుపత్రులు</span><span class="chip">రోగులు</span><span class="chip">చికిత్స ఆహారం</span></div></div></div>
+<div class="row"><div class="k">సాధారణ Nutritionist</div><div class="v">ఆరోగ్యంగా ఉన్నవారికి తినే అలవాట్లు, బరువు నిర్వహణ, రోజువారీ భోజన ప్రణాళిక, ఆరోగ్యకర జీవనశైలిపై శాస్త్రీయ ఆధారాలతో సలహా.</div></div>
+<div class="row"><div class="k">క్రీడాకారుల Nutritionist</div><div class="v">క్రీడాకారులకు కావలసిన శక్తి, నీరు, వ్యాయామం తర్వాత కోలుకోవడం, పోటీ రోజుల ఆహారం, శరీర బరువు/కండరాల లక్ష్యాల్లో సహాయం. పెద్ద క్రీడా బృందాల్లో ఉద్యోగాలకు ఎక్కువ పోటీ, అనుభవం అవసరం.</div></div>
+<div class="row"><div class="k">ప్రజారోగ్య పోషణ</div><div class="v">గర్భిణులు, పిల్లల పోషణ, రక్తహీనత, పోషకాహార లోపం, పాఠశాల/గ్రామ కార్యక్రమాలు, ఆరోగ్య అవగాహన, ప్రభుత్వ/NGO ప్రాజెక్టుల్లో పని.</div></div>
+<div class="row"><div class="k">పిల్లల పోషణ</div><div class="v">శిశువులు, పిల్లలు, కౌమారదశలో ఎదుగుదల, తినడంలో ఇబ్బందులు, పిల్లల వ్యాధులకు సంబంధించిన పోషణలో ప్రత్యేక శిక్షణతో పనిచేయడం.</div></div>
+<div class="row"><div class="k">తల్లి ఆరోగ్య పోషణ</div><div class="v">గర్భధారణకు ముందు, గర్భకాలం, ప్రసవం తర్వాత పోషకాహారం; గర్భకాల ఆరోగ్య సమస్యలు, తల్లిపాల సందర్భాల్లో తగిన వృత్తి పరిధిలో సలహా.</div></div>
+<div class="row"><div class="k">మధుమేహం / మెటబాలిక్ పోషణ</div><div class="v">మధుమేహం, ఊబకాయం, మెటబాలిక్ సిండ్రోమ్ వంటి దీర్ఘకాల సమస్యలున్న వారికి పోషణ నిర్వహణ. ఆసుపత్రులు, డయాబెటిస్ కేంద్రాల్లో ముఖ్యమైన రంగం.</div></div>
+<div class="row"><div class="k">కిడ్నీ (Renal) పోషణ</div><div class="v">కిడ్నీ వ్యాధి, డయాలసిస్ రోగుల కోసం ప్రత్యేక డైట్. ప్రోటీన్, ఉప్పు, పొటాషియం, నీరు వంటి వాటిని వ్యక్తిని బట్టి జాగ్రత్తగా నిర్ణయించడానికి మంచి క్లినికల్ జ్ఞానం అవసరం.</div></div>
+<div class="row"><div class="k">క్యాన్సర్ (Oncology) పోషణ</div><div class="v">క్యాన్సర్ చికిత్సలో ఆకలి తగ్గడం, బరువు తగ్గడం, మింగడంలో ఇబ్బంది వంటి సమస్యలున్నవారికి వైద్య బృందంలో భాగంగా పోషణ సహాయం.</div></div>
+<div class="row"><div class="k">సంస్థల ఆహార నిర్వహణ</div><div class="v">ఆసుపత్రులు, హాస్టళ్లు, పాఠశాలలు, పెద్ద సంస్థల్లో మెనూలు, పోషక ప్రమాణాలు, పరిశుభ్రత, పెద్ద ఎత్తున భోజన ఏర్పాట్లను నిర్వహించడం.</div></div>
+<div class="row"><div class="k">పరిశోధన / బోధన</div><div class="v">ఆహారం, మెటబాలిజం, తినే అలవాట్లు, ప్రజారోగ్యం, చికిత్స ఫలితాలపై పరిశోధన. M.Sc/PhD చదువులతో విశ్వవిద్యాలయాలు, పరిశోధన రంగాలకు వెళ్లవచ్చు.</div></div>
+<div class="row"><div class="k">ఆహార / వెల్‌నెస్ పరిశ్రమ</div><div class="v">Food Companies, Health-tech, వెల్‌నెస్ కార్యక్రమాలు, ఉత్పత్తుల అభివృద్ధి, శాస్త్రీయ సమాచార రచన, ఆహార లేబుల్స్ వంటి పనులు చేయవచ్చు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">Nutritionist, Dietitian తేడా</div><div class="v">భారత NCAHP చట్టంలో రెండూ Nutrition Science Professional విభాగంలో ఉన్నాయి. Dietitian తరచుగా ఆసుపత్రి/చికిత్స ఆహార ప్రణాళికలపై పని చేస్తారు; Nutritionist సాధారణ ఆరోగ్యం, క్రీడలు, ప్రజారోగ్యంపై పని చేయవచ్చు. పేరు మాత్రమే కాదు, చదువు, అనుమతించిన పని పరిధి ముఖ్యం.</div></div>
+<div class="row"><div class="k">Nutritionist, Doctor తేడా</div><div class="v">Nutrition Professional తన అర్హత పరిధిలో ఆహార అవసరాలు చూసి పోషణ సలహా ఇస్తారు. Doctor వైద్య అర్హతతో వ్యాధులను నిర్ధారించి చికిత్స, మందులు సూచిస్తారు. Nutritionistను డాక్టర్‌తో సమానంగా భావించకూడదు.</div></div>
+<div class="row"><div class="k">Nutritionist, Fitness Trainer తేడా</div><div class="v">Nutritionist/Dietitian ప్రధానంగా Food, Nutrition Science, Dieteticsలో శిక్షణ పొందుతారు. Fitness Trainer శారీరక వ్యాయామం, శిక్షణపై ప్రధానంగా పని చేస్తారు. ప్రతి వ్యక్తి తన అర్హత పరిధిలోనే సలహా ఇవ్వాలి.</div></div>
+<div class="row"><div class="k">ఎవరు ఉద్యోగం ఇస్తారు?</div><div class="v">ఆసుపత్రులు, డయాబెటిస్ కేంద్రాలు, వెల్‌నెస్ క్లినిక్‌లు, క్రీడా అకాడమీలు, జిమ్ సంస్థలు, NGOs, ప్రజారోగ్య ప్రాజెక్టులు, Food Companies, రీసెర్చ్, ఆన్‌లైన్ పోషణ సేవలు.</div></div>
+<div class="row"><div class="k">సొంత ప్రాక్టీస్</div><div class="v">అర్హత కలిగిన పోషకాహార నిపుణులు వర్తించే నియమాలను పాటిస్తూ సొంత కౌన్సెలింగ్ లేదా ఆన్‌లైన్ సేవలు ఇవ్వవచ్చు. క్లయింట్ల నమ్మకం, నిజమైన ఫలితాలు, రికార్డులు, గోప్యత ముఖ్యం.</div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">Food Industry, Public Health, Research, Health Content, Food Service, Wellness Programmes వంటి రంగాల్లో అదే పోషణ చదువు ఉపయోగపడుతుంది.<div class="chips"><span class="chip">ఆహార పరిశ్రమ</span><span class="chip">ప్రజారోగ్యం</span><span class="chip">పరిశోధన</span><span class="chip">ఆరోగ్య రచన</span><span class="chip">ఆహార సేవలు</span><span class="chip">ఆరోగ్య కార్యక్రమాలు</span></div></div></div>
+<div class="flag"><span class="mark">ముఖ్యమైన విషయం</span><span>Detox, అద్భుతంగా బరువు తగ్గించే వాగ్దానాలు, అతిగా తినకూడదనే డైట్లు, సప్లిమెంట్లు అమ్మడం శాస్త్రీయ Nutritionకు ప్రత్యామ్నాయం కాదు.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఖర్చు ఎంత?</h3><p class="lede">ఇక్కడి జీతాలు మూల నివేదికలోని అంచనాలు మాత్రమే; ఉద్యోగం, ప్రాంతం, కాలాన్ని బట్టి మారవచ్చు.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / ట్రైనీ</div><div class="v"><span class="money">నెలకు ₹5,000</span> –₹15,000. కొన్ని ఆసుపత్రి/వెల్‌నెస్ ఇంటర్న్‌షిప్‌లకు తక్కువ స్టైపెండ్ లేదా అసలు జీతం లేకపోవచ్చు; పర్యవేక్షణ, నైపుణ్యాలు ముఖ్యమైనవి.</div></div>
+<div class="row"><div class="k">ప్రారంభ Dietitian / Nutritionist</div><div class="v"><span class="money">నెలకు ₹15,000</span> –₹25,000. భారత ఆసుపత్రి, క్లినిక్, వెల్‌నెస్ రంగాల్లో చాలా ప్రారంభ ఉద్యోగాలకు మూల నివేదిక అంచనా.</div></div>
+<div class="row"><div class="k">Nutritionist వేతన సూచిక</div><div class="v"><span class="money">≈ ₹23,500/month</span>నెలకు సుమారు ₹23,500. మూల నివేదికలో Indeed భారత సగటు ₹23,523 అని చెప్పింది; చాలా చిన్న నమూనాపై ఆధారపడింది కాబట్టి హామీ కాదు.</div></div>
+<div class="row"><div class="k">Dietitian వేతన సూచిక</div><div class="v"><span class="money">≈ ₹19,700/month</span>నెలకు సుమారు ₹19,700. మూల నివేదికలో 2026 మార్చి Indeed భారత సగటు ₹19,661 అని ఉంది; నమూనాపై ఆధారపడిన అంచనా మాత్రమే.</div></div>
+<div class="row"><div class="k">అనుభవం / ప్రత్యేకత</div><div class="v"><span class="money">నెలకు ₹25,000</span> –₹50,000 లేదా ఎక్కువ. క్లినికల్ అనుభవం, డయాబెటిస్/కిడ్నీ/క్యాన్సర్, Sports Nutrition, నిర్వహణ, మంచి ప్రైవేటు ప్రాక్టీస్‌తో అవకాశాలు మారతాయి.</div></div>
+<div class="row"><div class="k">ఆంధ్రప్రదేశ్</div><div class="v"><span class="money">Local salaries can be lower</span>స్థానిక జీతాలు తక్కువగా ఉండవచ్చు. మూల నివేదికలో Indeed AP Dietitian సగటు నెలకు సుమారు ₹15,653 అని ఉంది; చాలా కొద్ది నమోదులపై ఆధారపడిన సంఖ్య కాబట్టి జాగ్రత్తగా చూడండి.</div></div>
+<div class="row"><div class="k">సొంత / ఆన్‌లైన్ ప్రాక్టీస్</div><div class="v"><span class="money">ఆదాయం స్థిరంగా ఉండదు</span>ఆదాయం చాలా మారుతుంది. క్లయింట్ల సంఖ్య, నమ్మకం, వృత్తి నైతికత, మార్కెటింగ్, రికార్డు నిర్వహణ, నియమాలు కీలకం; ఎక్కువ సంపాదన హామీ కాదు.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">ప్రభుత్వ, విశ్వవిద్యాలయ, ప్రైవేటు కోర్సుల ఫీజుల్లో పెద్ద తేడా ఉంటుంది. ఎక్కువ ఫీజు చెల్లించే ముందు సిలబస్, క్లినికల్ ఇంటర్న్‌షిప్, గుర్తింపు, నిజమైన ఉద్యోగ అవకాశాలు పరిశీలించండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>సోషల్ మీడియాలో క్లయింట్లు వస్తారని మాత్రమే ఆశించి నాణ్యతలేని Nutrition కోర్సుకు పెద్ద విద్యా రుణం తీసుకోవద్దు.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్ల ఫలితాన్ని ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">నాలుగూ సరిపోతే</span> — నిజమైన ప్రణాళికతో ప్రయత్నం ప్రారంభించండి.</p>
+<p><span class="hi">ఒకటి సరిపోకపోతే</span> — నిర్ణయానికి ముందు ఆ అంశాన్ని ఆలోచించండి.</p>
+<p><span class="hi">రెండు లేదా అంతకంటే ఎక్కువ సరిపోకపోతే</span> — ఉపాధ్యాయుడు లేదా కెరీర్ కౌన్సెలర్‌తో మాట్లాడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఒక గడువు పెట్టుకోండి: “___ వయసు వరకు ప్రయత్నించి, అవసరమైతే Plan Bకి మారతాను.”</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈరోజు నుంచే ఏమి చేయాలి?</h3><p class="lede">స్కూల్‌లో ఇప్పుడే ప్రారంభించగల పనులు, తర్వాత చేయాల్సిన పనులు ఇవి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span> ఇప్పుడే స్కూల్‌లో</div><ul>
+<li>మనిషి జీర్ణక్రియ, ఆహారంలోని పోషకాలు గురించి పాఠశాల పుస్తకాల్లో చదవండి.</li>
+<li>ఒకరోజు తిన్న ఆహారాన్ని రాసి పోషకాల సమతుల్యత అర్థం చేసుకోండి; ఇతరులకు చికిత్స డైట్ ఇవ్వవద్దు.</li>
+<li>ఆరోగ్య విషయాలపై నమ్మదగిన శాస్త్రీయ సమాచారం, సోషల్ మీడియా ప్రకటనల మధ్య తేడా నేర్చుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span> 10వ తరగతి తర్వాత</div><ul>
+<li>క్లినికల్ న్యూట్రిషన్ లక్ష్యమైతే ఇంటర్ BiPC ఎంచుకోండి.</li>
+<li>Nutrition &amp; Dietetics డిగ్రీలకు ఏ సబ్జెక్టులు, ప్రవేశ విధానం అవసరమో కాలేజీ ప్రకటనల్లో చూడండి.</li>
+<li>మంచి క్లినికల్ శిక్షణ, ఇంటర్న్‌షిప్ ఉన్న కోర్సులను పోల్చండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span> ఇంటర్ / కోర్సు తర్వాత</div><ul>
+<li>గుర్తింపు పొందిన డిగ్రీ, ఆసుపత్రి ప్రాక్టికల్ శిక్షణ పూర్తిచేయండి.</li>
+<li>Clinical, Sports, Public Health వంటి మీకు నచ్చిన ప్రత్యేకత ఎంచుకోండి.</li>
+<li>ప్రస్తుత వృత్తి నమోదు నిబంధనలు చూసి, అర్హత ఉన్న ఉద్యోగాలకు దరఖాస్తు చేయండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">ముఖ్యమైన విషయం</span><span>సాధారణ అన్నం + పప్పు + కూర + పెరుగు భోజనం తీసుకుని ప్రధాన పోషకాలు ఏవో అంచనా వేయండి. నమ్మదగిన సమాచారం చూసి, వయసు/ఆరోగ్యాన్ని బట్టి అవసరాలు మారుతాయని గుర్తించండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకం మాత్రమే. అర్హతలు, వయసు, పరీక్షలు, వేతనాలు మారవచ్చు; దరఖాస్తు చేసే సంవత్సరపు అధికారిక ప్రకటన చూడండి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz = document.getElementById("quiz");
+  const verdict = document.getElementById("verdict");
+  const pip = document.getElementById("pip1");
+  if(!quiz || !verdict) return;
+  const questions = [...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected = questions.map(q => q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length < questions.length){
+      verdict.className = "verdict";
+      verdict.innerHTML = "<strong>Answer all six</strong>Your result appears here.";
+      if(pip) pip.className = "pip";
+      return;
+    }
+    const yes = selected.filter(b => b.dataset.v === "y").length;
+    if(yes >= 5){
+      verdict.className = "verdict good";
+      verdict.innerHTML = "<strong>Strong Nutrition fit</strong>You seem comfortable with science, counselling and evidence-based thinking. Choose a rigorous degree with real practical or clinical training.";
+      if(pip) pip.className = "pip done";
+    } else if(yes >= 3){
+      verdict.className = "verdict mixed";
+      verdict.innerHTML = "<strong>Explore before deciding</strong>You like some parts of nutrition. Try a science-based nutrition project and observe a qualified dietitian before choosing the degree.";
+      if(pip) pip.className = "pip warn";
+    } else {
+      verdict.className = "verdict bad";
+      verdict.innerHTML = "<strong>Think twice</strong>You may enjoy food or fitness without enjoying professional nutrition science. Compare Food Technology, Fitness, Medicine, Nursing, Public Health or other related careers.";
+      if(pip) pip.className = "pip stop";
+    }
+  }
+
+  quiz.addEventListener("click", function(e){
+    const btn = e.target.closest(".toggle button");
+    if(!btn) return;
+    const group = btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b => {
+      b.setAttribute("aria-pressed","false");
+      b.removeAttribute("data-picked");
+    });
+    btn.setAttribute("aria-pressed","true");
+    btn.setAttribute("data-picked","1");
+    updateVerdict();
+  });
+});
+</script>
+</div><script>
+ document.addEventListener('DOMContentLoaded',function(){
+  const questions=[...document.querySelectorAll('#quiz .q')];
+  const v=document.querySelector('#verdict');
+  function update(){const picks=questions.map(q=>q.querySelector('button[aria-pressed="true"]'));
+   const done=picks.filter(Boolean).length;if(done<questions.length){v.className='verdict';v.innerHTML='<strong>'+done+' / '+questions.length+' ప్రశ్నలకు సమాధానం ఇచ్చారు</strong>మిగిలిన ప్రశ్నలకూ సమాధానం ఇవ్వండి.';return;}
+   const yes=picks.filter(b=>b.dataset.v==='y').length;
+   v.className='verdict '+(yes>=5?'good':yes>=3?'mixed':'bad');
+   v.innerHTML='<strong>'+yes+' / '+questions.length+' ప్రశ్నలకు అవును</strong>'+(yes>=5?'మీకు ఈ రంగంపై ఆసక్తి ఉండవచ్చు. మిగతా మూడు సర్కిళ్లు కూడా జాగ్రత్తగా చదవండి.':yes>=3?'మీకు కొన్ని అంశాలపై ఆసక్తి ఉంది. నిజమైన పని, అర్హతలు తెలుసుకొని నిర్ణయించండి.':'మీకు ఈ రంగంలోని కొన్ని పనులు అంతగా నచ్చకపోవచ్చు. ఇతర అవకాశాలనూ పరిశీలించండి.');
+  }
+  for(const q of questions){for(const b of q.querySelectorAll('.toggle button'))b.addEventListener('click',()=>{for(const x of q.querySelectorAll('.toggle button')){x.setAttribute('aria-pressed',x===b?'true':'false');x.removeAttribute('data-picked');}b.setAttribute('data-picked','1');update();});}
+ });</script></body></html>

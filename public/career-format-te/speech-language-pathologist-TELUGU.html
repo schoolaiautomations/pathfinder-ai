@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు సర్కిళ్ల కెరీర్ మార్గదర్శకం — మాట, భాష చికిత్స నిపుణుడు (SLP)</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ సరిపోతుందా? · ఆంధ్రప్రదేశ్</div><h2>మాట, భాష చికిత్స నిపుణుడు (SLP)</h2><p class="standfirst">మాట్లాడటం, భాష, సంభాషణ, గొంతు, నత్తి, ఆహారం మింగడం వంటి ఇబ్బందులు ఉన్న పిల్లలకు, పెద్దలకు సహాయం చేసే ఆరోగ్య నిపుణుడు. భారతదేశంలో ప్రధాన చదువు B.ASLP (Bachelor in Audiology and Speech-Language Pathology). గుర్తింపు పొందిన కోర్సు తర్వాత RCI పరిధిలో CRR నమోదు అవసరం.</p></div>
+<div class="printhead">నాలుగు సర్కిళ్ల కెరీర్ గైడ్ · మాట, భాష చికిత్స నిపుణుడు (SLP) · విద్యార్థి పేరు: __________________ · తేదీ: __________</div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>నిజంగా ఇష్టమా?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>ఎలా చేరాలి?</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>అవకాశాలు ఏమిటి?</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>ఖర్చు, జీతం</em></a>
+</nav>
+<section id="c1"><div class="num">సర్కిల్ 1</div><h3>ఈ పని నిజంగా మీకు ఇష్టమా?</h3><p class="lede">ఆరు ప్రశ్నలకు నిజాయితీగా సమాధానం ఇవ్వండి. ఉద్యోగం పేరు మాత్రమే కాదు, రోజువారీ పని కూడా మీకు నచ్చాలి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>ప్రజలు ఎలా మాట్లాడతారు, వింటారు, భావాలు తెలియజేస్తారు, భాష నేర్చుకుంటారు తెలుసుకోవడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఒక పిల్లవాడు లేదా పెద్దవాడు అదే నైపుణ్యాన్ని ఎన్నిసార్లైనా సాధన చేయాల్సి వస్తే ఓపికగా పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>జీవశాస్త్రం, మనస్తత్వశాస్త్రం, భాష లేదా మానవ అభివృద్ధి మీకు ఆసక్తికరంగా ఉన్నాయా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>అభివృద్ధి సమస్యలున్న పిల్లలు, స్ట్రోక్ తర్వాత పెద్దలు, సంభాషణ సమస్యలున్న వారితో పనిచేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>చిన్న మార్పుల్ని గమనించి, జాగ్రత్తగా విని, పురోగతిని రికార్డు చేయగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>కుటుంబాలు, ఉపాధ్యాయులు, వైద్యులు, సైకాలజిస్టులు, పునరావాస నిపుణులతో కలిసి పనిచేయడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">సర్కిల్ 2</div><h3>ఏం చదవాలి? ఎలా చేరాలి?</h3><p class="lede">10వ తరగతి తర్వాత చదువు, అవసరమైన ప్రవేశ పరీక్షలు, అర్హతలు, శిక్షణ మార్గాలను తెలుసుకోండి.</p>
+<div class="flag green"><span class="mark">గమనించండి</span><span>B.ASLP అంటే Bachelor in Audiology and Speech-Language Pathology. RCI అంటే Rehabilitation Council of India. CRR అంటే Central Rehabilitation Register. వృత్తి గుర్తింపు, నమోదు ప్రక్రియలో ఇవి ముఖ్యం.</span></div>
+<div class="card">
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v">10వ తరగతి తర్వాత సైన్స్ గ్రూప్ ఎంచుకోండి. ప్రస్తుత RCI B.ASLP పాఠ్య నిబంధనల ప్రకారం 12వ తరగతిలో కనీసం రెండు సైన్స్ సబ్జెక్టులు చదివి, కనీస మార్కులు సాధించాలి. మాట, వినికిడి, శరీర నిర్మాణం, పునరావాసంపై ఆసక్తి ఉంటే BiPC నేరుగా ఉపయోగపడుతుంది. MPC వంటి ఇతర సైన్స్ కలయికలూ కళాశాల నియమాలకు సరిపోవచ్చు.</div></div>
+<div class="row"><div class="k">B.ASLP eligibility</div><div class="v">RCI ప్రస్తుత నిబంధనల ప్రకారం 10+2 లేదా సమానమైన కోర్సులో కనీసం 50% మార్కులు, కనీసం రెండు సైన్స్ సబ్జెక్టులు అవసరం. సంబంధిత వర్గాలకు ప్రభుత్వ/విశ్వవిద్యాలయ నిబంధనల ప్రకారం సడలింపులు ఉండవచ్చు. కళాశాల ప్రత్యేక ప్రవేశ అర్హత కూడా పరిశీలించాలి.</div></div>
+<div class="row"><div class="k">Main professional degree</div><div class="v">B.ASLP నాలుగేళ్ల ప్రొఫెషనల్ డిగ్రీ; అందులో ఒక సంవత్సరం ఇంటర్న్‌షిప్. Audiology (వినికిడి శాస్త్రం), Speech-Language Pathology (మాట, భాష సమస్యల చికిత్స) రెండూ చదువుతారు.</div></div>
+<div class="row"><div class="k">చదివే విషయాలు</div><div class="v">శరీర నిర్మాణశాస్త్రం, శరీర క్రియలు, భాషాశాస్త్రం, మనస్తత్వశాస్త్రం, మాట/భాష అభివృద్ధి, మాట సమస్యలు, స్వరం, నత్తి, వినికిడి పరీక్షలు, Hearing Aids, నాడీశాస్త్రం, క్లినికల్ శిక్షణ, పునరావాసం వంటి విషయాలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">ప్రవేశ పరీక్ష</div><div class="v">భారతదేశంలోని ప్రతి B.ASLP కళాశాలకు ఒకే జాతీయ ప్రవేశ పరీక్ష తప్పనిసరి కాదు. సంస్థను బట్టి విశ్వవిద్యాలయ/రాష్ట్ర కౌన్సెలింగ్, ప్రవేశ పరీక్ష లేదా ఇంటర్ మార్కుల ద్వారా అడ్మిషన్ ఉంటుంది. ముందుగా RCI గుర్తింపు ఉన్న కళాశాలలు ఎంపిక చేసి వాటి తాజా ప్రక్రియ తెలుసుకోండి.</div></div>
+<div class="row"><div class="k">Choose the college carefully</div><div class="v">RCI గుర్తింపు చాలా ముఖ్యం. మీరు చేరే విద్యాసంవత్సరానికి కళాశాల, B.ASLP కోర్సుకు RCI గుర్తింపు ఉందో ఫీజు చెల్లించే ముందే అధికారికంగా తనిఖీ చేయండి. కళాశాల వెబ్‌సైట్‌లో 'Speech Therapy' ఉందని రాయడం మాత్రమే సరిపోదు.</div></div>
+<div class="row"><div class="k">డిగ్రీ తర్వాత</div><div class="v">గుర్తింపు పొందిన B.ASLP, ఇంటర్న్‌షిప్ పూర్తి చేసి వర్తించే విధంగా Central Rehabilitation Register (CRR)లో నమోదు చేసుకోవాలి. ఆ తర్వాత Audiologist లేదా Speech-Language Pathology రంగంలో గుర్తింపు పొందిన వృత్తిపరమైన పనిని చేయవచ్చు.</div></div>
+<div class="row"><div class="k">ఉన్నత చదువులు</div><div class="v">M.Sc Speech-Language Pathology (M.Sc SLP) రెండు సంవత్సరాల ఉన్నత చదువు. ప్రస్తుత RCI నియమాల ప్రకారం అర్హత గల గుర్తింపు పొందిన B.ASLP పట్టభద్రులకు ప్రవేశం; క్లినికల్ నైపుణ్యాలు, పరిశోధన, ప్రత్యేక చికిత్స రంగాలకు ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన దశలు</div><div class="v">10వ తరగతి → ఇంటర్ సైన్స్ → RCI గుర్తింపు పొందిన B.ASLP ప్రవేశం → ఇంటర్న్‌షిప్‌తో కలిపి నాలుగేళ్ల చదువు → వర్తించే CRR నమోదు → మాట, భాష చికిత్స నిపుణుడిగా ఉద్యోగం.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>గుర్తింపు లేని చిన్న Speech Therapy సర్టిఫికెట్‌తోనే Speech-Language Pathologist అయ్యామని అనుకోవద్దు. గుర్తింపు ఉన్న అర్హత, CRR నమోదు వృత్తి ప్రక్రియలో ముఖ్యమైనవి.</span></div>
+</div></section>
+<section id="c3"><div class="num">సర్కిల్ 3</div><h3>ఉద్యోగాలు, ప్రత్యేక అవకాశాలు ఏమిటి?</h3><p class="lede">వేర్వేరు ప్రత్యేక రంగాలు, వాస్తవ ఉద్యోగ అవకాశాలు, ప్రత్యామ్నాయ మార్గాలను పరిశీలించండి.</p>
+<div class="card">
+<div class="row"><div class="k">Child Language Disorders</div><div class="v">పిల్లల్లో మాటలు అర్థం చేసుకోవడం, ఉపయోగించడం ఆలస్యమైతే సహాయం. పదసంపద, వ్యాకరణం, అర్థం చేసుకోవడం, సంభాషణ, కథ చెప్పడం వంటి భాషా నైపుణ్యాలపై పనిచేస్తారు.<div class="chips"><span class="chip">Children</span><span class="chip">Language</span><span class="chip">Communication</span></div></div></div>
+<div class="row"><div class="k">Speech Sound Disorders</div><div class="v">అక్షరాలు, మాట ధ్వనులను స్పష్టంగా పలకలేని పిల్లలు లేదా పెద్దలను పరిశీలించి శిక్షణ అందిస్తారు. Articulation, Phonological Disorder వంటి మాట ధ్వని సమస్యలు ఇందులో ఉంటాయి.</div></div>
+<div class="row"><div class="k">Autism Communication Support</div><div class="v">Autism ఉన్న వ్యక్తుల అవసరానికి తగిన సంభాషణ, భాష, సామాజిక మాటతీరు, అవసరమైతే AAC అనే ప్రత్యామ్నాయ కమ్యూనికేషన్ పద్ధతులతో సహాయం. ఇతర నిపుణులతో కలిసి పని చేస్తారు.</div></div>
+<div class="row"><div class="k">Stuttering / Fluency</div><div class="v">నత్తి (Stuttering), మాట ప్రవాహంలో ఆటంకాలున్నవారికి అంచనా వేసి, సంభాషణ వ్యూహాలు, వృత్తి పరిధిలో కౌన్సెలింగ్ వంటి సహాయం అందిస్తారు.</div></div>
+<div class="row"><div class="k">Voice Disorders</div><div class="v">గొంతును తప్పుగా వాడటం, వ్యాధులు, శస్త్రచికిత్సల వల్ల వచ్చే స్వర సమస్యల్లో ENT వైద్యుల సహకారంతో చికిత్స, శిక్షణ అందిస్తారు.</div></div>
+<div class="row"><div class="k">Adult Neurogenic Communication</div><div class="v">స్ట్రోక్, తలకు గాయం, నాడీ సంబంధ వ్యాధుల తర్వాత వచ్చే Aphasia, Dysarthria, Apraxia, జ్ఞానం-సంభాషణ ఇబ్బందులతో ఉన్న పెద్దలకు సహాయం.</div></div>
+<div class="row"><div class="k">Feeding &amp; Swallowing</div><div class="v">ప్రత్యేక శిక్షణ ఉన్న SLP నిపుణులు తినడం, ఆహారం మింగడంలో సమస్యలను తమ వృత్తి పరిధిలో అంచనా వేసి, వైద్య బృందంతో కలిసి పనిచేయవచ్చు.</div></div>
+<div class="row"><div class="k">AAC Specialist</div><div class="v">AAC అంటే Augmentative and Alternative Communication. మాట్లాడటం కష్టమైన వ్యక్తులు భావాలను తెలియజేయడానికి చిత్రాలు, కమ్యూనికేషన్ బోర్డులు, పరికరాలు, సాఫ్ట్‌వేర్ వాడటం నేర్పిస్తారు.</div></div>
+<div class="row"><div class="k">Cleft Lip / Palate &amp; Resonance</div><div class="v">పెదవి/అంగిలి చీలిక వంటి శరీర నిర్మాణ సమస్యల వల్ల మాట, స్వరం మారినవారికి ప్రత్యేక చికిత్స; Cleft/Craniofacial వైద్య బృందంతో కలిసి పని.</div></div>
+<div class="row"><div class="k">Hearing-related Communication</div><div class="v">వినికిడి లోపం మాట, భాష అభివృద్ధిని ఎలా ప్రభావితం చేస్తుందో B.ASLP ద్వారా అర్థం చేసుకుంటారు. Audiology, Speech Therapy నిపుణులు కలిసి వినికిడి పునరావాసం చేస్తారు.</div></div>
+<div class="row"><div class="k">School-based SLP</div><div class="v">తరగతి గదిలో నేర్చుకోవడం, ఉపాధ్యాయులు/స్నేహితులతో మాట్లాడటం కష్టమైన పిల్లలకు పాఠశాలలలో సహాయక సేవలు ఇవ్వవచ్చు.</div></div>
+<div class="row"><div class="k">Hospital / Rehabilitation SLP</div><div class="v">ENT, Neurology, Paediatrics, Rehabilitation Medicine విభాగాలతో కలిసి ఆసుపత్రుల్లో మాట, స్వరం, మింగడం వంటి ఇబ్బందుల చికిత్స.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">SLP vs Audiologist</div><div class="v">Speech-Language Pathologist ప్రధానంగా మాట, భాష, స్వరం, నత్తి, సంభాషణ, మింగడం సమస్యలపై పని చేస్తారు. Audiologist ప్రధానంగా వినికిడి పరీక్షలు, వినికిడి లోపం, Hearing Aids, శ్రవణ పునరావాసంపై పని చేస్తారు. B.ASLP రెండింటికీ పునాది ఇస్తుంది.</div></div>
+<div class="row"><div class="k">SLP vs Special Educator</div><div class="v">SLP సంభాషణ, మాట, భాష సంబంధ సమస్యలను అంచనా వేసి చికిత్స చేస్తారు. Special Educator పిల్లల అభ్యాసం, ప్రత్యేక విద్య అవసరాలు, విద్యా సహాయం మీద పని చేస్తారు. అవసరమైనప్పుడు ఇద్దరూ కలిసి పనిచేస్తారు.</div></div>
+<div class="row"><div class="k">SLP vs Psychologist</div><div class="v">SLP మాట, భాష, సంభాషణ, స్వరం, మింగడం పై పనిచేస్తారు. Psychologist ఆలోచన, ప్రవర్తన, భావోద్వేగాలు, మానసిక అంచనా వంటి అంశాలపై పని చేస్తారు. రెండూ వేర్వేరు శిక్షణలతో కూడిన వృత్తులు.</div></div>
+<div class="row"><div class="k">ఎక్కడ పనిచేయవచ్చు?</div><div class="v">ఆసుపత్రులు, ENT క్లినిక్‌లు, పునరావాస కేంద్రాలు, పిల్లల అభివృద్ధి కేంద్రాలు, పాఠశాలలు, వినికిడి/మాట క్లినిక్‌లు, తొలిదశ చికిత్స కేంద్రాలు, పరిశోధనా సంస్థలు.</div></div>
+<div class="row"><div class="k">AI-era relevance</div><div class="v">AI ద్వారా మాట విశ్లేషణ, transcription, AAC పరికరాలు, చికిత్స మెటీరియల్స్, దూరం నుంచి పర్యవేక్షణ మెరుగుపడవచ్చు. కానీ రోగి పరిస్థితి అర్థం చేసుకోవడం, కుటుంబంతో పనిచేయడం, క్లినికల్ నిర్ణయాలు తీసుకోవడంలో నిపుణుడు అవసరం.</div></div>
+<div class="row"><div class="k">ఉద్యోగదాతలు చూసే నైపుణ్యాలు</div><div class="v">ఉద్యోగానికి ఉపయోగపడే నైపుణ్యాలు: క్లినికల్ శిక్షణ, ఓపిక, సంభాషణ, అంచనా, చికిత్స నమోదు, అవసరమైన CRR నమోదు.<div class="chips"><span class="chip">Clinical Skills</span><span class="chip">Patience</span><span class="chip">Communication</span><span class="chip">Assessment</span><span class="chip">Documentation</span><span class="chip">CRR Registration</span></div></div></div>
+<div class="row"><div class="k">మీ ప్రత్యామ్నాయ మార్గం</div><div class="v">B.ASLP ద్వారా Audiology, Hearing Rehabilitation, AAC, Clinical Research, బోధన, Rehabilitation Services వంటి ఇతర ఉపాధి మార్గాలు కూడా ఉన్నాయి.<div class="chips"><span class="chip">Audiology</span><span class="chip">Hearing Rehabilitation</span><span class="chip">AAC</span><span class="chip">Clinical Research</span><span class="chip">Teaching</span><span class="chip">Rehabilitation Services</span></div></div></div>
+<div class="flag"><span class="mark">గమనించండి</span><span>చికిత్స ఫలితం రావడానికి సమయం పడుతుంది. SLP కేవలం పదాలు పునరావృతం చేయించరు; అసలు సంభాషణ సమస్యను అంచనా వేసి లక్ష్యాలు పెట్టి పురోగతిని కొలుస్తారు; కుటుంబంతోనూ పనిచేస్తారు.</span></div>
+</div></section>
+<section id="c4"><div class="num">సర్కిల్ 4</div><h3>జీతం, ఖర్చు ఎంత?</h3><p class="lede">మొదటి జీతం వచ్చే వరకు చదువు ఖర్చులు, తర్వాత సాధ్యమయ్యే ఆదాయం గురించి ఆలోచించండి.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / శిక్షణ ఉద్యోగి</div><div class="v"><span class="money">Stipend varies</span><br/>B.ASLPలో సంవత్సరం ఇంటర్న్‌షిప్ తప్పనిసరి. ఇంటర్న్ స్టైపెండ్ కళాశాల/సంస్థను బట్టి మారుతుంది; చేరే ముందు అడగండి.</div></div>
+<div class="row"><div class="k">ప్రారంభ SLP</div><div class="v"><span class="money">₹20,000 – ₹35,000/month</span><br/>ప్రారంభ SLP ఉద్యోగాలకు మూల నివేదిక ప్రకారం నెలకు ₹20,000–₹35,000 విస్తృత అంచనా. క్లినిక్, ఆసుపత్రి, పిల్లల కేంద్రం, నగరం, పనిని బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">India benchmark</div><div class="v"><span class="money">≈ ₹35,952/month</span><br/>2026 ఫిబ్రవరిలో Indeed భారతదేశం SLP సగటు నెలకు సుమారు ₹35,952 అని మూల నివేదిక పేర్కొంది; ఇది 25 జీత నివేదికల ఆధారంగా మాత్రమే కాబట్టి ఖచ్చితమైన జీతంగా భావించవద్దు.</div></div>
+<div class="row"><div class="k">అనుభవం గల SLP</div><div class="v"><span class="money">₹35,000 – ₹60,000+/month</span><br/>అనుభవం ఉన్న SLP నిపుణులకు నెలకు ₹35,000–₹60,000 లేదా ఎక్కువ రావచ్చు. పిల్లల చికిత్స, న్యూరాలజీ, Voice, Swallowing, AAC ప్రత్యేక అనుభవం వల్ల అవకాశాలు మెరుగుపడవచ్చు.</div></div>
+<div class="row"><div class="k">సొంత క్లినిక్ / ప్రాక్టీస్</div><div class="v"><span class="money">Highly variable</span><br/>సొంత ప్రాక్టీస్ ఆదాయం ఖచ్చితంగా చెప్పలేం. నగరం, ప్రతి సెషన్ ఫీజు, రోగుల సంఖ్య, అద్దె, రిఫరల్స్, పేరు, నమోదు నిబంధనలపై ఆధారపడుతుంది.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు హెచ్చరిక</div><div class="v">B.ASLP ఫీజులు కళాశాలను బట్టి చాలా మారతాయి. చేరే విద్యాసంవత్సరానికి RCI గుర్తింపు, క్లినికల్ సదుపాయాలు, ఆసుపత్రి అనుభవం, ఇంటర్న్‌షిప్, పూర్తి నాలుగేళ్ల ఖర్చు తప్పక పరిశీలించండి.</div></div>
+<div class="flag red"><span class="mark">ముఖ్యమైన విషయం</span><span>కళాశాల Placement హామీ లేదా ప్రకటన చూసి మాత్రమే చేరవద్దు. RCI గుర్తింపు, పర్యవేక్షణతో క్లినికల్ శిక్షణ, CRR అర్హతలు ముఖ్యం.</span></div>
+</div></section>
+<div class="rule-box"><h4>నాలుగు సర్కిళ్లను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><strong>నాలుగు అంశాలూ సరిపోతే</strong> — ఈ వృత్తికి అవసరమైన శిక్షణ ఇప్పటి నుంచే మొదలుపెట్టండి.</p>
+<p><strong>ఒక అంశం సరిపోకపోతే</strong> — నిర్ణయం ముందు మళ్లీ ఆలోచించండి.</p>
+<p><strong>రెండు లేదా ఎక్కువ అంశాలు సరిపోకపోతే</strong> — కెరీర్ కౌన్సెలర్‌తో మాట్లాడి ఇతర వృత్తులనూ చూడండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఈ ఉద్యోగం కోసం ఎంతకాలం ప్రయత్నించాలో, ఎప్పుడు ప్రత్యామ్నాయ ప్రణాళికకు వెళ్లాలో ముందే నిర్ణయించుకోండి.</p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచి ఏం చేయాలి?</h3><p class="lede">ఇప్పటి నుంచే చిన్న సాధనతో ఈ కెరీర్ మీకు నచ్చుతుందో పరీక్షించండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే, పాఠశాలలో</div><ul>
+<li>మాట, భాష, వినికిడి ఎలా పనిచేస్తాయో ప్రాథమిక విజ్ఞానం చదవండి.</li>
+<li>ఒకరి మాటలను ఓపికగా విని, సంభాషణ నైపుణ్యాన్ని గమనించండి.</li>
+<li>Biology, English, Psychology పునాదులపై దృష్టి పెట్టండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>ఇంటర్‌లో కనీసం అవసరమైన రెండు సైన్స్ సబ్జెక్టులతో కూడిన గ్రూప్ ఎంచుకోండి; BiPC అనుకూలం.</li>
+<li>RCI గుర్తింపు ఉన్న B.ASLP కళాశాలలు, అర్హతలు, ప్రవేశ విధానం పోల్చండి.</li>
+<li>వీలైతే గుర్తింపు ఉన్న Speech-Language Clinicలో నిపుణుల పని గురించి తెలుసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>కాలేజీ, శిక్షణ సమయంలో</div><ul>
+<li>నాలుగేళ్ల B.ASLPలో ఒక సంవత్సరం ఇంటర్న్‌షిప్‌తో పూర్తి చేయండి.</li>
+<li>వర్తించే CRR నమోదు, వృత్తి నిబంధనలు పాటించండి.</li>
+<li>పిల్లలు, పెద్దలు, వినికిడి, క్లినికల్, AAC వంటి విభాగాలను పరిశీలించి అవసరమైతే MSc SLP చదవండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">గమనించండి</span><span>అనుమతి ఉంటే ఒక అర్హతగల Speech-Language Pathologist పని గమనించండి. సమస్య గుర్తించడం, లక్ష్యం నిర్ణయించడం, క్రమబద్ధ కార్యకలాపాలతో చికిత్స చేయడం, పురోగతి నమోదు చేయడం ఎలా జరుగుతుందో చూడండి.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శక సమాచారం మాత్రమే; అధికారిక ప్రవేశం, నియామకం, లైసెన్సు లేదా జీతాల ప్రకటన కాదు. అర్హతలు, పరీక్షలు, గుర్తింపు, ఫీజులు, వయస్సు, జీతాలు మారవచ్చు. దరఖాస్తుకు ముందు సంబంధిత అధికారిక ప్రకటనలు తనిఖీ చేయండి. ఈ నివేదికలోని ఆదాయాలు మూల ఫైలులో ఉన్న అంచనాలే.</p>
+
+</div><script>document.addEventListener('DOMContentLoaded',function(){const quiz=document.getElementById('quiz'),verdict=document.getElementById('verdict'),pip=document.getElementById('pip1');if(!quiz||!verdict)return;const qs=[...quiz.querySelectorAll('.q')];function update(){const selected=qs.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);if(selected.length<qs.length){verdict.className='verdict';verdict.innerHTML='<strong>ఆరు ప్రశ్నలకూ సమాధానం ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.';if(pip)pip.className='pip';return;}const yes=selected.filter(b=>b.dataset.v==='y').length;if(yes>=5){verdict.className='verdict good';verdict.innerHTML='<strong>ఈ రంగం మీకు సరిపోవచ్చు</strong>మీ సమాధానాల్లో ఈ వృత్తికి అవసరమైన ఆసక్తి, ఓపిక కనిపిస్తున్నాయి. నిజమైన పనిని దగ్గరగా చూసి, చదువు మార్గం తెలుసుకోండి.';if(pip)pip.className='pip done';}else if(yes>=3){verdict.className='verdict mixed';verdict.innerHTML='<strong>నిర్ణయం ముందు ప్రయత్నించండి</strong>ఈ వృత్తిలో కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. రోజువారీ పనిని తెలుసుకొని, చిన్న సాధన చేసి తర్వాత నిర్ణయించండి.';if(pip)pip.className='pip warn';}else{verdict.className='verdict bad';verdict.innerHTML='<strong>మరోసారి ఆలోచించండి</strong>ఈ వృత్తి రోజువారీ పని మీకు సరిపోకపోవచ్చు. ఇతర కెరీర్‌లను కూడా పోల్చి కౌన్సెలర్‌తో మాట్లాడండి.';if(pip)pip.className='pip stop';}}quiz.addEventListener('click',function(e){const b=e.target.closest('.toggle button');if(!b)return;b.closest('.toggle').querySelectorAll('button').forEach(x=>{x.setAttribute('aria-pressed','false');x.removeAttribute('data-picked');});b.setAttribute('aria-pressed','true');b.setAttribute('data-picked','1');update();});});</script></body></html>
