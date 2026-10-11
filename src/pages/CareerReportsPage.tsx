@@ -747,107 +747,118 @@ export default function CareerReportsPage() {
 
         {/* Clean Sticky Header with Back button, Career Title & Top Audio Player */}
         <header
-          className="sticky top-0 z-50 px-3 sm:px-6 py-2.5 bg-[#FAF8F5] border-b border-[#E0D6CA] flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 shadow-xs"
+          className="sticky top-0 z-50 px-3 sm:px-6 py-2.5 bg-[#FAF8F5] border-b border-[#E0D6CA] flex flex-col md:flex-row md:items-center justify-between gap-2.5 sm:gap-4 shadow-xs"
           style={{ backdropFilter: "blur(12px)" }}
         >
-          {/* Left: Back Button */}
-          <button
-            type="button"
-            onClick={handleBackToCards}
-            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-xs hover:scale-102 active:scale-98 shrink-0"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="hidden sm:inline">{language === "te" ? "అన్ని కెరీర్‌లకు తిరిగి వెళ్లండి" : "Back to All Careers"}</span>
-            <span className="sm:hidden">Back</span>
-          </button>
+          {/* Row 1 on mobile: Back Button + Career Info + Desktop Profile */}
+          <div className="flex items-center justify-between gap-3 min-w-0">
+            {/* Back Button */}
+            <button
+              type="button"
+              onClick={handleBackToCards}
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-extrabold bg-stone-900 text-white hover:bg-stone-800 transition-all cursor-pointer shadow-xs hover:scale-102 active:scale-98 shrink-0"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">{language === "te" ? "అన్ని కెరీర్‌లకు తిరిగి వెళ్లండి" : "Back to All Careers"}</span>
+              <span className="sm:hidden">Back</span>
+            </button>
 
-          {/* Middle: Career Title Info */}
-          <div className="flex items-center gap-2 min-w-0 mr-auto sm:mr-0">
-            <span className="text-xl sm:text-2xl shrink-0">{selectedCareer.icon}</span>
-            <div className="min-w-0 text-left">
-              <h1 className="text-xs sm:text-base font-extrabold text-stone-900 truncate">
-                {selectedCareer.label}
-              </h1>
-              <span className="text-[10px] font-bold text-stone-500 block truncate">
-                {selectedCareer.streamBadge} &bull; {selectedCareer.category}
-              </span>
+            {/* Career Title Info */}
+            <div className="flex items-center gap-2 min-w-0 flex-1 ml-1 sm:ml-0">
+              <span className="text-xl sm:text-2xl shrink-0">{selectedCareer.icon}</span>
+              <div className="min-w-0 text-left">
+                <h1 className="text-sm sm:text-base font-extrabold text-stone-900 truncate">
+                  {selectedCareer.label}
+                </h1>
+                <span className="text-[10px] sm:text-xs font-bold text-stone-500 block truncate">
+                  {selectedCareer.streamBadge} &bull; {selectedCareer.category}
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Right: Language Switcher, Roadmap Icon Button & Audio Player */}
-          <div className="flex items-center gap-1.5 bg-stone-100 p-0.5 rounded-xl border border-stone-200 shrink-0">
-            <button
-              type="button"
-              onClick={() => handleLanguageChange("en")}
-              className={`px-2 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
-                language === "en" ? "bg-white text-stone-900 shadow-2xs" : "text-stone-500 hover:text-stone-900"
-              }`}
-            >
-              English
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLanguageChange("te")}
-              className={`px-2 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer ${
-                language === "te" ? "bg-emerald-600 text-white shadow-2xs" : "text-stone-500 hover:text-stone-900"
-              }`}
-            >
-              తెలుగు
-            </button>
-          </div>
-          {/* Right: Roadmap Icon Button & Audio Player */}
-          <div className="flex items-center gap-2 shrink-0">
-            {CAREER_ROADMAP_DATA[selectedCareer.id] && (
+          {/* Row 2 on mobile / Right side on desktop: Language Switcher + Roadmap Button + Audio Button */}
+          <div className="flex items-center justify-between md:justify-end gap-1.5 sm:gap-2 shrink-0 pt-0.5 md:pt-0 w-full md:w-auto">
+            {/* Language Switcher */}
+            <div className="flex items-center gap-0.5 sm:gap-1 bg-stone-100 p-0.5 rounded-xl border border-stone-200 shrink-0">
               <button
                 type="button"
-                onClick={() => setRoadmapCareer(CAREER_ROADMAP_DATA[selectedCareer.id])}
-                className="w-9 h-9 rounded-xl bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 flex items-center justify-center transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95 shrink-0"
-                title={`View ${selectedCareer.label} Career Pathway Roadmap`}
-                aria-label={`View ${selectedCareer.label} Career Pathway Roadmap`}
+                onClick={() => handleLanguageChange("en")}
+                className={`px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-black transition-all cursor-pointer ${
+                  language === "en" ? "bg-white text-stone-900 shadow-2xs" : "text-stone-500 hover:text-stone-900"
+                }`}
               >
-                <Route className="w-4 h-4 text-emerald-700" />
+                English
               </button>
-            )}
-            {audioUrl ? (
-              <div className="flex items-center gap-2 bg-amber-50/90 border border-amber-300/80 rounded-2xl px-3 py-1.5 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => handleLanguageChange("te")}
+                className={`px-2 sm:px-2.5 py-1 rounded-lg text-[11px] sm:text-xs font-black transition-all cursor-pointer ${
+                  language === "te" ? "bg-emerald-600 text-white shadow-2xs" : "text-stone-500 hover:text-stone-900"
+                }`}
+              >
+                తెలుగు
+              </button>
+            </div>
+
+            {/* Roadmap Icon Button + Audio Button grouped together on same line */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {CAREER_ROADMAP_DATA[selectedCareer.id] && (
                 <button
                   type="button"
-                  onClick={togglePlayAudio}
-                  disabled={isAudioLoading}
-                  className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl font-black text-xs transition-all shadow-xs cursor-pointer ${
-                    isPlaying
-                      ? "bg-amber-600 text-white animate-pulse"
-                      : "bg-amber-900 hover:bg-amber-950 text-white hover:scale-103"
-                  }`}
-                  title={isPlaying ? "Pause Audio" : "Listen to Career Explanation Audio"}
+                  onClick={() => setRoadmapCareer(CAREER_ROADMAP_DATA[selectedCareer.id])}
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-100 hover:bg-emerald-200 border border-emerald-300 flex items-center justify-center transition-all cursor-pointer shadow-2xs hover:scale-105 active:scale-95 shrink-0"
+                  title={`View ${selectedCareer.label} Career Pathway Roadmap`}
+                  aria-label={`View ${selectedCareer.label} Career Pathway Roadmap`}
                 >
-                  {isPlaying ? (
-                    <>
-                      <Pause className="w-3.5 h-3.5 fill-current" />
-                      <span>Pause Audio</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-3.5 h-3.5 fill-current" />
-                      <span>Listen to Career Audio</span>
-                    </>
-                  )}
+                  <Route className="w-4 h-4 text-emerald-700" />
                 </button>
+              )}
 
-                {/* Duration / Progress counter */}
-                <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-amber-900 pr-1">
-                  <Headphones className="w-3.5 h-3.5 text-amber-700" />
-                  <span>
-                    {formatTime(audioCurrentTime)} / {formatTime(audioDuration)}
-                  </span>
+              {audioUrl ? (
+                <div className="flex items-center gap-1.5 sm:gap-2 bg-amber-50/90 border border-amber-300/80 rounded-2xl px-2 sm:px-3 py-1 sm:py-1.5 shadow-2xs shrink-0">
+                  <button
+                    type="button"
+                    onClick={togglePlayAudio}
+                    disabled={isAudioLoading}
+                    className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl font-black text-xs transition-all shadow-xs cursor-pointer ${
+                      isPlaying
+                        ? "bg-amber-600 text-white animate-pulse"
+                        : "bg-amber-900 hover:bg-amber-950 text-white hover:scale-103"
+                    }`}
+                    title={isPlaying ? "Pause Audio" : "Listen to Career Explanation Audio"}
+                  >
+                    {isPlaying ? (
+                      <>
+                        <Pause className="w-3.5 h-3.5 fill-current" />
+                        <span className="hidden min-[360px]:inline">Pause Audio</span>
+                        <span className="min-[360px]:hidden">Pause</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3.5 h-3.5 fill-current" />
+                        <span className="hidden min-[360px]:inline">Listen Audio</span>
+                        <span className="min-[360px]:hidden">Audio</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* Duration / Progress counter */}
+                  <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-amber-900 pr-1">
+                    <Headphones className="w-3.5 h-3.5 text-amber-700" />
+                    <span>
+                      {formatTime(audioCurrentTime)} / {formatTime(audioDuration)}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 border border-stone-200 text-stone-400 text-xs font-bold">
-                <Headphones className="w-3.5 h-3.5" />
-                <span>Audio coming soon</span>
-              </div>
-            )}
+              ) : (
+                <div className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-stone-100 border border-stone-200 text-stone-400 text-xs font-bold">
+                  <Headphones className="w-3.5 h-3.5" />
+                  <span>Audio coming soon</span>
+                </div>
+              )}
+            </div>
+          </div>
 
             {/* Student Profile / Sign Out */}
             {currentUser && studentProfile && (
@@ -877,7 +888,6 @@ export default function CareerReportsPage() {
                 </button>
               </div>
             )}
-          </div>
         </header>
 
         {/* Full-Page Clean Report Iframe */}
@@ -1102,23 +1112,23 @@ export default function CareerReportsPage() {
         className="sticky top-0 z-40 border-b border-stone-200/70"
         style={{ background: "rgba(250,248,245,0.95)", backdropFilter: "blur(16px)" }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-8 h-14 sm:h-16 flex items-center justify-between gap-1.5 sm:gap-3">
           {/* Left: Home Button */}
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white border border-stone-200 text-stone-700 hover:text-stone-900 hover:bg-stone-50 hover:border-stone-300 transition-all cursor-pointer shadow-2xs hover:scale-102 active:scale-98 shrink-0"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-bold bg-white border border-stone-200 text-stone-700 hover:text-stone-900 hover:bg-stone-50 hover:border-stone-300 transition-all cursor-pointer shadow-2xs hover:scale-102 active:scale-98 shrink-0"
           >
-            <Home className="w-4 h-4 text-stone-600" />
+            <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-stone-600" />
             <span>Home</span>
           </Link>
 
-          <nav className="flex items-center gap-1.5 sm:gap-2">
+          <nav className="flex items-center gap-1 sm:gap-2 shrink-0">
             {/* Language Switcher (English / తెలుగు) */}
-            <div className="flex items-center bg-stone-100 p-0.5 rounded-xl border border-stone-200 shrink-0 shadow-2xs mr-1">
+            <div className="flex items-center bg-stone-100 p-0.5 rounded-xl border border-stone-200 shrink-0 shadow-2xs">
               <button
                 type="button"
                 onClick={() => handleLanguageChange("en")}
-                className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                className={`px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-black transition-all cursor-pointer ${
                   language === "en" ? "bg-white text-stone-900 shadow-2xs" : "text-stone-500 hover:text-stone-900"
                 }`}
               >
@@ -1127,16 +1137,17 @@ export default function CareerReportsPage() {
               <button
                 type="button"
                 onClick={() => handleLanguageChange("te")}
-                className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                className={`px-2 sm:px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-black transition-all cursor-pointer ${
                   language === "te" ? "bg-emerald-600 text-white shadow-2xs" : "text-stone-500 hover:text-stone-900"
                 }`}
               >
                 తెలుగు
               </button>
             </div>
-            {/* Student Profile / Sign Out */}
+
+            {/* Student Profile / Sign Out (Desktop only) */}
             {currentUser && studentProfile && (
-              <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-800">
+              <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-800">
                 {currentUser.user_metadata?.avatar_url ? (
                   <img
                     src={currentUser.user_metadata.avatar_url}
@@ -1163,15 +1174,16 @@ export default function CareerReportsPage() {
               </div>
             )}
 
+            {/* Book Online Counselling Button */}
             <button
               type="button"
               onClick={() => setIsBookingModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 text-white shrink-0"
+              className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-xl font-bold text-[11px] sm:text-sm transition-all shadow-sm hover:shadow-md cursor-pointer hover:-translate-y-0.5 active:translate-y-0 text-white shrink-0"
               style={{ background: "#1C1917", color: "#FAF8F5" }}
             >
-              <Calendar className="w-3.5 h-3.5 text-[#C9A97A] shrink-0" />
+              <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C9A97A] shrink-0" />
               <span className="hidden sm:inline">Book Online Counselling</span>
-              <span className="sm:hidden">Book Counselling</span>
+              <span className="sm:hidden">Book</span>
             </button>
           </nav>
         </div>
@@ -1179,36 +1191,36 @@ export default function CareerReportsPage() {
 
       {/* Hero Header */}
       <section className="border-b border-stone-200/80 bg-[#F5F1EC]">
-        <div className="max-w-7xl w-full mx-auto py-8 sm:py-10 px-4 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="max-w-7xl w-full mx-auto py-6 sm:py-10 px-3.5 sm:px-6 flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
           {/* Left-aligned Content */}
-          <div className="space-y-3 max-w-2xl text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5]">
-              <Sparkles className="w-3.5 h-3.5 text-[#C9A97A]" />
-              Free Public Access &bull; {allCareers.length} Career Options
+          <div className="space-y-2.5 sm:space-y-3 max-w-2xl text-left">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-stone-900 text-[#FAF8F5] w-fit">
+              <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#C9A97A]" />
+              <span>Free Public Access &bull; {allCareers.length} Careers</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-stone-900 tracking-tight leading-tight">
               Explore All Career Options &amp; Reports
             </h1>
 
-            <p className="text-xs sm:text-base text-stone-600 font-medium leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base text-stone-600 font-medium leading-relaxed">
               Click any career card below to open and read its complete, full-length blueprint report. We listed few here but there are 300+ broad recognizable career options in india. 
             </p>
           </div>
 
-          {/* Top Right: Real School Logo + Snail Dance Animation */}
-          <div className="shrink-0 flex items-center gap-3 sm:gap-5 justify-start md:justify-end">
+          {/* Top Right: Real School Logo + Snail Dance Animation (Centered & Balanced on Mobile) */}
+          <div className="shrink-0 flex items-center gap-4 sm:gap-6 justify-center md:justify-end w-full md:w-auto pt-1 md:pt-0">
             {verifiedSchool?.logo_url && (
               <div className="flex items-center justify-center shrink-0">
                 <img
                   src={verifiedSchool.logo_url}
                   alt={verifiedSchool.school_name || verifiedSchool.school_id}
-                  className="h-20 w-20 sm:h-28 sm:w-28 md:h-32 md:w-32 object-contain hover:scale-105 transition-transform"
+                  className="h-16 w-16 sm:h-24 sm:w-24 md:h-32 md:w-32 object-contain hover:scale-105 transition-transform"
                 />
               </div>
             )}
 
-            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex items-center justify-center">
+            <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 flex items-center justify-center shrink-0">
               <DotLottieReact
                 src="/snail-dance.lottie"
                 loop
