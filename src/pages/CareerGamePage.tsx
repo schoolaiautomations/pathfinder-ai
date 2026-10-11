@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { CAREER_GAMES, CareerGame, GameQuestion } from "@/lib/career-game-data";
+import { getVerifiedSchoolSession } from "@/lib/supabase";
 
 // Web Audio API Sound Synthesizer (Zero External Assets, Instant & Reliable)
 class SoundFX {
@@ -402,6 +403,7 @@ const ALL_LOBBY_TRACKS = [
 ];
 
 export default function CareerGamePage() {
+  const verifiedSchool = getVerifiedSchoolSession();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -556,6 +558,20 @@ export default function CareerGamePage() {
 
   return (
     <main className="min-h-screen font-sans text-stone-900 relative overflow-x-hidden flex flex-col" style={{ background: "#FAF8F5" }}>
+      {/* ── Background School Logo Watermark across Quiz ── */}
+      {verifiedSchool?.logo_url && (
+        <div
+          className="pointer-events-none fixed inset-0 z-20 flex items-center justify-center select-none overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={verifiedSchool.logo_url}
+            alt="School Watermark"
+            className="w-[320px] sm:w-[480px] max-h-[480px] object-contain opacity-[0.06] filter grayscale mix-blend-multiply transition-opacity duration-300"
+          />
+        </div>
+      )}
+
       {/* Confetti Canvas */}
       <canvas
         ref={canvasRef}
@@ -580,6 +596,16 @@ export default function CareerGamePage() {
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
             </button>
+
+            {verifiedSchool?.logo_url && (
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white border border-stone-200 shadow-2xs">
+                <img
+                  src={verifiedSchool.logo_url}
+                  alt={verifiedSchool.school_name || verifiedSchool.school_id}
+                  className="h-6 sm:h-7 max-w-[90px] object-contain"
+                />
+              </div>
+            )}
 
             {gameMode !== "lobby" ? (
               <button

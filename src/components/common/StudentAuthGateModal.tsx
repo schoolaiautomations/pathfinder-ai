@@ -21,27 +21,47 @@ import {
   ArrowRight,
   ArrowLeft,
   ShieldCheck,
+  Building2,
+  School as SchoolIcon,
+  X,
 } from "lucide-react";
-import { signInWithGoogle, saveStudentExplorerProfile, StudentExplorerProfile } from "@/lib/supabase";
+import {
+  signInWithGoogle,
+  saveStudentExplorerProfile,
+  StudentExplorerProfile,
+  SchoolRecord,
+  verifySchoolId,
+  setVerifiedSchoolSession,
+} from "@/lib/supabase";
 import { useToast } from "@/hooks/use-toast";
 
 interface StudentAuthGateModalProps {
   isOpen: boolean;
   user: User | null;
+  verifiedSchool: SchoolRecord | null;
+  onSchoolVerified: (school: SchoolRecord | null) => void;
   onProfileSaved: (profile: StudentExplorerProfile) => void;
+  onClose?: () => void;
 }
 
 export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
   isOpen,
   user,
+  verifiedSchool,
+  onSchoolVerified,
   onProfileSaved,
+  onClose,
 }) => {
   const { toast } = useToast();
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isVerifyingSchool, setIsVerifyingSchool] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Mandatory fields
+  // School ID input state
+  const [inputSchoolId, setInputSchoolId] = useState("");
+
+  // Mandatory student fields
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
   const [studentLocation, setStudentLocation] = useState("");
@@ -60,6 +80,47 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
       }
     }
   }, [user]);
+
+  const handleVerifySchool = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage(null);
+
+    const cleanId = inputSchoolId.trim();
+    if (!cleanId) {
+      setErrorMessage("Please enter your School ID.");
+      return;
+    }
+
+    setIsVerifyingSchool(true);
+    try {
+      const res = await verifySchoolId(cleanId);
+      if (res.success && res.school) {
+        onSchoolVerified(res.school);
+        toast({
+          title: "School Verified!",
+          description: `School logo set as background for ${res.school.school_name || res.school.school_id}!`,
+        });
+        if (onClose && user) {
+          onClose();
+        }
+      } else {
+        setErrorMessage(
+          res.error || `School ID "${cleanId}" was not found. Please verify with your school coordinator.`
+        );
+      }
+    } catch (err: any) {
+      setErrorMessage(err?.message || "Failed to verify School ID. Please try again.");
+    } finally {
+      setIsVerifyingSchool(false);
+    }
+  };
+
+  const handleResetSchool = () => {
+    setVerifiedSchoolSession(null);
+    onSchoolVerified(null);
+    setInputSchoolId("");
+    setErrorMessage(null);
+  };
 
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
@@ -85,7 +146,6 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
     const cleanLocation = studentLocation.trim();
     const cleanPhone = studentPhone.trim().replace(/[^0-9+]/g, "");
 
-    // Validate mandatory fields
     if (!cleanName || !cleanClass || !cleanLocation || !cleanPhone) {
       setErrorMessage("All fields are mandatory. Please fill in your name, class, location, and phone number.");
       return;
@@ -108,6 +168,7 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
         email: user?.email || null,
         auth_user_id: user?.id || null,
         google_avatar_url: googleAvatar,
+        school_id: verifiedSchool?.school_id || null,
       });
 
       toast({
@@ -126,8 +187,10 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
           email: user?.email || null,
           auth_user_id: user?.id || null,
           google_avatar_url: googleAvatar,
+          school_id: verifiedSchool?.school_id || null,
         });
       }
+      if (onClose) onClose();
     } catch (err: any) {
       setErrorMessage(err?.message || "Failed to save profile. Please try again.");
     } finally {
@@ -136,15 +199,126 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
   };
 
   return (
-    <Dialog open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={(open) => { if (!open && onClose && user && verifiedSchool) onClose(); }}>
       <DialogContent
-        className="max-w-md bg-white border border-stone-200 text-stone-900 rounded-3xl p-6 sm:p-7 shadow-2xl [&>button]:hidden"
-        onPointerDownOutside={(e) => e.preventDefault()}
-        onEscapeKeyDown={(e) => e.preventDefault()}
+        className="max-w-md bg-white border border-stone-200 text-stone-900 rounded-3xl p-6 sm:p-7 shadow-2xl relative"
+        onPointerDownOutside={(e) => {
+          if (!verifiedSchool || !user) e.preventDefault();
+        }}
+        onEscapeKeyDown={(e) => {
+          if (!verifiedSchool || !user) e.preventDefault();
+        }}
       >
-        {!user ? (
-          /* ── STEP 1: Google Sign-In Required ── */
+        {onClose && (verifiedSchool || user) && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-5 right-5 p-1 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+            aria-label="Close"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
+
+        {/* ── STAGE 0: ENTER SCHOOL ID (BEFORE SIGN IN / TO SET BACKGROUND LOGO) ── */}
+        {!verifiedSchool ? (
           <div className="space-y-5 text-left">
+            <DialogHeader className="space-y-2 text-left">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5F1EC] border border-[#E0D6CA] text-[#7C5C3E] text-xs font-bold uppercase tracking-wider w-fit">
+                <SchoolIcon className="w-3.5 h-3.5 text-[#C9A97A]" />
+                School Access &amp; Logo Setup
+              </div>
+              <DialogTitle className="text-xl sm:text-2xl font-extrabold text-stone-900 tracking-tight leading-snug">
+                Enter Your School ID
+              </DialogTitle>
+              <DialogDescription className="text-xs sm:text-sm text-stone-500 font-medium leading-relaxed">
+                Enter your School ID to activate your school's branded background and portal access across Explore Careers.
+              </DialogDescription>
+            </DialogHeader>
+
+            {errorMessage && (
+              <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleVerifySchool} className="space-y-3 pt-1">
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
+                  <Building2 className="w-3.5 h-3.5 text-[#7C5C3E]" />
+                  School ID or Image URL *
+                </label>
+                <Input
+                  required
+                  autoFocus
+                  value={inputSchoolId}
+                  onChange={(e) => setInputSchoolId(e.target.value)}
+                  placeholder="e.g. DPS101, DEMO, or paste Logo URL"
+                  className="h-11 rounded-xl text-sm font-bold bg-stone-50 border-stone-200 focus:bg-white"
+                />
+                <p className="text-[11px] text-stone-400 font-medium">
+                  Matches your Supabase <code className="bg-stone-100 px-1 py-0.5 rounded text-stone-600 font-mono">schools</code> table. Or enter <code className="bg-stone-100 px-1 py-0.5 rounded text-stone-600 font-bold">DEMO</code> / direct image URL to test immediately.
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  disabled={isVerifyingSchool || !inputSchoolId.trim()}
+                  className="w-full h-11 rounded-xl font-bold text-xs sm:text-sm bg-stone-900 text-white hover:bg-stone-800 shadow-md cursor-pointer transition-all flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99]"
+                >
+                  {isVerifyingSchool ? (
+                    <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <span>Verify &amp; Set Background Logo</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </Button>
+              </div>
+            </form>
+
+            <div className="flex flex-col items-center gap-2 pt-1">
+              <Link
+                to="/"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-500 hover:text-stone-900 transition-colors cursor-pointer py-1"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Return to Home</span>
+              </Link>
+            </div>
+          </div>
+        ) : !user ? (
+          /* ── STAGE 1: GOOGLE SIGN-IN REQUIRED ── */
+          <div className="space-y-5 text-left">
+            {/* Verified School Banner & Background Preview */}
+            <div className="flex items-center gap-3 p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80">
+              <img
+                src={verifiedSchool.logo_url}
+                alt="School Logo"
+                className="h-9 max-w-[85px] object-contain rounded-md shrink-0 bg-white p-1 border border-amber-100 shadow-2xs"
+              />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-800">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  <span>Verified School &amp; Background Active</span>
+                </div>
+                <div className="text-xs font-extrabold text-stone-900 truncate">
+                  {verifiedSchool.school_name || verifiedSchool.school_id}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={handleResetSchool}
+                className="text-[11px] font-bold text-stone-400 hover:text-stone-800 underline shrink-0 cursor-pointer"
+                title="Change School ID"
+              >
+                Change
+              </button>
+            </div>
+
             <DialogHeader className="space-y-2 text-left">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5F1EC] border border-[#E0D6CA] text-[#7C5C3E] text-xs font-bold uppercase tracking-wider w-fit">
                 <Lock className="w-3.5 h-3.5 text-[#C9A97A]" />
@@ -154,7 +328,7 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
                 Sign in to Explore Careers
               </DialogTitle>
               <DialogDescription className="text-xs sm:text-sm text-stone-500 font-medium leading-relaxed">
-                Sign in with your Google account to unlock free, unlimited access to 31+ in-depth career blueprints, salary guides, and educational roadmaps.
+                Sign in with your Google account to unlock free, unlimited access to 55+ in-depth career blueprints, salary guides, and educational roadmaps.
               </DialogDescription>
             </DialogHeader>
 
@@ -163,7 +337,7 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
               {[
                 "Complete 4-Circles career evaluation & roadmaps",
                 "Intermediate stream choices (MPC, BiPC, CEC, etc.)",
-                "Audio explanations & salary growth insights",
+                "Telugu & English audio explanations & salary growth insights",
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-stone-700">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -227,8 +401,33 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
             </div>
           </div>
         ) : (
-          /* ── STEP 2: Mandatory Student Onboarding Form ── */
+          /* ── STAGE 2: MANDATORY STUDENT ONBOARDING FORM ── */
           <div className="space-y-4 text-left">
+            {/* Verified School Pill */}
+            <div className="flex items-center gap-3 p-2.5 rounded-2xl bg-amber-50/70 border border-amber-200/80">
+              <img
+                src={verifiedSchool.logo_url}
+                alt="School Logo"
+                className="h-8 max-w-[70px] object-contain rounded shrink-0 bg-white p-0.5 border border-amber-100"
+              />
+              <div className="min-w-0 flex-1">
+                <span className="text-[9px] font-black uppercase tracking-wider text-amber-800 block">
+                  Enrolled School &amp; Background Active
+                </span>
+                <span className="text-xs font-bold text-stone-900 truncate block">
+                  {verifiedSchool.school_name || verifiedSchool.school_id}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleResetSchool}
+                className="text-[11px] font-bold text-stone-400 hover:text-stone-800 underline shrink-0 cursor-pointer"
+                title="Change School ID"
+              >
+                Change
+              </button>
+            </div>
+
             <DialogHeader className="space-y-1 text-left">
               <div className="flex items-center gap-2">
                 {user.user_metadata?.avatar_url && (
@@ -259,7 +458,6 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
             )}
 
             <form onSubmit={handleProfileSubmit} className="space-y-3 pt-1">
-              {/* Student Name */}
               <div className="space-y-1">
                 <label className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
                   <UserIcon className="w-3.5 h-3.5 text-[#7C5C3E]" />
@@ -274,7 +472,6 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
                 />
               </div>
 
-              {/* Class / Year */}
               <div className="space-y-1">
                 <label className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
                   <GraduationCap className="w-3.5 h-3.5 text-[#7C5C3E]" />
@@ -289,7 +486,6 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
                 />
               </div>
 
-              {/* Location / City */}
               <div className="space-y-1">
                 <label className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#7C5C3E]" />
@@ -304,7 +500,6 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
                 />
               </div>
 
-              {/* Contact Number */}
               <div className="space-y-1">
                 <label className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
                   <Phone className="w-3.5 h-3.5 text-[#7C5C3E]" />

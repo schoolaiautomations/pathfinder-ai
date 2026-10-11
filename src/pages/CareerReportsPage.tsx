@@ -54,6 +54,10 @@ import {
   getStudentExplorerProfile,
   signOutStudent,
   StudentExplorerProfile,
+  SchoolRecord,
+  getVerifiedSchoolSession,
+  verifySchoolId,
+  setVerifiedSchoolSession,
 } from "@/lib/supabase";
 import type { User } from "@supabase/supabase-js";
 
@@ -440,10 +444,26 @@ export default function CareerReportsPage() {
   const [popupCancelCount, setPopupCancelCount] = useState(0);
   const popupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Student Auth Gate State (Google Sign-In & Profile Onboarding)
+  // Student Auth Gate State (School Access, Google Sign-In & Profile Onboarding)
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [studentProfile, setStudentProfile] = useState<StudentExplorerProfile | null>(null);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
+  const [isSchoolModalOpen, setIsSchoolModalOpen] = useState(false);
+  const [verifiedSchool, setVerifiedSchool] = useState<SchoolRecord | null>(() => {
+    return getVerifiedSchoolSession();
+  });
+
+  // Check URL parameter for school_id (e.g. ?school=DPS101 or ?school_id=DPS101)
+  useEffect(() => {
+    const schoolParam = searchParams.get("school") || searchParams.get("school_id");
+    if (schoolParam) {
+      verifySchoolId(schoolParam).then((res) => {
+        if (res.success && res.school) {
+          setVerifiedSchool(res.school);
+        }
+      });
+    }
+  }, [searchParams]);
 
   // Check auth session & profile on mount and on auth state change
   useEffect(() => {
@@ -498,7 +518,7 @@ export default function CareerReportsPage() {
     };
   }, []);
 
-  const isAccessGranted = Boolean(currentUser && studentProfile);
+  const isAccessGranted = Boolean(verifiedSchool && currentUser && studentProfile);
 
   const scheduleNextPopup = (delayMs: number) => {
     if (popupTimerRef.current) {
@@ -846,6 +866,8 @@ export default function CareerReportsPage() {
                     await signOutStudent();
                     setCurrentUser(null);
                     setStudentProfile(null);
+                    setVerifiedSchoolSession(null);
+                    setVerifiedSchool(null);
                     navigate("/");
                   }}
                   className="text-stone-400 hover:text-red-600 text-[10px] ml-0.5 underline cursor-pointer"
@@ -859,7 +881,20 @@ export default function CareerReportsPage() {
         </header>
 
         {/* Full-Page Clean Report Iframe */}
-        <div className="flex-1 w-full bg-stone-50 min-h-[calc(100vh-65px)]">
+        <div className="flex-1 w-full bg-stone-50 min-h-[calc(100vh-65px)] relative">
+          {/* Watermark overlay OVER the iframe */}
+          {verifiedSchool?.logo_url && (
+            <div
+              className="pointer-events-none fixed inset-0 z-30 flex items-center justify-center select-none overflow-hidden"
+              aria-hidden="true"
+            >
+              <img
+                src={verifiedSchool.logo_url}
+                alt="School Watermark"
+                className="w-[320px] sm:w-[480px] max-h-[480px] object-contain opacity-[0.06] filter grayscale mix-blend-multiply transition-opacity duration-300"
+              />
+            </div>
+          )}
           <iframe
             src={
               language === "te"
@@ -1035,9 +1070,15 @@ export default function CareerReportsPage() {
       />
       {/* Student Auth & Mandatory Onboarding Gate Modal */}
         <StudentAuthGateModal
-          isOpen={!isAuthChecking && !isAccessGranted}
+          isOpen={isSchoolModalOpen || (!isAuthChecking && !isAccessGranted)}
           user={currentUser}
+          verifiedSchool={verifiedSchool}
+          onSchoolVerified={(school) => {
+            setVerifiedSchool(school);
+            setIsSchoolModalOpen(false);
+          }}
           onProfileSaved={(prof) => setStudentProfile(prof)}
+          onClose={() => setIsSchoolModalOpen(false)}
         />
 
         {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
@@ -1110,6 +1151,8 @@ export default function CareerReportsPage() {
                     await signOutStudent();
                     setCurrentUser(null);
                     setStudentProfile(null);
+                    setVerifiedSchoolSession(null);
+                    setVerifiedSchool(null);
                     navigate("/");
                   }}
                   className="text-stone-400 hover:text-red-600 text-[10px] ml-0.5 underline cursor-pointer"
@@ -1153,9 +1196,19 @@ export default function CareerReportsPage() {
             </p>
           </div>
 
-          {/* Top Right: Snail Dance Lottie Animation */}
-          <div className="shrink-0 flex items-center justify-start md:justify-end">
-            <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center">
+          {/* Top Right: Real School Logo + Snail Dance Animation */}
+          <div className="shrink-0 flex items-center gap-3 sm:gap-5 justify-start md:justify-end">
+            {verifiedSchool?.logo_url && (
+              <div className="flex items-center justify-center shrink-0">
+                <img
+                  src={verifiedSchool.logo_url}
+                  alt={verifiedSchool.school_name || verifiedSchool.school_id}
+                  className="h-20 w-20 sm:h-28 sm:w-28 md:h-32 md:w-32 object-contain hover:scale-105 transition-transform"
+                />
+              </div>
+            )}
+
+            <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 flex items-center justify-center">
               <DotLottieReact
                 src="/snail-dance.lottie"
                 loop
@@ -1410,10 +1463,16 @@ export default function CareerReportsPage() {
       />
       {/* Student Auth & Mandatory Onboarding Gate Modal */}
       <StudentAuthGateModal
-        isOpen={!isAuthChecking && !isAccessGranted}
-        user={currentUser}
-        onProfileSaved={(prof) => setStudentProfile(prof)}
-      />
+          isOpen={isSchoolModalOpen || (!isAuthChecking && !isAccessGranted)}
+          user={currentUser}
+          verifiedSchool={verifiedSchool}
+          onSchoolVerified={(school) => {
+            setVerifiedSchool(school);
+            setIsSchoolModalOpen(false);
+          }}
+          onProfileSaved={(prof) => setStudentProfile(prof)}
+          onClose={() => setIsSchoolModalOpen(false)}
+        />
 
       {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
       <AiCareerMentor onOpenBooking={handleOpenBookingModal} careerContext="Explore All Careers" />

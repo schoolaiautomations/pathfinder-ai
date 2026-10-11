@@ -27,6 +27,7 @@ import {
   TELUGU_CAREER_FILES,
   CAREER_AUDIO_MAP,
 } from "@/lib/career-translations-te";
+import { getVerifiedSchoolSession } from "@/lib/supabase";
 
 type FourCirclesReportViewProps = {
   formData: RoadmapFormData;
@@ -57,6 +58,7 @@ export const FourCirclesReportView = ({ formData, fileName }: FourCirclesReportV
       (opt) => opt.label.toLowerCase() === (formData.careerGoal || "").trim().toLowerCase()
     );
   const careerId = careerOption?.id || "";
+  const verifiedSchool = getVerifiedSchoolSession();
 
   // Audio state
   const audioUrl = careerId ? CAREER_AUDIO_MAP[careerId] : undefined;
@@ -228,7 +230,20 @@ export const FourCirclesReportView = ({ formData, fileName }: FourCirclesReportV
   }, [bodyContent, formData]);
 
   return (
-    <div className="min-h-screen bg-[#E9EBE6] text-[#14243A] pb-24 font-sans safe-bottom">
+    <div className="min-h-screen bg-[#E9EBE6] text-[#14243A] pb-24 font-sans safe-bottom relative">
+      {/* ── Background School Logo Watermark ── */}
+      {verifiedSchool?.logo_url && (
+        <div
+          className="fixed inset-0 pointer-events-none z-20 flex items-center justify-center select-none overflow-hidden"
+          aria-hidden="true"
+        >
+          <img
+            src={verifiedSchool.logo_url}
+            alt="School Watermark"
+            className="w-[340px] sm:w-[540px] max-h-[540px] object-contain opacity-[0.06] filter grayscale mix-blend-multiply transition-opacity duration-300"
+          />
+        </div>
+      )}
       {/* Hidden HTML5 Audio Element */}
       {audioUrl && (
         <audio
@@ -341,8 +356,16 @@ export const FourCirclesReportView = ({ formData, fileName }: FourCirclesReportV
       {/* Top Action Bar with Language Toggle, Audio Player, Roadmap Icon, PDF & Try Another */}
       <div className="max-w-[920px] mx-auto px-3 sm:px-4 pt-4 sm:pt-6 no-print space-y-3">
         <div className="bg-white border border-[#D3D7D2] rounded-2xl p-3.5 sm:p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
-          {/* Left Title / Badge */}
+          {/* Left Title / Badge & School Branding */}
           <div className="flex items-center gap-2 text-xs font-bold text-[#7E6A2E] uppercase tracking-wider">
+            {verifiedSchool?.logo_url && (
+              <img
+                src={verifiedSchool.logo_url}
+                alt={verifiedSchool.school_name || verifiedSchool.school_id}
+                className="h-6 max-w-[85px] object-contain rounded bg-white p-0.5 border border-stone-200"
+                title={verifiedSchool.school_name || verifiedSchool.school_id}
+              />
+            )}
             <Sparkles className="w-4 h-4 text-[#14243A]" />
             <span>Four Circles Career Fit Report</span>
           </div>
