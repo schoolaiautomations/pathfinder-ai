@@ -15,6 +15,7 @@ import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import raviTeja from "@/lib/ravi_teja.jpg";
 import srinivasN from "@/lib/srinivas_n.jpg";
 import sivaSai from "@/lib/p_sivasai.jpeg";
+import subhashReddy from "@/lib/v_subash_reddy.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import {
   Dialog,
@@ -33,6 +34,19 @@ interface Mentor {
 }
 
 const mentors: Mentor[] = [
+  {
+    name: "Dr. V. Subhash Reddy",
+    photo: subhashReddy,
+    qualification: "B.H.M.S., M.Sc. in Psychology",
+    role: "District Career & Mental Health Counsellor",
+    bio: "Dedicated to student career development, mental health awareness, psychological counselling, de-addiction support, and community well-being. Associated with Sri Srinivasa Homoeo Clinic, an institution with over 40 years of history and three branches. Executive Committee Member, APAI – East Godavari.\n\nVision: To make a better society through mental health awareness, counselling, and compassionate healthcare.",
+    specializations: [
+      "Mental Health Awareness & Counselling",
+      "Student Career Development",
+      "De-Addiction Support",
+      "Compassionate Healthcare",
+    ],
+  },
   {
     name: "Siva Sai P",
     photo: sivaSai,
@@ -151,7 +165,7 @@ const CareerMentorsPage = () => {
 
       {/* ─── MENTOR GRID ─────────────────────────────────────────────────────── */}
       <main className="flex-1 px-4 sm:px-8 pb-10">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {mentors.map((mentor) => (
             <div
               key={mentor.name}
