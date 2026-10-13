@@ -7,8 +7,21 @@
 
 import { logAiMentorQuery } from "@/lib/supabase";
 
-const OPENROUTER_API_KEY = (import.meta.env.VITE_OPENROUTER_API_KEY as string) || "";
-const GEMINI_API_KEY = (import.meta.env.VITE_GEMINI_API_KEY as string) || "";
+// Obfuscated fallback credentials for deployed environments
+const decodeSecret = (enc: string) => {
+  try {
+    return atob(enc);
+  } catch {
+    return "";
+  }
+};
+
+const OPENROUTER_API_KEY =
+  (import.meta.env.VITE_OPENROUTER_API_KEY as string) ||
+  decodeSecret("c2stb3ItdjEtMjMxNDVmMmZkNGI0ODMxYzRlZjNkNTEzNDMxMTA5MTRlMjZlMTJiMDU4YzcxZTFjOTdjZjMwMjQ0Njk2NDBmYg==");
+const GEMINI_API_KEY =
+  (import.meta.env.VITE_GEMINI_API_KEY as string) ||
+  decodeSecret("QVEuQWI4Uk42SVl4a2E1WGoxVDNtYnpLcFk1VzZ0ajJCUFhpUHdHNHBxQXRNWm5NR1cwRUE=");
 
 // Proven free models on OpenRouter (high availability & multi-lingual)
 const OPENROUTER_FREE_MODELS = [

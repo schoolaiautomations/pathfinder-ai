@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు వృత్తాలు — బిజినెస్ అనలిస్ట్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ సరిపోతుందా? · భారతదేశం</div><h2>బిజినెస్ అనలిస్ట్</h2><p class="standfirst">బిజినెస్ అనలిస్ట్ ఒక కంపెనీలో సమస్యను అర్థం చేసుకుంటారు. వినియోగదారులు, మేనేజర్లతో మాట్లాడి, పని విధానాలను, డేటాను పరిశీలించి ఏం మార్చాలో సూచిస్తారు. చాలా కంపెనీల్లో <b>వ్యాపార బృందాలకూ టెక్నాలజీ బృందాలకూ మధ్య వారధిగా</b> పనిచేస్తారు. అవసరాలను స్పష్టంగా రాయడం, పని విధానం మెరుగుపరచడం, రిపోర్టులు, డాష్‌బోర్డులు లేదా ప్రొడక్ట్ మార్పులు చేయించడంలో తోడ్పడతారు.</p></div>
+<div class="printhead">కెరీర్‌కి నాలుగు వృత్తాలు  ·  బిజినెస్ అనలిస్ట్  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>సమస్యలు + మనుషులు</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>డిగ్రీ + వ్యాపార నైపుణ్యాలు</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>వ్యాపారం + టెక్నాలజీ</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>నైపుణ్యం + రంగం</em></a>
+</nav>
+<section id="c1"><div class="num">వృత్తం 1</div><h3>బిజినెస్ అనాలిసిస్ మీకు సరిపోతుందా?</h3><p class="lede">బిజినెస్ అనలిస్ట్ అంటే PowerPoint ప్రెజెంటేషన్లు తయారుచేసే వ్యక్తి మాత్రమే కాదు. అసలు పని సమస్యను సరిగ్గా అర్థం చేసుకోవడం, మంచి ప్రశ్నలు అడగడం, అమలు చేయగల పరిష్కారంపై అందరినీ ఒప్పించడం.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>ఏదైనా సమస్య వచ్చినప్పుడు “ఇలా ఎందుకు జరుగుతోంది?” అని అడిగి అసలు కారణం తెలుసుకోవడం మీకు ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వినియోగదారులు, మేనేజర్లు, టెక్నికల్ బృందాలతో మాట్లాడి ఒక్కొక్కరి అవసరం తెలుసుకోవడం ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>గందరగోళంగా ఉన్న సమాచారాన్ని అర్థమయ్యే దశల వారీ పద్ధతిలో అమర్చగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>సంఖ్యలు, స్ప్రెడ్‌షీట్లు, చార్టులు, ప్రాథమిక డేటా విశ్లేషణతో పనిచేయడానికి ఇబ్బంది లేదా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>మీకు తెలిసిన విషయం తెలియని వ్యక్తికి కూడా ఒక సమస్యను సులభంగా వివరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వ్యాపార విషయాలతో పాటు ప్రాథమిక టెక్నాలజీ, కంప్యూటర్ టూల్స్ నేర్చుకోవడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ జవాబు ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">వృత్తం 2</div><h3>ఎలా బిజినెస్ అనలిస్ట్ కావచ్చు?</h3><p class="lede">ఈ వృత్తికి తప్పనిసరిగా ఒకే డిగ్రీ లేదా దేశవ్యాప్త ఒకే ప్రవేశ పరీక్ష లేదు. బిజినెస్, కామర్స్, ఎకనామిక్స్, ఇంజినీరింగ్, కంప్యూటర్ సైన్స్, స్టాటిస్టిక్స్ వంటి చదువుల నుంచి రావచ్చు.</p>
+<div class="flag green"><span class="mark">ఉపయోగపడే పదాలు</span><span><b>BA</b> = బిజినెస్ అనలిస్ట్. <b>BRD</b> = వ్యాపార అవసరాలను రాసే పత్రం. <b>UAT</b> = వినియోగదారులు సాఫ్ట్‌వేర్‌ను పరీక్షించడం. <b>SQL</b> = డేటాబేస్‌లోని సమాచారంతో పనిచేసే భాష. <b>BPMN</b> = వ్యాపార పని విధానాన్ని చిత్రంగా చూపే ప్రామాణిక పద్ధతి.</span></div>
+<div class="card">
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>ఏ ఇంటర్ గ్రూప్ అయినా ఎంచుకోవచ్చు.</b><br/><br/>వ్యాపారం, ఎకనామిక్స్, లెక్కలు ఇష్టమైతే <b>MEC / Commerce</b> ఉపయోగపడుతుంది.<br/><br/>ఇంజినీరింగ్, కంప్యూటర్ సైన్స్, స్టాటిస్టిక్స్ లేదా టెక్నికల్ అనాలిసిస్ చేయాలనుకుంటే <b>MPC</b> ఉపయోగపడుతుంది.<br/><br/><b>CEC / Humanities</b> కూడా సరిపోతాయి; కానీ తర్వాత సంఖ్యలపై పట్టు, Excel, టెక్నాలజీ నైపుణ్యాలను పెంచుకోవాలి.</div></div>
+<div class="row"><div class="k">మార్గం A — BBA / B.Com</div><div class="v"><b>12వ తరగతి → BBA / B.Com → Excel + వ్యాపార పని విధానాలు + ప్రాథమిక SQL + Power BI → ఇంటర్న్‌షిప్ → జూనియర్ బిజినెస్ అనలిస్ట్ / ఆపరేషన్స్ అనలిస్ట్.</b><br/><br/>వ్యాపారం, ఫైనాన్స్, రోజువారీ కార్యకలాపాలు, కమ్యూనికేషన్ ఇష్టమయ్యే విద్యార్థులకు ఇది మంచి మార్గం.</div></div>
+<div class="row"><div class="k">మార్గం B — B.Tech / B.E.</div><div class="v"><b>MPC → CSE / IT / ECE లేదా ఇతర ఇంజినీరింగ్ → సాఫ్ట్‌వేర్ వ్యవస్థలు + SQL + అవసరాల సేకరణ + వ్యాపార ప్రక్రియలు → IT బిజినెస్ అనలిస్ట్ / ప్రొడక్ట్ అనలిస్ట్.</b><br/><br/>టెక్నాలజీ కంపెనీల్లో ఇది సాధారణ మార్గం. సాఫ్ట్‌వేర్, వ్యాపార అవసరాలు రెండూ అర్థమవుతాయి.</div></div>
+<div class="row"><div class="k">మార్గం C — ఎకనామిక్స్ / స్టాటిస్టిక్స్</div><div class="v"><b>12వ తరగతి → BA/B.Sc. Economics, Statistics లేదా Mathematics → Excel + SQL + డాష్‌బోర్డులు + వ్యాపార అవగాహన → బిజినెస్ అనలిస్ట్ / డేటా ఆధారిత BA / స్ట్రాటజీ అనలిస్ట్.</b><br/><br/>లోతుగా ఆలోచించి సమస్యలు పరిష్కరించాలనుకునేవారికి మంచిది.</div></div>
+<div class="row"><div class="k">మార్గం D — కంప్యూటర్ అప్లికేషన్స్ / IT</div><div class="v"><b>12వ తరగతి → BCA / B.Sc. Computer Science / IT → SQL + సిస్టమ్స్ + ప్రక్రియల మ్యాపింగ్ + కమ్యూనికేషన్ → IT బిజినెస్ అనలిస్ట్ / ఫంక్షనల్ అనలిస్ట్.</b></div></div>
+<div class="row"><div class="k">MBA మార్గం</div><div class="v"><b>డిగ్రీ → CAT / XAT / CMAT లేదా ఇతర ప్రవేశ మార్గం → MBA/PGDM → బిజినెస్ అనలిస్ట్ / స్ట్రాటజీ / కన్సల్టింగ్ / ప్రొడక్ట్ / ఆపరేషన్స్ ఉద్యోగాలు.</b><br/><br/>మేనేజ్‌మెంట్, కన్సల్టింగ్ ఉద్యోగాలకు MBA ఉపయోగపడుతుంది. కానీ <b>ప్రతి బిజినెస్ అనలిస్ట్ ఉద్యోగానికీ MBA తప్పనిసరి కాదు.</b></div></div>
+<div class="row"><div class="k">అదనపు సర్టిఫికెట్లు</div><div class="v">పని అనుభవాన్ని బట్టి తర్వాత IIBA ఇచ్చే <b>ECBA, CCBA, CBAP</b> లేదా బిజినెస్ అనాలిసిస్, Agile, ప్రొడక్ట్ సర్టిఫికెట్లు చూడవచ్చు.<br/><br/><b>సర్టిఫికెట్‌ను నిజమైన ప్రాజెక్టులు, కమ్యూనికేషన్, సమస్య పరిష్కారానికి ప్రత్యామ్నాయంగా భావించవద్దు.</b></div></div>
+<div class="row"><div class="k">కంపెనీలు కోరే నైపుణ్యాలు</div><div class="v"><b>Excel · SQL · Power BI · అవసరాలు గుర్తించడం · పని విధానం గీయడం · కమ్యూనికేషన్ · సమస్య పరిష్కారం.</b><br/><br/>IT బిజినెస్ అనలిస్ట్ పాత్రల్లో APIs, డేటాబేస్‌లు, Agile/Scrum, సాఫ్ట్‌వేర్ తయారీ ప్రక్రియ గురించి ప్రాథమిక అవగాహన కూడా ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన మార్గం</div><div class="v"><b>10వ తరగతి → సరైన ఇంటర్ గ్రూప్ → BBA/B.Com/B.Tech/BCA/Economics/Statistics లేదా సంబంధిత డిగ్రీ → Excel + SQL + ప్రక్రియల మ్యాపింగ్ + అవసరాల డాక్యుమెంట్ + Power BI → ప్రాజెక్ట్/ఇంటర్న్‌షిప్ → జూనియర్ BA → బిజినెస్ అనలిస్ట్.</b></div></div>
+<div class="flag red"><span class="mark">చాలా ముఖ్యం</span><span><b>టూల్స్ ఒక్కటే నేర్చుకుంటే సరిపోదు.</b> Excel, SQL, Power BI ఉపయోగపడతాయి. కానీ ముందుగా అసలు వ్యాపార సమస్య ఏంటో తెలుసుకుని, సరైన ప్రశ్నలు వేసి, అవసరాలను స్పష్టమైన పరిష్కారంగా మార్చగలగాలి.</span></div>
+</div></section>
+<section id="c3"><div class="num">వృత్తం 3 · ఉద్యోగాలు మరియు అవకాశాలు</div><h3>ఎలాంటి బిజినెస్ అనలిస్ట్ ఉద్యోగాలు ఉన్నాయి?</h3><p class="lede">దాదాపు అన్ని రంగాల్లో బిజినెస్ అనలిస్ట్‌లు ఉంటారు. సాఫ్ట్‌వేర్, రోజువారీ కార్యకలాపాలు, ప్రొడక్ట్స్, ఫైనాన్స్ లేదా డేటా మీద దృష్టి బట్టి ఉద్యోగ పేరు, పని మారుతాయి.</p>
+<div class="card">
+<div class="row"><div class="k">IT బిజినెస్ అనలిస్ట్</div><div class="v"><b>వ్యాపార వినియోగదారులు, సాఫ్ట్‌వేర్ బృందాల మధ్య పనిచేస్తారు.</b> అవసరాలు సేకరించడం, పని విధానాలు వివరించడం, కొత్త ఫీచర్లు స్పష్టం చేయడం, టెస్టింగ్‌కు సహాయం చేయడం చేస్తారు.<br/><b>నైపుణ్యాలు:</b> Requirements · Systems · UAT.</div></div>
+<div class="row"><div class="k">ఫంక్షనల్ అనలిస్ట్</div><div class="v">ఫైనాన్స్, HR, సప్లై చైన్ లేదా ERP వంటి వ్యాపార విభాగం ఎలా పనిచేస్తుందో అర్థం చేసుకుని, ఆ పనికి ఉపయోగించే సాఫ్ట్‌వేర్ వ్యవస్థలను మెరుగుపరుస్తారు.</div></div>
+<div class="row"><div class="k">ప్రాసెస్ అనలిస్ట్</div><div class="v">ఒక సంస్థలో పని ఎలా ముందుకు సాగుతుందో పరిశీలించి, ఆలస్యాలు, అనవసరమైన దశలు కనిపెట్టి, వేగంగా, తక్కువ ఖర్చుతో, నమ్మకంగా జరిగేలా పద్ధతిని మార్చుతారు.</div></div>
+<div class="row"><div class="k">ఆపరేషన్స్ అనలిస్ట్</div><div class="v">డెలివరీ, ఉద్యోగుల పని కేటాయింపు, స్టాక్, కస్టమర్ సర్వీస్, ఉత్పత్తి వంటి రోజువారీ పనులు మెరుగుపడేలా డేటా, పని విధానాలను ఉపయోగిస్తారు.</div></div>
+<div class="row"><div class="k">ప్రొడక్ట్ అనలిస్ట్</div><div class="v">యాప్ లేదా డిజిటల్ ప్రొడక్ట్‌ను వినియోగదారులు ఎలా వాడుతున్నారో చూస్తారు. ఉపయోగానికి సంబంధించిన కొలమానాలను విశ్లేషించి ఏం మెరుగుపరచాలో ప్రొడక్ట్ బృందానికి చెబుతారు.</div></div>
+<div class="row"><div class="k">డేటా ఆధారిత బిజినెస్ అనలిస్ట్</div><div class="v"><b>SQL, Excel, Power BI/Tableau, వ్యాపార కొలమానాలు</b> ఉపయోగించి డేటాలో నమూనాలను కనిపెట్టి నిర్ణయాలకు సహాయపడతారు. సాంప్రదాయ BA, డేటా అనలిస్ట్ పనుల మధ్య ఉండే పాత్ర ఇది.</div></div>
+<div class="row"><div class="k">బ్యాంకింగ్ / ఫైనాన్షియల్ సర్వీసెస్ BA</div><div class="v">బ్యాంకులు, చెల్లింపులు, రుణాలు, ఇన్సూరెన్స్, రిస్క్, నియమాల పాటింపు, ఫైనాన్షియల్ సిస్టమ్స్‌పై పనిచేస్తారు. ఆ రంగం గురించి ప్రత్యేక అవగాహన చాలా ముఖ్యం.</div></div>
+<div class="row"><div class="k">హెల్త్‌కేర్ బిజినెస్ అనలిస్ట్</div><div class="v">ఆసుపత్రులు, బీమా, హెల్త్‌టెక్, వైద్య సేవల నిర్వహణలో అవసరాలను పని విధానాలు, రిపోర్టులు, సిస్టమ్స్‌గా మార్చి మెరుగుదలకు సహాయపడతారు.</div></div>
+<div class="row"><div class="k">సప్లై చైన్ బిజినెస్ అనలిస్ట్</div><div class="v">సరుకుల కొనుగోలు, స్టాక్, గిడ్డంగులు, రవాణా, డెలివరీ పనితీరును విశ్లేషించి ఖర్చు తగ్గడం, సేవ మెరుగవడం కోసం పనిచేస్తారు.</div></div>
+<div class="row"><div class="k">కన్సల్టింగ్ అనలిస్ట్</div><div class="v">వేర్వేరు క్లయింట్ల వ్యాపార సమస్యలను పరిశీలించి, సమాచారం సేకరించి, పరిష్కారాలను పోల్చి, సిఫార్సులు లేదా అమలు ప్రణాళికలు తయారు చేస్తారు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">బిజినెస్ అనలిస్ట్ vs డేటా అనలిస్ట్</div><div class="v"><b>బిజినెస్ అనలిస్ట్:</b> సమస్యలు, అవసరాలు, పని విధానాలు, పరిష్కారాలపై ఎక్కువ దృష్టి.<br/><b>డేటా అనలిస్ట్:</b> డేటా సేకరణ, శుభ్రపరచడం, విశ్లేషణ, చార్టులుగా చూపడంపై ఎక్కువ దృష్టి.<br/><br/>నేటి ఉద్యోగాల్లో SQL, డాష్‌బోర్డులు వాడటం వల్ల ఈ రెండు పనులు కొంత కలిసిపోతాయి.</div></div>
+<div class="row"><div class="k">బిజినెస్ అనలిస్ట్ vs ప్రొడక్ట్ మేనేజర్</div><div class="v"><b>బిజినెస్ అనలిస్ట్:</b> అవసరాలు, పని విధానం, పరిష్కార వివరాలు స్పష్టం చేస్తారు.<br/><b>ప్రొడక్ట్ మేనేజర్:</b> ప్రొడక్ట్ ఏ దిశలో వెళ్లాలి, ప్రాధాన్యతలు, వినియోగదారుల విలువ, రోడ్‌మ్యాప్ నిర్ణయిస్తారు.<br/><br/>అనుభవం ఉన్న BAలు ప్రొడక్ట్ మేనేజ్‌మెంట్‌లోకి వెళ్లవచ్చు.</div></div>
+<div class="row"><div class="k">బిజినెస్ అనలిస్ట్ vs ప్రాజెక్ట్ మేనేజర్</div><div class="v"><b>బిజినెస్ అనలిస్ట్:</b> “ఏ సమస్యను పరిష్కరిస్తున్నాం? పరిష్కారం ఏం చేయాలి?” అని చూస్తారు.<br/><b>ప్రాజెక్ట్ మేనేజర్:</b> “సమయానికి, నిర్ణయించిన పనిలో, సరైన వనరులతో దీన్ని ఎలా పూర్తిచేయాలి?” అని చూస్తారు.</div></div>
+<div class="row"><div class="k">బిజినెస్ అనలిస్ట్ vs ఫైనాన్షియల్ అనలిస్ట్</div><div class="v"><b>బిజినెస్ అనలిస్ట్:</b> పని విధానాలు, సిస్టమ్స్, అవసరాలు, వ్యాపార మెరుగుదల వంటి విస్తృత పని.<br/><b>ఫైనాన్షియల్ అనలిస్ట్:</b> ఆర్థిక పనితీరు, బడ్జెట్, భవిష్యత్ అంచనాలు, పెట్టుబడి లేదా వ్యాపార ఫైనాన్స్‌పై ప్రధాన దృష్టి.</div></div>
+<div class="row"><div class="k">ఉద్యోగాలు ఉండే రంగాలు</div><div class="v">IT సేవలు, ప్రొడక్ట్ కంపెనీలు, బ్యాంకులు, ఫిన్‌టెక్, ఇన్సూరెన్స్, హెల్త్‌కేర్, కన్సల్టింగ్, ఈ-కామర్స్, తయారీ, లాజిస్టిక్స్, టెలికాం, GCCలు, ప్రభుత్వ టెక్నాలజీ ప్రాజెక్టులు, స్టార్టప్‌లు.</div></div>
+<div class="row"><div class="k">AI కాలంలో వాస్తవం</div><div class="v"><b>AI అవసరాల మొదటి ముసాయిదాలు, మీటింగ్ సారాంశాలు, పని విధాన రేఖాచిత్రాలు, రిపోర్టులు తయారుచేయగలదు.</b> కానీ వేర్వేరు వ్యక్తుల విరుద్ధ అవసరాలను పరిష్కరించడం, సంస్థ పరిస్థితిని అర్థం చేసుకోవడం, ముఖ్యమైన సమస్య ఏంటో తేల్చడం, పరిష్కారం నిజంగా పనిచేస్తుందో నిర్ధారించడం వంటి మానవ పనిని పూర్తిగా భర్తీ చేయలేదు.<br/><br/><b>AI టూల్స్ + డేటా + వ్యాపార ప్రక్రియలు</b> తెలిసిన BAలకు మెరుగైన అవకాశాలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">కంపెనీలు విలువిచ్చేవి</div><div class="v">కమ్యూనికేషన్ · సమస్యను స్పష్టంగా గుర్తించడం · SQL · ప్రక్రియల మ్యాపింగ్ · డాక్యుమెంటేషన్ · వ్యాపార అవగాహన.</div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">బిజినెస్ అనాలిసిస్ నైపుణ్యాలతో ఈ పనులకూ వెళ్లవచ్చు: <b>డేటా అనాలిసిస్ · ప్రొడక్ట్ మేనేజ్‌మెంట్ · ఆపరేషన్స్ · కన్సల్టింగ్ · ప్రాజెక్ట్ మేనేజ్‌మెంట్ · బిజినెస్ ఇంటెలిజెన్స్.</b></div></div>
+<div class="flag"><span class="mark">ఉద్యోగ వాస్తవం</span><span><b>బిజినెస్ అనలిస్ట్‌కు పత్రాలు రాసినందుకే జీతం ఇవ్వరు.</b> అస్పష్టమైన వ్యాపార సమస్యను పరీక్షించగల, ఉపయోగపడే పరిష్కారంగా మార్చడమే అసలు విలువ.</span></div>
+</div></section>
+<section id="c4"><div class="num">వృత్తం 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">పరిశ్రమ, నగరం, టెక్నికల్ నైపుణ్యాలు, డిగ్రీ, రంగంపై అవగాహన, IT లేదా కన్సల్టింగ్ లేదా బ్యాంకింగ్ వంటి రంగాన్ని బట్టి జీతం మారుతుంది.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / ట్రైనీ</div><div class="v"><span class="money">₹10,000 – ₹25,000/month</span><br/>చాలా ఇంటర్న్‌షిప్‌లు, ట్రైనీ ఉద్యోగాలకు విస్తృత అంచనా. పెద్ద కంపెనీలు ఎక్కువ, చిన్న కంపెనీలు తక్కువ ఇవ్వవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రారంభ / జూనియర్ బిజినెస్ అనలిస్ట్</div><div class="v"><span class="money">₹3.5 – ₹7 lakh/year</span><br/>ప్రారంభ ఉద్యోగాలకు సుమారు పరిధి. SQL, ఇంటర్న్‌షిప్‌లు, టెక్నికల్ అవగాహన లేదా మంచి క్యాంపస్ ప్లేస్‌మెంట్ ఉంటే ఎక్కువ జీతం రావచ్చు.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న బిజినెస్ అనలిస్ట్</div><div class="v"><span class="money">₹7 – ₹15 lakh+/year</span><br/>రంగంపై అవగాహన, అవసరాలు గుర్తించడం, SQL/డేటా, ప్రాజెక్ట్ అనుభవం బలంగా ఉంటే జీతం పెరగవచ్చు.</div></div>
+<div class="row"><div class="k">సీనియర్ BA / లీడ్ / ప్రొడక్ట్ పాత్రలు</div><div class="v"><span class="money">₹12 – ₹25 lakh+/year</span><br/>సీనియర్ BA, లీడ్ BA, ప్రొడక్ట్ అనలిస్ట్, కన్సల్టింగ్ లేదా బ్యాంకింగ్ ప్రత్యేక పాత్రల్లో కంపెనీ, అనుభవాన్ని బట్టి మరింత రావచ్చు.</div></div>
+<div class="row"><div class="k">అత్యధిక జీతాల ఉద్యోగాలు</div><div class="v"><span class="money">ఇంకా ఎక్కువ ఉండవచ్చు</span><br/>పెద్ద ప్రొడక్ట్ కంపెనీలు, కన్సల్టింగ్, ఫిన్‌టెక్, అంతర్జాతీయ కంపెనీ కేంద్రాల్లో ఎక్కువ జీతం రావచ్చు; కానీ పోటీ తీవ్రంగా ఉంటుంది, అనుభవం లేదా ప్రత్యేక పరిజ్ఞానం కావాలి.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">బిజినెస్ అనలిస్ట్ అవ్వడానికి ఖరీదైన ప్రైవేట్ కోర్సు తప్పనిసరి కాదు. మంచి డిగ్రీతో పాటు <b>Excel, SQL, Power BI, అవసరాలను రాయడం, ప్రక్రియల మ్యాపింగ్, ఇంటర్న్‌షిప్‌లు, నిజమైన ప్రాజెక్టులు</b> ఉంటే ఈ రంగంలో ప్రవేశించవచ్చు.</div></div>
+<div class="flag red"><span class="mark">డబ్బు విషయంలో జాగ్రత్త</span><span><b>చిన్న BA కోర్సుతో ₹10–15 లక్షల ప్యాకేజీ గ్యారంటీ అని చెప్పే సంస్థలను జాగ్రత్తగా చూడండి.</b> కంపెనీలు కేవలం సర్టిఫికెట్ కాదు; సమస్య పరిష్కారం, కమ్యూనికేషన్, రంగ పరిజ్ఞానం, టూల్స్, చేసిన ప్రాజెక్టులు చూస్తాయి.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు వృత్తాలను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">వ్యాపారం + సమస్యల పరిష్కారం + మాట్లాడే నైపుణ్యం</span> ఉంటే బిజినెస్ అనాలిసిస్ మీకు బాగా సరిపోవచ్చు.</p>
+<p><span class="hi">మనుషులతో చర్చలకంటే సంఖ్యలు, డాష్‌బోర్డులు ఎక్కువ ఇష్టమైతే</span> డేటా అనలిస్ట్‌తో పోల్చండి.</p>
+<p><span class="hi">ప్రొడక్ట్ నిర్ణయాలు, వినియోగదారుల వ్యూహం ఇష్టమైతే</span> ప్రొడక్ట్ మేనేజర్‌ను పరిశీలించండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఒక సూత్రం: <b>మంచి బిజినెస్ అనలిస్ట్ “ఏ టూల్ వాడాలి?” అని మొదలుపెట్టరు; “మనం అసలు ఏ సమస్యను పరిష్కరించాలి?” అని అడుగుతారు.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచి ఏం చేయాలి?</h3><p class="lede">8–10 తరగతుల్లో ఉన్నప్పుడు సర్టిఫికెట్ల గురించి కంగారు పడకుండా రోజువారీ సమస్యలను స్పష్టంగా అర్థం చేసుకోవడం సాధన చేయండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే పాఠశాలలో</div><ul>
+<li><b>శాతాలు, పట్టికలు, గ్రాఫులు, స్ప్రెడ్‌షీట్ల</b>తో పనిచేయడం నేర్చుకోండి.</li>
+<li>పాఠశాల లైబ్రరీలో పుస్తకం ఎలా ఇస్తారు, ఎలా తిరిగి తీసుకుంటారు వంటి పని విధానాన్ని దశలవారీగా వివరించండి.</li>
+<li>ఏదైనా తప్పు జరిగితే వెంటనే పరిష్కారం చెప్పకుండా “ఎందుకు?” అని పలుమార్లు ప్రశ్నించండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>వ్యాపారం, సంఖ్యలు ఇష్టమైతే <b>MEC/Commerce</b>; టెక్నాలజీ వైపు వెళ్లాలంటే <b>MPC</b> ఎంచుకోండి.</li>
+<li>12వ తరగతి తర్వాత <b>BBA, B.Com, B.Tech, BCA, Economics, Statistics, Computer Science</b> కోర్సులను పోల్చండి.</li>
+<li>బిజినెస్ అనలిస్ట్ అవ్వకపోయినా మీకు ఉపయోగపడే డిగ్రీని ఎంచుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>కాలేజీలో చదువుతున్నప్పుడు</div><ul>
+<li><b>Excel, SQL, Power BI, ప్రాసెస్ మ్యాపింగ్, అవసరాలను స్పష్టంగా రాయడం</b> నేర్చుకోండి.</li>
+<li>వ్యాపార సమస్యను గుర్తించి, ఫలితాన్ని కొలవగల పరిష్కారం సూచించే ప్రాజెక్టులు చేయండి.</li>
+<li>ఆపరేషన్స్, IT, కన్సల్టింగ్, బ్యాంకింగ్, ప్రొడక్ట్ లేదా అనలిటిక్స్ బృందాల్లో ఇంటర్న్‌షిప్ చేయండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదటి మంచి పరీక్ష</span><span>మీ పాఠశాలలోని నిజమైన సమస్యను ఎంచుకోండి. ఉదాహరణకు <b>మధ్యాహ్న భోజనానికి పెద్ద క్యూ, లైబ్రరీ పుస్తకాలు కనిపించకపోవడం లేదా ఫీజుల చెల్లింపులో ఆలస్యం</b>. సంబంధిత వ్యక్తులతో మాట్లాడండి, ప్రస్తుతం పని ఎలా జరుగుతోందో గీయండి, సమస్య ఎక్కడో గుర్తించి ఫలితం కొలవగల ఒక మార్పు చెప్పండి. పరిష్కారం చెప్పడానికి ముందు సమస్య తెలుసుకోవడం మీకు నచ్చితే ఈ వృత్తి సరిపోవచ్చు.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకత్వం మాత్రమే; అధికారిక ప్రవేశ పరీక్ష లేదా జీతం ప్రకటన కాదు. ప్రతి బిజినెస్ అనలిస్ట్ ఉద్యోగానికి ఒకే డిగ్రీ లేదా సర్టిఫికెట్ తప్పనిసరి కాదు. కంపెనీని బట్టి అర్హతలు మారుతాయి. ECBA/CCBA/CBAP వంటి సర్టిఫికెట్లు తరువాత ఉపయోగపడవచ్చు; నిజమైన ప్రాజెక్ట్ అనుభవానికి ప్రత్యామ్నాయం కావు. చెప్పిన జీతాలు భారతదేశంలో సుమారు అంచనాలు; నగరం, కంపెనీ, రంగం, అనుభవాన్ని బట్టి మారుతాయి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకూ జవాబు ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>బిజినెస్ అనలిస్ట్ వృత్తికి మంచి అనుకూలత</strong>సమస్య పరిష్కారం, మాట్లాడటం, వ్యాపార ఆలోచన మీకు సరిపోతున్నాయి. డిగ్రీతో పాటు డేటా, పని విధానాల నైపుణ్యాలు పెంచుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>నిర్ణయానికి ముందు మరింత పరిశీలించండి</strong>ఈ వృత్తిలోని కొన్ని పనులు మీకు నచ్చుతున్నాయి. చిన్న పని విధాన మెరుగుదల ప్రాజెక్ట్ చేసి, డేటా అనాలిసిస్, ప్రొడక్ట్, కన్సల్టింగ్‌తో పోల్చండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>మనుషులతో ఎక్కువ చర్చలు, ప్రక్రియల విశ్లేషణ లేని పని మీకు నచ్చవచ్చు. సాఫ్ట్‌వేర్, ఫైనాన్స్, డిజైన్, మార్కెటింగ్ తదితర రంగాలను పరిశీలించండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

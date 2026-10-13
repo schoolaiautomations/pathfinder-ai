@@ -367,6 +367,24 @@ export const TELUGU_CAREER_MAP: Record<string, TeluguCareerMetadata> = {
     streamBadge: "BiPC / BNYS",
     description: "ఔషధ రహిత ప్రకృతి చికిత్సలు, యోగాసనాలు, జీవనశైలి మార్పులతో వ్యాధుల నివారణ, ఆయుష్ (AYUSH) రిజిస్టర్డ్ మెడికల్ డాక్టర్ హోదా.",
   },
+  "business-analyst": {
+    label: "బిజినెస్ అనలిస్ట్ (Business Analyst)",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "Degree / B.Tech / BBA",
+    description: "వ్యాపార సమస్యల పరిష్కారం, డేటా విశ్లేషణ, క్లయింట్ అవసరాల గుర్తింపు, కంపెనీల డిజిటల్ ప్రగతి మరియు ప్రాజెక్ట్ మేనేజ్‌మెంట్.",
+  },
+  "financial-analyst": {
+    label: "ఫైనాన్షియల్ అనలిస్ట్ (Financial Analyst)",
+    category: "కామర్స్ & ఫైనాన్స్",
+    streamBadge: "Commerce / CFA / MBA",
+    description: "కంపెనీల ఆర్థిక విశ్లేషణ, స్టాక్ మార్కెట్ పరిశోధన, పెట్టుబడుల ప్రణాళిక, ఇన్వెస్ట్‌మెంట్ బ్యాంకింగ్ మరియు ఆర్థిక నమూనాలు.",
+  },
+  "ms-masters": {
+    label: "విదేశాల్లో MS / మాస్టర్స్ (Study Abroad)",
+    category: "సైన్స్ (MPC / ఇంజనీరింగ్)",
+    streamBadge: "Degree / GRE / IELTS",
+    description: "విదేశీ విశ్వవిద్యాలయాల్లో ఉన్నత విద్య, GRE/IELTS పరీక్షలు, అడ్మిషన్ల ప్రక్రియ, వీసా మరియు అంతర్జాతీయ కెరీర్ అవకాశాలు.",
+  },
 };
 
 // ── Telugu File Map (Custom Human Translated Files) ──
@@ -424,6 +442,9 @@ export const TELUGU_CAREER_FILES: Record<string, string> = {
   "railway-jobs": "indian-railways-TELUGU.html",
   "speech-pathologist": "speech-language-pathologist-TELUGU.html",
   "yoga-doctor": "yoga-naturopathy-doctor-TELUGU.html",
+  "business-analyst": "business-analyst-TELUGU.html",
+  "financial-analyst": "financial-analyst-TELUGU.html",
+  "ms-masters": "ms-masters-TELUGU.html",
   "not-decided": "not-decided-yet-TELUGU.html",
   other: "not-decided-yet-TELUGU.html",
 };

@@ -67,7 +67,10 @@ export const DEFAULT_CAREER_OPTIONS = [
   { id: "income-tax-officer", label: "Income Tax Officer (SSC CGL)", icon: "💼", file: "four-circles-income-tax-officer.html" },
   { id: "railway-jobs", label: "Indian Railways Jobs (RRB NTPC & ALP)", icon: "🚆", file: "four-circles-indian-railways-jobs.html" },
   { id: "speech-pathologist", label: "Speech-Language Pathologist (Audiologist)", icon: "🗣️", file: "four-circles-speech-language-pathologist.html" },
-  { id: "yoga-doctor", label: "Yoga & Naturopathy Doctor (BNYS)", icon: "🧘", file: "four-circles-yoga-naturopathy-doctor.html" },
+  { id: "yoga-doctor", label: "Yoga Doctor / Naturopathy (BNYS)", icon: "🧘", file: "four-circles-yoga-doctor.html" },
+  { id: "business-analyst", label: "Business Analyst", icon: "📊", file: "four-circles-business-analyst.html" },
+  { id: "financial-analyst", label: "Financial Analyst", icon: "📈", file: "four-circles-financial-analyst.html" },
+  { id: "ms-masters", label: "MS / Master's Abroad", icon: "🌍", file: "four-circles-ms-masters-foreign-countries.html" },
   { id: "not-decided", label: "Not Decided Yet", icon: "🧭", file: "four-circles-not-decided-yet.html" },
   { id: "other", label: "Other", icon: "✨", file: "four-circles-not-decided-yet.html" },
 ] as const;
@@ -134,6 +137,9 @@ export function findCareerFormatFile(careerGoal: string): string | null {
   if (normalized.includes("income tax") || normalized.includes("tax officer") || normalized.includes("cbdt") || normalized.includes("tax inspector")) return "four-circles-income-tax-officer.html";
   if (normalized.includes("railway") || normalized.includes("rrb") || normalized.includes("loco pilot") || normalized.includes("station master") || normalized.includes("railways")) return "four-circles-indian-railways-jobs.html";
   if (normalized.includes("food safety") || normalized.includes("fso") || normalized.includes("fssai")) return "four-circles-food-safety-officer.html";
+  if (normalized.includes("business analyst") || normalized.includes("business analytics")) return "four-circles-business-analyst.html";
+  if (normalized.includes("financial analyst") || normalized.includes("finance analyst") || normalized.includes("cfa") || normalized.includes("equity research")) return "four-circles-financial-analyst.html";
+  if (normalized.includes("ms ") || normalized.includes("masters abroad") || normalized.includes("foreign countries") || normalized.includes("study abroad") || normalized.includes("gre") || normalized.includes("toefl") || normalized.includes("ielts")) return "four-circles-ms-masters-foreign-countries.html";
   if (normalized.includes("government job") || normalized.includes("govt job") || normalized.includes("sarkari") || normalized.includes("ssc") || normalized.includes("appsc") || normalized.includes("group 1") || normalized.includes("group 2") || normalized.includes("group 4") || normalized.includes("group-1") || normalized.includes("group-2") || normalized.includes("chsl") || normalized.includes("cgl")) return "four-circles-government-jobs.html";
 
   // Check software engineer keywords BEFORE general engineer

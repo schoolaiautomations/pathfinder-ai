@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు వృత్తాలు — విదేశాల్లో MS / మాస్టర్స్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">ఉన్నత చదువులు మీకు సరిపోతాయా? · భారతదేశం</div><h2>విదేశాల్లో MS / మాస్టర్స్</h2><p class="standfirst">విదేశాల్లో <b>MS / మాస్టర్స్</b> చదివితే ప్రత్యేక కోర్సులు, పరిశోధన, అంతర్జాతీయ అనుభవం, ఇతర దేశాల్లో ఉద్యోగావకాశాలు లభించవచ్చు. కానీ భారతదేశంలో చదవడం కంటే ఇది ఎప్పుడూ మంచిదని కాదు. <b>మీరు ఎంచుకునే రంగం, యూనివర్సిటీ నాణ్యత, మొత్తం ఖర్చు, స్కాలర్‌షిప్‌లు, వీసా/పని నియమాలు, డిగ్రీ వల్ల కెరీర్‌కు లాభం</b> ఆధారంగా నిర్ణయించాలి.</p></div>
+<div class="printhead">కెరీర్‌కి నాలుగు వృత్తాలు  ·  విదేశాల్లో MS / మాస్టర్స్  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>సరిపోతుందా?</b><em>విదేశాలకు ఎందుకు?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>డిగ్రీ → దరఖాస్తు</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>దేశాలు</b><em>దేశానికో ప్రత్యేకత</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>డబ్బు</b><em>ఖర్చు + ఆర్థిక సాయం</em></a>
+</nav>
+<section id="c1"><div class="num">వృత్తం 1</div><h3>విదేశాల్లో మాస్టర్స్ చేయడం నిజంగా అవసరమా?</h3><p class="lede">స్నేహితులు వెళ్తున్నారని మాత్రమే విదేశాలకు వెళ్లకండి. చదువు లేదా కెరీర్‌లో ఒక స్పష్టమైన లక్ష్యాన్ని విదేశీ విద్య నెరవేర్చాలి.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>బ్యాచిలర్స్ డిగ్రీ తర్వాత ఏ రంగంలో ప్రత్యేకంగా చదవాలనుకుంటున్నారో కొంతైనా ఆలోచించారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>డిగ్రీ చదువుతున్నంతకాలం మంచి మార్కులు/గ్రేడ్లు తెచ్చుకోవడానికి కృషి చేస్తారా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వేరే దేశంలో స్వతంత్రంగా ఉంటూ రోజువారీ పనులన్నీ మీరే చూసుకోగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>పరీక్ష మార్కులతో పాటు English, కమ్యూనికేషన్, ప్రాజెక్టులు, ఇంటర్న్‌షిప్‌లు, మీ ప్రొఫైల్ మెరుగుపరచడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>మీ కుటుంబం ఖర్చును నిజంగా భరించగలదా? లేక స్కాలర్‌షిప్/అసిస్టెంట్‌షిప్ కోసం గట్టిగా ప్రయత్నించడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వలస నిబంధనలు, చదువు తర్వాత పని చేసే అవకాశాలు తగ్గినా ఆ డిగ్రీని చదవాలనే ఆసక్తి ఉంటుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ జవాబు ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">వృత్తం 2</div><h3>అసలు చదువు, దరఖాస్తు మార్గం ఏమిటి?</h3><p class="lede">సాధారణంగా గుర్తింపు పొందిన బ్యాచిలర్స్ డిగ్రీ పూర్తయ్యాక లేదా చివరి సంవత్సరంలో విదేశీ మాస్టర్స్‌కు దరఖాస్తు చేస్తారు. కోర్సు, యూనివర్సిటీని బట్టి అర్హతలు మారుతాయి.</p>
+<div class="flag green"><span class="mark">తరచూ వినిపించే పదాలు</span><span><b>SOP</b> = ఎందుకు ఈ కోర్సు చదవాలనుకుంటున్నామో రాసే Statement of Purpose. <b>LOR</b> = ఉపాధ్యాయులు/ఇతరుల సిఫార్సు లేఖ. <b>IELTS/TOEFL/PTE</b> = ఇంగ్లీష్ పరీక్షలు. <b>GRE</b> = Graduate Record Examination. <b>GMAT</b> = Graduate Management Admission Test. <b>GRE/GMAT అన్ని కోర్సులకు తప్పనిసరి కాదు</b>; సంబంధిత కోర్సు నిబంధన చూడాలి.</span></div>
+<div class="card">
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>మీకు నిజంగా నచ్చిన డిగ్రీకి దారితీసే ఇంటర్ గ్రూప్‌ను ఎంచుకోండి.</b><br/><br/>MPC నుంచి Engineering/Computer Science/Physics; BiPC నుంచి Biology/Health/Life Sciences; Commerce నుంచి Finance/Business/Economics; Humanities నుంచి Social Sciences, Design, Policy తదితర కోర్సులకు వెళ్లవచ్చు.<br/><br/><b>10వ తరగతిలోనే విదేశీ దేశం నిర్ణయించాల్సిన అవసరం లేదు.</b></div></div>
+<div class="row"><div class="k">దశ 1 — బ్యాచిలర్స్ డిగ్రీ</div><div class="v"><b>12వ తరగతి → భారతదేశంలో గుర్తింపు పొందిన బ్యాచిలర్స్ డిగ్రీ.</b><br/><br/>కాలేజీలో మంచి గ్రేడ్లు తెచ్చుకోండి. భవిష్యత్తు మాస్టర్స్‌కు సంబంధించిన ప్రాజెక్టులు, ఇంటర్న్‌షిప్‌లు, రీసెర్చ్, టెక్నికల్ నైపుణ్యాలు లేదా పని అనుభవం పెంచుకోండి.</div></div>
+<div class="row"><div class="k">దశ 2 — మాస్టర్స్ కోర్సు ఎంచుకోండి</div><div class="v">ముందుగా <b>ఏ రంగంలో ప్రత్యేకంగా చదవాలనుకుంటున్నారో</b> నిర్ణయించండి. తర్వాత దేశం, యూనివర్సిటీ ఎంచుకోండి.<br/><br/>ఉదాహరణలు: <b>MS Computer Science · MS Data Science · MS Mechanical · Biotechnology · Finance · Public Health.</b><br/><br/>మీకు అవసరం లేని కోర్సు ఉన్న పేరున్న యూనివర్సిటీ ఎప్పుడూ మంచి ఎంపిక కాదు.</div></div>
+<div class="row"><div class="k">దశ 3 — యూనివర్సిటీ జాబితా</div><div class="v">మూడు రకాలుగా జాబితా చేసుకోండి:<br/><b>Ambitious:</b> చేరడం కష్టం కానీ అవకాశం ఉంది.<br/><b>Target:</b> మీ అర్హతలకు బాగా సరిపోతుంది.<br/><b>Safer:</b> అడ్మిషన్ అవకాశం కొంచెం ఎక్కువ.<br/><br/>సిలబస్, అధ్యాపకులు/పరిశోధన, ఇంటర్న్‌షిప్‌లు, ప్రాంతం, ఫీజులు, స్కాలర్‌షిప్‌లు, పూర్వ విద్యార్థుల ఉద్యోగాలు, వీసా/పని నిబంధనలు పోల్చండి.</div></div>
+<div class="row"><div class="k">దశ 4 — ఇంగ్లీష్ పరీక్ష</div><div class="v">ఇంగ్లీష్‌లో బోధించే చాలా కోర్సులు <b>IELTS, TOEFL, PTE లేదా ఇతర అంగీకరించిన ఇంగ్లీష్ ఆధారం</b> అడుగుతాయి.<br/><br/>కావాల్సిన స్కోర్ యూనివర్సిటీని బట్టి మారుతుంది. కొన్ని ప్రత్యేక పరిస్థితుల్లో మినహాయింపు ఇవ్వవచ్చు; అధికారిక ధృవీకరణ లేకుండా మినహాయింపు వస్తుందని భావించవద్దు.</div></div>
+<div class="row"><div class="k">దశ 5 — GRE / GMAT అవసరమా?</div><div class="v"><b>కోర్సు అడిగితే లేదా దాన్ని పరిగణిస్తే మాత్రమే.</b><br/><br/>కొన్ని గ్రాడ్యుయేట్ కోర్సుల్లో, ముఖ్యంగా అమెరికాలో, GRE ఉపయోగపడుతుంది. చాలా కోర్సులకు అది ఐచ్ఛికం లేదా అసలు అవసరం లేదు.<br/><br/>Business, Management, కొన్ని Finance కోర్సులకు GMAT/GRE ఉపయోగపడవచ్చు.</div></div>
+<div class="row"><div class="k">దశ 6 — దరఖాస్తు పత్రాలు</div><div class="v">సాధారణంగా కావాల్సినవి: <b>మార్కుల ట్రాన్స్‌క్రిప్టులు · SOP · LORలు · CV/Resume · ఇంగ్లీష్ స్కోర్ · అవసరమైతే ఇతర పరీక్ష స్కోర్.</b><br/><br/>పరిశోధన/కోర్సును బట్టి రాత నమూనా, పోర్ట్‌ఫోలియో, రీసెర్చ్ స్టేట్‌మెంట్, ఇంటర్వ్యూ కూడా అడగవచ్చు.</div></div>
+<div class="row"><div class="k">దశ 7 — అడ్మిషన్ + ఆర్థిక సహాయం</div><div class="v">అడ్మిషన్ వచ్చిన తర్వాత యూనివర్సిటీ ర్యాంక్ ఒక్కటే కాదు, <b>సహాయం తీసివేసిన తర్వాత నిజంగా ఎంత ఖర్చో</b> పోల్చండి.<br/><br/>స్కాలర్‌షిప్‌లు, ట్యూషన్ మినహాయింపు, Research Assistantship, Teaching Assistantship, యూనివర్సిటీ ఉద్యోగాలు, విద్యా రుణాలు చూడండి. కొన్ని ఉత్తర అమెరికా పరిశోధన కోర్సుల్లో అసిస్టెంట్‌షిప్‌లు ఉంటాయి; <b>గ్యారంటీ కాదు.</b></div></div>
+<div class="row"><div class="k">దశ 8 — వీసా</div><div class="v">అడ్మిషన్, వలసకు సంబంధించిన అవసరమైన పత్రాలు వచ్చిన తర్వాత సరైన విద్యార్థి వీసా/స్టడీ పర్మిట్‌కు దరఖాస్తు చేయండి. అడిగినంత ఆర్థిక సామర్థ్యం చూపాలి.<br/><br/>వీసా నియమాలు దేశానికోలా ఉంటాయి; ప్రణాళిక ప్రారంభించిన తర్వాత కూడా మారవచ్చు.</div></div>
+<div class="row"><div class="k">సరైన కాలక్రమం</div><div class="v"><b>డిగ్రీ 2–3వ సంవత్సరాలు:</b> GPA, ప్రాజెక్టులు, ఇంటర్న్‌షిప్‌లు/పరిశోధన మెరుగుపరచండి.<br/><b>మాస్టర్స్‌కు 12–18 నెలల ముందు:</b> కోర్సులు, పరీక్షలు, స్కాలర్‌షిప్‌ల జాబితా.<br/><b>8–12 నెలల ముందు:</b> దరఖాస్తులు.<br/><b>ఆఫర్లు వచ్చిన తర్వాత:</b> ఆర్థిక నిర్ణయం, వీసా, వసతి, ప్రయాణం.</div></div>
+<div class="row"><div class="k">పూర్తి ప్రయాణ మార్గం</div><div class="v"><b>10వ తరగతి → 12వ తరగతి → బ్యాచిలర్స్ డిగ్రీ → మంచి GPA + ప్రాజెక్టులు/ఇంటర్న్‌షిప్‌లు/పరిశోధన → ప్రత్యేక కోర్సు + దేశాల జాబితా → IELTS/TOEFL/PTE + అవసరమైతే GRE/GMAT → SOP + LOR + దరఖాస్తులు → అడ్మిషన్ + స్కాలర్‌షిప్/నిధులు → వీసా → విదేశీ మాస్టర్స్ → ఇంటర్న్‌షిప్/రీసెర్చ్ → ఉద్యోగం / PhD / భారత్‌కు తిరుగు.</b></div></div>
+<div class="flag red"><span class="mark">చాలా ముఖ్యం</span><span><b>వీసా లేదా అక్కడ స్థిరపడటమే ప్రధాన కారణంగా మాస్టర్స్ ఎంచుకోవద్దు.</b> వలస నిబంధనలు, చదువు తర్వాత పని చేసే కాలం, ఉద్యోగ మార్కెట్ మారవచ్చు. తిరిగి భారతదేశానికి వచ్చినా ఉపయోగపడే చదువును ఎంచుకోండి.</span></div>
+</div></section>
+<section id="c3"><div class="num">వృత్తం 3 · ఉద్యోగాలు మరియు అవకాశాలు</div><h3>మీకు ఏ దేశం సరిపోవచ్చు?</h3><p class="lede">అందరికీ ఒకే “అత్యుత్తమ దేశం” లేదు. మీ చదువు రంగం, బడ్జెట్, కోర్సు వ్యవధి, భాష, కెరీర్ ప్రణాళిక ముఖ్యం.</p>
+<div class="card">
+<div class="row"><div class="k">అమెరికా</div><div class="v"><b>పరిశోధన, ఇంజినీరింగ్, కంప్యూటర్ సైన్స్, బయోటెక్, బిజినెస్, ప్రత్యేక కోర్సులకు బలమైన దేశం.</b><br/><br/>మాస్టర్స్ సాధారణంగా 1.5–2 సంవత్సరాలు; కోర్సును బట్టి మారుతుంది. పరిశోధన యూనివర్సిటీల్లో అసిస్టెంట్‌షిప్ ఉండవచ్చు. PhDతో పోలిస్తే మాస్టర్స్‌కు నిధులు రావడం అనిశ్చితం.<br/><br/><b>ఎవరికి మంచిది:</b> పరిశోధన నాణ్యత, కోర్సుల ఎంపిక, పెద్ద అమెరికా ఉద్యోగ మార్కెట్ ముఖ్యమనుకునేవారికి.</div></div>
+<div class="row"><div class="k">యునైటెడ్ కింగ్‌డమ్ (UK)</div><div class="v"><b>చాలా బోధన ఆధారిత మాస్టర్స్ కోర్సులు ఒక్క సంవత్సరమే.</b> సమయం తగ్గినా చదువు చాలా వేగంగా సాగుతుంది.<br/><br/>UK Student visaకి గుర్తింపు పొందిన విద్యా సంస్థ నుంచి ఆఫర్, అవసరమైన నిధులు, ఇంగ్లీష్ అర్హత కావాలి. మూల నివేదిక ప్రకారం నాన్-డాక్టరల్ విద్యార్థుల అర్హత గల Graduate visa దరఖాస్తులు <b>31 డిసెంబర్ 2026 వరకు అయితే 2 ఏళ్లు; 1 జనవరి 2027 నుంచి అయితే 18 నెలలు</b> అని ఉంది.<br/><br/><b>ఎవరికి మంచిది:</b> తక్కువ కాలంలో మాస్టర్స్, మంచి యూనివర్సిటీ కావాలనుకునేవారికి.</div></div>
+<div class="row"><div class="k">కెనడా</div><div class="v"><b>రీసెర్చ్, కోర్సువర్క్ మాస్టర్స్ ఎంపికలు, చదువు తర్వాత పని చేసే అవకాశాల వల్ల ప్రాచుర్యం.</b><br/><br/>మూల నివేదికలోని నిబంధనల ప్రకారం అర్హత గల మాస్టర్స్ డిగ్రీ కనీసం 8 నెలలు ఉంటే, 2 ఏళ్ల లోపు కోర్సైనా <b>3 ఏళ్ల PGWP</b>కి దరఖాస్తు చేయవచ్చు; ఇతర నిబంధనలు వర్తిస్తాయి. డిగ్రీ స్థాయి మాస్టర్స్‌కు ప్రస్తుతం PGWP field-of-study పరిమితి లేకపోయినా భాష, ఇతర అర్హతలు ఉంటాయి.<br/><br/><b>ఎవరికి మంచిది:</b> యూనివర్సిటీ నాణ్యత, PGWP అర్హత జాగ్రత్తగా చూసుకునేవారికి.</div></div>
+<div class="row"><div class="k">జర్మనీ</div><div class="v"><b>ఇంజినీరింగ్, సైన్స్, ఆటోమొబైల్, తయారీ, ఎనర్జీ, పరిశోధనలో బలమైన దేశం. ప్రభుత్వ యూనివర్సిటీల్లో ఫీజు తరచుగా తక్కువ.</b><br/><br/>DAAD ప్రకారం చాలా ప్రభుత్వ యూనివర్సిటీల బ్యాచిలర్స్, వరుస మాస్టర్స్ కోర్సులకు సాధారణ ట్యూషన్ ఫీజు ఉండకపోవచ్చు; మినహాయింపులు ఉంటాయి. సెమిస్టర్ ఫీజు, జీవన ఖర్చు మాత్రం ఉంటాయి. జీవన ఖర్చు సుమారు <b>€900–€1,200/నెల</b> అని మూల నివేదిక చెబుతోంది.<br/><br/>ఇంగ్లీష్‌లో కోర్సులు ఉన్నా, జర్మన్ వస్తే రోజువారీ జీవితం, ఉద్యోగాలకు ఉపయోగం.</div></div>
+<div class="row"><div class="k">ఆస్ట్రేలియా</div><div class="v"><b>ఇంజినీరింగ్, IT, బిజినెస్, హెల్త్, ఎన్విరాన్‌మెంటల్ సైన్స్, ప్రాక్టికల్ కోర్సులకు బలమైన ఎంపిక.</b><br/><br/>అంతర్జాతీయ విద్యార్థులకు Student visa కావాలి. ట్యూషన్, జీవన ఖర్చులు ఎక్కువ కావచ్చు. మూల నివేదిక ప్రకారం చాలా ప్రధాన దరఖాస్తుదారులకు Student visa దరఖాస్తు ఫీజు <b>1 జూలై 2026 నుంచి AUD 2,500</b> అయ్యింది.<br/><br/><b>ఎవరికి మంచిది:</b> ఇంగ్లీష్‌లో చదువు, ప్రాక్టికల్ కోర్సులు కావాలి, మొత్తం ఖర్చు భరించగలవారికి.</div></div>
+<div class="row"><div class="k">ఇతర మంచి దేశాలు</div><div class="v"><b>Ireland · Netherlands · Sweden · France · Switzerland · Singapore.</b><br/><br/>కొన్ని ప్రత్యేక రంగాల్లో ఇవి కూడా గొప్ప ఎంపికలు. కానీ ఫీజులు, స్థానిక భాష అవసరం, స్కాలర్‌షిప్‌లు, చదువు తర్వాత పని నిబంధనలు చాలా మారుతాయి.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">MS vs MSc / MA / MEng</div><div class="v"><b>MS / MSc:</b> యూనివర్సిటీని బట్టి సైన్స్, ఇంజినీరింగ్, డేటా, పరిశోధన కోర్సుల పేర్లు.<br/><b>MA:</b> సాధారణంగా కళలు, హ్యుమానిటీస్, పాలసీ, కొన్ని సోషల్ సైన్స్ కోర్సులు.<br/><b>MEng:</b> తరచూ ఉద్యోగ నైపుణ్యాలపై ఆధారిత ఇంజినీరింగ్ మాస్టర్స్.<br/><br/>డిగ్రీ పేరులోని అక్షరాలకంటే <b>కోర్సులో ఏం నేర్పుతారనేదే ముఖ్యం.</b></div></div>
+<div class="row"><div class="k">కోర్సువర్క్ vs థీసిస్</div><div class="v"><b>Coursework Master's:</b> ఎక్కువ తరగతులు, ప్రాజెక్టులు, ఉద్యోగానికి అవసరమైన శిక్షణ.<br/><b>Thesis/Research Master's:</b> పరిశోధన భాగం ఎక్కువ; PhD, రీసెర్చ్ కెరీర్‌కు మంచి పునాది.<br/><br/>తర్వాత PhD చేయాలనుకుంటే రీసెర్చ్ అనుభవం ముఖ్యంగా ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k">ర్యాంకింగ్ vs ఉద్యోగ ప్రయోజనం</div><div class="v">యూనివర్సిటీ మొత్తం ర్యాంక్ మాత్రమే చూడవద్దు. <b>మీ విభాగం, సిలబస్, అధ్యాపకులు, పరిశోధన ల్యాబ్స్, ఇంటర్న్‌షిప్ అవకాశాలు, దగ్గరలో కంపెనీలు, పూర్వ విద్యార్థుల ఫలితాలు, మొత్తం అప్పు</b> పరిశీలించండి.</div></div>
+<div class="row"><div class="k">AI కాలంలో మాస్టర్స్ విలువ</div><div class="v">బ్యాచిలర్స్‌లో కంటే <b>లోతైన ప్రత్యేక పరిజ్ఞానం</b> నేర్పితే మాస్టర్స్ బాగా ఉపయోగపడుతుంది. ఉదాహరణకు AI, Robotics, Semiconductor Engineering, Biotechnology, Energy Systems, Quantitative Finance, అధునాతన పరిశోధన.<br/><br/>టెక్నికల్/ఉద్యోగ ప్రయోజనం తక్కువగా ఉండే ఖరీదైన సాధారణ డిగ్రీ పెట్టుబడిగా బాగుండకపోవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">భారత్ వదిలి వెళ్లే ముందు Plan B సిద్ధం చేయండి: <b>భారతదేశంలో ఉద్యోగం · భారతదేశంలో మాస్టర్స్ · GATE/IIT మార్గం · రీసెర్చ్ అసిస్టెంట్‌షిప్ · ముందుగా ఉద్యోగం, తర్వాత చదువు.</b><br/><br/>విదేశీ మాస్టర్స్ వల్ల అవకాశాలు పెరగాలి; ఒకే ఫలితంపై ఆధారపడకూడదు.</div></div>
+<div class="flag"><span class="mark">నిర్ణయ సూత్రం</span><span><b>దేశం కంటే ముందుగా కోర్సు నిర్ణయించండి.</b> “నాకు ఏ నైపుణ్యం కావాలి?” అని అడగండి. ఆ తర్వాత “ఆ నైపుణ్యాన్ని మా కుటుంబం భరించగల ఖర్చు, రిస్క్‌తో ఏ యూనివర్సిటీ ఇస్తుంది?” అని ఆలోచించండి.</span></div>
+</div></section>
+<section id="c4"><div class="num">వృత్తం 4</div><h3>ఎంత ఖర్చు అవుతుంది?</h3><p class="lede">విదేశాల్లో మాస్టర్స్ కొన్ని ప్రభుత్వ యూనివర్సిటీల్లో అందుబాటు ధరలో ఉండవచ్చు; కొన్ని ప్రైవేట్ లేదా ప్రముఖ యూనివర్సిటీల్లో చాలా ఖరీదవుతుంది. <b>మొత్తం డిగ్రీ ఖర్చు</b> లెక్కించాలి.</p>
+<div class="card">
+<div class="row"><div class="k">అమెరికా ఖర్చు</div><div class="v"><span class="money">తరచూ ఎక్కువ ఖర్చయ్యే ఎంపిక</span><br/>యూనివర్సిటీ, కోర్సును బట్టి ట్యూషన్ ఫీజు బాగా మారుతుంది. హెల్త్ ఇన్సూరెన్స్, గది అద్దె, తిండి, ప్రయాణం, ఇతర ఫీజులు కలపాలి. కొన్నిచోట్ల అసిస్టెంట్‌షిప్ ఖర్చు తగ్గించవచ్చు; <b>లిఖితపూర్వక మంజూరు రాకముందు వస్తుందని నమ్మవద్దు.</b></div></div>
+<div class="row"><div class="k">UK ఖర్చు</div><div class="v"><span class="money">ఎక్కువ ఫీజు; కానీ తరచూ ఒక సంవత్సరమే</span><br/>కోర్సు చిన్నదైతే జీవన ఖర్చు తగ్గవచ్చు. అయినా ప్రముఖ యూనివర్సిటీల అంతర్జాతీయ విద్యార్థుల ఫీజు ఎక్కువగా ఉండవచ్చు. లండన్ ఇతర UK నగరాల కంటే తరచూ ఖరీదైనది.</div></div>
+<div class="row"><div class="k">కెనడా ఖర్చు</div><div class="v"><span class="money">మధ్యస్థ నుంచి ఎక్కువ</span><br/>ప్రావిన్స్, యూనివర్సిటీ, పరిశోధన/కోర్సువర్క్ విధానాన్ని బట్టి ఖర్చు మారుతుంది. మీ నిర్దిష్ట సంస్థ, కోర్సు స్టడీ పర్మిట్, చదువు తర్వాత పని మార్గం అర్హతలకు సరిపోతాయో చూసుకోండి.</div></div>
+<div class="row"><div class="k">జర్మనీ ఖర్చు</div><div class="v"><span class="money">ప్రభుత్వ యూనివర్సిటీల్లో తరచూ తక్కువ ట్యూషన్</span><br/>DAAD ప్రకారం చాలా ప్రభుత్వ యూనివర్సిటీల బ్యాచిలర్స్, వరుస మాస్టర్స్ కోర్సుల్లో సాధారణ ట్యూషన్ ఉండదు; మినహాయింపులు ఉన్నాయి. సెమిస్టర్ చార్జీలు సుమారు <b>€70–€430</b>, జీవన ఖర్చులు <b>€900–€1,200/నెల</b> అని మూల నివేదిక అంచనా. కొన్ని రాష్ట్రాలు/యూనివర్సిటీలు EU బయటివారికి ట్యూషన్ వసూలు చేస్తాయి.</div></div>
+<div class="row"><div class="k">ఆస్ట్రేలియా ఖర్చు</div><div class="v"><span class="money">సాధారణంగా మొత్తం ఖర్చు ఎక్కువ</span><br/>ట్యూషన్, జీవన ఖర్చులు అధికంగా ఉండవచ్చు. వీసా ఫీజు కూడా ముఖ్యం; మూల నివేదిక ప్రకారం 1 జూలై 2026 నుంచి చాలా మంది దరఖాస్తుదారులకు Student visa చార్జీ AUD 2,500.</div></div>
+<div class="row"><div class="k">ఆర్థిక సహాయం మార్గాలు</div><div class="v"><b>యూనివర్సిటీ స్కాలర్‌షిప్ · ప్రతిభ ఆధారిత స్కాలర్‌షిప్ · RA · TA · DAAD · విద్యా రుణం.</b><br/><br/><b>RA</b> = Research Assistantship (పరిశోధనలో సహాయక పని). <b>TA</b> = Teaching Assistantship (బోధనలో సహాయక పని). అవకాశం కోర్సు, యూనివర్సిటీని బట్టి మారుతుంది.</div></div>
+<div class="row"><div class="k">రుణం తీసుకునే నిర్ణయం</div><div class="v">పెద్ద రుణానికి ముందు ఇలా లెక్కించండి:<br/><b>మొత్తం ట్యూషన్ + జీవన ఖర్చు + ఇన్సూరెన్స్ + వీసా + ప్రయాణం − ఖచ్చితంగా మంజూరైన స్కాలర్‌షిప్/నిధులు = మీరు సమకూర్చాల్సిన నిజమైన మొత్తం.</b><br/><br/>దాన్ని ఆ రంగంలో కొత్త ఉద్యోగికి వాస్తవంగా వచ్చే జీతంతో పోల్చండి; ఇంటర్నెట్‌లో కనిపించే అత్యధిక జీతంతో కాదు.</div></div>
+<div class="row"><div class="k">ఖర్చుకు వచ్చే ప్రయోజనం (ROI)</div><div class="v">ఎక్కువ ఖరీదైన డిగ్రీ అయినా అసాధారణమైన ఉద్యోగ/పరిశోధన అవకాశాలు ఇస్తే ఉపయోగకరం కావచ్చు. తక్కువ ఫీజు ఉన్నా ఉద్యోగ ఫలితాలు బలహీనంగా ఉంటే ఆ కోర్సు మంచిది కాకపోవచ్చు.<br/><br/><b>ROI</b> అంటే పెట్టే డబ్బు, సమయం, రిస్క్‌తో పోలిస్తే కెరీర్‌కు వచ్చే విలువ.</div></div>
+<div class="flag red"><span class="mark">డబ్బు విషయంలో జాగ్రత్త</span><span><b>“విదేశాల్లో అందరికీ ఉద్యోగం వస్తుంది” అని పెద్ద అప్పు తీసుకోవద్దు.</b> అడ్మిషన్ వచ్చినంత మాత్రాన వీసా, ఇంటర్న్‌షిప్, ఉద్యోగం, వర్క్ పర్మిట్, శాశ్వత నివాసం గ్యారంటీ కాదు. ఒక్కో దశలో వేర్వేరు రిస్క్ ఉంటుంది.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు వృత్తాలను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">స్పష్టమైన ప్రత్యేక రంగం + మంచి చదువు ప్రొఫైల్ + భరించగల ఖర్చు</span> ఉంటే విదేశీ మాస్టర్స్ మంచి అవకాశం కావచ్చు.</p>
+<p><span class="hi">ఇంకా ఏ రంగమో తెలియకపోతే</span> ముందుగా డిగ్రీలో నైపుణ్యాలు, మంచి రికార్డు సాధించి తర్వాత నిర్ణయించండి.</p>
+<p><span class="hi">బలహీనమైన కోర్సు కోసం భారీ రుణం కావాల్సివస్తే</span> ముందుగా భారతదేశంలోని మాస్టర్స్ లేదా ఉద్యోగ అనుభవంతో పోల్చండి.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఒక సూత్రం: <b>“ఏ దేశానికి వెళ్లాలి?” అని మొదట అడగకండి. “నేను ఏమవ్వాలి? అక్కడికి వెళ్లడానికి ఏ కోర్సు మంచి మార్గం?” అని అడగండి.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచి ఏం చేయాలి?</h3><p class="lede">8–10 తరగతుల విద్యార్థులు ఇప్పుడే IELTS/GRE కోచింగ్ మొదలుపెట్టాల్సిన అవసరం లేదు. తర్వాత మంచి మాస్టర్స్ దరఖాస్తు చేయగల ప్రాథమిక నైపుణ్యాలను పెంచుకోండి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>8–10 తరగతుల్లో</div><ul>
+<li><b>English, కమ్యూనికేషన్, గణితం/సైన్స్ లేదా మీకు నచ్చిన సబ్జెక్టు పునాదులు</b> బాగా నేర్చుకోండి.</li>
+<li>విదేశీ దేశం నిర్ణయించే ముందు కెరీర్ అవకాశాలను తెలుసుకోండి.</li>
+<li>మీ పనులు మీరే చేసుకోవడం, సమయం నిర్వహించడం, డిజిటల్ టూల్స్ వాడటం నేర్చుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>11–12 తరగతులు + డిగ్రీ</div><ul>
+<li>మీకు కావాల్సిన రంగానికి సరిపోయే ఇంటర్ గ్రూప్, డిగ్రీ ఎంచుకోండి.</li>
+<li><b>GPA/CGPA</b> బాగా ఉంచుకోండి. ఫెయిల్ అయిన సబ్జెక్టులు/బ్యాక్‌లాగ్స్ కొన్ని అవకాశాలను తగ్గించవచ్చు.</li>
+<li>సర్టిఫికెట్లు మాత్రమే కాదు; ప్రాజెక్టులు, ఇంటర్న్‌షిప్‌లు, పరిశోధన, పోటీలు లేదా సంబంధిత పని చేయండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>డిగ్రీ 2వ / 3వ సంవత్సరంలో</div><ul>
+<li>ముందుగా <b>ఏ ప్రత్యేక కోర్సు</b> కావాలో, ఆ తర్వాత దేశాలు, యూనివర్సిటీలు ఎంచుకోండి.</li>
+<li>యూనివర్సిటీ బాగా నచ్చే ముందు మొత్తం ఖర్చు, స్కాలర్‌షిప్ అవకాశాలు అంచనా వేయండి.</li>
+<li>నిజంగా అవసరమైన చోటే English/GRE/GMATకి సిద్ధం అవ్వండి; SOP/LOR ప్రణాళిక ముందుగానే మొదలుపెట్టండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదటి మంచి పరీక్ష</span><span>మీకు నచ్చిన ఒక మాస్టర్స్ కోర్సు ఎంచుకోండి. <b>ఏం నేర్చుకుంటారు? ఏ ఉద్యోగాలు వస్తాయి? మొత్తం ఖర్చు? స్కాలర్‌షిప్ అవకాశాలు? డిగ్రీ అయ్యాక వెంటనే ఇండియాకి తిరిగి రావాల్సి వస్తే ఏం చేస్తారు?</b> అనే ఐదు ప్రశ్నలకు సమాధానం రాయండి. అప్పుడు కూడా ఆ డిగ్రీ ఉపయోగంగా అనిపిస్తే మీరు సరైన విధంగా ఆలోచిస్తున్నారు.</span></div>
+</section>
+<p class="note">ఇది విద్యా మార్గదర్శకత్వం మాత్రమే; అడ్మిషన్, వీసా, వలస లేదా ఉద్యోగ హామీ కాదు. మాస్టర్స్ అర్హతలు, ఇంగ్లీష్ పరీక్షలు, ఫీజులు, స్కాలర్‌షిప్‌లు, విద్యార్థుల పని హక్కులు, చదువు తర్వాత పని చేసే నియమాలు దేశం, యూనివర్సిటీని బట్టి తరచుగా మారతాయి. మూల నివేదికలో ఉన్న ఉదాహరణలు: జర్మనీలో అనేక ప్రభుత్వ యూనివర్సిటీల వరుస మాస్టర్స్ కోర్సులకు సాధారణ ట్యూషన్ ఫీజు లేకపోవచ్చు (మినహాయింపులు ఉన్నాయి), జీవన ఖర్చు €900–€1,200/నెల; కెనడాలో అర్హత కలిగిన మాస్టర్స్ విద్యార్థులకు 3 ఏళ్ల PGWP అవకాశం; UKలో 1 జనవరి 2027 నుంచి కొన్ని Graduate visa దరఖాస్తులకు 2 ఏళ్ల బదులు 18 నెలలు; ఆస్ట్రేలియాలో 1 జూలై 2026 నుంచి విద్యార్థి వీసా ఫీజు AUD 2,500. దరఖాస్తు చేసే సంవత్సరం అధికారిక వివరాలు తప్పక తనిఖీ చేయాలి.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకూ జవాబు ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>విదేశీ మాస్టర్స్‌కు మంచి అనుకూలత</strong>ప్రత్యేక చదువు, స్వతంత్ర జీవనం, దీర్ఘకాల ప్రయోజనాల గురించి ఆలోచించడానికి సిద్ధంగా ఉన్నట్టు కనిపిస్తోంది. ముందుగా బలమైన డిగ్రీ ప్రొఫైల్ నిర్మించుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>అవకాశం ఉంది; జాగ్రత్తగా ప్రణాళిక వేయండి</strong>కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. చదువు, కుటుంబ ఆర్థిక స్థితి, స్వతంత్రంగా ఉండగలగడం, కెరీర్ స్పష్టత మెరుగుపరచుకోండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>తొందరపడకండి</strong>విదేశీ మాస్టర్స్ ఇప్పుడు సరైన ఎంపిక కాకపోవచ్చు. ముందుగా డిగ్రీలో మెరుగుపడి భారతదేశ మాస్టర్స్, పని అనుభవం, ఆర్థిక సహాయంతో పరిశోధన మార్గాలతో పోల్చండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

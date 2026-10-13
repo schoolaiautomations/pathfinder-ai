@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="te"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>నాలుగు వృత్తాలు — ఫైనాన్షియల్ అనలిస్ట్</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">కెరీర్ సరిపోతుందా? · భారతదేశం</div><h2>ఫైనాన్షియల్ అనలిస్ట్</h2><p class="standfirst">ఫైనాన్షియల్ అనలిస్ట్ కంపెనీ లేదా పెట్టుబడిదారు మంచి నిర్ణయాలు తీసుకోవడానికి డబ్బు, వ్యాపార ఫలితాలు, ఆర్థిక డేటాను పరిశీలిస్తారు. ఆదాయం, ఖర్చులు విశ్లేషించడం, బడ్జెట్, భవిష్యత్తు అంచనాలు తయారుచేయడం, ఆర్థిక నివేదికలు చదవడం, కంపెనీ విలువ అంచనా వేయడం, పెట్టుబడులను పరిశీలించడం వంటి పనులు చేస్తారు. <b>Corporate Financial Analyst, FP&amp;A Analyst, Equity Research Analyst, Investment Analyst</b> ఒకదానికొకటి సంబంధించినా వేర్వేరు ఉద్యోగాలు.</p></div>
+<div class="printhead">కెరీర్‌కి నాలుగు వృత్తాలు  ·  ఫైనాన్షియల్ అనలిస్ట్  ·  పేరు: <span class="fill"></span>   తేదీ: <span class="fill" style="min-width:90px"></span></div>
+<nav class="strip">
+<a class="pip" href="#c1" id="pip1"><div class="ring">1</div><b>ఆసక్తి</b><em>సంఖ్యలు + వ్యాపారం</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>చదువు మార్గం</b><em>డిగ్రీ + నైపుణ్యాలు</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>ఉద్యోగాలు</b><em>కంపెనీలు + మార్కెట్లు</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>ఆదాయం</b><em>నైపుణ్యం ముఖ్యం</em></a>
+</nav>
+<section id="c1"><div class="num">వృత్తం 1</div><h3>ఫైనాన్షియల్ అనాలిసిస్ మీకు సరిపోతుందా?</h3><p class="lede">ఈ పని అంటే స్టాక్ మార్కెట్‌లో పనిచేయడం మాత్రమే కాదు. చాలా మంది ఫైనాన్షియల్ అనలిస్ట్‌లు కంపెనీల్లో బడ్జెట్, ఖర్చు, అమ్మకాలు, లాభం, భవిష్యత్ ప్రణాళికలను పరిశీలిస్తారు.</p>
+<div class="card"><div id="quiz">
+<div class="q"><p>సంఖ్యలు, శాతాలు, పట్టికలు, గ్రాఫులతో పనిచేయడం మీకు ఇష్టమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఒక కంపెనీకి ఈ ఏడాది లాభం ఎందుకు పెరిగింది లేదా తగ్గింది అని తెలుసుకోవడం నచ్చుతుందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>స్ప్రెడ్‌షీట్‌లతో ఓపికగా పనిచేసి లెక్కల్లో తప్పులు ఉన్నాయేమో చూడగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>వ్యాపారం, ఎకనామిక్స్, కంపెనీలు, మార్కెట్లు, డబ్బు ఎలా తిరుగుతుందో తెలుసుకోవడం ఆసక్తిగా ఉందా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>ఆర్థిక ఫలితాన్ని మేనేజర్ లేదా క్లయింట్‌కు స్పష్టంగా వివరించగలరా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+<div class="q"><p>కాలేజీ తర్వాత కూడా Excel, అకౌంటింగ్, ఫైనాన్స్, డేటా టూల్స్ నేర్చుకుంటూ ఉండడానికి సిద్ధమా?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">అవును</button><button aria-pressed="false" data-v="n" type="button">కాదు</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>ఆరు ప్రశ్నలకూ జవాబు ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.</div></div></section>
+<section id="c2"><div class="num">వృత్తం 2</div><h3>ఈ రంగంలోకి వచ్చే మార్గాలు ఏవి?</h3><p class="lede">ఈ వృత్తికి తప్పనిసరి ఒకే డిగ్రీ లేదా దేశవ్యాప్త ఒకే ప్రవేశ పరీక్ష లేదు. కంపెనీలు సంబంధిత డిగ్రీతో పాటు అకౌంటింగ్, Excel, ఆర్థిక విశ్లేషణ, కమ్యూనికేషన్ నైపుణ్యాలను చూస్తాయి.</p>
+<div class="flag green"><span class="mark">ఉపయోగపడే పదాలు</span><span><b>FP&amp;A</b> = ఆర్థిక ప్రణాళిక, విశ్లేషణ. <b>CFA</b> = CFA Institute ఇచ్చే అంతర్జాతీయ Chartered Financial Analyst అర్హత. <b>NISM</b> = National Institute of Securities Markets. ఇవి ప్రతి ఫైనాన్షియల్ అనలిస్ట్ ఉద్యోగానికి తప్పనిసరి కావు; కొన్ని ప్రత్యేక పనులకు ఉపయోగపడతాయి.</span></div>
+<div class="card">
+<div class="row"><div class="k">10వ తరగతి తర్వాత</div><div class="v"><b>గణితంతో MEC / Commerce అత్యంత నేరుగా ఉపయోగపడే మార్గం.</b><br/><br/>గణితం, ఎకనామిక్స్, కామర్స్, అకౌంట్స్‌లో పునాది ఏర్పడుతుంది.<br/><br/><b>గణితం లేని CEC / Commerce</b> కూడా వీలే. కానీ శాతాలు, స్టాటిస్టిక్స్, స్ప్రెడ్‌షీట్లు విడిగా బాగా నేర్చుకోవాలి.<br/><br/><b>MPC</b> చదివినవారు కూడా BBA, ఎకనామిక్స్, ఇంజినీరింగ్ తర్వాత ఫైనాన్స్ ఉద్యోగాలు లేదా MBA ద్వారా రావచ్చు.</div></div>
+<div class="row"><div class="k">మార్గం A — B.Com</div><div class="v"><b>10వ తరగతి → MEC/CEC/Commerce → B.Com / B.Com Finance / Accounting → Excel + ఆర్థిక నివేదికల విశ్లేషణ + ఇంటర్న్‌షిప్ → జూనియర్ ఫైనాన్షియల్ అనలిస్ట్ / ఫైనాన్స్ అనలిస్ట్.</b><br/><br/>భారతదేశంలో ఇది తక్కువ ఖర్చుతో వెళ్లగల నేరుగా ఉన్న మార్గాల్లో ఒకటి.</div></div>
+<div class="row"><div class="k">మార్గం B — BBA Finance</div><div class="v"><b>12వ తరగతి → BBA / BBA Finance → అకౌంటింగ్ + కార్పొరేట్ ఫైనాన్స్ + Excel + ఇంటర్న్‌షిప్ → కార్పొరేట్ ఫైనాన్స్ / FP&amp;A / ఫైనాన్స్ అనలిస్ట్.</b><br/><br/>వ్యాపారం, మేనేజ్‌మెంట్‌తో పాటు ఫైనాన్స్ ఇష్టమయ్యేవారికి ఉపయోగపడుతుంది.</div></div>
+<div class="row"><div class="k">మార్గం C — ఎకనామిక్స్ / స్టాటిస్టిక్స్ / మ్యాథ్స్</div><div class="v"><b>12వ తరగతి → BA/B.Sc. Economics, Statistics లేదా Mathematics → Excel + ఫైనాన్స్ + డేటా విశ్లేషణ → ఫైనాన్షియల్ అనలిస్ట్ / రిస్క్ / రీసెర్చ్ / అనలిటిక్స్.</b><br/><br/>లోతైన లెక్కల ఆధారిత ఫైనాన్స్ ఉద్యోగాలకు బలమైన మార్గం.</div></div>
+<div class="row"><div class="k">మార్గం D — ఇంజినీరింగ్ నుంచి ఫైనాన్స్</div><div class="v"><b>MPC → B.Tech/B.E. → అకౌంటింగ్, ఫైనాన్స్, మోడలింగ్ నేర్చుకోవడం → ఫైనాన్స్ ఇంటర్న్‌షిప్ / MBA / CFA → ఫైనాన్షియల్ అనలిస్ట్ / బిజినెస్ ఫైనాన్స్ / ఇన్వెస్ట్‌మెంట్ ఉద్యోగాలు.</b><br/><br/>విశ్లేషణ, డేటాలో నైపుణ్యమున్న ఇంజినీర్లు ఫైనాన్స్ రంగంలోకి తరచూ వెళ్తారు.</div></div>
+<div class="row"><div class="k">ఉన్నత చదువు — MBA Finance</div><div class="v"><b>డిగ్రీ → CAT / XAT / CMAT లేదా బిజినెస్ స్కూల్ ప్రవేశం → MBA/PGDM Finance → ఫైనాన్షియల్ అనలిస్ట్ / కార్పొరేట్ ఫైనాన్స్ / ఇన్వెస్ట్‌మెంట్ బ్యాంకింగ్ / FP&amp;A.</b><br/><br/>MBAతో ఉన్నతస్థాయి ఉద్యోగావకాశాలు పెరగవచ్చు. <b>ప్రతి ప్రారంభ ఫైనాన్స్ ఉద్యోగానికి MBA అవసరం కాదు.</b></div></div>
+<div class="row"><div class="k">CFA మార్గం</div><div class="v"><b>CFA అదనపు అర్హత; తప్పనిసరి కాదు.</b> పెట్టుబడి విశ్లేషణ, ఈక్విటీ రీసెర్చ్, పోర్ట్‌ఫోలియో, కంపెనీ విలువ అంచనా వంటి పనులకు ఉపయోగపడుతుంది.<br/><br/>ప్రస్తుత CFA Institute నియమాల ప్రకారం, ఎంచుకున్న Level I పరీక్ష తేదీ డిగ్రీ పూర్తయ్యే నెలకు <b>23 నెలలలోపు</b> ఉంటే, ఇతర నిబంధనలు పాటిస్తూ డిగ్రీ విద్యార్థి నమోదు కావచ్చు.</div></div>
+<div class="row"><div class="k">NISM రీసెర్చ్ అనలిస్ట్</div><div class="v"><b>సాధారణ ఫైనాన్షియల్ అనలిస్ట్, SEBI నియంత్రణలోని Research Analyst ఒకటే కాదు.</b><br/><br/>SEBI Research Analyst నిబంధనల ప్రకారం షేర్ల పరిశోధన ప్రచురించే సంబంధిత వ్యక్తులకు <b>NISM-Series-XV: Research Analyst Certification</b> అవసరం కావచ్చు. మారిన పరీక్షను <b>20 జనవరి 2026</b> నుంచి ప్రారంభించారు.<br/><br/><b>ప్రతి కార్పొరేట్ ఫైనాన్షియల్ అనలిస్ట్‌కు ఇది అవసరం లేదు.</b></div></div>
+<div class="row"><div class="k">కంపెనీలు కోరే నైపుణ్యాలు</div><div class="v"><b>Excel · అకౌంటింగ్ · ఆర్థిక నివేదికలు · బడ్జెట్ · భవిష్యత్ అంచనాలు · Power BI · కమ్యూనికేషన్.</b><br/><br/>పెద్ద డేటాతో పనిచేసే ఫైనాన్స్ బృందాల్లో SQL, Python కూడా ఉపయోగపడతాయి.</div></div>
+<div class="row"><div class="k">పూర్తి చేయాల్సిన మార్గం</div><div class="v"><b>10వ తరగతి → గణితంతో MEC/Commerceకి ప్రాధాన్యం → B.Com/BBA/Economics/Statistics లేదా సంబంధిత డిగ్రీ → Excel + అకౌంటింగ్ + ఆర్థిక నివేదికలు + ఫైనాన్షియల్ మోడలింగ్ → ఇంటర్న్‌షిప్ → జూనియర్ ఫైనాన్షియల్ అనలిస్ట్ → ఫైనాన్షియల్ అనలిస్ట్.</b><br/><br/>తర్వాత లక్ష్య ఉద్యోగాన్ని బట్టి <b>MBA, CFA, NISM, డేటా నైపుణ్యాలు</b> చేర్చుకోండి.</div></div>
+<div class="flag red"><span class="mark">చాలా ముఖ్యం</span><span><b>ప్రాథమిక విషయాలు నేర్చుకోకుండా సర్టిఫికెట్లు మాత్రమే సేకరించవద్దు.</b> Income Statement, Balance Sheet, Cash Flow Statement చదవగలగాలి. సంఖ్యలు ఎందుకు మారాయో, తర్వాత కంపెనీ ఏం చేయాలో వివరించగలగాలి.</span></div>
+</div></section>
+<section id="c3"><div class="num">వృత్తం 3 · ఉద్యోగాలు మరియు అవకాశాలు</div><h3>ఎలాంటి ఫైనాన్షియల్ అనలిస్ట్ కావచ్చు?</h3><p class="lede">ఫైనాన్షియల్ అనలిస్ట్ అనేది చాలా ఉద్యోగాలకు కలిపి వాడే పేరు. కంపెనీ ఫైనాన్స్, పెట్టుబడి పరిశోధన, ప్రత్యేక ఫైనాన్స్ బృందాల్లో పని చాలా తేడాగా ఉంటుంది.</p>
+<div class="card">
+<div class="row"><div class="k">కార్పొరేట్ ఫైనాన్షియల్ అనలిస్ట్</div><div class="v"><b>కంపెనీ ఆదాయం, ఖర్చులు, లాభం, ఆర్థిక పనితీరును విశ్లేషిస్తారు.</b> రిపోర్టులు తయారుచేసి వ్యాపారం ఎలా నడుస్తోందో మేనేజర్లకు అర్థమయ్యేలా చేస్తారు.<br/><b>ముఖ్యాంశాలు:</b> P&amp;L · Reports · Business Decisions.</div></div>
+<div class="row"><div class="k">FP&amp;A అనలిస్ట్</div><div class="v"><b>Financial Planning &amp; Analysis.</b> బడ్జెట్‌లు, భవిష్యత్ అంచనాలు, వివిధ పరిస్థితులలో ఫలితాల మోడల్స్ తయారుచేస్తారు. నిజమైన ఫలితాలను ప్రణాళికతో పోల్చి తేడా ఎందుకుందో చెబుతారు.</div></div>
+<div class="row"><div class="k">ఈక్విటీ రీసెర్చ్ అనలిస్ట్</div><div class="v">స్టాక్ మార్కెట్లో నమోదైన కంపెనీలు, పరిశ్రమలు, ఆర్థిక నివేదికలు, మేనేజ్‌మెంట్ సమాచారం, విలువ అంచనాలు పరిశీలించి పెట్టుబడిపై అభిప్రాయాలు రూపొందిస్తారు. కొన్ని పనులకు SEBI/NISM నిబంధనలు వర్తిస్తాయి.</div></div>
+<div class="row"><div class="k">ఇన్వెస్ట్‌మెంట్ అనలిస్ట్</div><div class="v">కంపెనీలు, ఫండ్స్, ప్రాజెక్టులు లేదా ఇతర పెట్టుబడుల రిస్క్, రాబడి, విలువ, మార్కెట్ పరిస్థితులు పరిశీలించి పెట్టుబడిని అంచనా వేస్తారు.</div></div>
+<div class="row"><div class="k">క్రెడిట్ అనలిస్ట్</div><div class="v">ఒక వ్యక్తి లేదా కంపెనీ తీసుకున్న అప్పును తిరిగి చెల్లించగలరా అని అంచనా వేస్తారు. బ్యాంకులు, NBFCలు, క్రెడిట్ రేటింగ్ సంస్థలు, రుణ కంపెనీల్లో ఉద్యోగాలు ఉంటాయి.</div></div>
+<div class="row"><div class="k">రిస్క్ అనలిస్ట్</div><div class="v">ఆర్థిక, మార్కెట్, రుణ లేదా వ్యాపార ప్రమాదాలను కొలిచి, ఎంత నష్టం రావచ్చో, దాన్ని ఎలా నియంత్రించాలో సంస్థకు తెలియజేస్తారు.</div></div>
+<div class="row"><div class="k">ట్రెజరీ అనలిస్ట్</div><div class="v">కంపెనీ నగదు, బ్యాంకు సంబంధాలు, వెంటనే అందుబాటులో ఉండాల్సిన డబ్బు, పెట్టుబడులు, అప్పులు, విదేశీ కరెన్సీ రిస్క్ నిర్వహణకు సహాయపడతారు.</div></div>
+<div class="row"><div class="k">వాల్యుయేషన్ అనలిస్ట్</div><div class="v">ఆర్థిక మోడల్స్, ఇతర కంపెనీల పోలికల ఆధారంగా ఒక కంపెనీ, వ్యాపార విభాగం, ఆస్తి లేదా పెట్టుబడి విలువ ఎంత ఉండవచ్చో అంచనా వేస్తారు.</div></div>
+<div class="row"><div class="k">బిజినెస్ ఫైనాన్స్ అనలిస్ట్</div><div class="v">వ్యాపార బృందాలతో కలిసి ధరలు, లాభ మార్జిన్, వృద్ధి, ఖర్చులు, వ్యాపార నిర్ణయాలు ఆర్థికంగా ఉపయోగకరమా అని పరిశీలిస్తారు.</div></div>
+<div class="row"><div class="k">ఫైనాన్స్ డేటా అనలిస్ట్</div><div class="v">ఫైనాన్స్ అవగాహనతో పాటు <b>Excel, SQL, Power BI, Python, డాష్‌బోర్డులు</b> ఉపయోగించి రిపోర్టులను ఆటోమేటిక్ చేయడం, పెద్ద ఆర్థిక డేటాను విశ్లేషించడం చేస్తారు.</div></div>
+</div>
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">ఫైనాన్షియల్ అనలిస్ట్ vs అకౌంటెంట్</div><div class="v"><b>అకౌంటెంట్:</b> ఆర్థిక లావాదేవీలను సరిగ్గా నమోదు చేసి, వర్గీకరించి, రిపోర్టు చేస్తారు.<br/><b>ఫైనాన్షియల్ అనలిస్ట్:</b> ఆ సమాచారంతో పనితీరును అర్థం చేసుకుని భవిష్యత్తు అంచనా వేసి నిర్ణయాలకు సహాయపడతారు.<br/><br/>అనలిస్ట్‌కు అకౌంటింగ్ పరిజ్ఞానం చాలా అవసరం.</div></div>
+<div class="row"><div class="k">ఫైనాన్షియల్ అనలిస్ట్ vs CA</div><div class="v"><b>ఫైనాన్షియల్ అనలిస్ట్:</b> ఉద్యోగ పాత్ర; అందరికీ ఒకే తప్పనిసరి ప్రొఫెషనల్ అర్హత లేదు.<br/><b>Chartered Accountant (CA):</b> ICAI మార్గం ద్వారా పొందే నియంత్రిత వృత్తి అర్హత.<br/><br/>CAలు ఫైనాన్షియల్ అనలిస్ట్ కావచ్చు; కానీ ప్రతి అనలిస్ట్ ఉద్యోగానికి CA అవసరం లేదు.</div></div>
+<div class="row"><div class="k">ఫైనాన్షియల్ అనలిస్ట్ vs ఇన్వెస్ట్‌మెంట్ బ్యాంకర్</div><div class="v"><b>ఫైనాన్షియల్ అనలిస్ట్:</b> కంపెనీలు, ఫైనాన్స్ బృందాల్లో ఉండే విస్తృత విశ్లేషణ పాత్ర.<br/><b>ఇన్వెస్ట్‌మెంట్ బ్యాంకింగ్:</b> కంపెనీల విలీనం, కొనుగోళ్లు, పెట్టుబడి సేకరణ వంటి ప్రత్యేక పనులు; తరచూ ఎక్కువ పని గంటలు, వేరే నియామక విధానం ఉంటాయి.</div></div>
+<div class="row"><div class="k">ఫైనాన్షియల్ అనలిస్ట్ vs స్టాక్ ట్రేడర్</div><div class="v"><b>ఫైనాన్షియల్ అనలిస్ట్:</b> సమాచారాన్ని విశ్లేషించి సూచనలు, వ్యాపార నిర్ణయాలు రూపొందిస్తారు.<br/><b>ట్రేడర్:</b> మార్కెట్లో కొనుగోలు-అమ్మకం స్థితులను అమలు చేస్తారు, నిర్వహిస్తారు.<br/><br/>ఫైనాన్షియల్ అనలిస్ట్ అవ్వడం అంటే రోజంతా షేర్లు కొనడం, అమ్మడం కాదు.</div></div>
+<div class="row"><div class="k">ఎక్కడ పనిచేయవచ్చు?</div><div class="v">బ్యాంకులు, ఫిన్‌టెక్, కన్సల్టింగ్, తయారీ, IT, GCCలు, పెట్టుబడి సంస్థలు, ఇన్సూరెన్స్, స్టార్టప్‌లు, ఈ-కామర్స్, అకౌంటింగ్/సలహా సంస్థలు, ఫైనాన్స్ విభాగం ఉన్న పెద్ద సంస్థలన్నింటిలోనూ అవకాశం ఉంటుంది.</div></div>
+<div class="row"><div class="k">AI కాలంలో వాస్తవం</div><div class="v"><b>AI పదేపదే చేసే రిపోర్టులు, స్ప్రెడ్‌షీట్ ఫార్ములాలు, తొలి విశ్లేషణ ముసాయిదాలను ఆటోమేటిక్ చేయగలదు.</b> అందుకే డేటా సరిగ్గా ఉందా చూడడం, అకౌంటింగ్ అర్థం చేసుకోవడం, ఊహలను ప్రశ్నించడం, వేర్వేరు పరిస్థితుల అంచనా వేయడం, ఫలితం వ్యాపారానికి <b>ఎందుకు</b> ముఖ్యమో వివరించగల అనలిస్ట్‌ల విలువ పెరుగుతుంది.</div></div>
+<div class="row"><div class="k">కంపెనీలు విలువిచ్చేవి</div><div class="v"><b>Excel · ఫైనాన్షియల్ మోడలింగ్ · అకౌంటింగ్ · వ్యాపార అవగాహన · Power BI · కమ్యూనికేషన్.</b></div></div>
+<div class="row"><div class="k">ప్రత్యామ్నాయ ప్రణాళిక</div><div class="v">ఫైనాన్స్ విశ్లేషణ నైపుణ్యాలతో <b>అకౌంటింగ్ · బ్యాంకింగ్ · బిజినెస్ అనలిటిక్స్ · FP&amp;A · క్రెడిట్ · కన్సల్టింగ్</b> వంటి రంగాల్లోనూ పని చేయవచ్చు.</div></div>
+<div class="flag"><span class="mark">ఉద్యోగ వాస్తవం</span><span><b>ఫైనాన్షియల్ అనలిస్ట్‌కు లెక్కలు వేసినందుకే జీతం ఇవ్వరు.</b> ఆ సంఖ్యల అర్థం, తర్వాత ఏం జరగవచ్చు, సంస్థ ఏ నిర్ణయం తీసుకోవాలో చెప్పడమే అసలు విలువ.</span></div>
+</div></section>
+<section id="c4"><div class="num">వృత్తం 4</div><h3>ఎంత సంపాదించవచ్చు?</h3><p class="lede">నగరం, కంపెనీ, డిగ్రీ, ప్రత్యేక ఫైనాన్స్ రంగం, నైపుణ్యాలను బట్టి జీతం చాలా మారుతుంది.</p>
+<div class="card">
+<div class="row"><div class="k">ఇంటర్న్ / ఫైనాన్స్ ట్రైనీ</div><div class="v"><span class="money">₹10,000 – ₹25,000/month</span><br/>చాలా ఇంటర్న్‌షిప్‌లకు సుమారు జీత పరిధి. ప్రముఖ సంస్థలు ఎక్కువ, చిన్న సంస్థలు తక్కువ ఇవ్వవచ్చు.</div></div>
+<div class="row"><div class="k">ప్రారంభ / జూనియర్ అనలిస్ట్</div><div class="v"><span class="money">₹3 – ₹6 lakh/year</span><br/>చాలా B.Com/BBA/Economics డిగ్రీల తర్వాత వచ్చే మొదటి ఉద్యోగాలకు సుమారు పరిధి. మంచి కాలేజీ, ఇంటర్న్‌షిప్, మోడలింగ్ నైపుణ్యాలు లేదా ప్రత్యేక కంపెనీలు ఎక్కువ ఇవ్వవచ్చు.</div></div>
+<div class="row"><div class="k">భారతదేశ సగటు సూచిక</div><div class="v"><span class="money">≈ ₹5.71 lakh/year</span><br/><b>1 అక్టోబర్ 2026</b>న Indeed భారతదేశంలో ఫైనాన్షియల్ అనలిస్ట్ సగటు జీతాన్ని <b>₹5,70,628/సంవత్సరం</b>గా చూపింది; <b>123 నమోదైన జీతాల</b> ఆధారంగా. అన్ని అనుభవ స్థాయిలు కలిసివుండవచ్చు; కొత్తవారికి గ్యారంటీ జీతం కాదు.</div></div>
+<div class="row"><div class="k">అనుభవం ఉన్న అనలిస్ట్</div><div class="v"><span class="money">₹6 – ₹12 lakh+/year</span><br/>FP&amp;A, కంపెనీ విలువ అంచనా, పెట్టుబడి పరిశోధన, వ్యాపార భాగస్వామ్యం లేదా డేటా ఆటోమేషన్‌లో పట్టు ఉంటే మరింత సంపాదించవచ్చు.</div></div>
+<div class="row"><div class="k">సీనియర్ ఫైనాన్షియల్ అనలిస్ట్</div><div class="v"><span class="money">Around ₹10 – ₹15 lakh+/year can be possible</span><br/>Indeed భారతదేశ సీనియర్ ఫైనాన్షియల్ అనలిస్ట్ సగటు ₹11 లక్షలకంటే ఎక్కువగా చూపుతోంది. కానీ ఉద్యోగ పేరు, కంపెనీ, అనుభవాన్ని బట్టి చాలా తేడా ఉంటుంది.</div></div>
+<div class="row"><div class="k">అత్యధిక జీతాల ఫైనాన్స్ ఉద్యోగాలు</div><div class="v"><span class="money">ఇంకా చాలా ఎక్కువ ఉండవచ్చు</span><br/>ఇన్వెస్ట్‌మెంట్ బ్యాంకింగ్, ప్రముఖ ఈక్విటీ రీసెర్చ్, ప్రైవేట్ ఈక్విటీ, ఉన్నత కార్పొరేట్ ఫైనాన్స్, అంతర్జాతీయ ప్రత్యేక ఉద్యోగాల్లో మరింత రావచ్చు. కానీ పోటీ తీవ్రం; కొత్తవారికి సాధారణ జీతంగా భావించవద్దు.</div></div>
+<div class="row"><div class="k">కోర్సు ఖర్చు</div><div class="v">ఫైనాన్షియల్ అనలిస్ట్ అవ్వడానికి ఖరీదైన ప్రైవేట్ కోర్సు తప్పనిసరి కాదు. మంచి B.Com/BBA/Economics డిగ్రీతో పాటు <b>Excel, అకౌంటింగ్, ఫైనాన్షియల్ మోడలింగ్, ఇంటర్న్‌షిప్‌లు, ప్రాజెక్టులు</b> నేర్చుకోవడం అనేక సర్టిఫికెట్ల కంటే ఎక్కువ ఉపయోగపడుతుంది.</div></div>
+<div class="flag red"><span class="mark">డబ్బు విషయంలో జాగ్రత్త</span><span><b>చిన్న ఫైనాన్షియల్ మోడలింగ్ కోర్సుతో ₹10–20 లక్షల ప్యాకేజీ గ్యారంటీ అంటున్న సంస్థల పట్ల జాగ్రత్త.</b> అధిక జీతాలకు ప్రాథమిక పరిజ్ఞానం, మంచి కాలేజీ/కంపెనీ అవకాశాలు, ఇంటర్న్‌షిప్‌లు, మాట్లాడే నైపుణ్యం, విశ్లేషణ శక్తి, తీవ్ర పోటీ ముఖ్యం.</span></div>
+</div></section>
+<div class="rule-box"><h4>మీ నాలుగు వృత్తాలను ఎలా అర్థం చేసుకోవాలి?</h4>
+<p><span class="hi">సంఖ్యలు + వ్యాపారం + నిర్ణయాలు</span> ఇష్టమైతే ఫైనాన్షియల్ అనాలిసిస్ మంచి ఎంపిక కావచ్చు.</p>
+<p><span class="hi">అకౌంటింగ్, ఆడిట్, పన్నులు ఇష్టమైతే</span> Chartered Accountancy / Accounting‌తో పోల్చండి.</p>
+<p><span class="hi">మార్కెట్లు, కంపెనీల విలువను అంచనా వేయడం ఇష్టమైతే</span> Equity Research / Investment Analysis పరిశీలించండి; తర్వాత CFA కూడా ఆలోచించవచ్చు.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">ఒక సూత్రం: <b>మంచి ఫైనాన్షియల్ అనలిస్ట్ “లాభం 10% పెరిగింది” అని ఆగిపోరు. ఎందుకు పెరిగింది, అది కొనసాగుతుందా, కంపెనీ ఏం చేయాలో వివరిస్తారు.</b></p>
+</div>
+<section id="c5" style="margin-top:34px"><div class="num">మీ కార్యాచరణ ప్రణాళిక</div><h3>ఈ రోజు నుంచి ఏం చేయాలి?</h3><p class="lede">8–10 తరగతుల విద్యార్థులు ఇప్పుడే పెద్ద ప్రొఫెషనల్ సర్టిఫికెట్లు కాదు; డబ్బు, వ్యాపారం గురించి ప్రాథమికంగా తెలుసుకోవడం మొదలుపెట్టాలి.</p>
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>ఇప్పుడే పాఠశాలలో</div><ul>
+<li><b>శాతాలు, నిష్పత్తులు, సగటులు, గ్రాఫులు</b> బాగా నేర్చుకోండి.</li>
+<li>స్ప్రెడ్‌షీట్‌లో వరుసలు, నిలువు వరుసలు, ఫార్ములాలు, మొత్తం, చార్టులు నేర్చుకోండి.</li>
+<li>ఆదాయం, ఖర్చు, లాభం, ఆస్తులు, అప్పు, నగదు అనే మాటల అర్థం తెలుసుకోండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>10వ తరగతి తర్వాత</div><ul>
+<li>ఫైనాన్స్ ఇష్టమని తెలిసి ఉంటే <b>MEC / గణితంతో కామర్స్</b>కి ప్రాధాన్యం ఇవ్వండి.</li>
+<li>CEC కూడా వీలే; గణితం, స్టాటిస్టిక్స్‌ను అదనంగా బాగా నేర్చుకోండి.</li>
+<li>12వ తరగతి తర్వాత <b>B.Com, BBA Finance, Economics, Statistics</b> వంటి డిగ్రీలను పోల్చండి.</li>
+</ul></div>
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>కాలేజీలో చదువుతున్నప్పుడు</div><ul>
+<li><b>Excel + ఆర్థిక నివేదికలు + అకౌంటింగ్ + ఫైనాన్షియల్ మోడలింగ్</b> నిజంగా నేర్చుకోండి.</li>
+<li>నిజమైన కంపెనీ వార్షిక నివేదికలతో కనీసం రెండు ప్రాజెక్టులు చేయండి.</li>
+<li>ఖరీదైన సర్టిఫికెట్ల ముందు ఫైనాన్స్ ఇంటర్న్‌షిప్‌లు చేయండి. తర్వాత లక్ష్య ఉద్యోగానికి తగ్గట్టుగా CFA, MBA, NISM, SQL/Python ఎంచుకోండి.</li>
+</ul></div>
+</div>
+<div class="flag green"><span class="mark">మొదటి మంచి పరీక్ష</span><span>ఒక ప్రముఖ స్టాక్ మార్కెట్ కంపెనీ వార్షిక నివేదిక తీసుకోండి. రెండు సంవత్సరాల <b>ఆదాయం, ఖర్చులు, లాభం, వ్యాపార కార్యకలాపాల నుంచి వచ్చిన నగదు</b> తెలుసుకోండి. శాతం మార్పు లెక్కించండి. ఏమి మెరుగైందో, ఏమి తగ్గిందో మూడు వాక్యాలు రాయండి. సంఖ్యలతో వ్యాపార కథ అర్థం చేసుకోవడం ఇష్టమైతే ఈ వృత్తి సరిపోవచ్చు.</span></div>
+</section>
+<p class="note">ఇది కెరీర్ మార్గదర్శకత్వం మాత్రమే; పెట్టుబడి సలహా లేదా అధికారిక ప్రవేశ ప్రకటన కాదు. ప్రతి ఫైనాన్షియల్ అనలిస్ట్‌కు ఒకే అర్హత తప్పనిసరి కాదు. SEBI Research Analyst నియమాలకు లోబడే వ్యక్తులకు 20 జనవరి 2026 నుంచి మారిన NISM-Series-XV పరీక్ష సంబంధించినది; సాధారణ కార్పొరేట్ ఫైనాన్స్ ఉద్యోగాలతో కలపవద్దు. CFA అదనపు అర్హత మాత్రమే; నిర్దిష్ట నిబంధనల ప్రకారం డిగ్రీ పూర్తయ్యే ముందే Level Iకి నమోదు కావచ్చు. మూల నివేదికలో 1 అక్టోబర్ 2026న Indeed తెలిపిన భారతదేశ సగటు వార్షిక జీతం సుమారు ₹5.71 లక్షలు (123 జీతాల ఆధారంగా) అని ఉంది.</p>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>ఆరు ప్రశ్నలకూ జవాబు ఇవ్వండి</strong>మీ ఫలితం ఇక్కడ కనిపిస్తుంది.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>ఫైనాన్షియల్ అనలిస్ట్ వృత్తికి మంచి అనుకూలత</strong>సంఖ్యలు, వ్యాపారం, ఫలితాలు వివరించడం మీకు సరిపోతున్నాయి. ఖరీదైన సర్టిఫికెట్లకు ముందుగా అకౌంటింగ్, Excel నేర్చుకోండి.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>నిర్ణయానికి ముందు పరిశీలించండి</strong>ఫైనాన్స్‌లో కొన్ని అంశాలు మీకు నచ్చుతున్నాయి. నిజమైన కంపెనీ ఆర్థిక నివేదికను విశ్లేషించి, అకౌంటింగ్, బ్యాంకింగ్, బిజినెస్ అనాలిటిక్స్‌తో పోల్చండి.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>మరోసారి ఆలోచించండి</strong>సంఖ్యల విశ్లేషణ తక్కువగా ఉండే వ్యాపార పని మీకు బాగా నచ్చవచ్చు. మార్కెటింగ్, మేనేజ్‌మెంట్, HR, వ్యాపారం, లా వంటి రంగాలను పరిశీలించండి.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+</div></body></html>

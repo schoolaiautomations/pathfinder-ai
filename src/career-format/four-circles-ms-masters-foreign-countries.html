@@ -1,0 +1,361 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>Four Circles — MS / Master's in Foreign Countries</title><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@500&amp;display=swap" rel="stylesheet"/><style>
+  :root{
+    --ink:#14243A; --ink-soft:#41536B; --khaki:#B9A063; --khaki-deep:#7E6A2E;
+    --paper:#E9EBE6; --card:#FFFFFF; --rule:#D3D7D2;
+    --red:#9E2B20; --amber:#A8710C; --green:#2C6B4C;
+    --display:"Barlow Condensed",Arial Narrow,sans-serif;
+    --body:"Inter",system-ui,-apple-system,Segoe UI,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:34px 0 4px;text-align:center}
+  .hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .hero h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,8.5vw,54px);line-height:.98;
+    margin:8px 0 8px;text-transform:uppercase;letter-spacing:-.005em}
+  .hero p{color:var(--ink-soft);font-size:15px;max-width:44ch;margin:0 auto 22px}
+  .hero.compact{padding:20px 0 0}
+  .hero.compact h1{font-size:clamp(24px,5vw,30px)}
+  .hero.compact p,.hero.compact .eyebrow{display:none}
+
+  .searchbar{display:flex;gap:8px;background:var(--card);border:1px solid var(--rule);
+    border-radius:10px;padding:7px 7px 7px 14px;align-items:center;box-shadow:0 1px 0 rgba(20,36,58,.04)}
+  .searchbar:focus-within{border-color:var(--ink)}
+  .searchbar svg{flex:none;opacity:.4}
+  #careerInput{flex:1;min-width:0;border:0;outline:0;font:500 16px/1.4 var(--body);
+    color:var(--ink);background:transparent;padding:9px 4px}
+  #careerInput::placeholder{color:#94A0AE;font-weight:400}
+  #goBtn{flex:none;border:0;border-radius:7px;background:var(--ink);color:#fff;
+    font:600 14px/1 var(--body);padding:12px 18px;cursor:pointer;transition:opacity .15s}
+  #goBtn:hover{opacity:.88} #goBtn:disabled{opacity:.45;cursor:default}
+  #goBtn:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+
+  .suggest{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:14px}
+  .sug{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    background:var(--card);border-radius:99px;padding:6px 12px;color:var(--ink-soft);cursor:pointer}
+  .sug:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* ---------- states ---------- */
+  #status{margin-top:26px;text-align:center;color:var(--ink-soft);font-size:15px}
+  .dots{display:inline-flex;gap:5px;margin-bottom:12px}
+  .dots i{width:9px;height:9px;border-radius:50%;background:var(--khaki);display:block;
+    animation:pulse 1.05s ease-in-out infinite}
+  .dots i:nth-child(2){animation-delay:.14s} .dots i:nth-child(3){animation-delay:.28s}
+  .dots i:nth-child(4){animation-delay:.42s}
+  @keyframes pulse{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  .errbox{background:#F8ECEA;border-left:4px solid var(--red);border-radius:8px;
+    padding:14px 16px;text-align:left;font-size:15px;color:var(--ink)}
+
+  /* ---------- result ---------- */
+  #result{display:none;margin-top:30px}
+  .mast{border-top:3px solid var(--ink);padding-top:14px}
+  .mast .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--khaki-deep)}
+  .mast h2{font-family:var(--display);font-weight:700;font-size:clamp(36px,10vw,60px);line-height:.94;
+    margin:6px 0 4px;text-transform:uppercase}
+  .standfirst{color:var(--ink-soft);font-size:15px;max-width:46ch;margin:0 0 18px}
+
+  .strip{display:flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--card);margin-bottom:30px}
+  .pip{flex:1;padding:12px 8px;text-align:center;border-right:1px solid var(--rule);
+    text-decoration:none;color:inherit;display:block}
+  .pip:last-child{border-right:0}
+  .pip:hover{background:#F4F5F1}
+  .ring{width:30px;height:30px;border-radius:50%;border:2.5px solid var(--rule);margin:0 auto 6px;
+    display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;
+    color:var(--ink-soft);transition:all .3s}
+  .pip.done .ring{border-color:var(--green);background:var(--green);color:#fff}
+  .pip.warn .ring{border-color:var(--amber);background:var(--amber);color:#fff}
+  .pip.stop .ring{border-color:var(--red);background:var(--red);color:#fff}
+  .pip b{display:block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.02em;text-transform:uppercase}
+  .pip em{font-style:normal;font-family:var(--mono);font-size:10px;color:var(--ink-soft)}
+
+  section{margin-bottom:34px;scroll-margin-top:14px}
+  .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--khaki-deep)}
+  h3{font-family:var(--display);font-weight:700;font-size:clamp(25px,6vw,34px);line-height:1.06;
+    margin:2px 0 10px;text-transform:uppercase}
+  .lede{color:var(--ink-soft);font-size:15px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px}
+
+  .q{border-bottom:1px solid var(--rule);padding:12px 0;display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .q:first-child{padding-top:0} .q:last-child{border-bottom:0;padding-bottom:4px}
+  .q p{margin:0;font-size:15px;flex:1;min-width:0}
+  .toggle{display:flex;flex:none;border:1px solid var(--rule);border-radius:7px;overflow:hidden}
+  .toggle button{font:600 13px/1 var(--body);padding:8px 13px;border:0;background:var(--card);
+    color:var(--ink-soft);cursor:pointer;transition:background .15s,color .15s}
+  .toggle button+button{border-left:1px solid var(--rule)}
+  .toggle button:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+  .toggle button[aria-pressed="true"][data-v="y"]{background:var(--green);color:#fff}
+  .toggle button[aria-pressed="true"][data-v="n"]{background:var(--red);color:#fff}
+  .verdict{margin-top:14px;border-radius:8px;padding:13px 15px;font-size:15px;background:#F1F2EE;
+    color:var(--ink-soft);border-left:4px solid var(--rule)}
+  .verdict strong{display:block;font-family:var(--display);font-weight:700;font-size:19px;
+    color:var(--ink);text-transform:uppercase;margin-bottom:2px}
+  .verdict.good{background:#EAF2ED;border-left-color:var(--green)}
+  .verdict.mixed{background:#FBF2E2;border-left-color:var(--amber)}
+  .verdict.bad{background:#F8ECEA;border-left-color:var(--red)}
+
+  .row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .row:first-child{padding-top:0} .row:last-child{border-bottom:0;padding-bottom:0}
+  .row .k{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.15;flex:0 0 33%;
+    text-transform:uppercase;letter-spacing:.01em}
+  .row .v{flex:1;font-size:14.5px;color:var(--ink-soft)}
+  .row .v b{color:var(--ink);font-weight:600}
+  .money{font-family:var(--mono);font-size:15px;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+  .chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;border:1px solid var(--rule);
+    border-radius:99px;padding:5px 11px;color:var(--ink-soft);background:var(--card);text-transform:uppercase}
+
+  .flag{display:flex;gap:11px;align-items:flex-start;border-radius:8px;padding:13px 15px;
+    font-size:14.5px;margin-top:14px;background:#FBF2E2;border-left:4px solid var(--amber)}
+  .flag.red{background:#F8ECEA;border-left-color:var(--red)}
+  .flag.green{background:#EAF2ED;border-left-color:var(--green)}
+  .flag .mark{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;
+    color:var(--amber);flex:none;text-transform:uppercase;padding-top:1px}
+  .flag.red .mark{color:var(--red)} .flag.green .mark{color:var(--green)}
+
+  .rule-box{background:var(--ink);color:#fff;border-radius:10px;padding:22px 20px}
+  .rule-box h4{font-family:var(--display);font-weight:700;font-size:26px;margin:0 0 8px;text-transform:uppercase}
+  .rule-box p{margin:0 0 12px;font-size:15px;color:#C7CFDA}
+  .rule-box p:last-child{margin-bottom:0}
+  .rule-box .hi{color:var(--khaki);font-weight:600}
+  .note{font-size:12.5px;color:var(--ink-soft);margin-top:18px;text-align:center}
+
+  .subno{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;
+    background:var(--khaki);color:#fff;font-family:var(--mono);font-size:11px;
+    vertical-align:2px;margin-right:7px}
+
+  .plan{padding:4px 16px}
+  .stage{border-bottom:1px solid var(--rule);padding:16px 0}
+  .stage:last-child{border-bottom:0}
+  .stage-head{font-family:var(--display);font-weight:700;font-size:21px;text-transform:uppercase;
+    letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+  .stage-no{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:var(--ink);color:#fff;font-family:var(--mono);font-size:12px;font-weight:500;flex:none}
+  .stage ul{margin:9px 0 0;padding-left:36px;list-style:none}
+  .stage li{position:relative;font-size:14.5px;color:var(--ink-soft);padding:5px 0}
+  .stage li::before{content:"";position:absolute;left:-16px;top:13px;width:7px;height:7px;
+    border-radius:50%;border:2px solid var(--khaki)}
+
+  /* ---------- actions + print ---------- */
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .act{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:8px;padding:9px 14px;font:600 13.5px/1 var(--body);color:var(--ink);cursor:pointer}
+  .act:hover{border-color:var(--ink)}
+  .act:focus-visible{outline:2px solid var(--khaki);outline-offset:2px}
+  .act svg{opacity:.6}
+  .printhead{display:none}
+  .acthint{font-size:12.5px;color:var(--ink-soft);margin:-12px 0 20px}
+  .acthint.live{color:var(--khaki-deep);font-weight:500}
+
+  @media print{
+    @page{margin:13mm}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+    body{background:#fff;font-size:11.5pt}
+    .wrap{max-width:none;padding:0}
+    .hero,#status,.actions,.acthint,.suggest,.searchbar,.pip em{display:none !important}
+    #result{display:block !important;margin-top:0}
+    .printhead{display:block;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:14px;
+      font-family:var(--mono);font-size:10pt;color:var(--ink-soft)}
+    .printhead .fill{display:inline-block;border-bottom:1px solid var(--ink-soft);min-width:150px}
+    a{text-decoration:none;color:inherit}
+    .card,.q,.stage,.flag,.rule-box,.verdict{break-inside:avoid;page-break-inside:avoid}
+    section{margin-bottom:20px}
+    h3{font-size:20pt} .mast h2{font-size:34pt}
+    .rule-box{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+    .rule-box p{color:var(--ink-soft)} .rule-box .hi{color:var(--khaki-deep)}
+  }
+
+  @media (max-width:560px){
+    .row{display:block} .row .k{margin-bottom:3px;font-size:17px}
+    .stage ul{padding-left:22px} .stage li::before{left:-14px}
+    .pip b{font-size:13px} .pip em{display:none}
+    .q{flex-direction:column;gap:9px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+body{background:#fff}.printhead{display:block !important}
+.toggle button[data-picked="1"][data-v="y"]{background:#2C6B4C;color:#fff}
+.toggle button[data-picked="1"][data-v="n"]{background:#9E2B20;color:#fff}
+@media screen{.wrap{padding-top:24px}}</style></head><body><div class="wrap">
+<div class="mast"><div class="eyebrow">Higher-study fit check · India</div><h2>MS / Master's in Foreign Countries</h2><p class="standfirst">Studying for an <b>MS / Master's abroad</b> can give access to specialised courses, research, international exposure and global job markets. But it is not automatically better than studying in India. The right decision depends on <b>your field, university quality, total cost, scholarships, visa/work rules and the career value of the degree</b>.</p></div>
+
+<div class="printhead">Four Circles of Career &nbsp;·&nbsp; MS / Master's Abroad &nbsp;·&nbsp; Name: <span class="fill"></span> &nbsp; Date: <span class="fill" style="min-width:90px"></span></div>
+
+<nav class="strip">
+<a class="pip" id="pip1" href="#c1"><div class="ring">1</div><b>Fit</b><em>Why go abroad?</em></a>
+<a class="pip" href="#c2"><div class="ring">2</div><b>Pathway</b><em>Bachelor's → application</em></a>
+<a class="pip warn" href="#c3"><div class="ring">3</div><b>Countries</b><em>Different strengths</em></a>
+<a class="pip" href="#c4"><div class="ring">4</div><b>Money</b><em>Cost + funding</em></a>
+</nav>
+
+<section id="c1"><div class="num">CIRCLE 1</div><h3>Should you really plan for a Master's abroad?</h3><p class="lede">Going abroad should solve a clear academic or career problem — not simply because friends are going.</p>
+
+<div class="card"><div id="quiz">
+<div class="q"><p>Do you already have a field you may want to specialise in after your bachelor's degree?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to maintain a strong academic record during your bachelor's degree?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you be comfortable living independently in another country and handling daily responsibilities yourself?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Are you willing to improve English, communication, projects, internships and your overall profile — not only exam scores?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Can your family realistically plan the cost, or are you willing to compete seriously for scholarships/assistantships?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+<div class="q"><p>Would you still want the degree if immigration or post-study work rules became less favourable?</p><div class="toggle"><button aria-pressed="false" data-v="y" type="button">Yes</button><button aria-pressed="false" data-v="n" type="button">No</button></div></div>
+</div><div class="verdict" id="verdict" role="status"><strong>Answer all six</strong>Your result appears here.</div></div></section>
+
+<section id="c2"><div class="num">CIRCLE 2</div><h3>What is the actual pathway?</h3><p class="lede">You normally apply for a foreign Master's <b>after or during the final year of a recognised bachelor's degree</b>. Requirements differ by university and course.</p>
+
+<div class="flag green"><span class="mark">Common terms</span><span><b>SOP = Statement of Purpose.</b> <b>LOR = Letter of Recommendation.</b> <b>IELTS/TOEFL/PTE = English-language tests.</b> <b>GRE = Graduate Record Examination.</b> <b>GMAT = Graduate Management Admission Test.</b> GRE/GMAT are <b>not universally compulsory</b>; check the exact programme.</span></div>
+
+<div class="card">
+<div class="row"><div class="k">After Class 10</div><div class="v"><b>Choose the stream that leads to the bachelor's degree you genuinely want.</b><br><br>MPC may lead to Engineering/Computer Science/Physics; BiPC to Biology/Health/Life Sciences; Commerce to Finance/Business/Economics; Humanities to Social Sciences, Design, Policy and related fields.<br><br>You do <b>not</b> need to decide the foreign country in Class 10.</div></div>
+
+<div class="row"><div class="k">Step 1 — Bachelor's Degree</div><div class="v"><b>Class 12 → recognised bachelor's degree in India.</b><br><br>During college, maintain good grades and build projects, internships, research, technical skills or work experience relevant to your future Master's.</div></div>
+
+<div class="row"><div class="k">Step 2 — Choose the Master's</div><div class="v">Decide the <b>specialisation first</b>, then country and university.<br><br>Examples:<div class="chips"><span class="chip">MS Computer Science</span><span class="chip">MS Data Science</span><span class="chip">MS Mechanical</span><span class="chip">Biotechnology</span><span class="chip">Finance</span><span class="chip">Public Health</span></div><br>A famous university with the wrong course is not automatically a good choice.</div></div>
+
+<div class="row"><div class="k">Step 3 — Shortlist Universities</div><div class="v">Create three groups:<br><b>Ambitious:</b> difficult but possible.<br><b>Target:</b> profile matches reasonably well.<br><b>Safer:</b> admission probability is stronger.<br><br>Compare curriculum, faculty/research, internships, location, tuition, scholarships, career outcomes and visa/work conditions.</div></div>
+
+<div class="row"><div class="k">Step 4 — English Test</div><div class="v">Many English-taught programmes ask for <b>IELTS, TOEFL, PTE or another accepted proof of English</b>.<br><br>Required scores vary by university. Some institutions may waive a test in specific situations; never assume a waiver until the university confirms it.</div></div>
+
+<div class="row"><div class="k">Step 5 — GRE / GMAT?</div><div class="v"><b>Only if the programme requires or values it.</b><br><br>GRE is common in some graduate programmes, especially in the United States, but many programmes are test-optional or do not require it.<br><br>GMAT/GRE may be relevant to Business, Management and some Finance programmes.</div></div>
+
+<div class="row"><div class="k">Step 6 — Application Documents</div><div class="v">Common documents include:<div class="chips"><span class="chip">Transcripts</span><span class="chip">SOP</span><span class="chip">LORs</span><span class="chip">CV / Resume</span><span class="chip">English Score</span><span class="chip">Test Score if needed</span></div><br>Research/coursework programmes may also ask for a writing sample, portfolio, research statement or interview.</div></div>
+
+<div class="row"><div class="k">Step 7 — Offer + Funding</div><div class="v">After admission, compare the <b>net cost</b>, not just the university ranking.<br><br>Check scholarships, tuition waivers, research assistantships, teaching assistantships, university jobs and education loans. Assistantships are common in some research-heavy North American programmes but are <b>not guaranteed</b>.</div></div>
+
+<div class="row"><div class="k">Step 8 — Visa</div><div class="v">After receiving the required admission/immigration documents, apply for the relevant student visa or study permit and prove finances as required.<br><br>Visa rules are country-specific and can change even after you start planning.</div></div>
+
+<div class="row"><div class="k">Best timeline</div><div class="v"><b>2nd–3rd year of bachelor's:</b> improve GPA, projects, internships/research.<br><b>12–18 months before Master's:</b> shortlist courses, tests, scholarships.<br><b>8–12 months before:</b> applications.<br><b>After offers:</b> funding decision, visa, housing and travel.</div></div>
+
+<div class="row"><div class="k">Complete roadmap</div><div class="v"><b>Class 10 → Class 12 → Bachelor's Degree → strong GPA + projects/internships/research → shortlist specialisation + countries → IELTS/TOEFL/PTE + GRE/GMAT only if needed → SOP + LOR + applications → admit + scholarship/funding → visa → Master's abroad → internship/research → job / PhD / return to India.</b></div></div>
+
+<div class="flag red"><span class="mark">Very important</span><span><b>Do not select a Master's mainly for immigration.</b> Immigration rules, post-study work periods and job markets can change. Choose a course that still has value if you eventually return to India.</span></div>
+</div></section>
+
+<section id="c3"><div class="num">CIRCLE 3 · COUNTRY CHOICES</div><h3>Which country may suit you?</h3><p class="lede">There is no universal “best country.” The right choice depends on your field, budget, preferred programme length, language and career plan.</p>
+
+<div class="card">
+<div class="row"><div class="k">United States</div><div class="v"><b>Strong for research, engineering, computer science, biotech, business and highly specialised programmes.</b><br><br>Master's programmes are commonly around 1.5–2 years, though length varies. Research universities may offer assistantships, but funding for Master's students is less predictable than for PhD students.<br><br><b>Good fit:</b> students prioritising research quality, course choice and the large US job market.</div></div>
+
+<div class="row"><div class="k">United Kingdom</div><div class="v"><b>Many taught Master's programmes are only 1 year.</b> This reduces study time but makes the academic year intensive.<br><br>A UK Student visa requires an offer from a licensed sponsor, sufficient funds and English ability. Current rules say the Graduate visa is <b>2 years for eligible applications made by 31 Dec 2026 and 18 months for applications from 1 Jan 2027</b> for non-doctoral graduates.<br><br><b>Good fit:</b> students wanting a shorter Master's and strong universities.</div></div>
+
+<div class="row"><div class="k">Canada</div><div class="v"><b>Popular for Master's programmes with research/coursework options and potential post-study work.</b><br><br>Current Canadian rules allow eligible Master's graduates to apply for a <b>3-year PGWP</b> even when the Master's is under 2 years, if the programme is at least 8 months and other conditions are met. Degree-level Master's graduates currently have no PGWP field-of-study restriction, but language and other eligibility requirements apply.<br><br><b>Good fit:</b> students who carefully verify both university quality and PGWP eligibility before enrolling.</div></div>
+
+<div class="row"><div class="k">Germany</div><div class="v"><b>Excellent for Engineering, Science, Automotive, Manufacturing, Energy and research — often with much lower tuition at public universities.</b><br><br>DAAD says most bachelor's and many consecutive Master's programmes at state universities generally do not charge tuition, although important exceptions exist. Students still pay semester contributions and living costs. Current DAAD guidance estimates living costs at roughly <b>€900–€1,200/month</b>.<br><br>Many Master's are available in English, but German can greatly improve everyday life and job opportunities.</div></div>
+
+<div class="row"><div class="k">Australia</div><div class="v"><b>Strong in Engineering, IT, Business, Health, Environmental Science and applied professional programmes.</b><br><br>International students need a Student visa and must budget carefully: tuition and living costs can be high. Australia's Student visa application charge increased to <b>AUD 2,500 from 1 July 2026</b> for most primary applicants.<br><br><b>Good fit:</b> students who value English-speaking study and applied programmes and can support the higher total cost.</div></div>
+
+<div class="row"><div class="k">Other strong options</div><div class="v"><div class="chips"><span class="chip">Ireland</span><span class="chip">Netherlands</span><span class="chip">Sweden</span><span class="chip">France</span><span class="chip">Switzerland</span><span class="chip">Singapore</span></div><br>These can be excellent for particular fields, but tuition, local-language expectations, scholarships and post-study work rules vary substantially.</div></div>
+</div>
+
+<div class="card" style="margin-top:14px">
+<div class="row"><div class="k">MS vs MSc / MA / MEng</div><div class="v"><b>MS / MSc:</b> science/engineering/data/research-oriented Master's titles depending on university.<br><b>MA:</b> commonly arts, humanities, policy and some social sciences.<br><b>MEng:</b> usually professional engineering Master's.<br><br>The <b>course content matters more than the letters in the degree title</b>.</div></div>
+
+<div class="row"><div class="k">Coursework vs Thesis</div><div class="v"><b>Coursework Master's:</b> more classes, projects and professional preparation.<br><b>Thesis/Research Master's:</b> larger research component; stronger preparation for PhD/research careers.<br><br>If you may pursue a PhD, research exposure can be especially valuable.</div></div>
+
+<div class="row"><div class="k">Ranking vs Career Value</div><div class="v">Do not look only at overall university rankings. Check <b>your department, curriculum, faculty, research labs, internship access, employers nearby, alumni outcomes and total debt</b>.</div></div>
+
+<div class="row"><div class="k">AI-era value</div><div class="v">A Master's is most useful when it adds <b>specialised depth</b> that a bachelor's alone may not provide — for example AI, Robotics, Semiconductor Engineering, Biotechnology, Energy Systems, Quantitative Finance or advanced research.<br><br>A generic expensive degree with weak technical or industry value can be a poor investment.</div></div>
+
+<div class="row"><div class="k">Plan B</div><div class="v">Before leaving India, have a Plan B:<div class="chips"><span class="chip">Job in India</span><span class="chip">Indian Master's</span><span class="chip">GATE / IIT route</span><span class="chip">Research Assistantship</span><span class="chip">Work first, study later</span></div><br>A foreign Master's should expand your options, not leave you with only one possible outcome.</div></div>
+
+<div class="flag"><span class="mark">Decision rule</span><span><b>Country comes after course.</b> First ask: “What expertise do I want?” Then ask: “Which university gives me that expertise at a cost and risk my family can reasonably support?”</span></div>
+</div></section>
+
+<section id="c4"><div class="num">CIRCLE 4</div><h3>How much can it cost?</h3><p class="lede">Foreign Master's programmes can range from relatively affordable public-university routes to very expensive private or elite programmes. Always calculate the <b>total degree cost</b>.</p>
+
+<div class="card">
+<div class="row"><div class="k">United States</div><div class="v"><span class="money">Often one of the higher-cost options</span><br><span style="font-size:13px">Tuition varies enormously by university and programme. Add health insurance, housing, food, travel and fees. Assistantships can reduce cost in some programmes, but should never be assumed before receiving a written award.</span></div></div>
+
+<div class="row"><div class="k">United Kingdom</div><div class="v"><span class="money">High tuition, but often only 1 year</span><br><span style="font-size:13px">A shorter degree can reduce total living cost, but international tuition at strong universities can still be substantial. London is generally much more expensive than many other UK cities.</span></div></div>
+
+<div class="row"><div class="k">Canada</div><div class="v"><span class="money">Moderate to high</span><br><span style="font-size:13px">Costs vary widely by province, university and research/coursework format. Verify that the specific institution and programme meet the requirements relevant to your study permit and planned post-graduation work route.</span></div></div>
+
+<div class="row"><div class="k">Germany</div><div class="v"><span class="money">Often lower tuition at public universities</span><br><span style="font-size:13px">DAAD says many state-university bachelor's and consecutive Master's programmes do not charge general tuition, though exceptions exist. Current semester contributions are commonly around <b>€70–€430</b>, and DAAD estimates living costs around <b>€900–€1,200/month</b>. Some states/universities charge tuition to non-EU students.</span></div></div>
+
+<div class="row"><div class="k">Australia</div><div class="v"><span class="money">Generally high total cost</span><br><span style="font-size:13px">Tuition plus living costs can be substantial. Visa charges are also significant; from 1 July 2026, the standard Student visa application charge increased to AUD 2,500 for most applicants.</span></div></div>
+
+<div class="row"><div class="k">Funding sources</div><div class="v"><div class="chips"><span class="chip">University Scholarship</span><span class="chip">Merit Scholarship</span><span class="chip">RA</span><span class="chip">TA</span><span class="chip">DAAD</span><span class="chip">Education Loan</span></div><br><b>RA = Research Assistantship.</b> <b>TA = Teaching Assistantship.</b> Funding availability depends heavily on programme and university.</div></div>
+
+<div class="row"><div class="k">Loan decision</div><div class="v">Before taking a large loan, calculate:<br><b>Total tuition + living + insurance + visa + travel − confirmed scholarship/funding = real amount you must finance.</b><br><br>Then compare this with realistic starting salaries in that field — not the highest salary shown online.</div></div>
+
+<div class="row"><div class="k">Return on Investment</div><div class="v">A more expensive degree can still make sense if it provides exceptional career/research access. A cheaper programme can be a bad deal if employment outcomes are weak.<br><br><b>ROI = career value relative to the money, time and risk you invest.</b></div></div>
+
+<div class="flag red"><span class="mark">Money warning</span><span><b>Never borrow a very large amount only because “everyone gets a job abroad.”</b> Admission does not guarantee a visa, internship, job, work permit or permanent residency. Treat all of those as separate stages with separate risk.</span></div>
+</div></section>
+
+<div class="rule-box"><h4>How to read your four circles</h4>
+<p><span class="hi">Clear specialisation + strong profile + manageable cost</span> — a Master's abroad can be a very good option.</p>
+<p><span class="hi">No clear field yet</span> — first build your bachelor's profile and decide later.</p>
+<p><span class="hi">Need a huge loan for a weak programme</span> — compare Indian Master's or work experience before committing.</p>
+<p style="margin-top:16px;color:#9FAAB9;font-size:14px">One extra rule: <b>do not ask “Which country should I go to?” first. Ask “What do I want to become, and which programme gives me the best path there?”</b></p>
+</div>
+
+<section id="c5" style="margin-top:34px"><div class="num">YOUR ACTION PLAN</div><h3>What to do from today</h3><p class="lede">For an 8th–10th class student, there is no need to start IELTS/GRE coaching now. Build the profile that will make a strong Master's application possible later.</p>
+
+<div class="card plan">
+<div class="stage"><div class="stage-head"><span class="stage-no">1</span>Class 8–10</div><ul>
+<li>Build strong <b>English, communication, Maths/science or subject fundamentals</b></li>
+<li>Explore careers before choosing a foreign country</li>
+<li>Learn to work independently, manage time and use digital tools</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">2</span>Class 11–12 + Bachelor's</div><ul>
+<li>Choose the right stream and bachelor's degree for your target field</li>
+<li>Protect your <b>GPA/CGPA</b>; failed subjects/backlogs can reduce some options</li>
+<li>Build projects, internships, research, competitions or relevant work — not only certificates</li>
+</ul></div>
+
+<div class="stage"><div class="stage-head"><span class="stage-no">3</span>2nd/3rd year of Bachelor's</div><ul>
+<li>Shortlist <b>specialisations</b>, then countries and universities</li>
+<li>Estimate total cost and scholarship possibilities before falling in love with a university</li>
+<li>Prepare English/GRE/GMAT only where actually needed and start SOP/LOR planning early</li>
+</ul></div>
+</div>
+
+<div class="flag green"><span class="mark">Best first test</span><span>Pick one Master's programme you think sounds exciting. Write down <b>what you will learn, what jobs it leads to, total cost, scholarship options and what you would do if you had to return to India immediately after graduating.</b> If the degree still makes sense after answering all five, you are thinking about studying abroad in the right way.</span></div>
+</section>
+
+<p class="note">This is educational guidance, not an admission, visa or immigration guarantee. Master's admission, English-test policies, tuition, scholarships, student-work rules and post-study work permissions change frequently by country and university. Current examples in this report include: Germany's DAAD guidance that many state-university consecutive Master's programmes charge no general tuition, with exceptions and living costs around €900–€1,200/month; Canada's current rule allowing eligible Master's graduates to apply for a 3-year PGWP even for qualifying Master's programmes under 2 years; the UK's Graduate visa changing from 2 years to 18 months for non-doctoral applications made from 1 January 2027; and Australia's Student visa application charge of AUD 2,500 from 1 July 2026. Always verify the exact university and immigration rules in the year you apply.</p>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  const quiz=document.getElementById("quiz"), verdict=document.getElementById("verdict"), pip=document.getElementById("pip1");
+  if(!quiz||!verdict)return;
+  const questions=[...quiz.querySelectorAll(".q")];
+
+  function updateVerdict(){
+    const selected=questions.map(q=>q.querySelector('button[data-picked="1"]')).filter(Boolean);
+    if(selected.length<questions.length){
+      verdict.className="verdict";
+      verdict.innerHTML="<strong>Answer all six</strong>Your result appears here.";
+      if(pip)pip.className="pip";
+      return;
+    }
+    const yes=selected.filter(b=>b.dataset.v==="y").length;
+    if(yes>=5){
+      verdict.className="verdict good";
+      verdict.innerHTML="<strong>Strong Master's-abroad fit</strong>You seem ready to think about specialisation, independence and long-term value. Focus on building a strong bachelor's profile before choosing a country.";
+      if(pip)pip.className="pip done";
+    } else if(yes>=3){
+      verdict.className="verdict mixed";
+      verdict.innerHTML="<strong>Possible, but plan carefully</strong>You like the idea, but some parts need work. Strengthen academics, finances, independence and career clarity before committing.";
+      if(pip)pip.className="pip warn";
+    } else {
+      verdict.className="verdict bad";
+      verdict.innerHTML="<strong>Do not rush</strong>A foreign Master's may not yet be the right plan. Build your bachelor's profile first and compare Indian Master's, work experience and funded research routes.";
+      if(pip)pip.className="pip stop";
+    }
+  }
+
+  quiz.addEventListener("click",function(e){
+    const btn=e.target.closest(".toggle button"); if(!btn)return;
+    const group=btn.closest(".toggle");
+    group.querySelectorAll("button").forEach(b=>{b.setAttribute("aria-pressed","false");b.removeAttribute("data-picked");});
+    btn.setAttribute("aria-pressed","true"); btn.setAttribute("data-picked","1"); updateVerdict();
+  });
+});
+</script>
+
+</div></body></html>

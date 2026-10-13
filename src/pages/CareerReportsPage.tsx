@@ -36,6 +36,7 @@ import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import { CareerRoadmapModal } from "@/components/common/CareerRoadmapModal";
 import { CAREER_ROADMAP_DATA } from "@/lib/career-roadmaps-data";
+import { CAREER_GAMES } from "@/lib/career-game-data";
 import {
   TELUGU_CAREER_MAP,
   TELUGU_CAREER_FILES,
@@ -337,6 +338,21 @@ const CATEGORY_MAP: Record<string, { category: string; streamBadge: string; desc
     streamBadge: "BiPC / BNYS (5.5 Years)",
     description: "5.5-year medical degree in naturopathy, yogic therapeutics, lifestyle disease reversal, AYUSH government medical officer roles, and wellness centers.",
   },
+  "business-analyst": {
+    category: "Commerce & Finance",
+    streamBadge: "Any Degree / B.Tech / BBA",
+    description: "Business problem solving, data storytelling, requirements gathering, Agile sprints, SQL, and enterprise digital transformation.",
+  },
+  "financial-analyst": {
+    category: "Commerce & Finance",
+    streamBadge: "Commerce / CFA / MBA Finance",
+    description: "Financial modeling, company valuation, stock market equity research, investment banking, and capital budgeting.",
+  },
+  "ms-masters": {
+    category: "Science (MPC / Engineering)",
+    streamBadge: "B.Tech / Degree / GRE / TOEFL",
+    description: "Higher education abroad, GRE/IELTS/TOEFL preparation, statement of purpose (SOP), global university admissions, and international STEM careers.",
+  },
   "not-decided": {
     category: "Self-Discovery & Exploration",
     streamBadge: "All Streams",
@@ -440,6 +456,7 @@ export default function CareerReportsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [showBookingPopup, setShowBookingPopup] = useState(false);
+  const [popupVariationIndex, setPopupVariationIndex] = useState(0);
   const [roadmapCareer, setRoadmapCareer] = useState<CareerRoadmap | null>(null);
   const [popupCancelCount, setPopupCancelCount] = useState(0);
   const popupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -525,6 +542,7 @@ export default function CareerReportsPage() {
       clearTimeout(popupTimerRef.current);
     }
     popupTimerRef.current = setTimeout(() => {
+      setPopupVariationIndex((prev) => prev + 1);
       setShowBookingPopup(true);
     }, delayMs);
   };
@@ -553,6 +571,145 @@ export default function CareerReportsPage() {
     setShowBookingPopup(false);
     setIsBookingModalOpen(true);
     scheduleNextPopup(120000);
+  };
+
+  const getBookingPopupContent = (careerName?: string, isTelugu?: boolean, index: number = 0) => {
+    if (careerName) {
+      const careerVariations = isTelugu
+        ? [
+            {
+              tag: "AI & భవిష్యత్ అవకాశాలు",
+              title: `${careerName} పై AI ప్రభావం ఎలా ఉంటుందో తెలుసుకోవాలనుకుంటున్నారా?`,
+              desc: `రాబోయే కాలంలో AI కారణంగా ఈ రంగంలో ఏ మార్పులు వస్తాయో మా నిపుణులతో నేరుగా చర్చించండి.`,
+              btn: "AI & భవిష్యత్తుపై మాట్లాడండి",
+            },
+            {
+              tag: "ఎంట్రన్స్ & కాలేజీ రోడ్‌మ్యాప్",
+              title: `${careerName} వైపు సరైన విద్యా మార్గం ఏది?`,
+              desc: `10వ తరగతి తర్వాత ఏ గ్రూప్ ఎంచుకోవాలి, ఏ ప్రవేశ పరీక్షలు రాయాలో పూర్తి క్లారిటీ పొందండి.`,
+              btn: "రోడ్‌మ్యాప్ ప్లాన్ చేసుకోండి",
+            },
+            {
+              tag: "కెరీర్ ఫిట్ & ఆప్టిట్యూడ్",
+              title: `${careerName} మీ అబ్బాయి/అమ్మాయికి సరిపోయే కెరీరా?`,
+              desc: `వారి సహజ ప్రతిభ, పని విధానం మరియు భవిష్యత్ జీతాల అవకాశాలు ఈ వృత్తికి సరిపోతాయో లేదో తెలుసుకోండి.`,
+              btn: "కెరీర్ ఫిట్ తెలుసుకోండి",
+            },
+            {
+              tag: "బ్యాకప్ ప్లాన్స్ & సెక్యూరిటీ",
+              title: `${careerName} తో పాటు సురక్షితమైన ప్లాన్-B కావాలా?`,
+              desc: `ఒకే సబ్జెక్టులతో చేరగలిగే ఇతర అత్యుత్తమ ప్రత్యామ్నాయ కెరీర్లను సీనియర్ కౌన్సెలర్లతో తెలుసుకోండి.`,
+              btn: "బ్యాకప్ ప్లాన్స్ తెలుసుకోండి",
+            },
+            {
+              tag: "తల్లిదండ్రుల కోసం గైడెన్స్",
+              title: `మీ పిల్లల భవిష్యత్తు కోసం ${careerName} కెరీర్ గురించి ఆలోచిస్తున్నారా?`,
+              desc: `ఈ రంగంలో ఉద్యోగ భద్రత, కాలేజీ ఫీజులు మరియు దీర్ఘకాలిక ఎదుగుదలపై సీనియర్ కౌన్సెలర్లతో మాట్లాడండి.`,
+              btn: "1-on-1 కౌన్సెలింగ్ బుక్ చేయండి",
+            },
+          ]
+        : [
+            {
+              tag: "AI & Future World",
+              title: `Want to know how AI impacts ${careerName}?`,
+              desc: `Learn what skills and specializations are needed to stay ahead and future-proof in ${careerName}.`,
+              btn: "Discuss AI & Future Impact",
+            },
+            {
+              tag: "Entrance & College Pathway",
+              title: `Unsure about the right pathway for ${careerName}?`,
+              desc: `Get clarity on 11th-12th stream choice, required entrance exams, and premier college admissions.`,
+              btn: "Map My Exact Pathway",
+            },
+            {
+              tag: "Career Fit & Aptitude",
+              title: `Is ${careerName} truly the best long-term fit?`,
+              desc: `Validate natural aptitude, work lifestyle, and real income growth before committing years of study.`,
+              btn: "Verify Career Fit",
+            },
+            {
+              tag: "Smart Backup Options",
+              title: `Need high-growth backup plans alongside ${careerName}?`,
+              desc: `Discover safe, rewarding alternative careers sharing similar subjects to secure your child's future.`,
+              btn: "Explore Backup Options",
+            },
+            {
+              tag: "Parent Consultation & ROI",
+              title: `Considering ${careerName} for your child's future?`,
+              desc: `Get objective clarity on college costs, career stability, and roadmap planning with a senior counsellor.`,
+              btn: "Book 1-on-1 Consultation",
+            },
+          ];
+      return careerVariations[index % careerVariations.length];
+    }
+
+    // Generalized variations for lobby / all careers view
+    const generalVariations = isTelugu
+      ? [
+          {
+            tag: "10వ తరగతి తర్వాత గైడెన్స్",
+            title: "MPC, BiPC లేదా కామర్స్ — ఏది ఎంచుకోవాలో తెలియడం లేదా?",
+            desc: "మీ పిల్లల సహజ ప్రతిభ మరియు ఆసక్తుల ఆధారంగా 11వ తరగతిలో సరైన గ్రూప్‌ను ఎంచుకోండి.",
+            btn: "స్ట్రీమ్ క్లారిటీ పొందండి",
+          },
+          {
+            tag: "AI & భవిష్యత్ ఉద్యోగాలు",
+            title: "AI యుగంలో ఏ కెరీర్‌లకు ఎక్కువ డిమాండ్ ఉండబోతోంది?",
+            desc: "భవిష్యత్తులో స్థిరమైన, అత్యధిక వృద్ధిని ఇచ్చే కెరీర్ మార్గాలను మా నిపుణులతో తెలుసుకోండి.",
+            btn: "భవిష్యత్ కెరీర్లు తెలుసుకోండి",
+          },
+          {
+            tag: "50+ కెరీర్ల క్లారిటీ",
+            title: "50కి పైగా కెరీర్లలో ఏది సరైనదో తేల్చుకోలేకపోతున్నారా?",
+            desc: "కేవలం 20 నిమిషాల 1-on-1 కౌన్సెలింగ్‌తో మీ పిల్లలకి సరిపోయే టాప్ 3 కెరీర్లను గుర్తించండి.",
+            btn: "కౌన్సెలర్‌తో మాట్లాడండి",
+          },
+          {
+            tag: "వ్యక్తిగత 5-ఏళ్ల ప్రణాళిక",
+            title: "మీ పిల్లల కోసం ప్రత్యేక 5-ఏళ్ల కెరీర్ రోడ్‌మ్యాప్ కావాలా?",
+            desc: "టాప్ కాలేజీలు, ప్రవేశ పరీక్షలు మరియు బ్యాకప్ ఆప్షన్లతో కూడిన వ్యక్తిగత విద్యా ప్రణాళిక రూపొందించుకోండి.",
+            btn: "రోడ్‌మ్యాప్ రూపొందించండి",
+          },
+          {
+            tag: "తల్లిదండ్రుల కోసం మార్గదర్శనం",
+            title: "10వ తరగతి తర్వాత మీ పిల్లల భవిష్యత్తు గురించి ఆలోచిస్తున్నారా?",
+            desc: "వారి ప్రతిభకు సరిపోయే సరైన గ్రూప్, టాప్ కాలేజీలు మరియు కెరీర్ అవకాశాలపై నిపుణుల సలహాలు పొందండి.",
+            btn: "కౌన్సెలింగ్ సెషన్ బుక్ చేయండి",
+          },
+        ]
+      : [
+          {
+            tag: "10th Class Stream Choice",
+            title: "Confused between MPC, BiPC, or Commerce for your child?",
+            desc: "Choose the right 11th-12th stream based on natural aptitude and long-term career viability.",
+            btn: "Get Stream Clarity",
+          },
+          {
+            tag: "AI & Future of Work",
+            title: "Wondering which careers are future-proof against AI?",
+            desc: "Discover high-demand career paths that leverage technology rather than risk displacement.",
+            btn: "Explore Future-Proof Careers",
+          },
+          {
+            tag: "Cut Through Confusion",
+            title: "Overwhelmed exploring 50+ career options?",
+            desc: "Filter out the noise and identify the top 3 high-potential career matches in a focused 20-minute session.",
+            btn: "Talk to a Career Expert",
+          },
+          {
+            tag: "Personalized 5-Year Blueprint",
+            title: "Want a custom 5-year academic & career blueprint?",
+            desc: "Map out top entrance exams, premier colleges, and realistic backup plans with experienced mentors.",
+            btn: "Build Custom Roadmap",
+          },
+          {
+            tag: "Guidance for Parents",
+            title: "Planning your child's academic future after 10th?",
+            desc: "Get an unbiased assessment of their strengths, suitable streams, and premier college pathways.",
+            btn: "Book Parent Consultation",
+          },
+        ];
+    return generalVariations[index % generalVariations.length];
   };
 
   // Build full career items list (supports English and Telugu)
@@ -1031,45 +1188,48 @@ export default function CareerReportsPage() {
         />
 
         {/* Bottom-Right Floating 1-Minute Booking Callout */}
-        {showBookingPopup && (
-          <aside
-            aria-label="Book Online Counselling Notification"
-            className="fixed bottom-20 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
-          >
-            <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
-              <Calendar className="w-5 h-5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between gap-1">
-                <span className="text-[10px] font-black uppercase tracking-wider text-[#7C5C3E]">
-                  Need Career Guidance?
-                </span>
+        {showBookingPopup && (() => {
+          const popupContent = getBookingPopupContent(selectedCareer.label, isTe, popupVariationIndex);
+          return (
+            <aside
+              aria-label="Book Online Counselling Notification"
+              className="fixed bottom-20 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
+            >
+              <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
+                <Calendar className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-[#7C5C3E]">
+                    {popupContent.tag}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleDismissBookingPopup}
+                    className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+                    aria-label="Dismiss popup"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+                <h4 className="text-xs sm:text-sm font-extrabold leading-tight text-stone-900 mt-0.5">
+                  {popupContent.title}
+                </h4>
+                <p className="text-[11px] text-stone-500 font-medium mt-1 leading-snug">
+                  {popupContent.desc}
+                </p>
                 <button
                   type="button"
-                  onClick={handleDismissBookingPopup}
-                  className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
-                  aria-label="Dismiss popup"
+                  onClick={handleOpenBookingModal}
+                  className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-xs"
                 >
-                  <X className="w-3.5 h-3.5" />
+                  <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+                  <span>{popupContent.btn}</span>
                 </button>
               </div>
-              <h4 className="text-xs sm:text-sm font-extrabold leading-tight text-stone-900 mt-0.5">
-                Book 1-on-1 Online Counselling
-              </h4>
-              <p className="text-[11px] text-stone-500 font-medium mt-1 leading-snug">
-                Speak directly with an expert career counsellor for personalized guidance.
-              </p>
-              <button
-                type="button"
-                onClick={handleOpenBookingModal}
-                className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-xs"
-              >
-                <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
-                <span>Book Session Now</span>
-              </button>
-            </div>
-          </aside>
-        )}
+            </aside>
+          );
+        })()}
 
   
       {/* ── Career Pathway Roadmap Modal ── */}
@@ -1349,7 +1509,7 @@ export default function CareerReportsPage() {
                         <span>Audio</span>
                       </span>
                     )}
-                    {["swe", "doctor", "police", "teacher", "ias", "nurse", "lawyer", "bank", "agri", "ca", "engineer", "mba", "air-hostess", "physiotherapy", "psychologist", "pilot", "army", "journalist"].includes(item.id) && (
+                    {CAREER_GAMES[item.id] && (
                       <Link
                         to={`/career-game?track=${item.id}`}
                         onClick={(e) => e.stopPropagation()}
@@ -1426,45 +1586,48 @@ export default function CareerReportsPage() {
       />
 
       {/* Bottom-Right Floating 1-Minute Booking Callout */}
-      {showBookingPopup && (
-        <aside
-          aria-label="Book Online Counselling Notification"
-          className="fixed bottom-20 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
-        >
-          <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
-            <Calendar className="w-5 h-5" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between gap-1">
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#7C5C3E]">
-                Need Career Guidance?
-              </span>
+      {showBookingPopup && (() => {
+        const popupContent = getBookingPopupContent(undefined, isTe, popupVariationIndex);
+        return (
+          <aside
+            aria-label="Book Online Counselling Notification"
+            className="fixed bottom-20 right-5 z-50 max-w-xs sm:max-w-sm bg-white border border-stone-200/90 rounded-2xl p-4 shadow-2xl animate-in slide-in-from-bottom-5 duration-300 flex items-start gap-3 text-stone-900"
+          >
+            <div className="w-10 h-10 rounded-xl bg-stone-900 text-[#C9A97A] flex items-center justify-center shrink-0 shadow-xs">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#7C5C3E]">
+                  {popupContent.tag}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleDismissBookingPopup}
+                  className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+                  aria-label="Dismiss popup"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <h4 className="text-xs sm:text-sm font-extrabold leading-tight text-stone-900 mt-0.5">
+                {popupContent.title}
+              </h4>
+              <p className="text-[11px] text-stone-500 font-medium mt-1 leading-snug">
+                {popupContent.desc}
+              </p>
               <button
                 type="button"
-                onClick={handleDismissBookingPopup}
-                className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
-                aria-label="Dismiss popup"
+                onClick={handleOpenBookingModal}
+                className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-xs"
               >
-                <X className="w-3.5 h-3.5" />
+                <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+                <span>{popupContent.btn}</span>
               </button>
             </div>
-            <h4 className="text-xs sm:text-sm font-extrabold leading-tight text-stone-900 mt-0.5">
-              Book 1-on-1 Online Counselling
-            </h4>
-            <p className="text-[11px] text-stone-500 font-medium mt-1 leading-snug">
-              Speak directly with an expert career counsellor for personalized guidance.
-            </p>
-            <button
-              type="button"
-              onClick={handleOpenBookingModal}
-              className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-stone-900 text-[#FAF8F5] hover:bg-stone-800 transition-all cursor-pointer shadow-xs"
-            >
-              <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
-              <span>Book Session Now</span>
-            </button>
-          </div>
-        </aside>
-      )}
+          </aside>
+        );
+      })()}
 
       
       {/* ── Career Pathway Roadmap Modal ── */}

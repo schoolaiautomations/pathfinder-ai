@@ -3321,4 +3321,9717 @@ export const CAREER_GAMES: Record<string, CareerGame> = {
       },
     ],
   },
+
+  "architect": {
+  "id": "architect",
+  "title": "Architect Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: NATA exam, 5-year B.Arch degree, drawing skills & structural design!",
+  "icon": "🏛️",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-amber-600 via-orange-600 to-stone-800",
+  "accentColor": "#D97706",
+  "description": "Dream of designing iconic skyscrapers, modern eco-friendly homes, and grand airports? Test your knowledge of the architect roadmap: MPC stream after 10th, NATA & JEE Paper 2 entrance exams, 5-year B.Arch degree, and spatial design skills!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=architect",
+  "cheatSheet": [
+    "Class 8-10: Practice freehand sketching, 3D geometry visualization, and perspective drawing.",
+    "After 10th: Choose MPC (Maths, Physics, Chemistry) — Mathematics is legally mandatory for architecture admissions in India.",
+    "Key Entrance Exams: NATA (National Aptitude Test in Architecture) & JEE Main Paper 2 (for NITs & SPAs).",
+    "College Degree: 5-Year Bachelor of Architecture (B.Arch) recognized by the Council of Architecture (COA).",
+    "Future with AI: Architects leverage AI for parametric blueprints and energy modeling while leading human spatial empathy!"
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "Which Intermediate (10+2) stream is mandatory in India to be eligible for Architecture degree entrance exams?",
+      "options": [
+        {
+          "text": "HEC (History, Economics, Civics)"
+        },
+        {
+          "text": "MPC (Mathematics, Physics, Chemistry) with Mathematics as a compulsory subject"
+        },
+        {
+          "text": "BiPC without Mathematics"
+        },
+        {
+          "text": "CEC without Mathematics"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Council of Architecture (COA) guidelines strictly require candidates to have studied Mathematics and Physics in Class 12 (MPC stream) to appear for NATA and JEE Paper 2.",
+      "proTip": "Keep your Maths marks above 50% in Class 11 and 12 to meet eligibility requirements."
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Key Architecture Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which nationwide aptitude test conducted by the Council of Architecture is the primary gateway for admission to B.Arch colleges in India?",
+      "options": [
+        {
+          "text": "NEET Medical Exam"
+        },
+        {
+          "text": "CLAT Law Exam"
+        },
+        {
+          "text": "NATA (National Aptitude Test in Architecture)"
+        },
+        {
+          "text": "UPSC Civil Services Exam"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "NATA tests drawing observation, visual perception, aesthetic sensitivity, and architectural awareness. JEE Main Paper 2 is also used for admission into NITs and SPAs (School of Planning and Architecture).",
+      "proTip": "NATA tests your sketching ability and 3D perception rather than rote memory!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: B.Arch Course Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "Unlike a standard 4-year B.Tech engineering degree, how many years does a full B.Arch (Bachelor of Architecture) degree take in India?",
+      "options": [
+        {
+          "text": "3 Years"
+        },
+        {
+          "text": "5 Years (10 Semesters including practical architectural internship)"
+        },
+        {
+          "text": "2 Years"
+        },
+        {
+          "text": "1 Year"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "A professional B.Arch degree takes exactly 5 years. The extended curriculum includes intensive studio design projects, building materials labs, structural calculations, and a full practical architectural firm internship.",
+      "proTip": "During the 5th year, students work on real construction sites and design their own thesis building!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which high school subject helps you understand scale, angles, symmetry, and 3D shapes needed for building blueprints?",
+      "options": [
+        {
+          "text": "Geometry and Solid Shapes in Mathematics"
+        },
+        {
+          "text": "Ancient Roman Poetry"
+        },
+        {
+          "text": "Memorizing historical treaty dates"
+        },
+        {
+          "text": "Spelling competitions"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Geometry is the fundamental language of architects! Understanding 2D-to-3D projection, elevations, cross-sections, and perspective begins directly with high school geometry.",
+      "proTip": "Try drawing everyday objects from top-view, front-view, and side-view to build spatial intelligence."
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: Skills to Build in School",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "What creative habit should a school student in 8th-10th class develop to become a standout future architect?",
+      "options": [
+        {
+          "text": "Never looking at buildings or city layouts"
+        },
+        {
+          "text": "Freehand sketching of buildings, maintaining a sketchbook, and noticing natural lighting and ventilation"
+        },
+        {
+          "text": "Spending all day playing mindless mobile games"
+        },
+        {
+          "text": "Copying drawings without understanding scale"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Maintaining a personal visual sketchbook, drawing streetscapes, observing how sunlight enters rooms, and observing structural details builds the keen eye every great architect needs.",
+      "proTip": "Spend 20 minutes on weekends sketching an interesting house or heritage monument near your home."
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Council of Architecture Registration",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "In India, which statutory body legally registers architects and grants the official license to sign and approve building plans?",
+      "options": [
+        {
+          "text": "Indian Medical Association (IMA)"
+        },
+        {
+          "text": "Council of Architecture (COA, India)"
+        },
+        {
+          "text": "Bar Council of India"
+        },
+        {
+          "text": "Cricket Control Board"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Under the Architects Act of 1972, only individuals registered with the Council of Architecture (COA) can legally designate themselves as 'Architect' and certify building blueprints.",
+      "proTip": "Passing B.Arch from a COA-approved college gives you an official COA registration number for life."
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Architect vs Civil Engineer",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the primary difference between what an Architect does and what a Civil Engineer does?",
+      "options": [
+        {
+          "text": "They do the exact same job with different names"
+        },
+        {
+          "text": "Architects envision the spatial design, aesthetic beauty, and functional living flow; Civil Engineers calculate the load-bearing strength and build the physical structural framework"
+        },
+        {
+          "text": "Civil engineers only paint the walls"
+        },
+        {
+          "text": "Architects only manufacture cement bags"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Architects design the soul and spatial flow of a building (how people live, breathe, and experience space). Civil engineers make that dream structurally safe, calculating concrete, steel, and soil loads.",
+      "proTip": "Architects and civil engineers work hand-in-hand as partners on every major construction project!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Everyday Tools of an Architect",
+      "category": "Skills to Build",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which digital software tools do modern architects use to model 3D buildings and simulate virtual walkthroughs?",
+      "options": [
+        {
+          "text": "MS Paint and Calculator only"
+        },
+        {
+          "text": "AutoCAD, Revit (BIM), SketchUp, and Rhino 3D"
+        },
+        {
+          "text": "Video game controllers only"
+        },
+        {
+          "text": "Paper charts and wooden scales exclusively"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Modern architecture firms rely heavily on BIM (Building Information Modeling) software like Autodesk Revit, AutoCAD, and SketchUp to simulate 3D walkthroughs and material schedules.",
+      "proTip": "You don't need these tools in high school — basic pencil sketching and curiosity for structures is all you need!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Green & Sustainable Architecture",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "Why is 'Green Sustainable Architecture' one of the fastest growing career fields in India and the world?",
+      "options": [
+        {
+          "text": "Buildings are painted only in bright green color"
+        },
+        {
+          "text": "Modern buildings must minimize electricity use, harness solar power, harvest rainwater, and reduce global carbon emissions"
+        },
+        {
+          "text": "Green buildings are built completely out of grass"
+        },
+        {
+          "text": "It is banned by the government"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Buildings consume nearly 40% of global energy. Eco-friendly green architects design energy-efficient spaces with natural cross-ventilation, solar panels, and low-carbon materials (LEED / IGBC standards).",
+      "proTip": "Designing buildings that fight climate change is one of the most rewarding parts of modern architecture."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Architecture in the AI Era",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "With Generative AI tools creating instant building renderings, why will human architects remain indispensable?",
+      "options": [
+        {
+          "text": "AI will replace all architects and build cities by itself"
+        },
+        {
+          "text": "AI cannot understand human emotion, local cultural heritage, physical terrain safety, or municipal building bye-laws like a creative human architect"
+        },
+        {
+          "text": "Architects will stop designing physical buildings"
+        },
+        {
+          "text": "Buildings will no longer require doors or windows"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI generates visual concepts in seconds, but human architects ensure that spaces feel joyful, honor local community traditions, comply with life-safety laws, and survive real weather for centuries.",
+      "proTip": "Future architects will use AI as a creative turbocharger to draft greener and more imaginative spaces!"
+    }
+  ]
+},
+
+  "scientist": {
+  "id": "scientist",
+  "title": "Scientist & Researcher Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: IISc/IISER entrance, B.Sc/BS-MS research degrees, CSIR-NET & ISRO/DRDO labs!",
+  "icon": "🔬",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-teal-600 via-cyan-600 to-blue-800",
+  "accentColor": "#0D9488",
+  "description": "Driven by curiosity to uncover the secrets of nature, discover new medicines, or invent clean energy? Test your scientist roadmap: MPC or BiPC stream, IISER & IISc gateways, B.Sc + M.Sc + Ph.D., and top research careers at ISRO, DRDO, CSIR & BARC!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=scientist",
+  "cheatSheet": [
+    "Class 8-10: Develop intense scientific curiosity, ask 'why' questions, and enjoy hands-on science experiments.",
+    "After 10th: Choose MPC (for Physics/Chemistry/Maths) or BiPC (for Life Sciences/Biochem). Both lead to pure sciences!",
+    "Premier Research Institutes: IISc Bangalore, 7 IISERs, NISER Bhubaneswar, and IITs (BS-MS courses).",
+    "Degrees: 4-Year B.S. / 5-Year Integrated BS-MS -> Ph.D. doctorate research.",
+    "Key Entrance Gateways: IAT (IISER Aptitude Test), NEST (for NISER), JEE Advanced, and CSIR-UGC NET for fellowships."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "Which Intermediate streams in India open doors to become a scientific researcher in pure sciences?",
+      "options": [
+        {
+          "text": "Only Commerce CEC"
+        },
+        {
+          "text": "MPC (for Physical Sciences, Chemistry & Maths) OR BiPC (for Biological & Life Sciences)"
+        },
+        {
+          "text": "Only Arts HEC"
+        },
+        {
+          "text": "None of the above"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Both MPC and BiPC lead directly into pure scientific research. Physical, chemical, and computational scientists take MPC, while biological, genetic, and pharmaceutical scientists take BiPC.",
+      "proTip": "If you love both biology and mathematics, some colleges offer PCMB (Physics, Chemistry, Maths & Biology)!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: India's Top Pure Science Institute",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which historic university in Bangalore, founded with the vision of Jamsetji Tata and Swami Vivekananda, is India's #1 ranked institution for scientific research?",
+      "options": [
+        {
+          "text": "Indian Institute of Science (IISc), Bangalore"
+        },
+        {
+          "text": "Film and Television Institute of India"
+        },
+        {
+          "text": "National Institute of Design"
+        },
+        {
+          "text": "State Bank of India Staff College"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "IISc Bangalore is globally recognized as India's crown jewel of scientific research, producing world-renowned discoveries in physics, aerospace, biochemistry, and quantum science.",
+      "proTip": "IISc admits students after Class 12 into its Bachelor of Science (Research) program through JEE Advanced, IAT, and NEET!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: IISER Integrated Research Degree",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How many years does the prestigious Integrated BS-MS (Bachelor + Master of Science) dual degree take at the 7 national IISER campuses?",
+      "options": [
+        {
+          "text": "1 Year"
+        },
+        {
+          "text": "5 Years (combining bachelor and master scientific research)"
+        },
+        {
+          "text": "2 Years"
+        },
+        {
+          "text": "10 Years"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "The IISER BS-MS program takes 5 years. Students spend the first 2 years learning interdisciplinary sciences, followed by 3 years of deep research specialization and a master's research thesis.",
+      "proTip": "IISERs are located in Pune, Kolkata, Mohali, Bhopal, Thiruvananthapuram, Tirupati, and Berhampur."
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: Key Research Aptitude Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which entrance exam is conducted specifically for admission into the 7 IISER campuses and IISc pure science degree programs after Class 12?",
+      "options": [
+        {
+          "text": "IAT (IISER Aptitude Test)"
+        },
+        {
+          "text": "Chartered Accountancy Intermediate"
+        },
+        {
+          "text": "Hotel Management JEE"
+        },
+        {
+          "text": "Driving License Test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "The IISER Aptitude Test (IAT) tests conceptual understanding across Biology, Chemistry, Mathematics, and Physics, opening doors to top research universities in India.",
+      "proTip": "Preparing well for NCERT textbooks in Class 11 and 12 gives you the solid foundation needed for IAT."
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: Scientific Method in School",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the core heart of the 'Scientific Method' that you learn in high school science labs?",
+      "options": [
+        {
+          "text": "Believing rumors without testing them"
+        },
+        {
+          "text": "Observing phenomena, forming a hypothesis, conducting controlled experiments, and drawing evidence-based conclusions"
+        },
+        {
+          "text": "Memorizing formulas the night before an exam and forgetting them immediately"
+        },
+        {
+          "text": "Refusing to accept experimental results that disagree with your wish"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Science is about honest evidence! Real scientists observe, hypothesize, test under controlled laboratory conditions, and let empirical data guide the truth.",
+      "proTip": "Next time an experiment fails in your school lab, don't worry — finding out what didn't work is how real science advances!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: The Doctorate (Ph.D.) Degree",
+      "category": "Course Duration",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "To become a lead Principal Investigator (Scientist) in prestigious labs, what doctorate degree is usually pursued after a Master's degree?",
+      "options": [
+        {
+          "text": "Ph.D. (Doctor of Philosophy in Science)"
+        },
+        {
+          "text": "Standard 10th Class SSC certificate"
+        },
+        {
+          "text": "A 1-week certificate in social media"
+        },
+        {
+          "text": "Primary school diploma"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "A Ph.D. typically takes 4–5 years of original laboratory research, culminating in scientific papers published in peer-reviewed journals and a doctoral dissertation.",
+      "proTip": "During your Ph.D. in India, government bodies like CSIR and UGC pay you a monthly Junior Research Fellowship (JRF) stipend!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Premier Indian Science Laboratories",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "Which of these premier government institutions employs thousands of Indian research scientists across space, defense, atomic energy, and industrial research?",
+      "options": [
+        {
+          "text": "ISRO, DRDO, BARC, and CSIR laboratories"
+        },
+        {
+          "text": "Movie production studios"
+        },
+        {
+          "text": "Clothing retail malls"
+        },
+        {
+          "text": "Private bus transport stands"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "ISRO (Space), DRDO (Defense), BARC (Atomic Energy), and CSIR (38 national labs in chemicals, genetics, metallurgy) are the backbone of India's sovereign scientific power.",
+      "proTip": "Scientists at ISRO who launched the Chandrayaan-3 Moon mission started with the same school science books you are reading today!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Key Qualities of a Great Scientist",
+      "category": "Skills to Build",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "What mindset distinguishes a breakthrough scientist from ordinary students?",
+      "options": [
+        {
+          "text": "Never asking questions in class"
+        },
+        {
+          "text": "Relentless curiosity, intellectual honesty, patience with failed experiments, and resilience"
+        },
+        {
+          "text": "Only caring about quick money in 1 month"
+        },
+        {
+          "text": "Copying research from others without giving credit"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Thomas Edison tested over 1,000 materials before finding the working lightbulb filament. Great scientists are driven by curiosity and never give up when experiments fail.",
+      "proTip": "Cultivate the habit of asking 'How does this work?' and 'Why does this happen?' in every school lesson."
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: International Research Fellowship Exams",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which nationwide competitive examination qualifies postgraduate science students for the Junior Research Fellowship (JRF) to fund their doctoral research in India?",
+      "options": [
+        {
+          "text": "CSIR-UGC NET (National Eligibility Test)"
+        },
+        {
+          "text": "Bank Clerk Typing Exam"
+        },
+        {
+          "text": "Railway Ticket Collector Exam"
+        },
+        {
+          "text": "State Police Constable Physical Test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Clearing the CSIR-UGC NET JRF provides a generous monthly stipend and contingency grant throughout your doctoral studies in top universities and national research laboratories.",
+      "proTip": "Top scorers in GATE also gain direct recruitment as Scientist 'B' in DRDO and BARC!"
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Science in the AI Era",
+      "category": "AI & Future World",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "How are modern research scientists using Artificial Intelligence (like AlphaFold) to revolutionize scientific breakthroughs?",
+      "options": [
+        {
+          "text": "Scientists have stopped doing experiments completely"
+        },
+        {
+          "text": "AI predicts complex 3D protein structures, simulates nuclear reactions, and discovers new battery materials in hours instead of decades, accelerating human discoveries"
+        },
+        {
+          "text": "AI has proven that scientific laws are completely fake"
+        },
+        {
+          "text": "Microscopes and laboratories have been abolished"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI tools like DeepMind's AlphaFold have predicted over 200 million protein structures, helping human scientists discover vaccines, fight climate change, and invent clean energy materials at lightning speed.",
+      "proTip": "The future belongs to scientists who combine deep physics, chemistry, or biology with AI data analysis!"
+    }
+  ]
+},
+
+  "pharmacist": {
+  "id": "pharmacist",
+  "title": "Pharmacist & Pharma Scientist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: B.Pharm vs Pharm.D, drug formulation, clinical research & pharmacy license!",
+  "icon": "💊",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-teal-600 via-emerald-600 to-green-700",
+  "accentColor": "#059669",
+  "description": "Curious about how medicines cure diseases, how vaccines are manufactured, or how pharmacy companies test new life-saving drugs? Test your pharmacist roadmap: BiPC/MPC after 10th, B.Pharm & Pharm.D degrees, Pharmacy Council of India (PCI) licensing, and global pharma R&D!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=pharmacist",
+  "cheatSheet": [
+    "Class 8-10: Love chemistry, understand organic molecules, and care about human health.",
+    "After 10th: Choose BiPC (Biology, Physics, Chemistry) or MPC (Maths, Physics, Chemistry) — both streams are eligible for Pharmacy in India!",
+    "Key Entrance Exams: State EAPCET / CET, GPAT (for Master's), and BITS HD.",
+    "Degrees: 4-Year B.Pharm (Bachelor of Pharmacy) or 6-Year Pharm.D (Doctor of Pharmacy with clinical hospital practice).",
+    "Registration: Licensed by State Pharmacy Council under the Pharmacy Act 1948."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "Which Intermediate (10+2) streams in India make you eligible to study Bachelor of Pharmacy (B.Pharm)?",
+      "options": [
+        {
+          "text": "Only Commerce CEC"
+        },
+        {
+          "text": "Both BiPC (Biology stream) and MPC (Maths stream) are eligible!"
+        },
+        {
+          "text": "Only Arts HEC"
+        },
+        {
+          "text": "Only Vocational carpentry"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Pharmacy is unique and wonderful! The Pharmacy Council of India (PCI) allows both BiPC (Biology) and MPC (Maths) students to enroll in B.Pharm and Pharm.D degrees.",
+      "proTip": "If you took MPC but are interested in medicine and healthcare, Pharmacy is an incredible direct pathway!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: B.Pharm Course Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How many years does the standard Bachelor of Pharmacy (B.Pharm) undergraduate degree take in India?",
+      "options": [
+        {
+          "text": "2 Years"
+        },
+        {
+          "text": "4 Years (8 Semesters)"
+        },
+        {
+          "text": "1 Year"
+        },
+        {
+          "text": "6 Months"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "B.Pharm is a 4-year professional bachelor degree covering pharmaceutics, pharmacology, medicinal chemistry, pharmaceutical analysis, and clinical trials.",
+      "proTip": "Diploma holders (D.Pharm, 2 years) can join the 2nd year of B.Pharm directly through lateral entry!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: B.Pharm vs Pharm.D",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "What is the 6-year clinical doctorate course called that includes 1 full year of hospital residency beside doctors?",
+      "options": [
+        {
+          "text": "Pharm.D (Doctor of Pharmacy)"
+        },
+        {
+          "text": "B.Com General"
+        },
+        {
+          "text": "ITI Electrician"
+        },
+        {
+          "text": "B.A. Political Science"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Pharm.D is a 6-year professional program (5 years study + 1 year hospital internship). Pharm.D graduates work in hospitals managing patient drug safety and advising doctors on dosage.",
+      "proTip": "Pharm.D graduates are entitled to use the prefix 'Dr.' as clinical pharmacy specialists!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which high school science subject forms the deepest foundation for understanding medicines and drug molecules?",
+      "options": [
+        {
+          "text": "Chemistry (Chemical Reactions, Acids & Bases, Organic compounds)"
+        },
+        {
+          "text": "Physical geography of volcanoes"
+        },
+        {
+          "text": "Ancient Roman wars"
+        },
+        {
+          "text": "Carpentry & wood cutting"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Medicines are biochemical molecules! Understanding how chemicals interact, dissolve, and bond inside the human body starts directly with school Chemistry.",
+      "proTip": "Pay close attention to periodic tables, chemical equations, and acid-base reactions in 9th and 10th science."
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: Skills to Build in School",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "What personal habit is essential for someone working with medicines where a tiny dose mistake could hurt someone?",
+      "options": [
+        {
+          "text": "Careless guessing of measurements"
+        },
+        {
+          "text": "High accuracy, attention to exact measurements, and reading labels carefully"
+        },
+        {
+          "text": "Working in a hurry without checking expired dates"
+        },
+        {
+          "text": "Ignoring cleanliness and hygiene"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Pharmacists are trusted with human lives. Precision, meticulous measurement in milligrams, understanding side effects, and double-checking labels is the gold standard of the profession.",
+      "proTip": "Practice measuring ingredients precisely in school chemistry lab experiments — it trains your scientific discipline!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Legal Regulatory Body",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which national statutory body regulates pharmacy education and grants the legal Registered Pharmacist license in India?",
+      "options": [
+        {
+          "text": "Pharmacy Council of India (PCI)"
+        },
+        {
+          "text": "Bar Council of India"
+        },
+        {
+          "text": "Indian Railways"
+        },
+        {
+          "text": "Sports Authority of India"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "The Pharmacy Council of India (PCI) governs all pharmacy colleges, ensures curriculum standards, and registers professionals under the Pharmacy Act.",
+      "proTip": "Every community pharmacy or hospital drug department must have a PCI-registered pharmacist on duty by law."
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Global Pharma Capital",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "Why is India known worldwide as the 'Pharmacy of the World'?",
+      "options": [
+        {
+          "text": "India imports all its medicines from small islands"
+        },
+        {
+          "text": "Indian pharma companies manufacture over 60% of the world's global vaccines and affordable generic life-saving medicines"
+        },
+        {
+          "text": "Medicines are banned in all other nations"
+        },
+        {
+          "text": "Only Indian doctors know how to make tablets"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "India produces world-class medicines supplied to over 200 countries, including Hyderabad's Genome Valley and hubs in Gujarat and Maharashtra.",
+      "proTip": "A degree in pharmacy in India provides global career opportunities in research, clinical trials, and manufacturing!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Diverse Career Paths",
+      "category": "Skills to Build",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Besides opening a medical shop, what major high-tech careers can a B.Pharm graduate pursue?",
+      "options": [
+        {
+          "text": "Only sweeping medical store floors"
+        },
+        {
+          "text": "Drug Formulation R&D Scientist, Quality Assurance (QA) Officer, Clinical Research Associate, and Drug Regulatory Inspector"
+        },
+        {
+          "text": "Repairing bus engines"
+        },
+        {
+          "text": "Selling cement bags"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Pharmacy graduates work in cutting-edge research labs inventing new tablets, inspecting vaccine manufacturing lines, managing clinical trials, and working as Government Drug Inspectors.",
+      "proTip": "Drug Inspector (DI) is a respected gazetted government officer role recruited through State PSCs and UPSC!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Master's Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "Which national entrance exam is cleared after B.Pharm for admission into premier M.Pharm research institutions like NIPER?",
+      "options": [
+        {
+          "text": "GPAT (Graduate Pharmacy Aptitude Test)"
+        },
+        {
+          "text": "Bank PO Exam"
+        },
+        {
+          "text": "Police Physical Efficiency Test"
+        },
+        {
+          "text": "Merchant Navy Test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "GPAT qualifies students for Master of Pharmacy (M.Pharm) admissions with a monthly government scholarship, opening pathways into premier institutions like NIPER (National Institute of Pharmaceutical Education and Research).",
+      "proTip": "NIPER institutes are to pharmacy what IITs are to engineering!"
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Pharmacy in the AI Era",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How is AI transforming modern pharmacology and drug discovery?",
+      "options": [
+        {
+          "text": "Medicines are no longer needed because humans live forever"
+        },
+        {
+          "text": "AI predicts which chemical compounds bind to viruses in days, speeding up drug discovery from 12 years to under 1 year, while pharmacists lead safety validation"
+        },
+        {
+          "text": "AI creates fake medicine packets with zero chemicals"
+        },
+        {
+          "text": "Hospitals have closed down completely"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI screens billions of molecular structures in virtual labs, predicting which compound will destroy cancer cells without harming healthy tissue. Human pharmacists guide the safe formulation and clinical trials.",
+      "proTip": "Learning computational chemistry and data science alongside pharmacy is the biggest superpower of the next decade!"
+    }
+  ]
+},
+
+  "entrepreneur": {
+  "id": "entrepreneur",
+  "title": "Entrepreneur & Business Founder Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: problem solving, startup incubation, business models, funding & leadership!",
+  "icon": "🚀",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-amber-500 via-orange-600 to-red-700",
+  "accentColor": "#EA580C",
+  "description": "Dream of starting your own innovative company, launching a breakthrough product, or creating jobs for thousands of people? Test your startup founder roadmap: any stream after 10th, customer empathy, building minimum viable products (MVPs), seed funding, and business scaling!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=entrepreneur",
+  "cheatSheet": [
+    "Class 8-10: Identify real problems around you, practice selling ideas, and understand how pocket money or small shops work.",
+    "After 10th: Any stream (Commerce CEC/MEC, Science MPC/BiPC, or Arts) can build a startup!",
+    "Key Concept: Building a Minimum Viable Product (MVP) to test if real customers will pay for your solution.",
+    "Support Ecosystem: Startup India, T-Hub Hyderabad, college incubation cells, and angel investor networks.",
+    "Future with AI: Solo founders can build AI-powered multi-million dollar products with small, agile teams!"
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "Which Intermediate (10+2) stream is required to become a startup founder or entrepreneur in India?",
+      "options": [
+        {
+          "text": "Only Science MPC"
+        },
+        {
+          "text": "Only Commerce CEC"
+        },
+        {
+          "text": "Any stream! Entrepreneurs come from Science, Commerce, Arts, or Vocational backgrounds"
+        },
+        {
+          "text": "Only students who failed 10th"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "There is no single 'entrepreneur stream'! Tech founders often study MPC/B.Tech, consumer brand founders study Commerce/BBA, and social impact founders study Arts. Passion for problem-solving is what matters.",
+      "proTip": "Pick the stream that aligns with what you love building — tech, commerce, or creative services!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Core Definition of an Entrepreneur",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the true definition of an entrepreneur?",
+      "options": [
+        {
+          "text": "Someone who sits at home waiting for a government salary"
+        },
+        {
+          "text": "Someone who identifies a painful problem in society, creates a valuable product or service to solve it, and builds a sustainable business around it"
+        },
+        {
+          "text": "Someone who only spends their parents' money on luxury items"
+        },
+        {
+          "text": "Someone who dislikes talking to customers"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Entrepreneurs are problem solvers! From Zomato solving food delivery to Zoho solving business software, every great company starts by making people's daily lives easier.",
+      "proTip": "Look around your school or neighborhood today: what is one problem people complain about that you could fix?"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: What is an MVP?",
+      "category": "Skills to Build",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "In the startup world, what does 'MVP' stand for?",
+      "options": [
+        {
+          "text": "Most Valuable Player in cricket"
+        },
+        {
+          "text": "Minimum Viable Product — the simplest basic version of your idea that real customers can test and use"
+        },
+        {
+          "text": "Maximum Video Player on YouTube"
+        },
+        {
+          "text": "Mobile Vehicle Parking"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Smart founders don't spend 3 years building a giant product in secret. They build a simple 'Minimum Viable Product' (MVP) in a few weeks to see if people actually want it.",
+      "proTip": "Before spending money, talk to 10 potential customers and ask if they would pay for your idea!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "Which high school subject teaches you how profit, revenue, costs, and percentage margins work?",
+      "options": [
+        {
+          "text": "Commercial Mathematics (Arithmetic, Profit & Loss, Percentages, Simple Interest)"
+        },
+        {
+          "text": "Drawing maps of ancient empires"
+        },
+        {
+          "text": "Memorizing Sanskrit hymns"
+        },
+        {
+          "text": "Gymnasium running drills"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "If you don't understand profit and loss, you can't run a company! High school arithmetic on costs, revenue, profit margins, and discounts is the daily math of every CEO.",
+      "proTip": "Master Profit & Loss problems in Class 8, 9, and 10 maths — that's the real language of business!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: Skills to Build in School",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "What real-world activity in school helps you build early entrepreneurial confidence?",
+      "options": [
+        {
+          "text": "Organizing a school exhibition stall, running a club, or leading a science fair project team"
+        },
+        {
+          "text": "Never participating in any school event"
+        },
+        {
+          "text": "Blaming team members whenever something goes wrong"
+        },
+        {
+          "text": "Spending all day on social media scrolling"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Managing budgets for a school fest, convincing friends to join a project, and selling tickets or food at an exhibition teaches you marketing, leadership, and resource management.",
+      "proTip": "Volunteer to lead a school stall or club event — it's the safest sandbox to practice leadership!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: College Incubation Hubs",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "What is an organization called (like T-Hub Hyderabad or college incubation centers) that provides free office space, mentors, and seed money to young student founders?",
+      "options": [
+        {
+          "text": "A prison"
+        },
+        {
+          "text": "A Startup Incubator / Accelerator"
+        },
+        {
+          "text": "A movie theater"
+        },
+        {
+          "text": "A railway platform"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Incubators help baby companies grow! India has world-class incubators like T-Hub, NSRCEL (IIM Bangalore), and IIT Innovation Hubs that nurture young student ideas into funded enterprises.",
+      "proTip": "Most top Indian colleges now have active student e-cells (Entrepreneurship Cells) and incubators on campus!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: How Startups Raise Money",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "When a startup needs funds to hire engineers and expand, who are the people that invest money in exchange for a small percentage ownership (equity) in the company?",
+      "options": [
+        {
+          "text": "Angel Investors and Venture Capitalists (VCs)"
+        },
+        {
+          "text": "Traffic police officers"
+        },
+        {
+          "text": "Local bus conductors"
+        },
+        {
+          "text": "Library book keepers"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Angel Investors (successful individuals) and Venture Capital funds invest risk capital into promising startups to help them scale rapidly nationwide and globally.",
+      "proTip": "Shows like Shark Tank India demonstrate how real founders pitch their business models to angel investors!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Customer Empathy & Feedback",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "Why do the greatest founders spend hours talking directly to their customers?",
+      "options": [
+        {
+          "text": "Because they have no other work to do"
+        },
+        {
+          "text": "Because listening to customer complaints reveals exactly what product features need fixing and builds deep loyalty"
+        },
+        {
+          "text": "To argue with them and prove the customer is wrong"
+        },
+        {
+          "text": "To collect phone numbers for fun"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Customer empathy is a founder's secret weapon. If your users love your product and tell their friends, your business grows automatically through word-of-mouth.",
+      "proTip": "Never get defensive when someone criticizes your project — feedback is free advice to get better!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Government Initiatives in India",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "Which flagship Government of India initiative provides tax exemptions, easy patent filing, and seed funds to encourage young Indian entrepreneurs?",
+      "options": [
+        {
+          "text": "Startup India & Standup India"
+        },
+        {
+          "text": "Indian Postal Railway"
+        },
+        {
+          "text": "National Forest Service"
+        },
+        {
+          "text": "Old Age Pension Board"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Startup India has registered over 100,000+ recognized startups, making India the 3rd largest startup ecosystem in the entire world with over 110+ unicorns!",
+      "proTip": "India is one of the most exciting countries in the world right now to build a new business."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Entrepreneurship in the AI Era",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How has modern Artificial Intelligence empowered young students to launch businesses with very little money?",
+      "options": [
+        {
+          "text": "Nobody can start businesses anymore"
+        },
+        {
+          "text": "AI helps solo founders generate code, design logos, write marketing emails, and automate customer support in hours, reducing startup costs to nearly zero!"
+        },
+        {
+          "text": "AI forces all businesses to close down"
+        },
+        {
+          "text": "AI is only used for playing computer games"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Today, a smart high school or college student with an AI assistant can build what previously took a 20-person engineering team. The cost of trying a new idea has never been lower in human history!",
+      "proTip": "Your ideas and courage matter more than big money — learn to leverage AI tools to build your dreams!"
+    }
+  ]
+},
+
+  "ips": {
+  "id": "ips",
+  "title": "IPS (Indian Police Service) Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: UPSC CSE exam, SVPNPA Hyderabad training, law enforcement & leadership!",
+  "icon": "🛡️",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-blue-700 via-indigo-800 to-slate-900",
+  "accentColor": "#1E40AF",
+  "description": "Want to become a IPS (Indian Police Service)? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=ips",
+  "cheatSheet": [
+    "Class 8-10: Focus on Social Studies (Civics, Indian Constitution, History, Geography) and build Physical fitness (daily running).",
+    "After 10th: Choose Any Intermediate stream (MPC, BiPC, CEC, HEC) + Any recognized Bachelor's Degree.",
+    "Key Gateways: Prepare for UPSC Civil Services Examination (CSE).",
+    "Degree & Duration: 3–4 Years Degree + 1–2 Years UPSC preparation & 2 Years SVPNPA training.",
+    "Future with AI: AI helps police forces analyze cyber fraud and traffic hotspots, while human IPS officers ensure constitutional justice and bravery."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a IPS (Indian Police Service)?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (MPC, BiPC, CEC, HEC) + Any recognized Bachelor's Degree"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (MPC, BiPC, CEC, HEC) + Any recognized Bachelor's Degree. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3–4 Years Degree + 1–2 Years UPSC preparation & 2 Years SVPNPA training"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3–4 Years Degree + 1–2 Years UPSC preparation & 2 Years SVPNPA training. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "UPSC Civil Services Examination (CSE) — Prelims, Mains & Personality Interview"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "UPSC Civil Services Examination (CSE) — Prelims, Mains & Personality Interview. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Social Studies (Civics, Indian Constitution, History, Geography) & English reading"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Social Studies (Civics, Indian Constitution, History, Geography) & English reading. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Physical fitness (daily running), mental honesty, reading newspapers, and public leadership"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Physical fitness (daily running), mental honesty, reading newspapers, and public leadership. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Sardar Vallabhbhai Patel National Police Academy (SVPNPA) in Hyderabad"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Sardar Vallabhbhai Patel National Police Academy (SVPNPA) in Hyderabad. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Leading district police forces, crime investigation, counter-terrorism, and public safety"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Leading district police forces, crime investigation, counter-terrorism, and public safety. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "ASP -> SP / DCP -> DIG -> Inspector General (IG) -> Director General of Police (DGP) / CBI / IB Director"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "ASP -> SP / DCP -> DIG -> Inspector General (IG) -> Director General of Police (DGP) / CBI / IB Director. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI helps police forces analyze cyber fraud and traffic hotspots, while human IPS officers ensure constitutional justice and bravery"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI helps police forces analyze cyber fraud and traffic hotspots, while human IPS officers ensure constitutional justice and bravery. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "navy-airforce": {
+  "id": "navy-airforce",
+  "title": "Indian Navy & Air Force Officer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: NDA / AFCAT / INA, fighter pilot wings, naval warships & national defense!",
+  "icon": "⚓",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-sky-700 via-blue-800 to-indigo-950",
+  "accentColor": "#0369A1",
+  "description": "Want to become a Indian Navy & Air Force Officer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=navy-airforce",
+  "cheatSheet": [
+    "Class 8-10: Focus on Physics (mechanics, optics, aerodynamics) and Mathematics (calculus, trigonometry) and build Strict discipline.",
+    "After 10th: Choose Compulsory MPC (Maths & Physics) in Intermediate Class 11-12.",
+    "Key Gateways: Prepare for UPSC NDA (National Defence Academy) or AFCAT / CDS / INET exams + 5-day SSB Interview.",
+    "Degree & Duration: 3 Years joint NDA training + 1 Year Air Force Academy (AFA Dundigal) or Indian Naval Academy (INA Ezhimala).",
+    "Future with AI: Unmanned stealth drones and AI radars assist tactical navigation, while human military pilots make split-second strategic combat decisions."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Indian Navy & Air Force Officer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory MPC (Maths & Physics) in Intermediate Class 11-12"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory MPC (Maths & Physics) in Intermediate Class 11-12. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3 Years joint NDA training + 1 Year Air Force Academy (AFA Dundigal) or Indian Naval Academy (INA Ezhimala)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3 Years joint NDA training + 1 Year Air Force Academy (AFA Dundigal) or Indian Naval Academy (INA Ezhimala). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "UPSC NDA (National Defence Academy) or AFCAT / CDS / INET exams + 5-day SSB Interview"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "UPSC NDA (National Defence Academy) or AFCAT / CDS / INET exams + 5-day SSB Interview. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Physics (mechanics, optics, aerodynamics) and Mathematics (calculus, trigonometry)"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Physics (mechanics, optics, aerodynamics) and Mathematics (calculus, trigonometry). What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Strict discipline, 5km daily running, pushups, swimming, NCC participation, and outdoor sports"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Strict discipline, 5km daily running, pushups, swimming, NCC participation, and outdoor sports. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Air Force Academy (Hyderabad) / Indian Naval Academy (Ezhimala, Kerala) / NDA (Pune)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Air Force Academy (Hyderabad) / Indian Naval Academy (Ezhimala, Kerala) / NDA (Pune). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Commanding advanced missile destroyers, flying supersonic fighter jets (Rafale/Su-30), and maritime border surveillance"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Commanding advanced missile destroyers, flying supersonic fighter jets (Rafale/Su-30), and maritime border surveillance. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Sub-Lieutenant / Flying Officer -> Lieutenant Commander / Squadron Leader -> Commodore / Air Commodore -> Admiral / Air Chief Marshal"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Sub-Lieutenant / Flying Officer -> Lieutenant Commander / Squadron Leader -> Commodore / Air Commodore -> Admiral / Air Chief Marshal. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Unmanned stealth drones and AI radars assist tactical navigation, while human military pilots make split-second strategic combat decisions"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Unmanned stealth drones and AI radars assist tactical navigation, while human military pilots make split-second strategic combat decisions. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "govt-jobs": {
+  "id": "govt-jobs",
+  "title": "Government Jobs (SSC, RRB, State PSC) Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: SSC CGL, State PSC Group 1 & 2, public administration & job stability!",
+  "icon": "📋",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-amber-600 via-stone-700 to-stone-900",
+  "accentColor": "#B45309",
+  "description": "Want to become a Government Jobs (SSC, RRB, State PSC)? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=govt-jobs",
+  "cheatSheet": [
+    "Class 8-10: Focus on Mathematics (Quantitative Aptitude), General Studies (Science, Civics, History), and English grammar and build Fast mental arithmetic calculations.",
+    "After 10th: Choose Any stream after 10th (CEC, MPC, BiPC, HEC) + Any recognized Bachelor's Degree.",
+    "Key Gateways: Prepare for Staff Selection Commission (SSC CGL), Railway Recruitment Board (RRB), or State PSC (Group 1, 2, 4).",
+    "Degree & Duration: 3-Year Degree + 1–2 Years dedicated competitive exam preparation.",
+    "Future with AI: Government portals use AI for automated citizen service delivery, while human officers ensure policy empathy and public equity."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Government Jobs (SSC, RRB, State PSC)?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any stream after 10th (CEC, MPC, BiPC, HEC) + Any recognized Bachelor's Degree"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any stream after 10th (CEC, MPC, BiPC, HEC) + Any recognized Bachelor's Degree. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year Degree + 1–2 Years dedicated competitive exam preparation"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year Degree + 1–2 Years dedicated competitive exam preparation. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "Staff Selection Commission (SSC CGL), Railway Recruitment Board (RRB), or State PSC (Group 1, 2, 4)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Staff Selection Commission (SSC CGL), Railway Recruitment Board (RRB), or State PSC (Group 1, 2, 4). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Mathematics (Quantitative Aptitude), General Studies (Science, Civics, History), and English grammar"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Mathematics (Quantitative Aptitude), General Studies (Science, Civics, History), and English grammar. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Fast mental arithmetic calculations, solving puzzles, daily newspaper reading, and consistent revision"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Fast mental arithmetic calculations, solving puzzles, daily newspaper reading, and consistent revision. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Staff Selection Commission (SSC) & State Public Service Commissions (APPSC/TSPSC)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Staff Selection Commission (SSC) & State Public Service Commissions (APPSC/TSPSC). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Public administration, citizen welfare schemes, public file auditing, revenue collection, and department execution"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Public administration, citizen welfare schemes, public file auditing, revenue collection, and department execution. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Assistant Section Officer (ASO) -> Section Officer -> Under Secretary -> Deputy Secretary in Ministries"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Assistant Section Officer (ASO) -> Section Officer -> Under Secretary -> Deputy Secretary in Ministries. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Government portals use AI for automated citizen service delivery, while human officers ensure policy empathy and public equity"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Government portals use AI for automated citizen service delivery, while human officers ensure policy empathy and public equity. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "designer": {
+  "id": "designer",
+  "title": "Graphic & UI/UX Designer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: NID & UCEED entrance, visual arts, design thinking & mobile app UI design!",
+  "icon": "🎨",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-purple-600 via-pink-600 to-rose-700",
+  "accentColor": "#9333EA",
+  "description": "Want to become a Graphic & UI/UX Designer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=designer",
+  "cheatSheet": [
+    "Class 8-10: Focus on Art, Geometry, Computer Graphics, and English communication and build Sketching daily.",
+    "After 10th: Choose Any Intermediate stream (Science, Commerce, or Arts) with an active creative portfolio.",
+    "Key Gateways: Prepare for UCEED (conducted by IIT Bombay) and NID DAT (Design Aptitude Test).",
+    "Degree & Duration: 4-Year Bachelor of Design (B.Des) degree.",
+    "Future with AI: AI generates fast design prototypes, while human designers master human psychology, user empathy, and delightful brand storytelling."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Graphic & UI/UX Designer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Science, Commerce, or Arts) with an active creative portfolio"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Science, Commerce, or Arts) with an active creative portfolio. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year Bachelor of Design (B.Des) degree"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year Bachelor of Design (B.Des) degree. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "UCEED (conducted by IIT Bombay) and NID DAT (Design Aptitude Test)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "UCEED (conducted by IIT Bombay) and NID DAT (Design Aptitude Test). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Art, Geometry, Computer Graphics, and English communication"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Art, Geometry, Computer Graphics, and English communication. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Sketching daily, noticing brand logos and app designs, learning Figma/Canva, and visual color theory"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Sketching daily, noticing brand logos and app designs, learning Figma/Canva, and visual color theory. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "National Institute of Design (NID Ahmedabad) and Industrial Design Centre (IDC - IIT Bombay)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "National Institute of Design (NID Ahmedabad) and Industrial Design Centre (IDC - IIT Bombay). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Designing intuitive mobile app screens, website interfaces, brand visual identities, and interactive product experiences"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Designing intuitive mobile app screens, website interfaces, brand visual identities, and interactive product experiences. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Junior UI/UX Designer -> Product Designer -> Lead UX Architect -> VP of Design / Creative Director"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Junior UI/UX Designer -> Product Designer -> Lead UX Architect -> VP of Design / Creative Director. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI generates fast design prototypes, while human designers master human psychology, user empathy, and delightful brand storytelling"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI generates fast design prototypes, while human designers master human psychology, user empathy, and delightful brand storytelling. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "interior-designer": {
+  "id": "interior-designer",
+  "title": "Interior Designer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: space planning, residential & commercial decor, 3D modeling & material styling!",
+  "icon": "🛋️",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-amber-600 via-yellow-700 to-stone-800",
+  "accentColor": "#D97706",
+  "description": "Want to become a Interior Designer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=interior-designer",
+  "cheatSheet": [
+    "Class 8-10: Focus on Mathematics (Geometry, Mensuration), Visual Arts, and Physics (Lighting and build Observing room layouts.",
+    "After 10th: Choose Any Intermediate stream (Science, Commerce, or Arts).",
+    "Key Gateways: Prepare for NID DAT, UCEED, or University Interior Design entrance tests.",
+    "Degree & Duration: 3-Year or 4-Year B.Des in Interior Design (or 3-Year B.Sc Interior Design).",
+    "Future with AI: AI produces instant 3D room renders, while human interior designers curate tactile material textures and emotional comfort."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Interior Designer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Science, Commerce, or Arts)"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Science, Commerce, or Arts). Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year or 4-Year B.Des in Interior Design (or 3-Year B.Sc Interior Design)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year or 4-Year B.Des in Interior Design (or 3-Year B.Sc Interior Design). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "NID DAT, UCEED, or University Interior Design entrance tests"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "NID DAT, UCEED, or University Interior Design entrance tests. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Mathematics (Geometry, Mensuration), Visual Arts, and Physics (Lighting & Acoustics)"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Mathematics (Geometry, Mensuration), Visual Arts, and Physics (Lighting & Acoustics). What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Observing room layouts, measuring furniture spaces, drawing 3D room sketches, and color combinations"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Observing room layouts, measuring furniture spaces, drawing 3D room sketches, and color combinations. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "NID, CEPT University Ahmedabad, and top architecture and design schools"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "NID, CEPT University Ahmedabad, and top architecture and design schools. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Transforming empty rooms into stunning living spaces, choosing wall paints, false ceilings, lighting, and custom furniture"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Transforming empty rooms into stunning living spaces, choosing wall paints, false ceilings, lighting, and custom furniture. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Junior Designer -> Interior Project Lead -> Studio Partner -> Independent Luxury Design Firm Founder"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Junior Designer -> Interior Project Lead -> Studio Partner -> Independent Luxury Design Firm Founder. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI produces instant 3D room renders, while human interior designers curate tactile material textures and emotional comfort"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI produces instant 3D room renders, while human interior designers curate tactile material textures and emotional comfort. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "fashion": {
+  "id": "fashion",
+  "title": "Fashion Designer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: NIFT entrance, garment styling, textile science & launching couture labels!",
+  "icon": "👗",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-pink-600 via-rose-600 to-purple-800",
+  "accentColor": "#DB2777",
+  "description": "Want to become a Fashion Designer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=fashion",
+  "cheatSheet": [
+    "Class 8-10: Focus on Visual Art, Home Science, History of Indian Textiles, and English and build Fashion sketching.",
+    "After 10th: Choose Any Intermediate stream (Arts, Science, or Commerce).",
+    "Key Gateways: Prepare for NIFT Entrance Exam (CAT.",
+    "Degree & Duration: 4-Year Bachelor of Design (B.Des) in Fashion Design / Knitwear / Leather Design.",
+    "Future with AI: AI predicts upcoming global fashion trends and generates digital fabric patterns, while human designers pioneer physical craft and fit."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Fashion Designer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Arts, Science, or Commerce)"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Arts, Science, or Commerce). Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year Bachelor of Design (B.Des) in Fashion Design / Knitwear / Leather Design"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year Bachelor of Design (B.Des) in Fashion Design / Knitwear / Leather Design. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "NIFT Entrance Exam (CAT — Creative Ability Test & GAT — General Ability Test + Situation Test)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "NIFT Entrance Exam (CAT — Creative Ability Test & GAT — General Ability Test + Situation Test). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Visual Art, Home Science, History of Indian Textiles, and English"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Visual Art, Home Science, History of Indian Textiles, and English. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Fashion sketching, understanding fabric textures (cotton, silk, linen), sewing curiosity, and following fashion weeks"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Fashion sketching, understanding fabric textures (cotton, silk, linen), sewing curiosity, and following fashion weeks. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "National Institute of Fashion Technology (NIFT Delhi, Mumbai, Hyderabad, Bengaluru)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "National Institute of Fashion Technology (NIFT Delhi, Mumbai, Hyderabad, Bengaluru). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Sketching apparel collections, selecting fabrics, draping patterns, overseeing garment stitching, and styling fashion shoots"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Sketching apparel collections, selecting fabrics, draping patterns, overseeing garment stitching, and styling fashion shoots. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Assistant Stylist -> Fashion Designer -> Head of Apparel Design -> Independent Fashion Brand Owner (Lakmé Fashion Week)"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Assistant Stylist -> Fashion Designer -> Head of Apparel Design -> Independent Fashion Brand Owner (Lakmé Fashion Week). With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI predicts upcoming global fashion trends and generates digital fabric patterns, while human designers pioneer physical craft and fit"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI predicts upcoming global fashion trends and generates digital fabric patterns, while human designers pioneer physical craft and fit. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "hotel-management": {
+  "id": "hotel-management",
+  "title": "Hotel Management & Luxury Hospitality Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: NCHMCT JEE, 5-star hotel operations, luxury cruises & guest relations!",
+  "icon": "🏨",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-amber-700 via-yellow-800 to-stone-900",
+  "accentColor": "#B45309",
+  "description": "Want to become a Hotel Management & Luxury Hospitality? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=hotel-management",
+  "cheatSheet": [
+    "Class 8-10: Focus on English communication, Geography (tourism destinations), and Basic Accountancy and build Polite public speaking.",
+    "After 10th: Choose Any Intermediate stream (Science, Commerce, or Arts) with English as a compulsory subject.",
+    "Key Gateways: Prepare for NCHMCT JEE (National Council for Hotel Management and Catering Technology Joint Entrance Exam).",
+    "Degree & Duration: 3-Year B.Sc in Hospitality & Hotel Administration (H&HA).",
+    "Future with AI: Smart hotel apps handle automated room check-in, while warm human hospitality managers deliver unforgettable guest care."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Hotel Management & Luxury Hospitality?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Science, Commerce, or Arts) with English as a compulsory subject"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Science, Commerce, or Arts) with English as a compulsory subject. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year B.Sc in Hospitality & Hotel Administration (H&HA)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year B.Sc in Hospitality & Hotel Administration (H&HA). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "NCHMCT JEE (National Council for Hotel Management and Catering Technology Joint Entrance Exam)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "NCHMCT JEE (National Council for Hotel Management and Catering Technology Joint Entrance Exam). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "English communication, Geography (tourism destinations), and Basic Accountancy"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "English communication, Geography (tourism destinations), and Basic Accountancy. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Polite public speaking, positive body language, grooming etiquette, and empathy for guests"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Polite public speaking, positive body language, grooming etiquette, and empathy for guests. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Institute of Hotel Management (IHM Pusa New Delhi, IHM Mumbai, IHM Hyderabad)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Institute of Hotel Management (IHM Pusa New Delhi, IHM Mumbai, IHM Hyderabad). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Managing luxury 5-star resort operations, fine-dining food & beverage service, front office, and VIP concierge"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Managing luxury 5-star resort operations, fine-dining food & beverage service, front office, and VIP concierge. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Management Trainee -> Department Manager -> Food & Beverage Director -> General Manager (GM) of 5-Star Hotel / Cruise Liner"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Management Trainee -> Department Manager -> Food & Beverage Director -> General Manager (GM) of 5-Star Hotel / Cruise Liner. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Smart hotel apps handle automated room check-in, while warm human hospitality managers deliver unforgettable guest care"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Smart hotel apps handle automated room check-in, while warm human hospitality managers deliver unforgettable guest care. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "sports": {
+  "id": "sports",
+  "title": "Professional Athlete & Sports Career Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: daily training, SAI academies, sports quota government jobs & Olympic dreams!",
+  "icon": "🏆",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-green-600 via-emerald-700 to-teal-900",
+  "accentColor": "#15803D",
+  "description": "Want to become a Professional Athlete & Sports Career? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=sports",
+  "cheatSheet": [
+    "Class 8-10: Focus on Physical Education, Biology (human muscular anatomy and build Waking up at 5:00 AM.",
+    "After 10th: Choose Any stream in Intermediate + Physical Education (B.P.Ed after degree or SAI training).",
+    "Key Gateways: Prepare for State & National Sports Trials / Khelo India Youth Games / National Games selections.",
+    "Degree & Duration: Continuous training + 3-Year B.P.Ed (Bachelor of Physical Education) or B.Sc Sports Science.",
+    "Future with AI: AI wearable sensors track biomechanics and injury prevention, while supreme athletic grit and human heart win championship gold."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Professional Athlete & Sports Career?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any stream in Intermediate + Physical Education (B.P.Ed after degree or SAI training)"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any stream in Intermediate + Physical Education (B.P.Ed after degree or SAI training). Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "Continuous training + 3-Year B.P.Ed (Bachelor of Physical Education) or B.Sc Sports Science"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes Continuous training + 3-Year B.P.Ed (Bachelor of Physical Education) or B.Sc Sports Science. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "State & National Sports Trials / Khelo India Youth Games / National Games selections"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "State & National Sports Trials / Khelo India Youth Games / National Games selections. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Physical Education, Biology (human muscular anatomy & nutrition), and Physics (projectile motion)"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Physical Education, Biology (human muscular anatomy & nutrition), and Physics (projectile motion). What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Waking up at 5:00 AM, disciplined athletic practice, clean nutrition, sleep hygiene, and mental resilience under pressure"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Waking up at 5:00 AM, disciplined athletic practice, clean nutrition, sleep hygiene, and mental resilience under pressure. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Sports Authority of India (SAI) National Centers of Excellence and Netaji Subhas National Institute of Sports (NSNIS Patiala)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Sports Authority of India (SAI) National Centers of Excellence and Netaji Subhas National Institute of Sports (NSNIS Patiala). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Intensive skill drills, cardio stamina conditioning, tactical match strategy, and competitive tournament participation"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Intensive skill drills, cardio stamina conditioning, tactical match strategy, and competitive tournament participation. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "District Champion -> State / National Gold Medalist -> Indian National Team Player -> International Olympian / Chief Sports Coach"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "District Champion -> State / National Gold Medalist -> Indian National Team Player -> International Olympian / Chief Sports Coach. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI wearable sensors track biomechanics and injury prevention, while supreme athletic grit and human heart win championship gold"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI wearable sensors track biomechanics and injury prevention, while supreme athletic grit and human heart win championship gold. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "chef": {
+  "id": "chef",
+  "title": "Chef & Culinary Arts Specialist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: culinary academies, kitchen brigades, pastry arts & executive chef mastery!",
+  "icon": "👨‍🍳",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-orange-600 via-red-700 to-stone-900",
+  "accentColor": "#EA580C",
+  "description": "Want to become a Chef & Culinary Arts Specialist? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=chef",
+  "cheatSheet": [
+    "Class 8-10: Focus on Chemistry (heat reactions, acids/bases in cooking), Biology (nutrition), and Food Science and build Cooking experiments at home.",
+    "After 10th: Choose Any Intermediate stream (Science, Commerce, or Arts).",
+    "Key Gateways: Prepare for NCHMCT JEE or Culinary Academy Entrance Tests (Culinary Institute of India).",
+    "Degree & Duration: 3-Year Bachelor in Culinary Arts (BCA) or 1.5-Year Diploma in Food Production.",
+    "Future with AI: Automated kitchen equipment aids temperature precision, while executive chefs pioneer creative flavor harmony and culinary artistry."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Chef & Culinary Arts Specialist?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Science, Commerce, or Arts)"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Science, Commerce, or Arts). Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year Bachelor in Culinary Arts (BCA) or 1.5-Year Diploma in Food Production"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year Bachelor in Culinary Arts (BCA) or 1.5-Year Diploma in Food Production. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "NCHMCT JEE or Culinary Academy Entrance Tests (Culinary Institute of India)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "NCHMCT JEE or Culinary Academy Entrance Tests (Culinary Institute of India). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Chemistry (heat reactions, acids/bases in cooking), Biology (nutrition), and Food Science"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Chemistry (heat reactions, acids/bases in cooking), Biology (nutrition), and Food Science. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Cooking experiments at home, knife safety, tasting different spices, and maintaining strict kitchen cleanliness"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Cooking experiments at home, knife safety, tasting different spices, and maintaining strict kitchen cleanliness. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Culinary Academy of India (Hyderabad), IHM Culinary branches, and Le Cordon Bleu"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Culinary Academy of India (Hyderabad), IHM Culinary branches, and Le Cordon Bleu. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Curating gourmet menus, cooking signature dishes, plating food artistically, and leading high-speed kitchen lines"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Curating gourmet menus, cooking signature dishes, plating food artistically, and leading high-speed kitchen lines. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Commis Chef -> Chef de Partie -> Sous Chef -> Executive Chef -> Michelin Star Restaurant Founder"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Commis Chef -> Chef de Partie -> Sous Chef -> Executive Chef -> Michelin Star Restaurant Founder. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Automated kitchen equipment aids temperature precision, while executive chefs pioneer creative flavor harmony and culinary artistry"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Automated kitchen equipment aids temperature precision, while executive chefs pioneer creative flavor harmony and culinary artistry. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "environmental-consultant": {
+  "id": "environmental-consultant",
+  "title": "Environmental Consultant & Sustainability Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: EIA studies, pollution control, ESG audits & saving planet Earth!",
+  "icon": "🌱",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-emerald-600 via-teal-700 to-cyan-900",
+  "accentColor": "#059669",
+  "description": "Want to become a Environmental Consultant & Sustainability? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=environmental-consultant",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (Ecology, Ecosystems), Chemistry (Pollution chemistry), and Geography and build Planting trees.",
+    "After 10th: Choose BiPC (Biology stream) OR MPC (Maths stream) in 10+2 Intermediate.",
+    "Key Gateways: Prepare for CUET / State CET / GATE (for M.Tech) / NABET EIA Accreditation.",
+    "Degree & Duration: 3-Year B.Sc / 4-Year B.Tech in Environmental Science / Engineering + 2-Year M.Sc / M.Tech.",
+    "Future with AI: Satellite imagery and AI sensors detect global deforestation and pollution spikes in real time, while consultants enforce clean policies."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Environmental Consultant & Sustainability?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "BiPC (Biology stream) OR MPC (Maths stream) in 10+2 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "BiPC (Biology stream) OR MPC (Maths stream) in 10+2 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year B.Sc / 4-Year B.Tech in Environmental Science / Engineering + 2-Year M.Sc / M.Tech"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year B.Sc / 4-Year B.Tech in Environmental Science / Engineering + 2-Year M.Sc / M.Tech. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "CUET / State CET / GATE (for M.Tech) / NABET EIA Accreditation"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "CUET / State CET / GATE (for M.Tech) / NABET EIA Accreditation. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (Ecology, Ecosystems), Chemistry (Pollution chemistry), and Geography"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (Ecology, Ecosystems), Chemistry (Pollution chemistry), and Geography. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Planting trees, conserving water, organizing school waste segregation drives, and nature curiosity"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Planting trees, conserving water, organizing school waste segregation drives, and nature curiosity. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "TERI School of Advanced Studies (New Delhi), IITs (Environmental Engg), and premier central universities"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "TERI School of Advanced Studies (New Delhi), IITs (Environmental Engg), and premier central universities. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Testing air and water quality, conducting Environmental Impact Assessments (EIA), and guiding industries to reduce carbon emissions"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Testing air and water quality, conducting Environmental Impact Assessments (EIA), and guiding industries to reduce carbon emissions. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Field Environmental Analyst -> Senior EIA Consultant -> ESG Lead Auditor -> Chief Sustainability Officer (CSO)"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Field Environmental Analyst -> Senior EIA Consultant -> ESG Lead Auditor -> Chief Sustainability Officer (CSO). With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Satellite imagery and AI sensors detect global deforestation and pollution spikes in real time, while consultants enforce clean policies"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Satellite imagery and AI sensors detect global deforestation and pollution spikes in real time, while consultants enforce clean policies. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "archaeologist": {
+  "id": "archaeologist",
+  "title": "Archaeologist & Heritage Conservator Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: historical excavations, ASI expeditions, ancient relics & museum curation!",
+  "icon": "🏺",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-stone-600 via-amber-800 to-stone-950",
+  "accentColor": "#78350F",
+  "description": "Want to become a Archaeologist & Heritage Conservator? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=archaeologist",
+  "cheatSheet": [
+    "Class 8-10: Focus on History (Harappan civilization, ancient dynasties), Geography, and Social Sciences and build Reading ancient history books.",
+    "After 10th: Choose Humanities / Arts (HEC) preferred, though any Intermediate stream is eligible.",
+    "Key Gateways: Prepare for CUET UG/PG & Archaeological Survey of India (ASI) Post Graduate Diploma entrance.",
+    "Degree & Duration: 3-Year B.A + 2-Year M.A in Ancient Indian History, Culture and Archaeology + 2-Year ASI PGDA.",
+    "Future with AI: LiDAR drones and AI satellite ground-penetrating radar reveal buried lost civilizations without disturbing the soil."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Archaeologist & Heritage Conservator?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Humanities / Arts (HEC) preferred, though any Intermediate stream is eligible"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Humanities / Arts (HEC) preferred, though any Intermediate stream is eligible. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year B.A + 2-Year M.A in Ancient Indian History, Culture and Archaeology + 2-Year ASI PGDA"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year B.A + 2-Year M.A in Ancient Indian History, Culture and Archaeology + 2-Year ASI PGDA. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "CUET UG/PG & Archaeological Survey of India (ASI) Post Graduate Diploma entrance"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "CUET UG/PG & Archaeological Survey of India (ASI) Post Graduate Diploma entrance. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "History (Harappan civilization, ancient dynasties), Geography, and Social Sciences"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "History (Harappan civilization, ancient dynasties), Geography, and Social Sciences. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Reading ancient history books, visiting museums and heritage temples, and meticulous field note-taking"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Reading ancient history books, visiting museums and heritage temples, and meticulous field note-taking. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Institute of Archaeology (ASI, New Delhi), Deccan College (Pune), and BHU Varanasi"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Institute of Archaeology (ASI, New Delhi), Deccan College (Pune), and BHU Varanasi. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Leading scientific archaeological digs, uncovering buried ancient cities, carbon-dating pottery, and conserving national monuments"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Leading scientific archaeological digs, uncovering buried ancient cities, carbon-dating pottery, and conserving national monuments. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Assistant Archaeologist -> Superintending Archaeologist -> Director of Excavations -> Director General of ASI"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Assistant Archaeologist -> Superintending Archaeologist -> Director of Excavations -> Director General of ASI. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "LiDAR drones and AI satellite ground-penetrating radar reveal buried lost civilizations without disturbing the soil"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "LiDAR drones and AI satellite ground-penetrating radar reveal buried lost civilizations without disturbing the soil. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "nutritionist": {
+  "id": "nutritionist",
+  "title": "Nutritionist & Dietitian Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: clinical dietetics, sports nutrition, metabolic health & IDA registered dietitian!",
+  "icon": "🥗",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-lime-600 via-green-600 to-emerald-800",
+  "accentColor": "#65A30D",
+  "description": "Want to become a Nutritionist & Dietitian? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=nutritionist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (human digestive system, vitamins, carbohydrates, proteins) and Chemistry and build Reading food ingredient nutrition labels.",
+    "After 10th: Choose Compulsory BiPC (Biology, Physics, Chemistry) in Intermediate.",
+    "Key Gateways: Prepare for University Entrance Tests + Registered Dietitian (RD) Examination by Indian Dietetic Association (IDA).",
+    "Degree & Duration: 3-Year B.Sc Nutrition & Dietetics + 2-Year M.Sc + 6 Months Hospital Internship.",
+    "Future with AI: AI apps calculate micronutrient calorie scans from plate photos, while human dietitians provide deep psychological habit counseling."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Nutritionist & Dietitian?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory BiPC (Biology, Physics, Chemistry) in Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory BiPC (Biology, Physics, Chemistry) in Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year B.Sc Nutrition & Dietetics + 2-Year M.Sc + 6 Months Hospital Internship"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year B.Sc Nutrition & Dietetics + 2-Year M.Sc + 6 Months Hospital Internship. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "University Entrance Tests + Registered Dietitian (RD) Examination by Indian Dietetic Association (IDA)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "University Entrance Tests + Registered Dietitian (RD) Examination by Indian Dietetic Association (IDA). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (human digestive system, vitamins, carbohydrates, proteins) and Chemistry"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (human digestive system, vitamins, carbohydrates, proteins) and Chemistry. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Reading food ingredient nutrition labels, understanding balanced diets, and healthy cooking curiosity"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Reading food ingredient nutrition labels, understanding balanced diets, and healthy cooking curiosity. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "National Institute of Nutrition (NIN Hyderabad), SNDT Women's University, and top medical colleges"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "National Institute of Nutrition (NIN Hyderabad), SNDT Women's University, and top medical colleges. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Designing specialized meal plans for diabetic patients, guiding sports athletes on protein intake, and treating malnutrition"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Designing specialized meal plans for diabetic patients, guiding sports athletes on protein intake, and treating malnutrition. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Junior Dietitian -> Hospital Chief Clinical Nutritionist -> National Sports Team Nutritionist -> Celebrity Wellness Consultant"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Junior Dietitian -> Hospital Chief Clinical Nutritionist -> National Sports Team Nutritionist -> Celebrity Wellness Consultant. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI apps calculate micronutrient calorie scans from plate photos, while human dietitians provide deep psychological habit counseling"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI apps calculate micronutrient calorie scans from plate photos, while human dietitians provide deep psychological habit counseling. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "veterinarian": {
+  "id": "veterinarian",
+  "title": "Veterinary Doctor (B.V.Sc) Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: animal surgery, pet care, livestock health & saving wildlife species!",
+  "icon": "🐾",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-emerald-700 via-teal-800 to-stone-900",
+  "accentColor": "#047857",
+  "description": "Want to become a Veterinary Doctor (B.V.Sc)? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=veterinarian",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (zoology, animal anatomy, genetics, physiology) and Chemistry and build Loving and caring for animals.",
+    "After 10th: Choose Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate.",
+    "Key Gateways: Prepare for NEET-UG (All India Veterinary Quota) or State EAPCET / CET Veterinary stream.",
+    "Degree & Duration: 5.5 Years B.V.Sc & AH (Bachelor of Veterinary Science & Animal Husbandry including 1-year clinical internship).",
+    "Future with AI: AI ultrasound and diagnostic tools detect animal diseases early, while compassionate veterinary doctors perform life-saving treatments."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Veterinary Doctor (B.V.Sc)?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "5.5 Years B.V.Sc & AH (Bachelor of Veterinary Science & Animal Husbandry including 1-year clinical internship)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 5.5 Years B.V.Sc & AH (Bachelor of Veterinary Science & Animal Husbandry including 1-year clinical internship). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "NEET-UG (All India Veterinary Quota) or State EAPCET / CET Veterinary stream"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "NEET-UG (All India Veterinary Quota) or State EAPCET / CET Veterinary stream. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (zoology, animal anatomy, genetics, physiology) and Chemistry"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (zoology, animal anatomy, genetics, physiology) and Chemistry. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Loving and caring for animals, gentle handling of pets, compassion, and zero fear of blood or injuries"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Loving and caring for animals, gentle handling of pets, compassion, and zero fear of blood or injuries. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Veterinary Council of India (VCI) colleges (SVVU Tirupati, PVNRTVU Hyderabad, IVRI Bareilly)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Veterinary Council of India (VCI) colleges (SVVU Tirupati, PVNRTVU Hyderabad, IVRI Bareilly). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Treating sick dogs and cats, performing surgeries, vaccinating dairy cattle, and protecting wildlife in sanctuaries"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Treating sick dogs and cats, performing surgeries, vaccinating dairy cattle, and protecting wildlife in sanctuaries. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Veterinary Assistant Surgeon (VAS) -> Senior Pet Hospital Surgeon -> Wildlife Zoo Chief Vet -> Animal Husbandry Director"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Veterinary Assistant Surgeon (VAS) -> Senior Pet Hospital Surgeon -> Wildlife Zoo Chief Vet -> Animal Husbandry Director. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI ultrasound and diagnostic tools detect animal diseases early, while compassionate veterinary doctors perform life-saving treatments"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI ultrasound and diagnostic tools detect animal diseases early, while compassionate veterinary doctors perform life-saving treatments. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "beautician": {
+  "id": "beautician",
+  "title": "Cosmetologist & Aesthetician Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: professional skincare, bridal makeup artistry, salon styling & studio business!",
+  "icon": "💄",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-rose-500 via-pink-600 to-purple-800",
+  "accentColor": "#E11D48",
+  "description": "Want to become a Cosmetologist & Aesthetician? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=beautician",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (human skin layers, hair follicle health), Chemistry (cosmetic ingredients), and Arts and build Color blending.",
+    "After 10th: Choose Any Intermediate stream (Science, Commerce, or Arts) or direct vocational cosmetology diploma.",
+    "Key Gateways: Prepare for CIDESCO International Certification or CIBTAC / National Skill Development Corporation (NSDC) assessments.",
+    "Degree & Duration: 1–2 Year Advanced Diploma in Cosmetology, Hair Dressing & Aesthetic Makeup.",
+    "Future with AI: AI skin diagnostic scanners analyze dermal pigmentation, while expert aesthetic stylists deliver artistic human beauty transformations."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Cosmetologist & Aesthetician?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Science, Commerce, or Arts) or direct vocational cosmetology diploma"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Science, Commerce, or Arts) or direct vocational cosmetology diploma. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "1–2 Year Advanced Diploma in Cosmetology, Hair Dressing & Aesthetic Makeup"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 1–2 Year Advanced Diploma in Cosmetology, Hair Dressing & Aesthetic Makeup. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "CIDESCO International Certification or CIBTAC / National Skill Development Corporation (NSDC) assessments"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "CIDESCO International Certification or CIBTAC / National Skill Development Corporation (NSDC) assessments. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (human skin layers, hair follicle health), Chemistry (cosmetic ingredients), and Arts"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (human skin layers, hair follicle health), Chemistry (cosmetic ingredients), and Arts. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Color blending, practicing hairstyles, hygienic skin care habits, and friendly conversational warmth"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Color blending, practicing hairstyles, hygienic skin care habits, and friendly conversational warmth. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "CIDESCO accredited beauty academies, Lakme Academy, and VLCC Institute"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "CIDESCO accredited beauty academies, Lakme Academy, and VLCC Institute. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Providing clinical facial therapies, luxury bridal makeup transformations, hair coloring, and spa treatments"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Providing clinical facial therapies, luxury bridal makeup transformations, hair coloring, and spa treatments. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Junior Hair/Skin Stylist -> Senior Bridal Makeup Artist -> Luxury Salon Manager -> Signature Beauty Brand / Studio Owner"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Junior Hair/Skin Stylist -> Senior Bridal Makeup Artist -> Luxury Salon Manager -> Signature Beauty Brand / Studio Owner. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI skin diagnostic scanners analyze dermal pigmentation, while expert aesthetic stylists deliver artistic human beauty transformations"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI skin diagnostic scanners analyze dermal pigmentation, while expert aesthetic stylists deliver artistic human beauty transformations. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "ai-scientist": {
+  "id": "ai-scientist",
+  "title": "AI Research Scientist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: Large Language Models, deep neural networks, Ph.D. research & inventing AGI!",
+  "icon": "🧠",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-violet-600 via-indigo-700 to-blue-900",
+  "accentColor": "#7C3AED",
+  "description": "Want to become a AI Research Scientist? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=ai-scientist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Mathematics (Linear Algebra, Calculus, Probability, Coordinate Geometry) and Computer Programming (Python) and build Solving math olympiad problems.",
+    "After 10th: Choose Compulsory MPC (Mathematics, Physics, Chemistry) with exceptional focus on Advanced Mathematics.",
+    "Key Gateways: Prepare for JEE Advanced / Main, GATE (Computer Science), and GRE / University Ph.D. admissions.",
+    "Degree & Duration: 4-Year B.Tech CSE + 2-Year M.S. + 4–5 Year Ph.D. in Computer Science & Artificial Intelligence.",
+    "Future with AI: AI scientists are the architects of the future, building safe artificial general intelligence to solve global scientific grand challenges."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a AI Research Scientist?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory MPC (Mathematics, Physics, Chemistry) with exceptional focus on Advanced Mathematics"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory MPC (Mathematics, Physics, Chemistry) with exceptional focus on Advanced Mathematics. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year B.Tech CSE + 2-Year M.S. + 4–5 Year Ph.D. in Computer Science & Artificial Intelligence"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year B.Tech CSE + 2-Year M.S. + 4–5 Year Ph.D. in Computer Science & Artificial Intelligence. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "JEE Advanced / Main, GATE (Computer Science), and GRE / University Ph.D. admissions"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "JEE Advanced / Main, GATE (Computer Science), and GRE / University Ph.D. admissions. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Mathematics (Linear Algebra, Calculus, Probability, Coordinate Geometry) and Computer Programming (Python)"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Mathematics (Linear Algebra, Calculus, Probability, Coordinate Geometry) and Computer Programming (Python). What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Solving math olympiad problems, coding logic games in Python, and reading about how neural networks work"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Solving math olympiad problems, coding logic games in Python, and reading about how neural networks work. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "IIT Bombay/Delhi/Madras, IISc Bangalore, Stanford, CMU, and Google DeepMind / OpenAI R&D labs"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "IIT Bombay/Delhi/Madras, IISc Bangalore, Stanford, CMU, and Google DeepMind / OpenAI R&D labs. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Designing novel Transformer neural architectures, training massive AI models on supercomputers, and publishing NeurIPS papers"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Designing novel Transformer neural architectures, training massive AI models on supercomputers, and publishing NeurIPS papers. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "AI Research Engineer -> Research Scientist -> Staff Scientist -> Chief AI Scientist / Head of Frontier AI Lab"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "AI Research Engineer -> Research Scientist -> Staff Scientist -> Chief AI Scientist / Head of Frontier AI Lab. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI scientists are the architects of the future, building safe artificial general intelligence to solve global scientific grand challenges"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI scientists are the architects of the future, building safe artificial general intelligence to solve global scientific grand challenges. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "data-scientist": {
+  "id": "data-scientist",
+  "title": "Data Scientist & ML Specialist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: big data analytics, statistical modeling, machine learning & Python coding!",
+  "icon": "📊",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-blue-600 via-indigo-600 to-cyan-700",
+  "accentColor": "#2563EB",
+  "description": "Want to become a Data Scientist & ML Specialist? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=data-scientist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Mathematics (Statistics, Mean/Median/Mode, Probability, Graphs) and Computer Science and build Analyzing sports statistics (cricket averages).",
+    "After 10th: Choose MPC (Mathematics, Physics, Chemistry) or MEC with strong Mathematics.",
+    "Key Gateways: Prepare for JEE Main / Advanced, State CET / EAPCET, or ISI Entrance Exam (Indian Statistical Institute).",
+    "Degree & Duration: 4-Year B.Tech in Data Science / CSE or 3-Year B.Stat / B.Sc Statistics + 2-Year M.Sc / M.Tech.",
+    "Future with AI: Automated ML generates routine baseline models, while human data scientists formulate complex business logic and ethical safety."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Data Scientist & ML Specialist?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "MPC (Mathematics, Physics, Chemistry) or MEC with strong Mathematics"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "MPC (Mathematics, Physics, Chemistry) or MEC with strong Mathematics. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year B.Tech in Data Science / CSE or 3-Year B.Stat / B.Sc Statistics + 2-Year M.Sc / M.Tech"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year B.Tech in Data Science / CSE or 3-Year B.Stat / B.Sc Statistics + 2-Year M.Sc / M.Tech. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "JEE Main / Advanced, State CET / EAPCET, or ISI Entrance Exam (Indian Statistical Institute)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "JEE Main / Advanced, State CET / EAPCET, or ISI Entrance Exam (Indian Statistical Institute). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Mathematics (Statistics, Mean/Median/Mode, Probability, Graphs) and Computer Science"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Mathematics (Statistics, Mean/Median/Mode, Probability, Graphs) and Computer Science. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Analyzing sports statistics (cricket averages), Excel tables, logic puzzles, and learning Python programming"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Analyzing sports statistics (cricket averages), Excel tables, logic puzzles, and learning Python programming. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Indian Statistical Institute (ISI Kolkata), IITs, BITS Pilani, and top international analytics schools"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Indian Statistical Institute (ISI Kolkata), IITs, BITS Pilani, and top international analytics schools. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Cleaning enterprise datasets, building machine learning algorithms, predicting customer trends, and building dashboards"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Cleaning enterprise datasets, building machine learning algorithms, predicting customer trends, and building dashboards. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Junior Data Analyst -> Machine Learning Engineer -> Senior Data Scientist -> Chief Data & Analytics Officer (CDO)"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Junior Data Analyst -> Machine Learning Engineer -> Senior Data Scientist -> Chief Data & Analytics Officer (CDO). With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Automated ML generates routine baseline models, while human data scientists formulate complex business logic and ethical safety"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Automated ML generates routine baseline models, while human data scientists formulate complex business logic and ethical safety. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "robotics-engineer": {
+  "id": "robotics-engineer",
+  "title": "Robotics Engineer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: Arduino & microcontrollers, mechatronics, sensors, kinematics & autonomous bots!",
+  "icon": "🤖",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-cyan-600 via-blue-700 to-slate-900",
+  "accentColor": "#0891B2",
+  "description": "Want to become a Robotics Engineer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=robotics-engineer",
+  "cheatSheet": [
+    "Class 8-10: Focus on Physics (circuits, electromagnetism, kinematics, levers), Mathematics, and Computer Science and build Building DIY electronic kits (Arduino / Raspberry Pi).",
+    "After 10th: Choose Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate.",
+    "Key Gateways: Prepare for JEE Main / Advanced, BITSAT, or State EAPCET / CET in Engineering.",
+    "Degree & Duration: 4-Year B.Tech in Robotics / Mechatronics / Mechanical / Electronics Engineering.",
+    "Future with AI: Generative AI provides spatial computer vision, while robotics engineers physically construct agile robots that build rockets and cars."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Robotics Engineer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year B.Tech in Robotics / Mechatronics / Mechanical / Electronics Engineering"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year B.Tech in Robotics / Mechatronics / Mechanical / Electronics Engineering. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "JEE Main / Advanced, BITSAT, or State EAPCET / CET in Engineering"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "JEE Main / Advanced, BITSAT, or State EAPCET / CET in Engineering. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Physics (circuits, electromagnetism, kinematics, levers), Mathematics, and Computer Science"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Physics (circuits, electromagnetism, kinematics, levers), Mathematics, and Computer Science. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Building DIY electronic kits (Arduino / Raspberry Pi), soldering wires, participating in school robotics club contests"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Building DIY electronic kits (Arduino / Raspberry Pi), soldering wires, participating in school robotics club contests. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "IIT Kanpur, IIT Madras, BITS Pilani, and premier robotics research laboratories"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "IIT Kanpur, IIT Madras, BITS Pilani, and premier robotics research laboratories. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Designing robotic arms for factory automation, programming autonomous rover navigation (ROS), and calibrating sensor motors"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Designing robotic arms for factory automation, programming autonomous rover navigation (ROS), and calibrating sensor motors. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Robotics Design Engineer -> Autonomous Systems Lead -> Chief Robotics Architect -> VP of Industrial Automation"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Robotics Design Engineer -> Autonomous Systems Lead -> Chief Robotics Architect -> VP of Industrial Automation. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Generative AI provides spatial computer vision, while robotics engineers physically construct agile robots that build rockets and cars"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Generative AI provides spatial computer vision, while robotics engineers physically construct agile robots that build rockets and cars. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "forensic-scientist": {
+  "id": "forensic-scientist",
+  "title": "Forensic Scientist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: crime scene DNA analysis, ballistic evidence, toxicology & working with police!",
+  "icon": "🔍",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-slate-700 via-indigo-900 to-stone-950",
+  "accentColor": "#475569",
+  "description": "Want to become a Forensic Scientist? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=forensic-scientist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (DNA structure, human genetics), Chemistry (chemical reactions, poisons), and Physics (optics and build Sharp observation of small details.",
+    "After 10th: Choose BiPC (Biology stream) OR MPC (Maths stream) in 10+2 Intermediate.",
+    "Key Gateways: Prepare for National Forensic Sciences University (NFSU) Entrance Test or University Science CET.",
+    "Degree & Duration: 3-Year B.Sc in Forensic Science + 2-Year M.Sc in Forensic Science (Toxicology / DNA Profiling / Ballistics).",
+    "Future with AI: AI facial recognition and automated DNA sequencer pipelines assist labs, while human forensic scientists guarantee court evidentiary truth."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Forensic Scientist?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "BiPC (Biology stream) OR MPC (Maths stream) in 10+2 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "BiPC (Biology stream) OR MPC (Maths stream) in 10+2 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year B.Sc in Forensic Science + 2-Year M.Sc in Forensic Science (Toxicology / DNA Profiling / Ballistics)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year B.Sc in Forensic Science + 2-Year M.Sc in Forensic Science (Toxicology / DNA Profiling / Ballistics). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "National Forensic Sciences University (NFSU) Entrance Test or University Science CET"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "National Forensic Sciences University (NFSU) Entrance Test or University Science CET. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (DNA structure, human genetics), Chemistry (chemical reactions, poisons), and Physics (optics & motion)"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (DNA structure, human genetics), Chemistry (chemical reactions, poisons), and Physics (optics & motion). What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Sharp observation of small details, methodical laboratory note-taking, and strong ethical integrity"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Sharp observation of small details, methodical laboratory note-taking, and strong ethical integrity. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "National Forensic Sciences University (NFSU Gandhinagar) and Central Forensic Science Laboratories (CFSL)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "National Forensic Sciences University (NFSU Gandhinagar) and Central Forensic Science Laboratories (CFSL). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Examining crime scene finger marks, testing blood DNA samples in clean rooms, analyzing bullet trajectories, and testifying in court"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Examining crime scene finger marks, testing blood DNA samples in clean rooms, analyzing bullet trajectories, and testifying in court. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Forensic Scientific Assistant -> Senior Scientific Officer (SSO) -> Assistant Director -> Director of State/Central FSL"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Forensic Scientific Assistant -> Senior Scientific Officer (SSO) -> Assistant Director -> Director of State/Central FSL. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI facial recognition and automated DNA sequencer pipelines assist labs, while human forensic scientists guarantee court evidentiary truth"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI facial recognition and automated DNA sequencer pipelines assist labs, while human forensic scientists guarantee court evidentiary truth. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "horticulturist": {
+  "id": "horticulturist",
+  "title": "Horticulturist & Green Agriculture Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: polyhouse farming, fruit orchards, floriculture & export agri-business!",
+  "icon": "🪴",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-emerald-600 via-green-700 to-lime-800",
+  "accentColor": "#16A34A",
+  "description": "Want to become a Horticulturist & Green Agriculture? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=horticulturist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (botany, plant reproduction, photosynthesis, soil minerals) and Chemistry and build Growing balcony potted plants.",
+    "After 10th: Choose Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate.",
+    "Key Gateways: Prepare for State Agri/Horti EAPCET or ICAR AIEEA (Indian Council of Agricultural Research).",
+    "Degree & Duration: 4-Year B.Sc (Hons) in Horticulture (including Rural Horticultural Work Experience internship).",
+    "Future with AI: Drones and AI soil sensors optimize drip irrigation, while horticulturists develop drought-resistant crops to ensure national food security."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Horticulturist & Green Agriculture?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year B.Sc (Hons) in Horticulture (including Rural Horticultural Work Experience internship)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year B.Sc (Hons) in Horticulture (including Rural Horticultural Work Experience internship). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "State Agri/Horti EAPCET or ICAR AIEEA (Indian Council of Agricultural Research)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "State Agri/Horti EAPCET or ICAR AIEEA (Indian Council of Agricultural Research). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (botany, plant reproduction, photosynthesis, soil minerals) and Chemistry"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (botany, plant reproduction, photosynthesis, soil minerals) and Chemistry. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Growing balcony potted plants, grafting plant branches, learning seed varieties, and caring for greenery"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Growing balcony potted plants, grafting plant branches, learning seed varieties, and caring for greenery. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Dr. YSR Horticultural University (AP), SKLTSHU (Telangana), and ICAR Horticultural Institutes (IIHR Bengaluru)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Dr. YSR Horticultural University (AP), SKLTSHU (Telangana), and ICAR Horticultural Institutes (IIHR Bengaluru). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Supervising high-yield greenhouse polyhouses, developing disease-resistant fruit varieties, and guiding farmers on crop yield"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Supervising high-yield greenhouse polyhouses, developing disease-resistant fruit varieties, and guiding farmers on crop yield. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Horticulture Officer (HO) -> Assistant Director of Horticulture -> District Horticulture Officer (DHO) -> Agri-Export Entrepreneur"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Horticulture Officer (HO) -> Assistant Director of Horticulture -> District Horticulture Officer (DHO) -> Agri-Export Entrepreneur. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Drones and AI soil sensors optimize drip irrigation, while horticulturists develop drought-resistant crops to ensure national food security"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Drones and AI soil sensors optimize drip irrigation, while horticulturists develop drought-resistant crops to ensure national food security. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "stenographer": {
+  "id": "stenographer",
+  "title": "Court & Government Stenographer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: high-speed shorthand, court transcription, SSC Steno Grade C & D & legal careers!",
+  "icon": "⌨️",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-stone-600 via-slate-700 to-stone-900",
+  "accentColor": "#57534E",
+  "description": "Want to become a Court & Government Stenographer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=stenographer",
+  "cheatSheet": [
+    "Class 8-10: Focus on English / Regional Language Grammar, Vocabulary, Spelling, and General Knowledge and build Fast touch typing on computer keyboards.",
+    "After 10th: Choose Any stream in 10+2 Intermediate (CEC, HEC, MPC, or BiPC).",
+    "Key Gateways: Prepare for SSC Stenographer Grade C & D Examination + Mandatory Shorthand & Computer Typing Skill Test (80–100 wpm).",
+    "Degree & Duration: 1–2 Years dedicated training in Pitman Shorthand speed and touch typing after 10th/12th.",
+    "Future with AI: Automated voice recognition generates rough draft text, while human stenographers ensure legally certified verbatim accuracy for courts."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Court & Government Stenographer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any stream in 10+2 Intermediate (CEC, HEC, MPC, or BiPC)"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any stream in 10+2 Intermediate (CEC, HEC, MPC, or BiPC). Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "1–2 Years dedicated training in Pitman Shorthand speed and touch typing after 10th/12th"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 1–2 Years dedicated training in Pitman Shorthand speed and touch typing after 10th/12th. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "SSC Stenographer Grade C & D Examination + Mandatory Shorthand & Computer Typing Skill Test (80–100 wpm)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "SSC Stenographer Grade C & D Examination + Mandatory Shorthand & Computer Typing Skill Test (80–100 wpm). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "English / Regional Language Grammar, Vocabulary, Spelling, and General Knowledge"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "English / Regional Language Grammar, Vocabulary, Spelling, and General Knowledge. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Fast touch typing on computer keyboards, sharp listening comprehension, and neat fast handwriting"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Fast touch typing on computer keyboards, sharp listening comprehension, and neat fast handwriting. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Government Commercial Institutes and State Board of Technical Education typing institutes"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Government Commercial Institutes and State Board of Technical Education typing institutes. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Transcribing High Court and Supreme Court judge oral judgments verbatim, taking ministerial dictations, and managing official records"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Transcribing High Court and Supreme Court judge oral judgments verbatim, taking ministerial dictations, and managing official records. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Stenographer Grade D -> Senior Stenographer -> Personal Assistant (PA) -> Private Secretary (PS) to Judges and Union Ministers"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Stenographer Grade D -> Senior Stenographer -> Personal Assistant (PA) -> Private Secretary (PS) to Judges and Union Ministers. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Automated voice recognition generates rough draft text, while human stenographers ensure legally certified verbatim accuracy for courts"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Automated voice recognition generates rough draft text, while human stenographers ensure legally certified verbatim accuracy for courts. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "astrophysicist": {
+  "id": "astrophysicist",
+  "title": "Astrophysicist & Space Scientist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: telescopes, black holes, ISRO & NASA planetary missions & deep space physics!",
+  "icon": "🔭",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-indigo-900 via-purple-900 to-black",
+  "accentColor": "#4338CA",
+  "description": "Want to become a Astrophysicist & Space Scientist? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=astrophysicist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Physics (gravitation, electromagnetism, wave optics) and Mathematics (calculus, trigonometry) and build Observing night sky constellations.",
+    "After 10th: Choose Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate.",
+    "Key Gateways: Prepare for JEE Advanced, IIST Entrance (for Indian Institute of Space Science and Technology), or JEST / GATE.",
+    "Degree & Duration: 4-Year B.Tech / B.S + 2-Year M.S + 4–5 Year Ph.D. in Astronomy & Astrophysics.",
+    "Future with AI: AI analyzes petabytes of space telescope imagery to discover exoplanets, while astrophysicists formulate grand unified laws of the cosmos."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Astrophysicist & Space Scientist?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year B.Tech / B.S + 2-Year M.S + 4–5 Year Ph.D. in Astronomy & Astrophysics"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year B.Tech / B.S + 2-Year M.S + 4–5 Year Ph.D. in Astronomy & Astrophysics. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "JEE Advanced, IIST Entrance (for Indian Institute of Space Science and Technology), or JEST / GATE"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "JEE Advanced, IIST Entrance (for Indian Institute of Space Science and Technology), or JEST / GATE. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Physics (gravitation, electromagnetism, wave optics) and Mathematics (calculus, trigonometry)"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Physics (gravitation, electromagnetism, wave optics) and Mathematics (calculus, trigonometry). What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Observing night sky constellations, watching space documentaries, and solving challenging math & physics problems"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Observing night sky constellations, watching space documentaries, and solving challenging math & physics problems. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "IIST Thiruvananthapuram, IIA Bangalore, IUCAA Pune, TIFR Mumbai, and ISRO Space Applications Centers"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "IIST Thiruvananthapuram, IIA Bangalore, IUCAA Pune, TIFR Mumbai, and ISRO Space Applications Centers. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Analyzing radio telescope data from deep space, simulating galaxy collisions on supercomputers, and planning Mars/Moon rover instruments"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Analyzing radio telescope data from deep space, simulating galaxy collisions on supercomputers, and planning Mars/Moon rover instruments. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Postdoctoral Researcher -> Scientist 'SD' at ISRO/IUCAA -> Mission Lead Principal Investigator -> Space Agency Research Director"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Postdoctoral Researcher -> Scientist 'SD' at ISRO/IUCAA -> Mission Lead Principal Investigator -> Space Agency Research Director. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI analyzes petabytes of space telescope imagery to discover exoplanets, while astrophysicists formulate grand unified laws of the cosmos"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI analyzes petabytes of space telescope imagery to discover exoplanets, while astrophysicists formulate grand unified laws of the cosmos. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "cyber-security": {
+  "id": "cyber-security",
+  "title": "Cyber Security & Ethical Hacker Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: network defense, ethical hacking, CEH certifications, cryptography & cyber police!",
+  "icon": "🛡️",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-emerald-700 via-teal-800 to-slate-950",
+  "accentColor": "#0F766E",
+  "description": "Want to become a Cyber Security & Ethical Hacker? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=cyber-security",
+  "cheatSheet": [
+    "Class 8-10: Focus on Computer Science, Mathematics (modular arithmetic, logic gates, cryptography), and Physics and build Practicing safe cyber hygiene.",
+    "After 10th: Choose Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate.",
+    "Key Gateways: Prepare for JEE Main / Advanced, State CET / EAPCET in Computer Science, and Global CEH / OSCP certifications.",
+    "Degree & Duration: 4-Year B.Tech in CSE / Cybersecurity / Information Technology.",
+    "Future with AI: Automated AI defends against instant automated cyber threats, while ethical hackers formulate high-level defense architecture and policy."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Cyber Security & Ethical Hacker?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory MPC (Mathematics, Physics, Chemistry) in Class 11-12 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year B.Tech in CSE / Cybersecurity / Information Technology"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year B.Tech in CSE / Cybersecurity / Information Technology. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "JEE Main / Advanced, State CET / EAPCET in Computer Science, and Global CEH / OSCP certifications"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "JEE Main / Advanced, State CET / EAPCET in Computer Science, and Global CEH / OSCP certifications. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Computer Science, Mathematics (modular arithmetic, logic gates, cryptography), and Physics"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Computer Science, Mathematics (modular arithmetic, logic gates, cryptography), and Physics. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Practicing safe cyber hygiene, learning Linux command-line, understanding how IP networks work, and solving coding riddles"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Practicing safe cyber hygiene, learning Linux command-line, understanding how IP networks work, and solving coding riddles. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "IITs, NITs, IIITs, and industry certification labs (Offensive Security OSCP, CompTIA Security+)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "IITs, NITs, IIITs, and industry certification labs (Offensive Security OSCP, CompTIA Security+). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Simulating ethical hacking penetration tests to fix security holes, monitoring Security Operations Centers (SOC), and stopping cyber attacks"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Simulating ethical hacking penetration tests to fix security holes, monitoring Security Operations Centers (SOC), and stopping cyber attacks. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "SOC Security Analyst -> Penetration Tester -> Lead Security Architect -> Chief Information Security Officer (CISO)"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "SOC Security Analyst -> Penetration Tester -> Lead Security Architect -> Chief Information Security Officer (CISO). With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Automated AI defends against instant automated cyber threats, while ethical hackers formulate high-level defense architecture and policy"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Automated AI defends against instant automated cyber threats, while ethical hackers formulate high-level defense architecture and policy. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "drone-pilot": {
+  "id": "drone-pilot",
+  "title": "Drone Pilot & UAV Technician Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: DGCA license, flight simulator training, agricultural spraying & aerial cinema!",
+  "icon": "🛸",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-sky-600 via-indigo-700 to-slate-900",
+  "accentColor": "#0284C7",
+  "description": "Want to become a Drone Pilot & UAV Technician? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=drone-pilot",
+  "cheatSheet": [
+    "Class 8-10: Focus on Physics (aerodynamics, battery electronics, radio frequency signals, gravity) and Geography (maps and build Playing with RC quadcopters safely.",
+    "After 10th: Choose Any stream in Intermediate (MPC preferred for understanding electronics and aerodynamics).",
+    "Key Gateways: Prepare for DGCA Medical Examination + DGCA-Approved Remote Pilot Training (RPTO) Certification Exam.",
+    "Degree & Duration: 5–7 Days intensive flight training at DGCA RPTO center after 10th/12th (Age 18+ for commercial license).",
+    "Future with AI: Autonomous AI drones fly preset GPS paths with collision-avoidance vision, while certified human drone pilots oversee fleet safety and compliance."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Drone Pilot & UAV Technician?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any stream in Intermediate (MPC preferred for understanding electronics and aerodynamics)"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any stream in Intermediate (MPC preferred for understanding electronics and aerodynamics). Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "5–7 Days intensive flight training at DGCA RPTO center after 10th/12th (Age 18+ for commercial license)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 5–7 Days intensive flight training at DGCA RPTO center after 10th/12th (Age 18+ for commercial license). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "DGCA Medical Examination + DGCA-Approved Remote Pilot Training (RPTO) Certification Exam"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "DGCA Medical Examination + DGCA-Approved Remote Pilot Training (RPTO) Certification Exam. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Physics (aerodynamics, battery electronics, radio frequency signals, gravity) and Geography (maps & GPS)"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Physics (aerodynamics, battery electronics, radio frequency signals, gravity) and Geography (maps & GPS). What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Playing with RC quadcopters safely, learning drone simulator software on computers, and spatial hand-eye coordination"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Playing with RC quadcopters safely, learning drone simulator software on computers, and spatial hand-eye coordination. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "DGCA-Authorized Remote Pilot Training Organizations (RPTOs) across India and DigitalSky portal"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "DGCA-Authorized Remote Pilot Training Organizations (RPTOs) across India and DigitalSky portal. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Flying commercial multi-rotor drones for agricultural fertilizer spraying, topographic land surveying, cinema shoots, and disaster delivery"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Flying commercial multi-rotor drones for agricultural fertilizer spraying, topographic land surveying, cinema shoots, and disaster delivery. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Junior Drone Operator -> Senior Commercial Remote Pilot -> Drone Fleet Operations Manager -> Drone Tech Enterprise Founder"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Junior Drone Operator -> Senior Commercial Remote Pilot -> Drone Fleet Operations Manager -> Drone Tech Enterprise Founder. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Autonomous AI drones fly preset GPS paths with collision-avoidance vision, while certified human drone pilots oversee fleet safety and compliance"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Autonomous AI drones fly preset GPS paths with collision-avoidance vision, while certified human drone pilots oversee fleet safety and compliance. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "epigraphist": {
+  "id": "epigraphist",
+  "title": "Epigraphist & Inscriptions Specialist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: deciphering Brahmi & ancient scripts, temple copper plates & ASI discoveries!",
+  "icon": "📜",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-amber-700 via-stone-800 to-black",
+  "accentColor": "#92400E",
+  "description": "Want to become a Epigraphist & Inscriptions Specialist? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=epigraphist",
+  "cheatSheet": [
+    "Class 8-10: Focus on History (ancient Indian kingdoms, Ashokan edicts), Classical Languages, and Linguistic grammar and build Fascination with ancient scripts.",
+    "After 10th: Choose Humanities / Arts (HEC) or literature groups in 10+2 Intermediate.",
+    "Key Gateways: Prepare for CUET UG / PG and Archaeological Survey of India (ASI) Epigraphy Branch selection.",
+    "Degree & Duration: 3-Year B.A + 2-Year M.A in History / Classical Languages (Sanskrit, Telugu, Tamil, Kannada) + Diploma in Epigraphy.",
+    "Future with AI: AI vision models help enhance damaged weathered stone inscription characters, while human epigraphists reconstruct the true cultural context."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Epigraphist & Inscriptions Specialist?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Humanities / Arts (HEC) or literature groups in 10+2 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Humanities / Arts (HEC) or literature groups in 10+2 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year B.A + 2-Year M.A in History / Classical Languages (Sanskrit, Telugu, Tamil, Kannada) + Diploma in Epigraphy"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year B.A + 2-Year M.A in History / Classical Languages (Sanskrit, Telugu, Tamil, Kannada) + Diploma in Epigraphy. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "CUET UG / PG and Archaeological Survey of India (ASI) Epigraphy Branch selection"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "CUET UG / PG and Archaeological Survey of India (ASI) Epigraphy Branch selection. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "History (ancient Indian kingdoms, Ashokan edicts), Classical Languages, and Linguistic grammar"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "History (ancient Indian kingdoms, Ashokan edicts), Classical Languages, and Linguistic grammar. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Fascination with ancient scripts, reading historical temple inscriptions, and patience with ancient linguistic puzzles"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Fascination with ancient scripts, reading historical temple inscriptions, and patience with ancient linguistic puzzles. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "ASI Epigraphy Branch (Mysore & Nagpur), Deccan College Pune, and University of Madras"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "ASI Epigraphy Branch (Mysore & Nagpur), Deccan College Pune, and University of Madras. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Taking estampages (ink impressions) of ancient stone inscriptions, deciphering forgotten scripts like Brahmi, and reconstructing historical dates"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Taking estampages (ink impressions) of ancient stone inscriptions, deciphering forgotten scripts like Brahmi, and reconstructing historical dates. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Epigraphical Assistant -> Assistant Superintending Epigraphist -> Director of Epigraphy (ASI) -> National Classical Scholar"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Epigraphical Assistant -> Assistant Superintending Epigraphist -> Director of Epigraphy (ASI) -> National Classical Scholar. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI vision models help enhance damaged weathered stone inscription characters, while human epigraphists reconstruct the true cultural context"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI vision models help enhance damaged weathered stone inscription characters, while human epigraphists reconstruct the true cultural context. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "fitness-coach": {
+  "id": "fitness-coach",
+  "title": "Fitness Coach & Athletic Trainer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: exercise biomechanics, certified personal training, gym leadership & athlete coaching!",
+  "icon": "🏋️",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-orange-600 via-amber-700 to-stone-900",
+  "accentColor": "#C2410C",
+  "description": "Want to become a Fitness Coach & Athletic Trainer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=fitness-coach",
+  "cheatSheet": [
+    "Class 8-10: Focus on Physical Education, Biology (skeletal and build Consistent daily bodyweight fitness (pushups.",
+    "After 10th: Choose Any Intermediate stream (Science, Commerce, or Arts) with active physical athletics.",
+    "Key Gateways: Prepare for International Certifications: ACE (American Council on Exercise), ACSM, ISSA, or B.P.Ed degree.",
+    "Degree & Duration: 6–12 Months Certification Course or 3-Year B.P.Ed (Bachelor of Physical Education).",
+    "Future with AI: AI smart cameras track workout repetition form and heart rates, while human fitness coaches provide the emotional drive and personal encouragement."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Fitness Coach & Athletic Trainer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Science, Commerce, or Arts) with active physical athletics"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Science, Commerce, or Arts) with active physical athletics. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "6–12 Months Certification Course or 3-Year B.P.Ed (Bachelor of Physical Education)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 6–12 Months Certification Course or 3-Year B.P.Ed (Bachelor of Physical Education). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "International Certifications: ACE (American Council on Exercise), ACSM, ISSA, or B.P.Ed degree"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "International Certifications: ACE (American Council on Exercise), ACSM, ISSA, or B.P.Ed degree. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Physical Education, Biology (skeletal & muscular system, heart rate physiology, calories), and Physics"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Physical Education, Biology (skeletal & muscular system, heart rate physiology, calories), and Physics. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Consistent daily bodyweight fitness (pushups, pullups, running), maintaining a positive encouraging attitude, and sports participation"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Consistent daily bodyweight fitness (pushups, pullups, running), maintaining a positive encouraging attitude, and sports participation. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "ACE-accredited fitness academies, Gold's Gym Fitness Institute, and Physical Education Colleges"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "ACE-accredited fitness academies, Gold's Gym Fitness Institute, and Physical Education Colleges. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Guiding clients through safe weightlifting form, designing personalized fat loss / muscle gain workouts, and motivating lifestyle health"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Guiding clients through safe weightlifting form, designing personalized fat loss / muscle gain workouts, and motivating lifestyle health. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Floor Gym Trainer -> Senior Personal Coach -> Strength & Conditioning Specialist for Sports Teams -> Signature Fitness Studio Owner"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Floor Gym Trainer -> Senior Personal Coach -> Strength & Conditioning Specialist for Sports Teams -> Signature Fitness Studio Owner. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI smart cameras track workout repetition form and heart rates, while human fitness coaches provide the emotional drive and personal encouragement"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI smart cameras track workout repetition form and heart rates, while human fitness coaches provide the emotional drive and personal encouragement. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "food-safety-officer": {
+  "id": "food-safety-officer",
+  "title": "Food Safety Officer (FSO / FSSAI) Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: FSSAI food quality laws, restaurant inspections, food adulteration testing & public health!",
+  "icon": "🧪",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-emerald-700 via-teal-800 to-stone-900",
+  "accentColor": "#0F766E",
+  "description": "Want to become a Food Safety Officer (FSO / FSSAI)? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=food-safety-officer",
+  "cheatSheet": [
+    "Class 8-10: Focus on Chemistry (chemical testing, food preservatives, adulterants), Biology (bacteria, food poisoning), and Civics and build Observing packaged food expiry dates and FSSAI logo marks.",
+    "After 10th: Choose Compulsory BiPC (Biology) OR MPC (with Chemistry) in 10+2 Intermediate.",
+    "Key Gateways: Prepare for FSSAI National Recruitment Exam or State PSC Food Safety Officer (FSO) Competitive Exam.",
+    "Degree & Duration: 4-Year B.Tech in Food Technology or 3-Year B.Sc in Food Science / Chemistry / Microbiology.",
+    "Future with AI: Smart chemical sensors and blockchain track food shipment freshness, while Food Safety Officers enforce legal penalties against adulteration."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Food Safety Officer (FSO / FSSAI)?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory BiPC (Biology) OR MPC (with Chemistry) in 10+2 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory BiPC (Biology) OR MPC (with Chemistry) in 10+2 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year B.Tech in Food Technology or 3-Year B.Sc in Food Science / Chemistry / Microbiology"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year B.Tech in Food Technology or 3-Year B.Sc in Food Science / Chemistry / Microbiology. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "FSSAI National Recruitment Exam or State PSC Food Safety Officer (FSO) Competitive Exam"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "FSSAI National Recruitment Exam or State PSC Food Safety Officer (FSO) Competitive Exam. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Chemistry (chemical testing, food preservatives, adulterants), Biology (bacteria, food poisoning), and Civics"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Chemistry (chemical testing, food preservatives, adulterants), Biology (bacteria, food poisoning), and Civics. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Observing packaged food expiry dates and FSSAI logo marks, maintaining kitchen cleanliness, and understanding health hygiene"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Observing packaged food expiry dates and FSSAI logo marks, maintaining kitchen cleanliness, and understanding health hygiene. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "NIFTEM (National Institute of Food Technology), CFTRI Mysore, and State Agricultural / Tech Universities"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "NIFTEM (National Institute of Food Technology), CFTRI Mysore, and State Agricultural / Tech Universities. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Inspecting restaurants, bakeries, and food processing plants, collecting food samples for lab tests, and sealing adulterated factories"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Inspecting restaurants, bakeries, and food processing plants, collecting food samples for lab tests, and sealing adulterated factories. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Food Safety Officer (FSO) -> Designated Officer (DO) -> Joint Commissioner (Food Safety) -> Central FSSAI Director"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Food Safety Officer (FSO) -> Designated Officer (DO) -> Joint Commissioner (Food Safety) -> Central FSSAI Director. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Smart chemical sensors and blockchain track food shipment freshness, while Food Safety Officers enforce legal penalties against adulteration"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Smart chemical sensors and blockchain track food shipment freshness, while Food Safety Officers enforce legal penalties against adulteration. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "geneticist": {
+  "id": "geneticist",
+  "title": "Geneticist & Biotech Researcher Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: DNA sequencing, CRISPR gene editing, hereditary disease cure & future biotechnology!",
+  "icon": "🧬",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-indigo-600 via-purple-700 to-pink-900",
+  "accentColor": "#4F46E5",
+  "description": "Want to become a Geneticist & Biotech Researcher? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=geneticist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (Mendelian inheritance, DNA double helix, cell division, genes) and Chemistry and build Fascination with heredity (why children look like parents).",
+    "After 10th: Choose Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate.",
+    "Key Gateways: Prepare for CUET UG / PG, GAT-B (Graduate Aptitude Test - Biotechnology), and CSIR-UGC NET for Ph.D. fellowship.",
+    "Degree & Duration: 3-Year B.Sc in Genetics / Biotechnology + 2-Year M.Sc + 4–5 Year Ph.D. in Molecular Genetics.",
+    "Future with AI: AI algorithms fold proteins and predict genetic disease risks from whole-genome scans, while geneticists pioneer cures using CRISPR gene editing."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Geneticist & Biotech Researcher?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3-Year B.Sc in Genetics / Biotechnology + 2-Year M.Sc + 4–5 Year Ph.D. in Molecular Genetics"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3-Year B.Sc in Genetics / Biotechnology + 2-Year M.Sc + 4–5 Year Ph.D. in Molecular Genetics. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "CUET UG / PG, GAT-B (Graduate Aptitude Test - Biotechnology), and CSIR-UGC NET for Ph.D. fellowship"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "CUET UG / PG, GAT-B (Graduate Aptitude Test - Biotechnology), and CSIR-UGC NET for Ph.D. fellowship. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (Mendelian inheritance, DNA double helix, cell division, genes) and Chemistry"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (Mendelian inheritance, DNA double helix, cell division, genes) and Chemistry. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Fascination with heredity (why children look like parents), reading science magazines on DNA, and biology lab experiments"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Fascination with heredity (why children look like parents), reading science magazines on DNA, and biology lab experiments. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Centre for Cellular and Molecular Biology (CCMB Hyderabad), IISc Bangalore, and Rajiv Gandhi Centre for Biotechnology (RGCB)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Centre for Cellular and Molecular Biology (CCMB Hyderabad), IISc Bangalore, and Rajiv Gandhi Centre for Biotechnology (RGCB). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Extracting and sequencing DNA in sterile laboratories, analyzing genetic mutations causing hereditary diseases, and testing gene therapies"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Extracting and sequencing DNA in sterile laboratories, analyzing genetic mutations causing hereditary diseases, and testing gene therapies. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Research Fellow -> Senior Scientist at CCMB / Pharma MNC -> Principal Investigator -> Director of Genomics Research Institute"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Research Fellow -> Senior Scientist at CCMB / Pharma MNC -> Principal Investigator -> Director of Genomics Research Institute. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI algorithms fold proteins and predict genetic disease risks from whole-genome scans, while geneticists pioneer cures using CRISPR gene editing"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI algorithms fold proteins and predict genetic disease risks from whole-genome scans, while geneticists pioneer cures using CRISPR gene editing. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "income-tax-officer": {
+  "id": "income-tax-officer",
+  "title": "Income Tax Officer (SSC CGL) Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: SSC CGL exam, CBDT direct taxes, financial investigation & central civil service power!",
+  "icon": "💼",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-blue-800 via-slate-800 to-stone-900",
+  "accentColor": "#1E3A8A",
+  "description": "Want to become a Income Tax Officer (SSC CGL)? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=income-tax-officer",
+  "cheatSheet": [
+    "Class 8-10: Focus on Mathematics (Commercial Arithmetic, Percentages, Ratios), English comprehension, and General Knowledge and build Solving quick mental math equations.",
+    "After 10th: Choose Any Intermediate stream (Commerce CEC/MEC, Science MPC, or Arts HEC) + Any recognized Bachelor's Degree.",
+    "Key Gateways: Prepare for Staff Selection Commission Combined Graduate Level (SSC CGL) Examination.",
+    "Degree & Duration: 3–4 Year Bachelor Degree + 1 Year dedicated SSC CGL preparation + 6 Months Direct Tax Training at DTRTI.",
+    "Future with AI: AI tax algorithms detect fraudulent banking transactions and shell company networks automatically, while officers lead field investigations."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Income Tax Officer (SSC CGL)?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Any Intermediate stream (Commerce CEC/MEC, Science MPC, or Arts HEC) + Any recognized Bachelor's Degree"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Any Intermediate stream (Commerce CEC/MEC, Science MPC, or Arts HEC) + Any recognized Bachelor's Degree. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "3–4 Year Bachelor Degree + 1 Year dedicated SSC CGL preparation + 6 Months Direct Tax Training at DTRTI"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 3–4 Year Bachelor Degree + 1 Year dedicated SSC CGL preparation + 6 Months Direct Tax Training at DTRTI. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "Staff Selection Commission Combined Graduate Level (SSC CGL) Examination — Tier 1 & Tier 2"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Staff Selection Commission Combined Graduate Level (SSC CGL) Examination — Tier 1 & Tier 2. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Mathematics (Commercial Arithmetic, Percentages, Ratios), English comprehension, and General Knowledge"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Mathematics (Commercial Arithmetic, Percentages, Ratios), English comprehension, and General Knowledge. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Solving quick mental math equations, following national budget news, and strong moral honesty"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Solving quick mental math equations, following national budget news, and strong moral honesty. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Direct Taxes Regional Training Institute (DTRTI) and Central Board of Direct Taxes (CBDT)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Direct Taxes Regional Training Institute (DTRTI) and Central Board of Direct Taxes (CBDT). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Auditing corporate financial tax returns, detecting black money and financial evasion, conducting search & seizure raids, and securing public revenue"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Auditing corporate financial tax returns, detecting black money and financial evasion, conducting search & seizure raids, and securing public revenue. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Income Tax Inspector (ITI) -> Income Tax Officer (ITO - Gazetted) -> Assistant Commissioner of Income Tax (IRS cadre)"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Income Tax Inspector (ITI) -> Income Tax Officer (ITO - Gazetted) -> Assistant Commissioner of Income Tax (IRS cadre). With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI tax algorithms detect fraudulent banking transactions and shell company networks automatically, while officers lead field investigations"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI tax algorithms detect fraudulent banking transactions and shell company networks automatically, while officers lead field investigations. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "railway-jobs": {
+  "id": "railway-jobs",
+  "title": "Indian Railways Officer & Engineer Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: RRB NTPC & ALP, high-speed Vande Bharat trains, track engineering & railway administration!",
+  "icon": "🚆",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-red-700 via-amber-800 to-stone-900",
+  "accentColor": "#B91C1C",
+  "description": "Want to become a Indian Railways Officer & Engineer? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=railway-jobs",
+  "cheatSheet": [
+    "Class 8-10: Focus on General Science (Physics mechanics, electricity), Mathematics (Speed, Time and build Solving time-and-distance train arithmetic problems.",
+    "After 10th: Choose 10th + ITI (for Assistant Loco Pilot / Technician) OR Intermediate MPC / Polytechnic Diploma / Any Bachelor's Degree.",
+    "Key Gateways: Prepare for Railway Recruitment Board (RRB) Exams.",
+    "Degree & Duration: Degree or Diploma + RRB CBT-1 & CBT-2 + Strict Medical Test + 6–12 Months Training at Zonal Railway Training Institute (ZRTI).",
+    "Future with AI: KAVACH automatic train protection and AI track monitoring prevent collisions, while railway professionals manage millions of passenger journeys daily."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Indian Railways Officer & Engineer?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "10th + ITI (for Assistant Loco Pilot / Technician) OR Intermediate MPC / Polytechnic Diploma / Any Bachelor's Degree"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "10th + ITI (for Assistant Loco Pilot / Technician) OR Intermediate MPC / Polytechnic Diploma / Any Bachelor's Degree. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "Degree or Diploma + RRB CBT-1 & CBT-2 + Strict Medical Test + 6–12 Months Training at Zonal Railway Training Institute (ZRTI)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes Degree or Diploma + RRB CBT-1 & CBT-2 + Strict Medical Test + 6–12 Months Training at Zonal Railway Training Institute (ZRTI). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "Railway Recruitment Board (RRB) Exams — RRB NTPC (Non-Technical), RRB ALP (Loco Pilot), or RRB JE (Junior Engineer)"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Railway Recruitment Board (RRB) Exams — RRB NTPC (Non-Technical), RRB ALP (Loco Pilot), or RRB JE (Junior Engineer). Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "General Science (Physics mechanics, electricity), Mathematics (Speed, Time & Distance), and General Awareness"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "General Science (Physics mechanics, electricity), Mathematics (Speed, Time & Distance), and General Awareness. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Solving time-and-distance train arithmetic problems, understanding railway network maps, and strict punctuality habits"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Solving time-and-distance train arithmetic problems, understanding railway network maps, and strict punctuality habits. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Railway Recruitment Boards (RRB) across all Indian Railway zones and Indian Railway Institute of Mechanical & Electrical Engineering (IRIMEE)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Railway Recruitment Boards (RRB) across all Indian Railway zones and Indian Railway Institute of Mechanical & Electrical Engineering (IRIMEE). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Operating high-speed locomotives (Vande Bharat), managing station traffic signals, maintaining railway electric tracks, and passenger safety"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Operating high-speed locomotives (Vande Bharat), managing station traffic signals, maintaining railway electric tracks, and passenger safety. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Station Master / Assistant Loco Pilot -> Chief Controller / Loco Pilot Mail -> Divisional Operations Manager (DOM) -> Divisional Railway Manager (DRM)"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Station Master / Assistant Loco Pilot -> Chief Controller / Loco Pilot Mail -> Divisional Operations Manager (DOM) -> Divisional Railway Manager (DRM). With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "KAVACH automatic train protection and AI track monitoring prevent collisions, while railway professionals manage millions of passenger journeys daily"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "KAVACH automatic train protection and AI track monitoring prevent collisions, while railway professionals manage millions of passenger journeys daily. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "speech-pathologist": {
+  "id": "speech-pathologist",
+  "title": "Speech-Language Pathologist & Audiologist Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: BASLP degree, stuttering therapy, cochlear hearing implants & helping children speak!",
+  "icon": "🗣️",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-teal-600 via-cyan-700 to-blue-900",
+  "accentColor": "#0D9488",
+  "description": "Want to become a Speech-Language Pathologist & Audiologist? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=speech-pathologist",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (human ear anatomy, vocal cords, brain speech centers), Physics (sound acoustics, frequencies), and English and build High patience.",
+    "After 10th: Choose Compulsory BiPC (Biology) or MPC (with Physics & Chemistry) in Class 11-12 Intermediate.",
+    "Key Gateways: Prepare for AIISH All India Entrance Examination, NEET, or State Paramedical CET.",
+    "Degree & Duration: 4-Year Bachelor of Audiology & Speech-Language Pathology (BASLP) including 1-year clinical hospital internship.",
+    "Future with AI: AI speech recognition apps assist daily home vocal therapy exercises, while certified speech pathologists provide compassionate human vocal therapy."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Speech-Language Pathologist & Audiologist?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory BiPC (Biology) or MPC (with Physics & Chemistry) in Class 11-12 Intermediate"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory BiPC (Biology) or MPC (with Physics & Chemistry) in Class 11-12 Intermediate. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "4-Year Bachelor of Audiology & Speech-Language Pathology (BASLP) including 1-year clinical hospital internship"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 4-Year Bachelor of Audiology & Speech-Language Pathology (BASLP) including 1-year clinical hospital internship. True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "AIISH All India Entrance Examination, NEET, or State Paramedical CET"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "AIISH All India Entrance Examination, NEET, or State Paramedical CET. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (human ear anatomy, vocal cords, brain speech centers), Physics (sound acoustics, frequencies), and English"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (human ear anatomy, vocal cords, brain speech centers), Physics (sound acoustics, frequencies), and English. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "High patience, gentle listening, clear pronunciation, and compassion for children or elderly facing communication difficulties"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "High patience, gentle listening, clear pronunciation, and compassion for children or elderly facing communication difficulties. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "All India Institute of Speech and Hearing (AIISH Mysore), Ali Yavar Jung National Institute (AYJNISHD Mumbai)"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "All India Institute of Speech and Hearing (AIISH Mysore), Ali Yavar Jung National Institute (AYJNISHD Mumbai). Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Helping young children overcome stammering and speech delays, fitting advanced digital hearing aids, and rehabilitating stroke patients"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Helping young children overcome stammering and speech delays, fitting advanced digital hearing aids, and rehabilitating stroke patients. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Clinical Speech Therapist -> Senior Audiology Specialist in Super-Specialty Hospitals -> Private Speech & Hearing Clinic Director"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Clinical Speech Therapist -> Senior Audiology Specialist in Super-Specialty Hospitals -> Private Speech & Hearing Clinic Director. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "AI speech recognition apps assist daily home vocal therapy exercises, while certified speech pathologists provide compassionate human vocal therapy"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "AI speech recognition apps assist daily home vocal therapy exercises, while certified speech pathologists provide compassionate human vocal therapy. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+
+  "yoga-doctor": {
+  "id": "yoga-doctor",
+  "title": "Yoga & Naturopathy Doctor (BNYS) Roadmap Quiz",
+  "subtitle": "A student-friendly quiz for 8th, 9th & 10th classes: 5.5-year BNYS medical degree, natural disease reversal, acupuncture & AYUSH wellness!",
+  "icon": "🧘",
+  "badge": "For Classes 8th – 10th",
+  "gradient": "from-emerald-600 via-teal-700 to-amber-900",
+  "accentColor": "#059669",
+  "description": "Want to become a Yoga & Naturopathy Doctor (BNYS)? Test if you know the exact roadmap: stream choices after 10th, required degrees, key entrance exams, and skills needed to excel!",
+  "totalQuestions": 10,
+  "blueprintUrl": "/career-reports?career=yoga-doctor",
+  "cheatSheet": [
+    "Class 8-10: Focus on Biology (human anatomy, physiology, preventive health, metabolism), Chemistry, and Physical Education and build Practicing morning yoga asanas and pranayama.",
+    "After 10th: Choose Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate with minimum 50% marks.",
+    "Key Gateways: Prepare for NEET-UG (AYUSH Quota) or State AYUSH Medical Counseling.",
+    "Degree & Duration: 5.5 Years BNYS (Bachelor of Naturopathy & Yogic Sciences including 1 full year of compulsory rotatory medical internship).",
+    "Future with AI: Smart health trackers monitor patient vital biometrics, while BNYS doctors guide holistic natural disease reversal without toxic side effects."
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "roadmapStage": "Stage 1: After 10th Class",
+      "category": "Choosing Branch / Stream",
+      "categoryColor": "bg-blue-100 text-blue-900 border-blue-300",
+      "question": "When you pass Class 10, which Intermediate (10+2) stream should you choose to become a Yoga & Naturopathy Doctor (BNYS)?",
+      "options": [
+        {
+          "text": "Any irrelevant vocational stream without checking eligibility"
+        },
+        {
+          "text": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate with minimum 50% marks"
+        },
+        {
+          "text": "Drop out of school after Class 10"
+        },
+        {
+          "text": "Only study arts without required core subjects"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Compulsory BiPC (Biology, Physics, Chemistry) in Class 11-12 Intermediate with minimum 50% marks. Meeting the right stream criteria in 11th and 12th is the vital first step on this roadmap!",
+      "proTip": "Check the exact entrance eligibility early in 10th class so you pick your Intermediate stream with 100% confidence!"
+    },
+    {
+      "id": 2,
+      "roadmapStage": "Stage 2: Training & Degree Duration",
+      "category": "Course Duration",
+      "categoryColor": "bg-emerald-100 text-emerald-900 border-emerald-300",
+      "question": "How much time does it take to complete the foundational qualification and training for this career pathway?",
+      "options": [
+        {
+          "text": "Just a 1-day certificate course"
+        },
+        {
+          "text": "15 years of only theoretical reading"
+        },
+        {
+          "text": "5.5 Years BNYS (Bachelor of Naturopathy & Yogic Sciences including 1 full year of compulsory rotatory medical internship)"
+        },
+        {
+          "text": "6 weeks of online videos"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "This professional pathway takes 5.5 Years BNYS (Bachelor of Naturopathy & Yogic Sciences including 1 full year of compulsory rotatory medical internship). True professional expertise requires structured degrees, lab experiments, and hands-on practical postings.",
+      "proTip": "Focus on mastering concepts every single year rather than rushing through degrees!"
+    },
+    {
+      "id": 3,
+      "roadmapStage": "Stage 3: Gateway Degree & Entrance Exam",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "Which key examination or degree gateway is central to entering this professional career in India?",
+      "options": [
+        {
+          "text": "NEET-UG (AYUSH Quota) or State AYUSH Medical Counseling"
+        },
+        {
+          "text": "A random lucky lottery draw"
+        },
+        {
+          "text": "Paying an unauthorized private middleman"
+        },
+        {
+          "text": "Only writing a high school spelling test"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "NEET-UG (AYUSH Quota) or State AYUSH Medical Counseling. Clearing standard national or state entrances guarantees transparent admission into top accredited colleges and government commissions.",
+      "proTip": "Previous years' question papers and conceptual NCERT mastery are your best friends when preparing for this gateway!"
+    },
+    {
+      "id": 4,
+      "roadmapStage": "Stage 4: School Foundations",
+      "category": "School Subjects",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "Which subject that you study right now in 8th, 9th, or 10th class builds the deepest foundation for this career?",
+      "options": [
+        {
+          "text": "Memorizing movie trivia"
+        },
+        {
+          "text": "Playing mobile games during study hours"
+        },
+        {
+          "text": "Biology (human anatomy, physiology, preventive health, metabolism), Chemistry, and Physical Education"
+        },
+        {
+          "text": "Sleeping in the classroom"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Biology (human anatomy, physiology, preventive health, metabolism), Chemistry, and Physical Education. What you are learning in school right now directly connects to this field!",
+      "proTip": "Pay extra attention when your teacher covers these topics in class — you are building the foundation of your future profession!"
+    },
+    {
+      "id": 5,
+      "roadmapStage": "Stage 5: High School Habits to Build",
+      "category": "Skills to Build",
+      "categoryColor": "bg-rose-100 text-rose-900 border-rose-300",
+      "question": "As an 8th, 9th, or 10th student, what real habit should you start cultivating to prepare for this profession?",
+      "options": [
+        {
+          "text": "Practicing morning yoga asanas and pranayama, eating natural unprocessed foods, and cultivating mental peace and discipline"
+        },
+        {
+          "text": "Refusing to do school assignments on time"
+        },
+        {
+          "text": "Spending 6 hours a day arguing on social media"
+        },
+        {
+          "text": "Giving up whenever a lesson feels slightly challenging"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Practicing morning yoga asanas and pranayama, eating natural unprocessed foods, and cultivating mental peace and discipline. Great professionals develop their discipline, focus, and core habits long before they enter college.",
+      "proTip": "Start with just 20 minutes a day practicing this habit — consistency over weeks and months creates champions!"
+    },
+    {
+      "id": 6,
+      "roadmapStage": "Stage 6: Premier Institutions & Regulators",
+      "category": "College Degree & Exams",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "Which premier institutions or statutory bodies are recognized across India for this professional discipline?",
+      "options": [
+        {
+          "text": "Unrecognized fake coaching websites with no campus"
+        },
+        {
+          "text": "Government Naturopathy Medical Colleges (Hyderabad, Chennai) and AYUSH recognized universities"
+        },
+        {
+          "text": "Local amusement parks"
+        },
+        {
+          "text": "Private bus booking counters"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Government Naturopathy Medical Colleges (Hyderabad, Chennai) and AYUSH recognized universities. Studying in premier recognized institutions gives you top laboratory facilities, experienced mentors, and world-class campus recruitment.",
+      "proTip": "Visit the official websites of these premier institutes online — seeing campus photos and student projects will inspire you!"
+    },
+    {
+      "id": 7,
+      "roadmapStage": "Stage 7: Everyday Role & Purpose",
+      "category": "Skills to Build",
+      "categoryColor": "bg-teal-100 text-teal-900 border-teal-300",
+      "question": "What is the real day-to-day mission and responsibility of professionals working in this field?",
+      "options": [
+        {
+          "text": "Sitting idle in an empty room with zero responsibilities"
+        },
+        {
+          "text": "Taking shortcuts and breaking ethics"
+        },
+        {
+          "text": "Treating lifestyle diseases (diabetes, blood pressure, obesity) using medical yoga therapy, clinical fasting, hydrotherapy, and acupuncture"
+        },
+        {
+          "text": "Only showing up once a year"
+        }
+      ],
+      "correctIndex": 2,
+      "explanation": "Treating lifestyle diseases (diabetes, blood pressure, obesity) using medical yoga therapy, clinical fasting, hydrotherapy, and acupuncture. Professionals in this field play a critical role in strengthening society, public welfare, and national progress.",
+      "proTip": "A career is not just a monthly paycheck — it is your daily opportunity to solve meaningful problems and make people's lives better!"
+    },
+    {
+      "id": 8,
+      "roadmapStage": "Stage 8: Career Ladder & Promotion",
+      "category": "Course Duration",
+      "categoryColor": "bg-indigo-100 text-indigo-900 border-indigo-300",
+      "question": "As you gain experience and demonstrate exceptional leadership, what does your long-term career growth path look like?",
+      "options": [
+        {
+          "text": "Registered Naturopathy Doctor (Dr.) -> Medical Officer in Government AYUSH Hospitals -> Chief Naturopathic Physician in Luxury Wellness Sanatoriums"
+        },
+        {
+          "text": "Staying in an entry-level trainee role forever with no advancement"
+        },
+        {
+          "text": "Demotions every year"
+        },
+        {
+          "text": "Being fired immediately without reason"
+        }
+      ],
+      "correctIndex": 0,
+      "explanation": "Registered Naturopathy Doctor (Dr.) -> Medical Officer in Government AYUSH Hospitals -> Chief Naturopathic Physician in Luxury Wellness Sanatoriums. With consistent hard work, continuous learning, and integrity, you can rise to senior national leadership positions!",
+      "proTip": "Never stop learning new skills — the best leaders in this field keep updating their knowledge throughout their lives!"
+    },
+    {
+      "id": 9,
+      "roadmapStage": "Stage 9: Mindset & Professional Ethics",
+      "category": "Skills to Build",
+      "categoryColor": "bg-amber-100 text-amber-900 border-amber-300",
+      "question": "What is the single most vital quality that earns deep respect and enduring trust in this profession?",
+      "options": [
+        {
+          "text": "Showing off with arrogance"
+        },
+        {
+          "text": "High personal integrity, empathy for citizens, and relentless dedication to quality"
+        },
+        {
+          "text": "Blaming others for your own mistakes"
+        },
+        {
+          "text": "Accepting bribes and cutting safety corners"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Integrity and genuine dedication to quality are irreplaceable! In every high-impact career, your reputation and honest character are your greatest assets.",
+      "proTip": "Always be honest in your school tests and assignments — true character is built through small choices made every day."
+    },
+    {
+      "id": 10,
+      "roadmapStage": "Stage 10: Future World & AI Collaboration",
+      "category": "AI & Future World",
+      "categoryColor": "bg-purple-100 text-purple-900 border-purple-300",
+      "question": "How will modern Artificial Intelligence (AI) and technology assist human professionals in this career over the next decade?",
+      "options": [
+        {
+          "text": "AI will eliminate the entire profession and humans will have no jobs"
+        },
+        {
+          "text": "Smart health trackers monitor patient vital biometrics, while BNYS doctors guide holistic natural disease reversal without toxic side effects"
+        },
+        {
+          "text": "Computers will be outlawed in this profession"
+        },
+        {
+          "text": "Nothing will change from 200 years ago"
+        }
+      ],
+      "correctIndex": 1,
+      "explanation": "Smart health trackers monitor patient vital biometrics, while BNYS doctors guide holistic natural disease reversal without toxic side effects. AI is a powerful assistant, but human empathy, critical judgment, moral courage, and physical action will always lead the future!",
+      "proTip": "Embrace modern technology as a co-pilot, while building your unique human strengths of empathy, creativity, and leadership!"
+    }
+  ]
+},
+"business-analyst": {
+  id: "business-analyst",
+  title: "Business Analyst",
+  subtitle: "Master of Data-Driven Decisions",
+  icon: "📊",
+  badge: "Strategy Pro",
+  gradient: "from-blue-600 to-cyan-500",
+  accentColor: "blue",
+  description: "Test your knowledge about becoming a Business Analyst — the bridge between business needs and technology solutions!",
+  totalQuestions: 10,
+  blueprintUrl: "/career-format/four-circles-business-analyst.html",
+  cheatSheet: [
+    "Business Analysts identify business problems and propose data-driven solutions",
+    "Key skills: data analysis, SQL, Excel, communication, requirements gathering",
+    "Common certifications: CBAP, PMI-PBA, IIBA ECBA",
+    "BA roles exist in IT, banking, consulting, healthcare, and e-commerce",
+    "Average starting salary in India: ₹5-8 LPA"
+  ],
+  questions: [
+    {
+      id: 1,
+      roadmapStage: "Stage 1: Choosing the Right Stream",
+      category: "Choosing Branch / Stream",
+      categoryColor: "bg-blue-100 text-blue-900 border-blue-300",
+      question: "Which academic stream in 11th-12th is most commonly recommended for students aspiring to become a Business Analyst?",
+      options: [
+        { text: "Commerce or Science with Mathematics — strong analytical and quantitative foundation" },
+        { text: "Arts with Music — creativity is the only requirement" },
+        { text: "Physical Education stream — fitness matters most in business" },
+        { text: "No education needed — just start working immediately after 10th" }
+      ],
+      correctIndex: 0,
+      explanation: "Commerce or Science with Mathematics provides the quantitative and analytical foundation essential for business analysis. Subjects like Statistics, Economics, and Mathematics build the problem-solving mindset needed.",
+      proTip: "Start learning basic Excel and data interpretation even while in school — it gives you a huge head start!"
+    },
+    {
+      id: 2,
+      roadmapStage: "Stage 2: Course Duration & Pathway",
+      category: "Course Duration",
+      categoryColor: "bg-green-100 text-green-900 border-green-300",
+      question: "What is the typical educational pathway to become a Business Analyst in India?",
+      options: [
+        { text: "Just a 2-week online course is enough" },
+        { text: "B.Com / BBA / B.Tech (3-4 years) → MBA or PG Diploma in Business Analytics (2 years) → Entry-level BA role" },
+        { text: "PhD mandatory before any BA job" },
+        { text: "No degree needed — only certifications matter" }
+      ],
+      correctIndex: 1,
+      explanation: "Most Business Analysts hold a bachelor's degree (B.Com, BBA, B.Tech, or B.Sc) followed by an MBA or PG Diploma in Business Analytics. The total journey is typically 5-6 years of education before landing an entry-level role.",
+      proTip: "Many top colleges like IIMs, ISB, and Great Lakes offer specialized Business Analytics programs — research them early!"
+    },
+    {
+      id: 3,
+      roadmapStage: "Stage 3: Essential School Subjects",
+      category: "School Subjects",
+      categoryColor: "bg-yellow-100 text-yellow-900 border-yellow-300",
+      question: "Which school subjects are most important for a future Business Analyst?",
+      options: [
+        { text: "Only Sanskrit and Hindi literature" },
+        { text: "Mathematics, Statistics, Economics, English, and Computer Science" },
+        { text: "Only Physical Education and Art" },
+        { text: "Geography is the only subject that matters" }
+      ],
+      correctIndex: 1,
+      explanation: "Mathematics builds analytical thinking, Statistics helps with data interpretation, Economics teaches market dynamics, English enables clear communication, and Computer Science introduces data handling — all critical for a BA career.",
+      proTip: "Practice word problems in Math — they train you to translate real-world scenarios into analytical frameworks, exactly what BAs do!"
+    },
+    {
+      id: 4,
+      roadmapStage: "Stage 4: Key Skills to Develop",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What are the most important technical skills a Business Analyst must master?",
+      options: [
+        { text: "Only typing speed — the faster you type, the better BA you are" },
+        { text: "SQL for database queries, Excel/Power BI for data visualization, and requirements documentation (BRD/FRD)" },
+        { text: "Only cooking and gardening" },
+        { text: "Memorizing the entire dictionary" }
+      ],
+      correctIndex: 1,
+      explanation: "SQL lets you extract data from databases, Excel and Power BI help create insightful dashboards, and BRD/FRD writing ensures clear communication of business requirements to development teams.",
+      proTip: "Learn SQL basics on free platforms like SQLZoo or HackerRank — even 30 minutes daily practice makes you proficient in 2-3 months!"
+    },
+    {
+      id: 5,
+      roadmapStage: "Stage 5: College Degree & Entrance Exams",
+      category: "College Degree & Exams",
+      categoryColor: "bg-indigo-100 text-indigo-900 border-indigo-300",
+      question: "Which entrance exams and certifications are relevant for aspiring Business Analysts?",
+      options: [
+        { text: "CAT / XAT / GMAT for MBA admissions, plus IIBA ECBA / CBAP certifications for BA specialization" },
+        { text: "Only NEET — same exam for all careers" },
+        { text: "No exams exist for this career" },
+        { text: "Only sports trials" }
+      ],
+      correctIndex: 0,
+      explanation: "CAT, XAT, and GMAT open doors to top MBA programs. IIBA's ECBA (Entry Certificate in Business Analysis) and CBAP (Certified Business Analysis Professional) are globally recognized BA certifications that boost your career.",
+      proTip: "Start CAT preparation in your final year of graduation — many IIM alumni work as senior Business Analysts and Product Managers!"
+    },
+    {
+      id: 6,
+      roadmapStage: "Stage 6: Daily Work Life",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What does a typical day look like for a Business Analyst?",
+      options: [
+        { text: "Just sitting idle and waiting for instructions" },
+        { text: "Gathering requirements from stakeholders, analyzing data, creating reports and dashboards, and facilitating meetings between business and tech teams" },
+        { text: "Only writing code all day like a programmer" },
+        { text: "Selling products door-to-door" }
+      ],
+      correctIndex: 1,
+      explanation: "BAs are the bridge between business teams and technology teams. They conduct stakeholder interviews, analyze processes, create data visualizations, write requirement documents, and ensure solutions meet business needs.",
+      proTip: "Practice presenting data insights to your family or friends — communication skills are just as important as technical skills for a BA!"
+    },
+    {
+      id: 7,
+      roadmapStage: "Stage 7: Industry Sectors",
+      category: "Choosing Branch / Stream",
+      categoryColor: "bg-blue-100 text-blue-900 border-blue-300",
+      question: "In which industries do Business Analysts find the most opportunities?",
+      options: [
+        { text: "Only in agriculture — no other industry needs BAs" },
+        { text: "IT/Software, Banking & Finance, E-commerce, Healthcare, Consulting firms like Deloitte, Accenture, and TCS" },
+        { text: "Only in government offices" },
+        { text: "Only in the movie industry" }
+      ],
+      correctIndex: 1,
+      explanation: "Business Analysts are needed across virtually every industry. IT companies, banks, consulting firms, healthcare organizations, and e-commerce giants all hire BAs to optimize their processes and drive data-informed decisions.",
+      proTip: "Internships during college in any of these sectors give you real-world BA experience — apply early, even for unpaid ones!"
+    },
+    {
+      id: 8,
+      roadmapStage: "Stage 8: Career Growth Path",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What is a realistic career growth path for a Business Analyst?",
+      options: [
+        { text: "Junior BA → Senior BA → Lead BA → Business Consulting Manager → Director of Analytics / Chief Strategy Officer" },
+        { text: "No growth possible — you stay in the same role forever" },
+        { text: "Demotion every year is normal" },
+        { text: "You must switch careers after 2 years" }
+      ],
+      correctIndex: 0,
+      explanation: "The BA career path offers excellent growth: from Junior BA to Senior BA, then Lead or Principal BA, moving into management as a Consulting Manager or Director, and potentially reaching C-suite roles like Chief Strategy Officer.",
+      proTip: "Building domain expertise in one industry (like fintech or healthcare) accelerates your growth much faster than being a generalist!"
+    },
+    {
+      id: 9,
+      roadmapStage: "Stage 9: Mindset & Professional Ethics",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What mindset quality is most critical for success as a Business Analyst?",
+      options: [
+        { text: "Being arrogant and dismissing others' ideas" },
+        { text: "Curiosity to ask 'why', empathy to understand stakeholder pain points, and integrity in presenting data honestly" },
+        { text: "Avoiding all teamwork and working in isolation" },
+        { text: "Never questioning anything — just follow orders blindly" }
+      ],
+      correctIndex: 1,
+      explanation: "The best BAs are curious (they dig deep into problems), empathetic (they truly understand user needs), and honest (they present data truthfully even when findings are uncomfortable). These soft skills differentiate good BAs from great ones.",
+      proTip: "In school projects, practice asking 'why does this problem exist?' at least 5 times — this '5 Whys' technique is used by real Business Analysts!"
+    },
+    {
+      id: 10,
+      roadmapStage: "Stage 10: Future World & AI Collaboration",
+      category: "AI & Future World",
+      categoryColor: "bg-purple-100 text-purple-900 border-purple-300",
+      question: "How will AI transform the Business Analyst role in the next decade?",
+      options: [
+        { text: "AI will completely replace all Business Analysts" },
+        { text: "AI tools will automate data collection and reporting, while BAs focus on strategic thinking, stakeholder management, and translating AI insights into business actions" },
+        { text: "AI has nothing to do with business analysis" },
+        { text: "Technology will go backwards and BAs will use only paper" }
+      ],
+      correctIndex: 1,
+      explanation: "AI will handle repetitive tasks like data cleaning, report generation, and pattern detection. BAs will evolve to focus on strategic interpretation, complex stakeholder negotiations, and ensuring AI solutions align with business goals.",
+      proTip: "Start learning basics of AI/ML concepts and tools like ChatGPT, Tableau AI — BAs who understand AI will be the most valuable professionals!"
+    }
+  ]
+},
+"financial-analyst": {
+  id: "financial-analyst",
+  title: "Financial Analyst",
+  subtitle: "Master of Markets & Money",
+  icon: "📈",
+  badge: "Finance Guru",
+  gradient: "from-emerald-600 to-teal-500",
+  accentColor: "emerald",
+  description: "Test your knowledge about becoming a Financial Analyst — the expert who turns numbers into strategic investment decisions!",
+  totalQuestions: 10,
+  blueprintUrl: "/career-format/four-circles-financial-analyst.html",
+  cheatSheet: [
+    "Financial Analysts evaluate investments, analyze company performance, and guide financial decisions",
+    "Key certifications: CFA (Chartered Financial Analyst), FRM, CA, CMA",
+    "Core skills: Financial modeling, Excel, valuation, accounting, statistics",
+    "Work in investment banks, asset management, corporate finance, and consulting",
+    "Average starting salary in India: ₹6-10 LPA"
+  ],
+  questions: [
+    {
+      id: 1,
+      roadmapStage: "Stage 1: Choosing the Right Stream",
+      category: "Choosing Branch / Stream",
+      categoryColor: "bg-blue-100 text-blue-900 border-blue-300",
+      question: "Which academic stream in 11th-12th best prepares you for a career as a Financial Analyst?",
+      options: [
+        { text: "Commerce with Mathematics — builds strong foundation in accounting, economics, and quantitative analysis" },
+        { text: "Arts with Dance — creativity is the only requirement for finance" },
+        { text: "Physical Education — fitness is the key to financial success" },
+        { text: "No stream matters — anyone can become a Financial Analyst without any education" }
+      ],
+      correctIndex: 0,
+      explanation: "Commerce with Mathematics is the ideal stream. Subjects like Accountancy, Business Studies, Economics, and Mathematics directly build the analytical and numerical skills needed for financial analysis.",
+      proTip: "Pay extra attention to Accountancy and Economics in 11th-12th — these subjects form the backbone of financial analysis!"
+    },
+    {
+      id: 2,
+      roadmapStage: "Stage 2: Course Duration & Pathway",
+      category: "Course Duration",
+      categoryColor: "bg-green-100 text-green-900 border-green-300",
+      question: "What is the typical educational pathway to become a Financial Analyst?",
+      options: [
+        { text: "A weekend workshop is sufficient" },
+        { text: "B.Com / BBA / B.Sc (3 years) → MBA Finance or CFA Program (2-3 years) → Entry-level Financial Analyst role" },
+        { text: "Only MBBS degree leads to finance careers" },
+        { text: "Finish 10th and directly join a bank" }
+      ],
+      correctIndex: 1,
+      explanation: "The standard path involves a bachelor's degree in Commerce, Business, or a quantitative field, followed by an MBA in Finance or the CFA (Chartered Financial Analyst) program. The total journey takes about 5-6 years before your first role.",
+      proTip: "The CFA program has 3 levels and can be started during graduation — it's the gold standard certification for Financial Analysts worldwide!"
+    },
+    {
+      id: 3,
+      roadmapStage: "Stage 3: Essential School Subjects",
+      category: "School Subjects",
+      categoryColor: "bg-yellow-100 text-yellow-900 border-yellow-300",
+      question: "Which school subjects are most crucial for aspiring Financial Analysts?",
+      options: [
+        { text: "Only Art and Craft" },
+        { text: "Mathematics, Accountancy, Economics, Statistics, and English" },
+        { text: "Only Physical Education" },
+        { text: "Only History and Geography" }
+      ],
+      correctIndex: 1,
+      explanation: "Mathematics develops quantitative reasoning, Accountancy teaches financial statement analysis, Economics explains market forces, Statistics enables data interpretation, and English ensures clear financial reporting and communication.",
+      proTip: "Start reading the business section of newspapers like Economic Times or Mint — it builds financial vocabulary naturally!"
+    },
+    {
+      id: 4,
+      roadmapStage: "Stage 4: Key Skills to Develop",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What are the most critical technical skills a Financial Analyst must possess?",
+      options: [
+        { text: "Only handwriting skills" },
+        { text: "Financial modeling in Excel, company valuation (DCF, comparables), reading financial statements (Balance Sheet, P&L, Cash Flow)" },
+        { text: "Only social media marketing" },
+        { text: "Video editing and photography" }
+      ],
+      correctIndex: 1,
+      explanation: "Financial modeling (building spreadsheet models to forecast company performance), valuation techniques (DCF analysis, comparable company analysis), and the ability to read and interpret Balance Sheets, Profit & Loss statements, and Cash Flow statements are the core technical skills.",
+      proTip: "Download annual reports of companies like Infosys or TCS from their websites — try reading the financial statements. Practice makes perfect!"
+    },
+    {
+      id: 5,
+      roadmapStage: "Stage 5: College Degree & Entrance Exams",
+      category: "College Degree & Exams",
+      categoryColor: "bg-indigo-100 text-indigo-900 border-indigo-300",
+      question: "Which exams and certifications are most important for Financial Analysts?",
+      options: [
+        { text: "CFA (Chartered Financial Analyst), CA (Chartered Accountant), and MBA entrance exams like CAT/GMAT" },
+        { text: "Only NEET — it covers all career exams" },
+        { text: "No exams are needed for this career" },
+        { text: "Only driving license test" }
+      ],
+      correctIndex: 0,
+      explanation: "The CFA charter is the most prestigious credential for Financial Analysts globally. CA gives deep accounting expertise. MBA from top institutions (via CAT/GMAT) opens doors to corporate finance and investment banking roles.",
+      proTip: "CFA Level 1 can be attempted while still in college — start preparing early to get a head start over your peers!"
+    },
+    {
+      id: 6,
+      roadmapStage: "Stage 6: Daily Work Life",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What does a typical workday look like for a Financial Analyst?",
+      options: [
+        { text: "Just counting cash notes all day" },
+        { text: "Analyzing company financial data, building valuation models, preparing investment reports, attending client meetings, and monitoring market trends" },
+        { text: "Only filing paper documents in cabinets" },
+        { text: "Playing stock market games on a phone all day" }
+      ],
+      correctIndex: 1,
+      explanation: "Financial Analysts spend their days analyzing financial data, building complex Excel models to value companies, preparing detailed investment reports and presentations, meeting clients/management, and staying updated on market news and economic indicators.",
+      proTip: "Create a mock investment portfolio on apps like Moneycontrol or Groww — tracking real stocks teaches you market dynamics better than any textbook!"
+    },
+    {
+      id: 7,
+      roadmapStage: "Stage 7: Types of Financial Analysts",
+      category: "Choosing Branch / Stream",
+      categoryColor: "bg-blue-100 text-blue-900 border-blue-300",
+      question: "What are the different specializations available for Financial Analysts?",
+      options: [
+        { text: "Only one type exists — all Financial Analysts do the same thing" },
+        { text: "Equity Research Analyst, Investment Banking Analyst, Credit Analyst, Risk Analyst, and Corporate Finance Analyst" },
+        { text: "Only accountants and cashiers" },
+        { text: "Only stock brokers" }
+      ],
+      correctIndex: 1,
+      explanation: "Financial Analysis has multiple specializations: Equity Research (analyzing stocks), Investment Banking (M&A deals, IPOs), Credit Analysis (loan risk assessment), Risk Management (portfolio risk), and Corporate Finance (company budgeting and capital allocation).",
+      proTip: "During college, try internships in different specializations — you'll discover which area of finance excites you the most!"
+    },
+    {
+      id: 8,
+      roadmapStage: "Stage 8: Career Growth Path",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What does the career growth trajectory look like for a Financial Analyst?",
+      options: [
+        { text: "Analyst → Senior Analyst → Associate VP → Vice President → Director → Managing Director / Chief Financial Officer" },
+        { text: "No growth possible — same position for entire career" },
+        { text: "Salary decreases every year" },
+        { text: "Must quit after 5 years — there's an age limit" }
+      ],
+      correctIndex: 0,
+      explanation: "Financial Analysts have one of the most structured career ladders: starting as an Analyst, progressing to Senior Analyst, then Associate VP, VP, Director, and ultimately Managing Director or CFO. Top performers in investment banking can earn ₹1-5 Crore+ annually.",
+      proTip: "Networking at finance events and building a strong LinkedIn profile can accelerate your promotions — relationships matter as much as skills in finance!"
+    },
+    {
+      id: 9,
+      roadmapStage: "Stage 9: Mindset & Professional Ethics",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What ethical principle is most important for Financial Analysts?",
+      options: [
+        { text: "Insider trading to make quick profits" },
+        { text: "Integrity in financial reporting, avoiding conflicts of interest, and always putting client interests first" },
+        { text: "Hiding losses to keep clients happy" },
+        { text: "Recommending stocks based on bribes from companies" }
+      ],
+      correctIndex: 1,
+      explanation: "Financial Analysts handle sensitive financial information and investment decisions that affect people's life savings. Integrity, transparency, and putting client interests first are non-negotiable ethical standards enforced by regulations like SEBI guidelines and CFA Institute's Code of Ethics.",
+      proTip: "The CFA Institute's Code of Ethics is a must-read for every aspiring Financial Analyst — it teaches you professional standards that build lifelong trust!"
+    },
+    {
+      id: 10,
+      roadmapStage: "Stage 10: Future World & AI Collaboration",
+      category: "AI & Future World",
+      categoryColor: "bg-purple-100 text-purple-900 border-purple-300",
+      question: "How will AI and technology reshape the Financial Analyst profession?",
+      options: [
+        { text: "AI will eliminate all finance jobs completely" },
+        { text: "AI will automate data gathering and basic analysis, while Financial Analysts focus on strategic judgment, client relationships, and interpreting complex market scenarios" },
+        { text: "Technology has no role in finance" },
+        { text: "Calculators will be banned and analysts will use abacus" }
+      ],
+      correctIndex: 1,
+      explanation: "AI and machine learning are already automating data collection, basic financial modeling, and pattern recognition. Future Financial Analysts will leverage AI tools for faster analysis while focusing on strategic interpretation, relationship management, and navigating complex scenarios that require human judgment.",
+      proTip: "Learn Python for finance and explore tools like Bloomberg Terminal and Refinitiv — tech-savvy analysts are in highest demand!"
+    }
+  ]
+},
+"ms-masters": {
+  id: "ms-masters",
+  title: "MS / Master's Abroad",
+  subtitle: "Gateway to Global Education",
+  icon: "🌍",
+  badge: "Global Scholar",
+  gradient: "from-violet-600 to-fuchsia-500",
+  accentColor: "violet",
+  description: "Test your knowledge about pursuing a Master's degree abroad — your pathway to world-class education and global career opportunities!",
+  totalQuestions: 10,
+  blueprintUrl: "/career-format/four-circles-ms-masters-foreign-countries.html",
+  cheatSheet: [
+    "MS abroad typically takes 1.5-2 years in USA, 1 year in UK, 2 years in Germany/Canada",
+    "Key exams: GRE/GMAT (aptitude), TOEFL/IELTS (English proficiency)",
+    "Top destinations: USA, UK, Canada, Germany, Australia",
+    "Funding options: Teaching/Research Assistantships, Scholarships, Education Loans",
+    "SOP (Statement of Purpose) and LORs (Letters of Recommendation) are critical for admission"
+  ],
+  questions: [
+    {
+      id: 1,
+      roadmapStage: "Stage 1: Choosing the Right Stream",
+      category: "Choosing Branch / Stream",
+      categoryColor: "bg-blue-100 text-blue-900 border-blue-300",
+      question: "Which undergraduate background best prepares you for an MS (Master of Science) program abroad?",
+      options: [
+        { text: "Any bachelor's degree in a relevant field (B.Tech, B.Sc, BCA, B.Com) with strong academics and research interest" },
+        { text: "Only students from IITs can apply for MS abroad" },
+        { text: "No undergraduate degree is needed — just IELTS score" },
+        { text: "Only medical graduates can pursue MS abroad" }
+      ],
+      correctIndex: 0,
+      explanation: "Students from any recognized university can apply for MS abroad, provided they have a relevant bachelor's degree with good grades. B.Tech students often pursue MS in Engineering/CS, B.Sc students in Sciences, and B.Com students in Business/Finance programs.",
+      proTip: "Maintain a GPA above 8.0/10 or 3.5/4.0 — top universities heavily weigh your academic performance during the admission process!"
+    },
+    {
+      id: 2,
+      roadmapStage: "Stage 2: Course Duration & Pathway",
+      category: "Course Duration",
+      categoryColor: "bg-green-100 text-green-900 border-green-300",
+      question: "How long does a typical MS program take in different countries?",
+      options: [
+        { text: "Same duration everywhere — exactly 4 years" },
+        { text: "USA: 1.5-2 years, UK: 1 year, Germany: 2 years, Canada: 1.5-2 years, Australia: 1.5-2 years" },
+        { text: "Only 3 months in any country" },
+        { text: "Minimum 5 years in every country" }
+      ],
+      correctIndex: 1,
+      explanation: "MS duration varies by country: USA programs are typically 1.5-2 years (with thesis or coursework options), UK offers intensive 1-year programs, Germany has 2-year programs (often tuition-free at public universities), and Canada/Australia range from 1.5-2 years.",
+      proTip: "Germany's public universities charge almost zero tuition — making it one of the most affordable destinations for MS abroad!"
+    },
+    {
+      id: 3,
+      roadmapStage: "Stage 3: Essential Entrance Exams",
+      category: "College Degree & Exams",
+      categoryColor: "bg-indigo-100 text-indigo-900 border-indigo-300",
+      question: "Which standardized tests are required for MS admission abroad?",
+      options: [
+        { text: "Only NEET is required for all MS programs" },
+        { text: "No tests are needed — just apply directly" },
+        { text: "GRE (Graduate Record Examination) for aptitude + TOEFL or IELTS for English proficiency; GMAT for MBA/business programs" },
+        { text: "Only a typing speed test" }
+      ],
+      correctIndex: 2,
+      explanation: "GRE tests quantitative, verbal, and analytical writing skills (score out of 340). TOEFL (out of 120) or IELTS (out of 9) prove English proficiency. GMAT is specifically for MBA and business master's programs. Many universities also accept GRE scores for business programs.",
+      proTip: "Aim for GRE 320+ and TOEFL 100+ (or IELTS 7.0+) to be competitive for top-50 universities — start preparation at least 6 months before your target test date!"
+    },
+    {
+      id: 4,
+      roadmapStage: "Stage 4: Application Components",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What are the most critical components of an MS abroad application?",
+      options: [
+        { text: "Just the GRE score — nothing else matters" },
+        { text: "SOP (Statement of Purpose), LORs (Letters of Recommendation), GRE/TOEFL scores, academic transcripts, resume, and research/project experience" },
+        { text: "Only a passport photo and birth certificate" },
+        { text: "Only money — universities accept anyone who pays" }
+      ],
+      correctIndex: 1,
+      explanation: "A complete application includes: SOP (your motivation and goals), 2-3 LORs from professors/employers, GRE/TOEFL scores, official transcripts, a well-crafted resume, and details of research projects, internships, and publications. Each component matters!",
+      proTip: "Start drafting your SOP at least 3 months before deadlines — get it reviewed by professors, seniors who went abroad, and professional editors. A powerful SOP can compensate for a slightly lower GPA!"
+    },
+    {
+      id: 5,
+      roadmapStage: "Stage 5: Funding & Scholarships",
+      category: "Course Duration",
+      categoryColor: "bg-green-100 text-green-900 border-green-300",
+      question: "What are the main funding options for Indian students pursuing MS abroad?",
+      options: [
+        { text: "There are no funding options — everyone must pay full tuition from savings" },
+        { text: "Teaching Assistantships (TA), Research Assistantships (RA), university scholarships, external scholarships (Fulbright, DAAD), and education loans" },
+        { text: "The Indian government pays for everyone automatically" },
+        { text: "Only lottery winners can afford MS abroad" }
+      ],
+      correctIndex: 1,
+      explanation: "Multiple funding avenues exist: TA/RA positions (work for the university and get tuition waiver + stipend), merit-based scholarships, external scholarships like Fulbright (USA), DAAD (Germany), Chevening (UK), and education loans from banks (₹20-50 lakhs at competitive interest rates).",
+      proTip: "Email professors directly about RA positions — professors with funded research projects often sponsor students. Check their recent publications and mention how your skills align with their research!"
+    },
+    {
+      id: 6,
+      roadmapStage: "Stage 6: Top Destinations Compared",
+      category: "Choosing Branch / Stream",
+      categoryColor: "bg-blue-100 text-blue-900 border-blue-300",
+      question: "What are the key differences between the top MS destinations for Indian students?",
+      options: [
+        { text: "All countries are exactly the same — no difference at all" },
+        { text: "USA: Best for STEM with OPT work visa; UK: 1-year fast programs; Germany: Nearly free tuition; Canada: Easier PR pathway; Australia: Post-study work rights" },
+        { text: "Only USA is worth going to — all other countries are inferior" },
+        { text: "No country accepts Indian students anymore" }
+      ],
+      correctIndex: 1,
+      explanation: "Each destination has unique advantages: USA offers 3-year OPT for STEM graduates and the world's top universities. UK has prestigious 1-year programs. Germany has near-zero tuition at public universities. Canada offers straightforward PR pathways. Australia provides generous post-study work visas.",
+      proTip: "Apply to a mix of 8-12 universities: 3-4 'ambitious' (dream schools), 4-5 'moderate' (good fit), and 2-3 'safe' (likely admits). This strategy maximizes your chances!"
+    },
+    {
+      id: 7,
+      roadmapStage: "Stage 7: Building a Strong Profile",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What activities during undergraduate years strengthen your MS abroad application the most?",
+      options: [
+        { text: "Only getting high marks — nothing else matters" },
+        { text: "Research projects, published papers, relevant internships, coding projects (for CS), and participation in hackathons/competitions" },
+        { text: "Only extracurricular activities like sports and drama" },
+        { text: "Just attending classes is enough" }
+      ],
+      correctIndex: 1,
+      explanation: "Top universities look for well-rounded candidates: research experience (even course projects count), internships in your field, technical projects (GitHub portfolio for CS students), publications in conferences/journals, and relevant competitions. These demonstrate your passion and capability beyond grades.",
+      proTip: "Approach professors for undergraduate research opportunities from your 2nd year — even a small project can lead to a publication that dramatically strengthens your application!"
+    },
+    {
+      id: 8,
+      roadmapStage: "Stage 8: Post-MS Career Opportunities",
+      category: "Skills to Build",
+      categoryColor: "bg-amber-100 text-amber-900 border-amber-300",
+      question: "What career options are available after completing an MS abroad?",
+      options: [
+        { text: "You must return to India immediately — no work allowed abroad" },
+        { text: "Work in the host country (using OPT/work visa), pursue a PhD, join top global companies, or return to India with international experience for premium roles" },
+        { text: "Only teaching in universities is possible" },
+        { text: "MS degree has no career value" }
+      ],
+      correctIndex: 1,
+      explanation: "After MS, you can work in the host country (USA's OPT allows 1-3 years of work, UK's Graduate Route allows 2 years, etc.), pursue a PhD for research/academic careers, join companies like Google, Microsoft, or Amazon, or return to India with valuable international experience for senior roles.",
+      proTip: "Start applying for jobs 3-4 months before graduation through university career fairs, LinkedIn, and company career pages. Networking with alumni is the #1 way to land interviews!"
+    },
+    {
+      id: 9,
+      roadmapStage: "Stage 9: Visa & Immigration Basics",
+      category: "College Degree & Exams",
+      categoryColor: "bg-indigo-100 text-indigo-900 border-indigo-300",
+      question: "What is the student visa process for studying abroad?",
+      options: [
+        { text: "No visa is needed — Indian passport allows free entry everywhere" },
+        { text: "After getting admission, apply for a student visa (F-1 for USA, Tier 4 for UK, Study Permit for Canada) with proof of admission, financial capability, and intent to study" },
+        { text: "You need to be a citizen of that country first" },
+        { text: "Visa is only for tourists, not students" }
+      ],
+      correctIndex: 1,
+      explanation: "After receiving your admission letter (I-20 from USA, CAS from UK, LOA from Canada), you apply for a student visa. You'll need to show proof of admission, financial documents (bank statements, loan sanction letters), SOP, and attend a visa interview (for USA). The process takes 4-8 weeks.",
+      proTip: "Keep all your financial documents organized well in advance — banks, scholarship letters, and sponsor affidavits. Visa officers want to see clear financial planning!"
+    },
+    {
+      id: 10,
+      roadmapStage: "Stage 10: Future World & AI Collaboration",
+      category: "AI & Future World",
+      categoryColor: "bg-purple-100 text-purple-900 border-purple-300",
+      question: "How is AI and technology changing the landscape of studying abroad?",
+      options: [
+        { text: "AI will eliminate the need for any international education" },
+        { text: "AI-powered tools help with GRE prep, SOP writing, university shortlisting, and scholarship matching; while international exposure provides irreplaceable cross-cultural skills and global networking" },
+        { text: "Technology makes foreign degrees worthless" },
+        { text: "Nothing has changed — the process is the same as 50 years ago" }
+      ],
+      correctIndex: 1,
+      explanation: "AI tools like ChatGPT help with test preparation and SOP drafting, platforms like Yocket and CollegeDunia use AI for university recommendations, and virtual campus tours make research easier. However, the irreplaceable value of living abroad — cross-cultural competence, global professional networks, and independence — makes international education more relevant than ever.",
+      proTip: "Use AI tools to research and shortlist universities, but write your SOP in your own authentic voice — admissions committees can spot generic AI-written essays instantly!"
+    }
+  ]
+},
 };
