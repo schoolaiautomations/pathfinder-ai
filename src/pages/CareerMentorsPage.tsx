@@ -16,6 +16,8 @@ import raviTeja from "@/lib/ravi_teja.jpg";
 import srinivasN from "@/lib/srinivas_n.jpg";
 import sivaSai from "@/lib/p_sivasai.jpeg";
 import subhashReddy from "@/lib/v_subash_reddy.jpeg";
+import sravyaVempati from "@/lib/sri_sravya_vempati.jpeg";
+import ravikanthVarma from "@/lib/ravikanth_varma.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import {
   Dialog,
@@ -35,6 +37,45 @@ interface Mentor {
 
 const mentors: Mentor[] = [
   {
+    name: "Sri. K. Ravikanth Varma",
+    photo: ravikanthVarma,
+    qualification: "M.Sc. Psychology • MBA • LL.B.",
+    role: "Career & Mental Health Counsellor | Advocate",
+    bio: "Sri. K. Ravikanth Varma combines multidisciplinary expertise across Psychology, Business Administration, and Law to guide students through two of life’s biggest areas: emotional well-being and career decisions.\n\nCurrently working as a Career and Mental Health Counsellor, he is dedicated to supporting students in their emotional well-being, mental health awareness, career exploration, decision-making, and personal development. Through personalized counselling sessions, career guidance programmes, and student-centred initiatives, he strives to help individuals identify their strengths, overcome challenges, and make informed, confident decisions about their educational and professional futures.",
+    specializations: [
+      "Psychology & Legal Career Guidance",
+      "Career Exploration & Decision-Making",
+      "Emotional Well-Being & Mental Health",
+      "Student Strengths & Personal Development",
+    ],
+  },
+  {
+    name: "Sri Sravya Vempati",
+    photo: sravyaVempati,
+    qualification: "Master's in Psychology • Stress Management & Counseling",
+    role: "Counseling Psychologist & Mental Health Educator",
+    bio: "Sri Sravya Vempati is a qualified Counseling Psychologist holding a Master’s degree in Psychology along with specialized certifications in Stress Management and Counseling.\n\nHer professional focus lies in promoting mental well-being, supporting emotional growth, and making psychological knowledge accessible, relatable, and meaningful to individuals from diverse backgrounds. As a dedicated mental health educator and storyteller, she develops psychology-informed content designed to educate, engage, and inspire constructive self-reflection.",
+    specializations: [
+      "Mental Well-Being & Counseling",
+      "Stress Management",
+      "Emotional Growth & Guidance",
+      "Psychology Education & Storytelling",
+    ],
+  },
+  {
+    name: "Siva Sai P",
+    photo: sivaSai,
+    qualification: "B.Tech in Mechanical Engineering • M.Sc. in Psychology",
+    role: "District Career & Mental Health Counsellor",
+    bio: "Siva Sai P is a District Career and Mental Health Counsellor with an interdisciplinary background combining a B.Tech in Mechanical Engineering and an M.Sc. in Psychology.\n\nHe blends analytical thinking with an understanding of human behaviour, motivation, and decision-making. Dedicated to student development and career guidance, he helps individuals identify their core strengths, explore rewarding career pathways, and create practical, actionable plans aligned with their natural aptitudes and aspirations.",
+    specializations: [
+      "Analytical & Psychological Guidance",
+      "Student Strengths & Aptitude Mapping",
+      "Decision-Making & Motivation",
+      "Mental Health & Career Planning",
+    ],
+  },
+  {
     name: "Dr. V. Subhash Reddy",
     photo: subhashReddy,
     qualification: "B.H.M.S., M.Sc. in Psychology",
@@ -48,22 +89,9 @@ const mentors: Mentor[] = [
     ],
   },
   {
-    name: "Siva Sai P",
-    photo: sivaSai,
-    qualification: "B.Tech in Mechanical Engineering • M.Sc. in Psychology",
-    role: "District Career & Mental Health Counsellor",
-    bio: "Currently working as a District Career and Mental Health Counsellor, I am passionate about career guidance, student development, and helping individuals make informed career decisions. My interdisciplinary background combines analytical thinking with an understanding of human behaviour, motivation, and decision-making. I aim to help individuals identify their strengths, explore career opportunities, and develop meaningful career plans aligned with their interests and aspirations. I aspire to contribute to an innovative startup by making career guidance accessible, practical, and impactful.",
-    specializations: [
-      "Analytical & Psychological Guidance",
-      "Student Strengths & Aptitude Mapping",
-      "Decision-Making & Motivation",
-      "Mental Health & Career Planning",
-    ],
-  },
-  {
     name: "KJD Raviteja",
     photo: raviTeja,
-    qualification: "Diploma in Psychology Guidance and Counselling",
+    qualification: "M.Sc. in Psychology, Diploma in Psychology Guidance and Counselling",
     role: "Career Mentor",
     bio: "Dedicated career mentor specializing in psychological guidance, student counselling, and helping learners navigate academic milestones with confidence.",
     specializations: [
@@ -75,7 +103,7 @@ const mentors: Mentor[] = [
   {
     name: "N Srinivas",
     photo: srinivasN,
-    qualification: "Diploma in Psychology Guidance and Counselling",
+    qualification: "M.Sc. in Psychology, Diploma in Psychology Guidance and Counselling",
     role: "Career Mentor",
     bio: "Experienced guidance counsellor focused on student self-discovery, emotional well-being, and structured career decision-making.",
     specializations: [
@@ -156,7 +184,7 @@ const CareerMentorsPage = () => {
           <span>Certified Guidance Professionals</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-stone-900 leading-tight">
-          Meet Your Career Mentors
+          Meet Our Career Mentors
         </h1>
         <p className="text-stone-500 text-xs sm:text-sm mt-1.5 leading-relaxed">
           Expert counsellors combining psychology, analytical reasoning, and career strategy to guide students towards fulfilling futures.
@@ -165,24 +193,19 @@ const CareerMentorsPage = () => {
 
       {/* ─── MENTOR GRID ─────────────────────────────────────────────────────── */}
       <main className="flex-1 px-4 sm:px-8 pb-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
           {mentors.map((mentor) => (
             <div
               key={mentor.name}
               className="rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col bg-white group"
             >
               {/* Photo Area */}
-              <div className="h-64 sm:h-72 bg-gradient-to-b from-stone-100 to-stone-200/60 flex items-center justify-center overflow-hidden relative">
+              <div className="h-64 sm:h-72 bg-gradient-to-b from-stone-100 to-stone-200/60 flex items-center justify-center overflow-hidden">
                 <img
                   src={mentor.photo}
                   alt={mentor.name}
                   className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md text-[10px] font-extrabold text-[#FAF8F5] tracking-wider uppercase shadow-xs">
-                    {mentor.role}
-                  </span>
-                </div>
               </div>
 
               {/* Info Area */}
@@ -191,18 +214,15 @@ const CareerMentorsPage = () => {
                 style={{ background: "#1C1917" }}
               >
                 <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#C9A97A] leading-none mb-1.5">
+                    {mentor.role}
+                  </p>
                   <h2 className="text-lg sm:text-xl font-black text-white leading-tight">
                     {mentor.name}
                   </h2>
-                  <p className="text-xs font-semibold text-[#C9A97A] mt-1 leading-snug">
+                  <p className="text-xs font-semibold text-stone-300 mt-1 leading-snug">
                     {mentor.qualification}
                   </p>
-
-                  {mentor.bio && (
-                    <p className="text-[12px] text-stone-300 font-normal leading-relaxed mt-2.5 line-clamp-3">
-                      {mentor.bio}
-                    </p>
-                  )}
 
                   {mentor.specializations && (
                     <div className="flex flex-wrap gap-1 mt-3">
@@ -224,22 +244,14 @@ const CareerMentorsPage = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="pt-4 mt-4 border-t border-stone-800 flex items-center gap-2">
+                <div className="pt-3 mt-3 border-t border-stone-800">
                   <button
                     type="button"
                     onClick={() => setSelectedMentor(mentor)}
-                    className="flex-1 inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors cursor-pointer border border-stone-700/80"
+                    className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors cursor-pointer border border-stone-700/80"
                   >
                     <span>Read Bio</span>
                     <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleOpenBooking(mentor)}
-                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#C9A97A] hover:bg-[#b89564] text-stone-900 text-xs font-extrabold transition-all cursor-pointer shadow-xs"
-                  >
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>Book 1-on-1</span>
                   </button>
                 </div>
               </div>
@@ -305,26 +317,14 @@ const CareerMentorsPage = () => {
                 )}
               </div>
 
-              {/* Footer CTA */}
-              <div className="p-4 bg-stone-50 border-t border-stone-200 flex items-center justify-between gap-3">
+              {/* Footer */}
+              <div className="p-4 bg-stone-50 border-t border-stone-200 flex justify-end">
                 <button
                   type="button"
                   onClick={() => setSelectedMentor(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-colors cursor-pointer"
+                  className="px-5 py-2 rounded-xl text-xs font-bold text-stone-700 hover:text-stone-900 bg-stone-200/70 hover:bg-stone-200 transition-colors cursor-pointer"
                 >
                   Close
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const m = selectedMentor;
-                    setSelectedMentor(null);
-                    handleOpenBooking(m);
-                  }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-extrabold transition-all cursor-pointer shadow-xs"
-                >
-                  <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
-                  <span>Book 1-on-1 Session with {selectedMentor.name}</span>
                 </button>
               </div>
             </div>
