@@ -16,6 +16,14 @@ import {
   Lock,
   GitFork,
   Calendar,
+  ClipboardCheck,
+  Search,
+  MessageSquare,
+  FileText,
+  TrendingUp,
+  CheckCircle2,
+  ArrowDown,
+  HelpCircle,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
@@ -75,19 +83,138 @@ const counsellors = [
   },
 ];
 
+const studentTypes = [
+  { num: "01", label: "Confused in Choosing Career" },
+  { num: "02", label: "Student with Multiple Interests" },
+  { num: "03", label: "Complete Guidance for a Chosen Career" },
+  { num: "06", label: "Academically Struggling Student" },
+  { num: "07", label: "Academically Strong but Confused" },
+  { num: "08", label: "Financially Constrained Student" },
+  { num: "12", label: "Early Career Explorer" },
+  { num: "18", label: "Parent-Only Enquiry" },
+];
+
+const sessionRoadmapSteps = [
+  {
+    step: "01",
+    title: "Registration & Booking",
+    description: "Fill basic details, select your preferred slot, and receive instant confirmation.",
+    pinColor: "#8C6843",
+    x: 200,
+    y: 50,
+    textSide: "right" as const,
+  },
+  {
+    step: "02",
+    title: "Profiling & Assessment",
+    description: "Complete academic, interest, and aptitude questionnaires before the session.",
+    pinColor: "#7C5C3E",
+    x: 200,
+    y: 145,
+    textSide: "left" as const,
+  },
+  {
+    step: "03",
+    title: "Pre-Session Review",
+    description: "Counsellor analyzes profile data and test insights to prepare discussion goals.",
+    pinColor: "#684C32",
+    x: 430,
+    y: 145,
+    textSide: "right" as const,
+  },
+  {
+    step: "04",
+    title: "1-on-1 Counselling",
+    description: "Live empathetic session exploring student aspirations, strengths, and confusion.",
+    pinColor: "#553C26",
+    x: 430,
+    y: 240,
+    textSide: "left" as const,
+  },
+  {
+    step: "05",
+    title: "Evaluation & Decision",
+    description: "Counsellor evaluates readiness to determine the best strategic next step:",
+    isBranching: true,
+    branchA: "Clarity → Personalized report",
+    branchB: "Explore → Follow-up session",
+    pinColor: "#422E1D",
+    x: 660,
+    y: 240,
+    textSide: "right" as const,
+  },
+  {
+    step: "06",
+    title: "Guidance Report",
+    description: "AI-assisted, counsellor-verified comprehensive career guidance report.",
+    pinColor: "#342519",
+    x: 660,
+    y: 335,
+    textSide: "left" as const,
+  },
+  {
+    step: "07",
+    title: "Action Plan",
+    description: "Receive vetted career pathways, colleges, exams, and a 3–6 month plan.",
+    pinColor: "#261D15",
+    x: 890,
+    y: 335,
+    textSide: "right" as const,
+  },
+  {
+    step: "08",
+    title: "Ongoing Mentorship",
+    description: "Track progress, review action milestones, and book follow-up check-ins.",
+    pinColor: "#1C1917",
+    x: 890,
+    y: 430,
+    textSide: "left" as const,
+  },
+];
+
 const Index = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
-  const [counsellorPage, setCounsellorPage] = useState(0);
-  const totalPages = Math.ceil(counsellors.length / 3);
-  const visibleCounsellors = counsellors.slice(counsellorPage * 3, counsellorPage * 3 + 3);
+  const [counsellorIndex, setCounsellorIndex] = useState(counsellors.length);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [activeRoadmapStep, setActiveRoadmapStep] = useState<number | null>(null);
+  const roadScrollRef = useRef<HTMLDivElement>(null);
 
-  const prevCounsellor = () =>
-    setCounsellorPage((p) => (p === 0 ? totalPages - 1 : p - 1));
-  const nextCounsellor = () =>
-    setCounsellorPage((p) => (p === totalPages - 1 ? 0 : p + 1));
+  const scrollRoad = (direction: "left" | "right") => {
+    if (roadScrollRef.current) {
+      const amount = direction === "left" ? -350 : 350;
+      roadScrollRef.current.scrollBy({ left: amount, behavior: "smooth" });
+    }
+  };
+
+  // 3 copies to enable infinite seamless smooth sliding
+  const extendedCounsellors = [...counsellors, ...counsellors, ...counsellors];
+
+  const prevCounsellor = () => {
+    setIsTransitioning(true);
+    setCounsellorIndex((prev) => prev - 1);
+  };
+
+  const nextCounsellor = () => {
+    setIsTransitioning(true);
+    setCounsellorIndex((prev) => prev + 1);
+  };
+
+  const handleTransitionEnd = () => {
+    if (counsellorIndex >= counsellors.length * 2) {
+      setIsTransitioning(false);
+      setCounsellorIndex((prev) => prev - counsellors.length);
+      setTimeout(() => setIsTransitioning(true), 20);
+    } else if (counsellorIndex < counsellors.length) {
+      setIsTransitioning(false);
+      setCounsellorIndex((prev) => prev + counsellors.length);
+      setTimeout(() => setIsTransitioning(true), 20);
+    }
+  };
+
+  const activeDot = ((counsellorIndex % counsellors.length) + counsellors.length) % counsellors.length;
 
   return (
     <main className="min-h-screen font-sans text-stone-900" style={{ background: "#FAF8F5" }}>
@@ -261,59 +388,75 @@ const Index = () => {
                 Every Career Decision Needs the Right Guidance!
               </h1>
 
-              {/* Subtext */}
-              <p
-                className="leading-relaxed text-sm sm:text-base font-medium max-w-xl"
-                style={{ color: "#6B5E53" }}
-              >
-                Between parental expectations, peer pressure, and endless advice,
-                feeling overwhelmed is only natural. We listen with patience, understand
-                who you truly are, and guide you to a career path that genuinely fits you.
-              </p>
-
-              {/* Primary CTA */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-                <button
-                  onClick={() => window.open("https://jqerkjewmmpowiwwpifv.supabase.co/storage/v1/object/public/pdf-section/four_circles_of_choosing_career.pdf", "_blank")}
-                  className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
-                  style={{ background: "#1C1917", color: "#FAF8F5" }}
-                >
-                  <BookOpen className="w-4 h-4" />
-                  How to Choose a Career
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setIsCaseStudyOpen(true)}
-                  className="flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all border border-stone-300/90 bg-white hover:bg-stone-100/90 text-stone-900 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
-                >
-                  <Sparkles className="w-4 h-4 text-[#8B6F47]" />
-                  <span>Read Case Study</span>
-                </button>
-              </div>
-
-              {/* Social proof strip */}
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-2 text-xs font-medium" style={{ color: "#9B8B7E" }}>
-                <span className="flex items-center gap-1.5">
-                  <Heart className="w-3.5 h-3.5" style={{ color: "#C9A97A" }} />
-                  Empathy-first counselling
-                </span>
-                <span className="w-1 h-1 rounded-full hidden sm:block" style={{ background: "#D5C9BE" }} />
-                <span className="flex items-center gap-1.5">
-                  <Compass className="w-3.5 h-3.5" style={{ color: "#C9A97A" }} />
-                  Four Circles Methodology
-                </span>
-                <span className="w-1 h-1 rounded-full hidden sm:block" style={{ background: "#D5C9BE" }} />
-                <span className="flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5" style={{ color: "#C9A97A" }} />
-                  For students &amp; families
-                </span>
+              {/* National Studies Reveal - Animated Circular Stats */}
+              <div className="pt-2 space-y-4">
+                <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#9B8B7E" }}>
+                  What national studies reveal
+                </p>
+                <div className="grid grid-cols-3 gap-3 sm:gap-5">
+                  {[
+                    {
+                      stat: "1 in 10",
+                      text: "students actually receive career counselling before choosing streams or degrees.",
+                      pct: 10,
+                    },
+                    {
+                      stat: "11%",
+                      text: "feel clear and confident about their career direction at Class 10 or 12.",
+                      pct: 11,
+                    },
+                    {
+                      stat: "13.2%",
+                      text: "received guidance matched to their genuine interests.",
+                      pct: 13.2,
+                    },
+                  ].map(({ stat, text, pct }) => {
+                    const r = 40;
+                    const c = 2 * Math.PI * r;
+                    const offset = c - (pct / 100) * c;
+                    return (
+                      <div key={stat} className="flex flex-col items-center text-center space-y-2">
+                        {/* Animated Circle + Number */}
+                        <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28">
+                          <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                            {/* Track */}
+                            <circle cx="50" cy="50" r={r} fill="none" stroke="#E0D6CA" strokeWidth="6" />
+                            {/* Animated arc */}
+                            <circle
+                              cx="50" cy="50" r={r} fill="none"
+                              stroke="#7C5C3E"
+                              strokeWidth="6"
+                              strokeLinecap="round"
+                              strokeDasharray={c}
+                              strokeDashoffset={offset}
+                              className="transition-all duration-1000 ease-out"
+                              style={{ animation: "circleIn 1.2s ease-out forwards" }}
+                            />
+                          </svg>
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <span
+                              className="font-extrabold leading-none"
+                              style={{ fontSize: "clamp(0.95rem, 2.2vw, 1.35rem)", color: "#7C5C3E" }}
+                            >
+                              {stat}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-[11px] sm:text-xs leading-snug font-medium" style={{ color: "#6B5E53" }}>
+                          {text}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="text-[11px] italic pt-1" style={{ color: "#A89A8E" }}>
+                  Source: Peer-reviewed research (IJNRD, 2023) &amp; India Today national investigation.
+                </p>
               </div>
             </div>
 
-            {/* Right Column: Hero Question Animation */}
-            <div className="lg:col-span-5 flex items-center justify-center lg:justify-end">
+            {/* Right Column: Hero Question Animation & Explore Careers Button */}
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
               <div className="relative max-w-sm sm:max-w-md w-full flex items-center justify-center aspect-[4/3]">
                 <div className="w-full h-full flex items-center justify-center">
                   <DotLottieReact
@@ -324,55 +467,150 @@ const Index = () => {
                   />
                 </div>
               </div>
+
+              {/* Explore Careers Button under illustration */}
+              <button
+                type="button"
+                onClick={() => navigate("/career-reports")}
+                className="mt-2 sm:mt-3 flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm sm:text-base cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                style={{ background: "#1C1917", color: "#FAF8F5" }}
+              >
+                <BookOpen className="w-4 h-4" />
+                Explore Careers
+                <ArrowRight className="w-4 h-4 ml-1" />
+              </button>
             </div>
 
           </div>
         </div>
-      </section>
 
-      {/* ─── TRUTH STRIP (WHAT STUDIES REVEAL) ──────────────────────────────── */}
-      <section style={{ background: "#F0EBE1", borderTop: "1px solid #E0D6CA", borderBottom: "1px solid #E0D6CA" }}>
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
-          <p className="text-center text-xs sm:text-sm font-semibold tracking-widest uppercase mb-8" style={{ color: "#9B8B7E" }}>
-            What national studies reveal
-          </p>
-          <div className="grid sm:grid-cols-3 gap-6 sm:gap-8">
-            {[
-              {
-                stat: "9 in 10",
-                text: "students in India receive zero professional career counselling before choosing their stream or college degree.",
-              },
-              {
-                stat: "89%",
-                text: "of secondary school students reported feeling confused or uncertain about their career direction at Class 10 or 12.",
-              },
-              {
-                stat: "86.8%",
-                text: "said guidance matched to their actual interests — not societal pressure — would have changed their decisions.",
-              },
-            ].map(({ stat, text }) => (
-              <div key={stat} className="text-center space-y-2">
-                <div
-                  className="font-extrabold leading-none"
-                  style={{ fontSize: "clamp(2rem, 5vw, 3rem)", color: "#7C5C3E" }}
-                >
-                  {stat}
-                </div>
-                <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#6B5E53" }}>
-                  {text}
-                </p>
-              </div>
-            ))}
+        {/* ─── STUDENT TYPES RIGHT-TO-LEFT MOVABLE SLIDER ────────── */}
+        <div className="pt-2 pb-12 sm:pb-16 max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="mb-5 flex items-center justify-between">
+            <div className="space-y-1">
+              <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#B5956A" }}>
+                Who We Counsel
+              </p>
+              <h2 className="text-base sm:text-xl font-extrabold text-stone-900">
+                Tailored Guidance for Every Student's Starting Point
+              </h2>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsBookingModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm cursor-pointer transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+              style={{ background: "#1C1917", color: "#FAF8F5" }}
+            >
+              <Calendar className="w-3.5 h-3.5 text-[#C9A97A]" />
+              <span>Book a 1-1 Session</span>
+            </button>
           </div>
-          <p className="text-center text-xs mt-8 italic" style={{ color: "#A89A8E" }}>
-            Source: Peer-reviewed research (IJNRD, 2023) &amp; India Today national investigation.
-          </p>
+
+          {/* Marquee Track with edge fade masks - aligned with page width */}
+          <div className="relative overflow-hidden group">
+            <div
+              className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-14 z-10"
+              style={{ background: "linear-gradient(to right, #FAF8F5, transparent)" }}
+            />
+            <div
+              className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-14 z-10"
+              style={{ background: "linear-gradient(to left, #FAF8F5, transparent)" }}
+            />
+
+            <div className="marquee-slider-track py-2">
+              {[...studentTypes, ...studentTypes, ...studentTypes].map((item, idx) => (
+                <div
+                  key={`${item.num}-${idx}`}
+                  className="w-56 sm:w-64 shrink-0 rounded-2xl px-5 py-5 sm:py-6 text-center flex items-center justify-center transition-all duration-300 hover:shadow-md hover:-translate-y-1 bg-white cursor-pointer select-none min-h-[5rem]"
+                  style={{ border: "1px solid #E0D6CA" }}
+                >
+                  <span className="font-bold text-xs sm:text-sm leading-snug tracking-tight" style={{ color: "#543926" }}>
+                    {item.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
+      {/* CSS keyframe for circle animation & slider track */}
+      <style>{`
+        @keyframes circleIn {
+          from { stroke-dashoffset: ${2 * Math.PI * 40}; }
+        }
+        @keyframes marqueeScrollLeft {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-100% / 3));
+          }
+        }
+        .marquee-slider-track {
+          display: flex;
+          gap: 1rem;
+          width: max-content;
+          animation: marqueeScrollLeft 28s linear infinite;
+        }
+        .marquee-slider-track:hover {
+          animation-play-state: paused;
+        }
+        .counsellor-slider-track {
+          --slide-pct: 100%;
+        }
+        @media (min-width: 640px) {
+          .counsellor-slider-track {
+            --slide-pct: 50%;
+          }
+        }
+        @media (min-width: 1024px) {
+          .counsellor-slider-track {
+            --slide-pct: 25%;
+          }
+        }
+        @keyframes flowDown {
+          0% {
+            stroke-dashoffset: 24;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+        @keyframes pulseHalo {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 0.7;
+          }
+          50% {
+            transform: scale(1.35);
+            opacity: 0.1;
+          }
+        }
+        .flowing-dash-line {
+          stroke-dasharray: 6 6;
+          animation: flowDown 1.3s linear infinite;
+        }
+        .pulse-halo-ring {
+          animation: pulseHalo 2.5s ease-out infinite;
+        }
+        @keyframes driveLane {
+          from {
+            stroke-dashoffset: 40;
+          }
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+        .animated-road-lane {
+          stroke-dasharray: 14 14;
+          animation: driveLane 1.1s linear infinite;
+        }
+      `}</style>
+
       {/* ─── CAREER COUNSELLORS CAROUSEL ──────────────────────────────── */}
       <section style={{ background: "#F0EBE1", borderTop: "1px solid #E0D6CA", borderBottom: "1px solid #E0D6CA" }}>
-        <div className="max-w-5xl mx-auto px-5 sm:px-8 py-16 sm:py-20">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-20">
           <p className="text-xs font-bold uppercase tracking-widest text-center mb-2" style={{ color: "#B5956A" }}>
             Certified Guidance Professionals
           </p>
@@ -383,82 +621,98 @@ const Index = () => {
             Meet Our Career Counsellors
           </h2>
 
-          {/* 3-Column Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {visibleCounsellors.map((counsellor) => (
-              <div
-                key={counsellor.name}
-                className="rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col bg-white group"
-              >
-                {/* Photo Area */}
-                <div className="h-52 sm:h-64 bg-gradient-to-b from-stone-100 to-stone-200/60 flex items-center justify-center overflow-hidden">
-                  <img
-                    src={counsellor.photo}
-                    alt={counsellor.name}
-                    className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
+          {/* Smooth Sliding Carousel Track */}
+          <div className="overflow-hidden py-2 -my-2">
+            <div
+              className="flex -mx-2.5 counsellor-slider-track"
+              style={{
+                transform: `translateX(calc(${counsellorIndex} * -1 * var(--slide-pct)))`,
+                transition: isTransitioning
+                  ? "transform 500ms cubic-bezier(0.25, 1, 0.5, 1)"
+                  : "none",
+              }}
+              onTransitionEnd={handleTransitionEnd}
+            >
+              {extendedCounsellors.map((counsellor, idx) => (
+                <div
+                  key={`${counsellor.name}-${idx}`}
+                  className="w-full sm:w-1/2 lg:w-1/4 shrink-0 px-2.5"
+                >
+                  <div className="rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col bg-white group h-full">
+                    {/* Photo Area */}
+                    <div className="h-48 sm:h-56 bg-gradient-to-b from-stone-100 to-stone-200/60 flex items-center justify-center overflow-hidden">
+                      <img
+                        src={counsellor.photo}
+                        alt={counsellor.name}
+                        className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
 
-                {/* Info Area — dark bottom */}
-                <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between" style={{ background: "#1C1917" }}>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#C9A97A] leading-none mb-1.5">
-                      {counsellor.role}
-                    </p>
-                    <h3 className="text-lg sm:text-xl font-black text-white leading-tight">
-                      {counsellor.name}
-                    </h3>
-                    <p className="text-xs font-semibold text-stone-300 mt-1 leading-snug">
-                      {counsellor.qualification}
-                    </p>
+                    {/* Info Area — dark bottom */}
+                    <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between" style={{ background: "#1C1917" }}>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-[#C9A97A] leading-none mb-1.5">
+                          {counsellor.role}
+                        </p>
+                        <h3 className="text-lg sm:text-xl font-black text-white leading-tight">
+                          {counsellor.name}
+                        </h3>
+                        <p className="text-xs font-semibold text-stone-300 mt-1 leading-snug">
+                          {counsellor.qualification}
+                        </p>
 
-                    {/* Specialization Tags */}
-                    <div className="flex flex-wrap gap-1 mt-3">
-                      {counsellor.specializations.map((spec, i) => (
-                        <span
-                          key={i}
-                          className="text-[10px] px-2 py-0.5 rounded-md bg-stone-800 text-stone-300 border border-stone-700/60 font-medium"
+                        {/* Specialization Tags */}
+                        <div className="flex flex-wrap gap-1 mt-3">
+                          {counsellor.specializations.map((spec, i) => (
+                            <span
+                              key={i}
+                              className="text-[10px] px-2 py-0.5 rounded-md bg-stone-800 text-stone-300 border border-stone-700/60 font-medium"
+                            >
+                              {spec}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* View Profile Link */}
+                      <div className="pt-3 mt-3 border-t border-stone-800">
+                        <button
+                          type="button"
+                          onClick={() => navigate("/career-mentors")}
+                          className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors cursor-pointer border border-stone-700/80"
                         >
-                          {spec}
-                        </span>
-                      ))}
+                          <span>View Full Profile</span>
+                          <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-
-                  {/* View Profile Link */}
-                  <div className="pt-3 mt-3 border-t border-stone-800">
-                    <button
-                      type="button"
-                      onClick={() => navigate("/career-mentors")}
-                      className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors cursor-pointer border border-stone-700/80"
-                    >
-                      <span>View Full Profile</span>
-                      <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-                    </button>
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           {/* Prev / Dots / Next */}
-          <div className="flex items-center justify-center gap-4 mt-6">
+          <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={prevCounsellor}
-              aria-label="Previous page"
+              aria-label="Previous profile"
               className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-stone-300 bg-white hover:bg-stone-100 flex items-center justify-center shadow-sm transition-all hover:shadow-md cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-stone-700" />
             </button>
 
             <div className="flex items-center gap-1.5">
-              {Array.from({ length: totalPages }).map((_, idx) => (
+              {counsellors.map((_, idx) => (
                 <button
                   key={idx}
-                  onClick={() => setCounsellorPage(idx)}
-                  aria-label={`Page ${idx + 1}`}
+                  onClick={() => {
+                    setIsTransitioning(true);
+                    setCounsellorIndex(counsellors.length + idx);
+                  }}
+                  aria-label={`Go to counsellor ${idx + 1}`}
                   className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
-                    idx === counsellorPage
+                    idx === activeDot
                       ? "bg-stone-800 scale-125"
                       : "bg-stone-300 hover:bg-stone-400"
                   }`}
@@ -468,7 +722,7 @@ const Index = () => {
 
             <button
               onClick={nextCounsellor}
-              aria-label="Next page"
+              aria-label="Next profile"
               className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-stone-300 bg-white hover:bg-stone-100 flex items-center justify-center shadow-sm transition-all hover:shadow-md cursor-pointer"
             >
               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-stone-700" />
@@ -477,89 +731,165 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ─── WHAT WE LOOK AT ─────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 py-16 sm:py-24">
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
-          {/* Left: sticky title */}
-          <div className="space-y-5 lg:sticky lg:top-24">
-            <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#B5956A" }}>
-              Our Methodology
-            </p>
-            <h2
-              className="font-extrabold leading-tight tracking-tight"
-              style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)", color: "#1C1917" }}
-            >
-              Four dimensions we explore with every student
-            </h2>
-            <p className="text-sm sm:text-base leading-relaxed" style={{ color: "#6B5E53" }}>
-              Career guidance isn't a single-question test. It's a conversation that
-              looks at four interconnected areas — because a career that works for you
-              must work across all of them.
-            </p>
-            <button
-              onClick={() => navigate("/career-reports")}
-              className="flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm cursor-pointer transition-all hover:-translate-y-0.5"
-              style={{ background: "#1C1917", color: "#FAF8F5" }}
-            >
-              Explore Careers <ArrowRight className="w-4 h-4" />
-            </button>
+      {/* ─── SESSIONS ROADMAP (WINDING HIGHWAY ROAD) ────────────────────── */}
+      <section className="relative overflow-hidden py-16 sm:py-24" style={{ background: "#FAF8F5" }}>
+        {/* Ambient background decoration */}
+        <div
+          className="absolute inset-0 -z-10 pointer-events-none"
+          style={{
+            background: "radial-gradient(ellipse 70% 50% at 50% 25%, rgba(224, 214, 202, 0.35) 0%, transparent 70%)",
+          }}
+        />
 
-            {/* Archer animation under explore careers button */}
-            <div className="pt-2 sm:pt-4 flex items-center justify-center lg:justify-start">
-              <div className="w-56 h-56 sm:w-64 sm:h-64 lg:w-72 lg:h-72 flex items-center justify-center">
-                <DotLottieReact
-                  src={archerAnimation || "/Archer.lottie"}
-                  loop
-                  autoplay
-                  className="w-full h-full object-contain"
-                />
-              </div>
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
+            <div className="space-y-2 max-w-2xl">
+              <span
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase"
+                style={{ background: "#F0EBE1", color: "#78645A", border: "1px solid #DDD3C5" }}
+              >
+                <span className="w-2 h-2 rounded-full animate-ping" style={{ background: "#B5956A" }} />
+                Session Roadmap
+              </span>
+              <h2
+                className="font-extrabold leading-tight tracking-tight text-stone-900 sm:whitespace-nowrap"
+                style={{ fontSize: "clamp(1.3rem, 3vw, 2.4rem)" }}
+              >
+                How Your 1-on-1 Guidance Session Works
+              </h2>
+              <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#6B5E53" }}>
+                A step-by-step journey from booking to career clarity. Follow the path to see what happens at every milestone.
+              </p>
             </div>
           </div>
 
-          {/* Right: 4 dimensions */}
-          <div className="space-y-4">
-            {[
-              {
-                num: "01",
-                title: "Passion & Daily Joy",
-                body: "What subjects or activities make time feel like it's flying? A career anchored to genuine curiosity doesn't feel like work — and that sustainability matters over decades.",
-              },
-              {
-                num: "02",
-                title: "Natural Strengths & Stream Fit",
-                body: "Where do you naturally excel without excessive effort? This guides which Intermediate stream (MPC, BiPC, MEC, CEC) or vocational path creates the least resistance and most momentum.",
-              },
-              {
-                num: "03",
-                title: "Real-World Demand & Competition",
-                body: "What are actual applicant-to-vacancy ratios? How many seats exist? What does the market look like in 5–10 years? Honest data prevents years of effort toward a bottlenecked path.",
-              },
-              {
-                num: "04",
-                title: "Financial Investment & Plan B",
-                body: "What is the total education cost and how many years of non-earning does it involve? Are there backup careers that protect you if Plan A doesn't work out? Security matters as much as aspiration.",
-              },
-            ].map(({ num, title, body }) => (
-              <div
-                key={num}
-                className="rounded-2xl p-5 sm:p-6 flex gap-4 transition-all hover:shadow-sm"
-                style={{ background: "#F5F1EC", border: "1px solid #E5DDD2" }}
+          {/* Stepped Snake Timeline */}
+          <div
+            ref={roadScrollRef}
+            className="overflow-x-auto pb-6 pt-4 scrollbar-thin select-none relative rounded-3xl border border-stone-200/90 bg-[#FAF8F5] shadow-xs"
+          >
+            <div className="relative w-[1100px] h-[470px] mx-auto px-4">
+              {/* SVG Connecting Lines */}
+              <svg
+                className="absolute inset-0 w-full h-full pointer-events-none"
+                viewBox="0 0 1100 470"
+                fill="none"
               >
-                <span className="font-mono font-extrabold text-xs shrink-0 mt-0.5 w-7" style={{ color: "#B5956A" }}>
-                  {num}
-                </span>
-                <div>
-                  <h4 className="font-extrabold text-sm sm:text-base mb-1.5" style={{ color: "#1C1917" }}>
-                    {title}
-                  </h4>
-                  <p className="text-xs sm:text-sm leading-relaxed" style={{ color: "#6B5E53" }}>
-                    {body}
-                  </p>
-                </div>
+                {/* Vertical line: 01 down to 02 */}
+                <line x1="200" y1="74" x2="200" y2="121" stroke="#292524" strokeWidth="3" />
+                {/* Horizontal line: 02 right to 03 */}
+                <line x1="224" y1="145" x2="406" y2="145" stroke="#292524" strokeWidth="3" />
+                {/* Vertical line: 03 down to 04 */}
+                <line x1="430" y1="169" x2="430" y2="216" stroke="#292524" strokeWidth="3" />
+                {/* Horizontal line: 04 right to 05 */}
+                <line x1="454" y1="240" x2="636" y2="240" stroke="#292524" strokeWidth="3" />
+                {/* Vertical line: 05 down to 06 */}
+                <line x1="660" y1="264" x2="660" y2="311" stroke="#292524" strokeWidth="3" />
+                {/* Horizontal line: 06 right to 07 */}
+                <line x1="684" y1="335" x2="866" y2="335" stroke="#292524" strokeWidth="3" />
+                {/* Vertical line: 07 down to 08 */}
+                <line x1="890" y1="359" x2="890" y2="406" stroke="#292524" strokeWidth="3" />
+
+                {/* Animated flowing dash overlay */}
+                <line x1="200" y1="74" x2="200" y2="121" stroke="#C9A97A" strokeWidth="1.5" strokeDasharray="5 5" className="animated-road-lane" />
+                <line x1="224" y1="145" x2="406" y2="145" stroke="#C9A97A" strokeWidth="1.5" strokeDasharray="5 5" className="animated-road-lane" />
+                <line x1="430" y1="169" x2="430" y2="216" stroke="#C9A97A" strokeWidth="1.5" strokeDasharray="5 5" className="animated-road-lane" />
+                <line x1="454" y1="240" x2="636" y2="240" stroke="#C9A97A" strokeWidth="1.5" strokeDasharray="5 5" className="animated-road-lane" />
+                <line x1="660" y1="264" x2="660" y2="311" stroke="#C9A97A" strokeWidth="1.5" strokeDasharray="5 5" className="animated-road-lane" />
+                <line x1="684" y1="335" x2="866" y2="335" stroke="#C9A97A" strokeWidth="1.5" strokeDasharray="5 5" className="animated-road-lane" />
+                <line x1="890" y1="359" x2="890" y2="406" stroke="#C9A97A" strokeWidth="1.5" strokeDasharray="5 5" className="animated-road-lane" />
+
+                {/* Start arrow line */}
+                <line x1="100" y1="50" x2="176" y2="50" stroke="#292524" strokeWidth="3" />
+                <polygon points="172,44 184,50 172,56" fill="#292524" />
+
+                {/* End arrow line */}
+                <line x1="914" y1="430" x2="990" y2="430" stroke="#292524" strokeWidth="3" />
+                <polygon points="985,424 997,430 985,436" fill="#292524" />
+              </svg>
+
+              {/* Start Label */}
+              <div className="absolute z-10" style={{ left: 48, top: 35 }}>
+                <span className="font-black text-sm tracking-tight" style={{ color: "#7C5C3E" }}>Start</span>
               </div>
-            ))}
+
+              {/* End Label */}
+              <div className="absolute z-10" style={{ left: 1000, top: 417 }}>
+                <span className="font-black text-sm tracking-tight text-stone-900">End 🎯</span>
+              </div>
+
+              {/* 8 Stepped Milestone Nodes & Text Labels */}
+              {sessionRoadmapSteps.map((stepItem, idx) => {
+                const isSelected = activeRoadmapStep === idx;
+                const isRight = stepItem.textSide === "right";
+                const isStep5 = stepItem.isBranching;
+
+                return (
+                  <div key={stepItem.step}>
+                    {/* Double-Ring Circular Node */}
+                    <div
+                      className="absolute z-20 cursor-pointer transition-transform duration-300 hover:scale-110"
+                      style={{
+                        left: stepItem.x,
+                        top: stepItem.y,
+                        transform: "translate(-50%, -50%)",
+                      }}
+                      onClick={() => setActiveRoadmapStep(isSelected ? null : idx)}
+                      title={`Step ${stepItem.step}: ${stepItem.title}`}
+                    >
+                      <div
+                        className={`w-12 h-12 rounded-full p-[3px] bg-white border-[2.5px] shadow-lg flex items-center justify-center transition-all ${
+                          isSelected
+                            ? "border-[#C9A97A] ring-4 ring-[#C9A97A]/25 scale-110"
+                            : "border-stone-300 hover:border-stone-400"
+                        }`}
+                      >
+                        <div
+                          className="w-full h-full rounded-full flex items-center justify-center text-white font-mono font-black text-xs"
+                          style={{ background: stepItem.pinColor }}
+                        >
+                          {stepItem.step}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Text Label */}
+                    <div
+                      className={`absolute z-10 ${isSelected ? "scale-[1.02]" : ""} transition-all duration-200`}
+                      style={{
+                        left: isRight ? stepItem.x + 34 : undefined,
+                        right: !isRight ? `calc(100% - ${stepItem.x - 34}px)` : undefined,
+                        top: stepItem.y,
+                        transform: "translateY(-50%)",
+                        maxWidth: isStep5 ? "180px" : "165px",
+                      }}
+                    >
+                      <h3 className={`font-extrabold text-xs sm:text-[13px] leading-tight mb-0.5 ${isSelected ? "text-[#7C5C3E]" : "text-stone-900"}`}>
+                        {stepItem.title}
+                      </h3>
+                      <p className="text-[10px] sm:text-[11px] text-stone-500 leading-snug">
+                        {stepItem.description}
+                      </p>
+                      {isStep5 && (
+                        <div className="mt-1 space-y-0.5">
+                          <div className="flex items-center gap-1 text-[9.5px] font-semibold text-stone-800">
+                            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#7C5C3E" }} />
+                            <span>{stepItem.branchA}</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-[9.5px] font-semibold text-stone-600">
+                            <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: "#B5956A" }} />
+                            <span>{stepItem.branchB}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
+
         </div>
       </section>
 
