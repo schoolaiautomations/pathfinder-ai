@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -10,6 +10,7 @@ import {
   Users,
   Phone,
   ChevronRight,
+  ChevronLeft,
   Menu,
   X,
   Lock,
@@ -22,12 +23,71 @@ import { CaseStudyModal } from "@/components/common/CaseStudyModal";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import archerAnimation from "@/lib/Archer.lottie";
 import questionAnimation from "@/lib/question.lottie";
+import raviTeja from "@/lib/ravi_teja.jpg";
+import srinivasN from "@/lib/srinivas_n.jpg";
+import sivaSai from "@/lib/p_sivasai.jpeg";
+import subhashReddy from "@/lib/v_subash_reddy.jpeg";
+import sravyaVempati from "@/lib/sri_sravya_vempati.jpeg";
+import ravikanthVarma from "@/lib/ravikanth_varma.jpeg";
+
+const counsellors = [
+  {
+    name: "Sri. K. Ravikanth Varma",
+    photo: ravikanthVarma,
+    qualification: "M.Sc. Psychology • MBA • LL.B.",
+    role: "Career & Mental Health Counsellor",
+    specializations: ["Psychology & Legal Career Guidance", "Emotional Well-Being"],
+  },
+  {
+    name: "Sri Sravya Vempati",
+    photo: sravyaVempati,
+    qualification: "Master's in Psychology • Stress Management",
+    role: "Counseling Psychologist",
+    specializations: ["Mental Well-Being & Counseling", "Stress Management"],
+  },
+  {
+    name: "Siva Sai P",
+    photo: sivaSai,
+    qualification: "B.Tech Mechanical • M.Sc. Psychology",
+    role: "District Career Counsellor",
+    specializations: ["Aptitude Mapping", "Career Planning"],
+  },
+  {
+    name: "Dr. V. Subhash Reddy",
+    photo: subhashReddy,
+    qualification: "B.H.M.S. • M.Sc. Psychology",
+    role: "District Career Counsellor",
+    specializations: ["Mental Health Awareness", "Student Development"],
+  },
+  {
+    name: "KJD Raviteja",
+    photo: raviTeja,
+    qualification: "M.Sc. Psychology • Diploma in Counselling",
+    role: "Career Mentor",
+    specializations: ["Psychology Guidance", "Academic Goal Setting"],
+  },
+  {
+    name: "N Srinivas",
+    photo: srinivasN,
+    qualification: "M.Sc. Psychology • Diploma in Counselling",
+    role: "Career Mentor",
+    specializations: ["Student Mentorship", "Career Pathway Planning"],
+  },
+];
 
 const Index = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
+  const [counsellorPage, setCounsellorPage] = useState(0);
+  const totalPages = Math.ceil(counsellors.length / 3);
+  const visibleCounsellors = counsellors.slice(counsellorPage * 3, counsellorPage * 3 + 3);
+
+  const prevCounsellor = () =>
+    setCounsellorPage((p) => (p === 0 ? totalPages - 1 : p - 1));
+  const nextCounsellor = () =>
+    setCounsellorPage((p) => (p === totalPages - 1 ? 0 : p + 1));
 
   return (
     <main className="min-h-screen font-sans text-stone-900" style={{ background: "#FAF8F5" }}>
@@ -310,34 +370,108 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ─── EMPATHY SECTION ─────────────────────────────────────────────── */}
+      {/* ─── CAREER COUNSELLORS CAROUSEL ──────────────────────────────── */}
       <section style={{ background: "#F0EBE1", borderTop: "1px solid #E0D6CA", borderBottom: "1px solid #E0D6CA" }}>
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 py-16 sm:py-20 text-center space-y-5">
-          <Compass className="w-8 h-8 mx-auto" style={{ color: "#B5956A" }} />
+        <div className="max-w-5xl mx-auto px-5 sm:px-8 py-16 sm:py-20">
+          <p className="text-xs font-bold uppercase tracking-widest text-center mb-2" style={{ color: "#B5956A" }}>
+            Certified Guidance Professionals
+          </p>
           <h2
-            className="font-extrabold leading-tight tracking-tight"
+            className="font-extrabold leading-tight tracking-tight text-center mb-8 sm:mb-10"
             style={{ fontSize: "clamp(1.4rem, 3.5vw, 2.2rem)", color: "#1C1917" }}
           >
-            "I don't know what to do after 10th" is the most honest thing a student can say.
+            Meet Our Career Counsellors
           </h2>
-          <p className="text-sm sm:text-base leading-relaxed" style={{ color: "#6B5E53" }}>
-            The pressure to decide a life-long direction at 15 or 16 is immense. Parents want security.
-            Friends have opinions. Society has expectations. And somewhere in all of that noise,
-            the student's own voice gets lost.
-          </p>
-          <p className="text-sm sm:text-base leading-relaxed" style={{ color: "#6B5E53" }}>
-            At Wabi, we create space for that voice. We don't rush, we don't judge, and we don't
-            hand you a pre-packaged answer. We help you understand yourself — and from that
-            understanding, build a future that is genuinely fulfilling.
-          </p>
-          <div className="flex justify-center pt-3">
+
+          {/* 3-Column Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {visibleCounsellors.map((counsellor) => (
+              <div
+                key={counsellor.name}
+                className="rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col bg-white group"
+              >
+                {/* Photo Area */}
+                <div className="h-52 sm:h-64 bg-gradient-to-b from-stone-100 to-stone-200/60 flex items-center justify-center overflow-hidden">
+                  <img
+                    src={counsellor.photo}
+                    alt={counsellor.name}
+                    className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                {/* Info Area — dark bottom */}
+                <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between" style={{ background: "#1C1917" }}>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-[#C9A97A] leading-none mb-1.5">
+                      {counsellor.role}
+                    </p>
+                    <h3 className="text-lg sm:text-xl font-black text-white leading-tight">
+                      {counsellor.name}
+                    </h3>
+                    <p className="text-xs font-semibold text-stone-300 mt-1 leading-snug">
+                      {counsellor.qualification}
+                    </p>
+
+                    {/* Specialization Tags */}
+                    <div className="flex flex-wrap gap-1 mt-3">
+                      {counsellor.specializations.map((spec, i) => (
+                        <span
+                          key={i}
+                          className="text-[10px] px-2 py-0.5 rounded-md bg-stone-800 text-stone-300 border border-stone-700/60 font-medium"
+                        >
+                          {spec}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* View Profile Link */}
+                  <div className="pt-3 mt-3 border-t border-stone-800">
+                    <button
+                      type="button"
+                      onClick={() => navigate("/career-mentors")}
+                      className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold transition-colors cursor-pointer border border-stone-700/80"
+                    >
+                      <span>View Full Profile</span>
+                      <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Prev / Dots / Next */}
+          <div className="flex items-center justify-center gap-4 mt-6">
             <button
-              onClick={() => navigate("/career-reports")}
-              className="flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-sm cursor-pointer transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
-              style={{ background: "#1C1917", color: "#FAF8F5" }}
+              onClick={prevCounsellor}
+              aria-label="Previous page"
+              className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-stone-300 bg-white hover:bg-stone-100 flex items-center justify-center shadow-sm transition-all hover:shadow-md cursor-pointer"
             >
-              <BookOpen className="w-4 h-4" />
-              Explore Careers
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-stone-700" />
+            </button>
+
+            <div className="flex items-center gap-1.5">
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCounsellorPage(idx)}
+                  aria-label={`Page ${idx + 1}`}
+                  className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
+                    idx === counsellorPage
+                      ? "bg-stone-800 scale-125"
+                      : "bg-stone-300 hover:bg-stone-400"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={nextCounsellor}
+              aria-label="Next page"
+              className="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-stone-300 bg-white hover:bg-stone-100 flex items-center justify-center shadow-sm transition-all hover:shadow-md cursor-pointer"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-stone-700" />
             </button>
           </div>
         </div>
