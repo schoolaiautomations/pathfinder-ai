@@ -1,5 +1,6 @@
 import type { FormData, CareerReport } from "./career-data";
 import { createClient } from "@supabase/supabase-js";
+import bcrypt from "bcryptjs";
 
 export const SUPABASE_URL = "https://jqerkjewmmpowiwwpifv.supabase.co";
 export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxZXJramV3bW1wb3dpd3dwaWZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU4OTc0NTMsImV4cCI6MjEwMTQ3MzQ1M30.z7TpLsSWGrq4bE1cRED-Pm1G2_hQaVI5vYDKBdcwFOs";
@@ -381,7 +382,7 @@ export interface CounsellorCustomisationRecord {
 export async function fetchCounsellorCustomisation(counsellorName: string): Promise<CounsellorCustomisationData | null> {
   if (!counsellorName || !counsellorName.trim()) return null;
   try {
-    const url = `${SUPABASE_URL}/rest/v1/counsellor_customisation?councellor_name=eq.${encodeURIComponent(counsellorName.trim())}&order=created_at.desc&limit=1`;
+    const url = `${SUPABASE_URL}/rest/v1/counsellor_customisation?councellor_name=ilike.${encodeURIComponent(counsellorName.trim())}&order=created_at.desc&limit=1`;
     const response = await fetch(url, {
       method: "GET",
       headers: {
@@ -412,6 +413,130 @@ export async function fetchCounsellorCustomisation(counsellorName: string): Prom
 /**
  * Fetch roadmap_basic submissions for a specific counsellor (or all if counsellorName is empty)
  */
+
+// ─── Counsellor Authentication (bcrypt-based) ─────────────────────────────────
+
+export interface CounsellorLoginResult {
+  success: boolean;
+  error?: string;
+  counsellorName?: string;
+}
+
+/**
+ * Verify counsellor login against counsellor_customisation table.
+ * Compares entered password with stored bcrypt hash.
+ */
+export async function verifyCounsellorLogin(
+  counsellorSlug: string,
+  password: string
+): Promise<CounsellorLoginResult> {
+  if (!counsellorSlug?.trim() || !password) {
+    return { success: false, error: "Username and password are required." };
+  }
+  const slug = counsellorSlug.trim().toLowerCase();
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/counsellor_customisation?councellor_name=ilike.${encodeURIComponent(slug)}&select=councellor_name,counsellor_password&limit=1`;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      return { success: false, error: "Unable to verify credentials. Please try again." };
+    }
+    const data = await response.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      return { success: false, error: "Counsellor not found. Check your username." };
+    }
+    const row = data[0];
+    const storedHash = row.counsellor_password;
+    if (!storedHash) {
+      return { success: false, error: "No password set for this account. Contact admin." };
+    }
+    
+    // Check if stored password is a bcrypt hash (starts with $2a$, $2b$, or $2y$)
+    const isBcrypt = typeof storedHash === "string" && (storedHash.startsWith("$2a$") || storedHash.startsWith("$2b$") || storedHash.startsWith("$2y$"));
+    let isMatch = false;
+    if (isBcrypt) {
+      isMatch = await bcrypt.compare(password, storedHash);
+    } else {
+      // Direct plain text fallback in case an unhashed password was inserted
+      isMatch = (password === storedHash);
+    }
+
+    if (!isMatch) {
+      return { success: false, error: "Incorrect password. Please try again." };
+    }
+    return { success: true, counsellorName: row.councellor_name };
+  } catch (err: any) {
+    console.warn("Login verification error:", err);
+    return { success: false, error: "Network error during login. Please try again." };
+  }
+}
+
+export interface ResetPasswordResult {
+  success: boolean;
+  error?: string;
+}
+
+/**
+ * Reset counsellor password. Verifies old password, then updates with new bcrypt hash.
+ */
+export async function resetCounsellorPassword(
+  counsellorSlug: string,
+  oldPassword: string,
+  newPassword: string
+): Promise<ResetPasswordResult> {
+  if (!counsellorSlug?.trim()) {
+    return { success: false, error: "Counsellor username is required." };
+  }
+  if (!oldPassword || !newPassword) {
+    return { success: false, error: "Both old and new passwords are required." };
+  }
+  if (newPassword.length < 6) {
+    return { success: false, error: "New password must be at least 6 characters." };
+  }
+  const slug = counsellorSlug.trim().toLowerCase();
+
+  // Step 1: Verify old password
+  const loginResult = await verifyCounsellorLogin(slug, oldPassword);
+  if (!loginResult.success) {
+    return { success: false, error: loginResult.error || "Current password is incorrect." };
+  }
+
+  // Step 2: Hash new password with bcrypt (salt rounds = 12, matching existing hashes)
+  const salt = await bcrypt.genSalt(12);
+  const newHash = await bcrypt.hash(newPassword, salt);
+
+  // Step 3: Update in Supabase
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/counsellor_customisation?councellor_name=ilike.${encodeURIComponent(slug)}`;
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({ counsellor_password: newHash }),
+    });
+    if (!response.ok) {
+      const errBody = await response.text();
+      console.warn("Password update failed:", response.status, errBody);
+      return { success: false, error: "Failed to update password in database." };
+    }
+    return { success: true };
+  } catch (err: any) {
+    console.warn("Password reset error:", err);
+    return { success: false, error: "Network error during password update." };
+  }
+}
+
+
 export async function fetchRoadmapBasicByCounsellor(counsellorName?: string): Promise<RoadmapBasicRow[]> {
   try {
     const url = counsellorName?.trim()

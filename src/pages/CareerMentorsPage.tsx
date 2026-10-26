@@ -18,6 +18,7 @@ import sivaSai from "@/lib/p_sivasai.jpeg";
 import subhashReddy from "@/lib/v_subash_reddy.jpeg";
 import sravyaVempati from "@/lib/sri_sravya_vempati.jpeg";
 import ravikanthVarma from "@/lib/ravikanth_varma.jpeg";
+import satyaNagala from "@/lib/satya_nagala_pic.png";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
 import {
   Dialog,

@@ -51,6 +51,8 @@ import {
   fetchRoadmapBasicByCounsellor,
   fetchBookCouncellingAll,
   fetchCounsellorCustomisation,
+  verifyCounsellorLogin,
+  resetCounsellorPassword,
 } from "@/lib/supabase";
 import type { RoadmapBasicRow, BookCouncellingRow } from "@/lib/supabase";
 import { StudentProfileView } from "@/components/counsellor/StudentProfileView";
@@ -62,8 +64,6 @@ import { CourseCurriculumView } from "@/components/counsellor/CourseCurriculumVi
 import { CareersTreeView } from "@/components/counsellor/CareersTreeView";
 import { DEFAULT_CAREER_OPTIONS } from "@/lib/roadmap-data";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
-
-const COUNSELLOR_PASSWORD = "wabi123";
 
 // Class Teachers & Total Strengths Rosters
 export interface ClassTeacherRosterItem {
@@ -598,6 +598,17 @@ const CounsellorDashboard = () => {
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+  // Reset password state
+  const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
+  const [resetOldPassword, setResetOldPassword] = useState("");
+  const [resetNewPassword, setResetNewPassword] = useState("");
+  const [resetConfirmPassword, setResetConfirmPassword] = useState("");
+  const [resetError, setResetError] = useState("");
+  const [resetSuccess, setResetSuccess] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+  const [showResetOld, setShowResetOld] = useState(false);
+  const [showResetNew, setShowResetNew] = useState(false);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
@@ -607,38 +618,66 @@ const CounsellorDashboard = () => {
       setLoginError("Please enter your counsellor name (URL slug).");
       return;
     }
-    if (password !== COUNSELLOR_PASSWORD) {
-      setLoginError("Incorrect password. Please try again.");
+    if (!password) {
+      setLoginError("Please enter your password.");
       return;
     }
 
     setIsLoggingIn(true);
     try {
-      // Fetch submissions to check if councellor_name exists in roadmap_basic
-      const allSubs = await fetchRoadmapBasicByCounsellor();
-      const normalize = (s: string | null) => (s || "").toLowerCase().replace(/[\s_-]+/g, "");
-
-      const matchedRow = allSubs.find((row) => {
-        if (!row.councellor_name) return false;
-        const c = row.councellor_name.toLowerCase().trim();
-        return normalize(c) === normalize(trimmedUser) || c === trimmedUser;
-      });
-
-      if (!matchedRow) {
-        setLoginError("User not found.");
+      const result = await verifyCounsellorLogin(trimmedUser, password);
+      if (!result.success) {
+        setLoginError(result.error || "Login failed.");
         setIsLoggingIn(false);
         return;
       }
 
-      const activeSlug = matchedRow.councellor_name || trimmedUser;
+      const activeSlug = result.counsellorName || trimmedUser;
       sessionStorage.setItem("counsellor_logged_in", activeSlug);
       setUsername(activeSlug);
       setIsLoggedIn(true);
       toast({ title: "Welcome!", description: `Logged in as ${activeSlug}` });
     } catch (err) {
-      setLoginError("Unable to verify user. Please try again.");
+      setLoginError("Unable to verify credentials. Please try again.");
     } finally {
       setIsLoggingIn(false);
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setResetError("");
+    setResetSuccess(false);
+
+    if (!resetOldPassword || !resetNewPassword) {
+      setResetError("All fields are required.");
+      return;
+    }
+    if (resetNewPassword !== resetConfirmPassword) {
+      setResetError("New passwords do not match.");
+      return;
+    }
+    if (resetNewPassword.length < 6) {
+      setResetError("New password must be at least 6 characters.");
+      return;
+    }
+
+    setIsResetting(true);
+    try {
+      const result = await resetCounsellorPassword(username, resetOldPassword, resetNewPassword);
+      if (!result.success) {
+        setResetError(result.error || "Password reset failed.");
+      } else {
+        setResetSuccess(true);
+        setResetOldPassword("");
+        setResetNewPassword("");
+        setResetConfirmPassword("");
+        toast({ title: "Password Updated", description: "Your password has been changed successfully." });
+      }
+    } catch (err) {
+      setResetError("Network error. Please try again.");
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -686,13 +725,31 @@ const CounsellorDashboard = () => {
           </div>
 
           {isLoggedIn ? (
-            <button
-              onClick={handleLogout}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-700 hover:text-stone-950 px-3.5 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all cursor-pointer shadow-2xs shrink-0"
-            >
-              <LogOut className="w-3.5 h-3.5 text-stone-500" />
-              <span>Logout</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setResetError("");
+                  setResetSuccess(false);
+                  setResetOldPassword("");
+                  setResetNewPassword("");
+                  setResetConfirmPassword("");
+                  setIsResetPasswordOpen(true);
+                }}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-700 hover:text-stone-950 px-3 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all cursor-pointer shadow-2xs shrink-0"
+              >
+                <Lock className="w-3.5 h-3.5 text-stone-500" />
+                <span className="hidden sm:inline">Change Password</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-700 hover:text-stone-950 px-3.5 py-1.5 rounded-xl border border-stone-200 bg-white hover:bg-stone-50 transition-all cursor-pointer shadow-2xs shrink-0"
+              >
+                <LogOut className="w-3.5 h-3.5 text-stone-500" />
+                <span>Logout</span>
+              </button>
+            </div>
           ) : (
             <Link
               to="/"
@@ -778,6 +835,27 @@ const CounsellorDashboard = () => {
                     )}
                   </Button>
                 </form>
+
+                <div className="text-center mt-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!username.trim()) {
+                        setLoginError("Please enter your counsellor name (URL slug) first.");
+                        return;
+                      }
+                      setResetError("");
+                      setResetSuccess(false);
+                      setResetOldPassword("");
+                      setResetNewPassword("");
+                      setResetConfirmPassword("");
+                      setIsResetPasswordOpen(true);
+                    }}
+                    className="text-xs font-semibold text-stone-500 hover:text-[#7C5C3E] underline underline-offset-2 cursor-pointer transition-colors"
+                  >
+                    Forgot / Reset Password?
+                  </button>
+                </div>
               </div>
             </div>
           ) : (
@@ -1082,10 +1160,12 @@ const CounsellorDashboard = () => {
                       return acc;
                     }, {});
 
+                    const isKaranamRaviteja = username.toLowerCase().trim() === "karanam-raviteja";
+
                     const allSchoolKeys = new Set([
                       ...Object.keys(schoolCounts),
                       ...customSchools,
-                      ...Object.values(SCHOOL_ROSTERS).map((r) => r.schoolName),
+                      ...(isKaranamRaviteja ? Object.values(SCHOOL_ROSTERS).map((r) => r.schoolName) : []),
                     ]);
                     const uniqueSchools = Array.from(allSchoolKeys).filter(Boolean).sort((a, b) => a.localeCompare(b));
 
@@ -1603,7 +1683,7 @@ const CounsellorDashboard = () => {
                         </div>
 
                         {/* ── TWO ACTION CARDS: 1. CAREER ANALYTICS, 2. CLASS TEACHERS & SCHOOL ROSTERS ── */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3.5">
+                        <div className={`grid grid-cols-1 ${isKaranamRaviteja ? "lg:grid-cols-2" : ""} gap-3.5`}>
                           {/* Card 1: Career Analytics & Pie Charts */}
                           <div
                             className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-3xl border shadow-xs bg-white"
@@ -1633,7 +1713,8 @@ const CounsellorDashboard = () => {
                             </button>
                           </div>
 
-                          {/* Card 2: Single Unified Class Teachers & School Rosters Card */}
+{/* Card 2: Single Unified Class Teachers & School Rosters Card (karanam-raviteja only) */}
+                          {isKaranamRaviteja && (
                           <div
                             className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 p-4 sm:p-5 rounded-3xl border shadow-xs bg-white"
                             style={{ borderColor: "#E0D6CA" }}
@@ -1675,6 +1756,7 @@ const CounsellorDashboard = () => {
                               </button>
                             </div>
                           </div>
+                          )}
                         </div>
 
                         {/* ── DIALOG POPUP: CAREER ANALYTICS & PIE CHARTS ── */}
@@ -1694,7 +1776,8 @@ const CounsellorDashboard = () => {
                           </DialogContent>
                         </Dialog>
 
-                        {/* ── DIALOG POPUP: VERTICALLY ALIGNED FOR MOBILE ── */}
+                        {/* ── DIALOG POPUP: VERTICALLY ALIGNED FOR MOBILE (karanam-raviteja only) ── */}
+                        {isKaranamRaviteja && (
                         <Dialog open={isRosterModalOpen} onOpenChange={setIsRosterModalOpen}>
                           <DialogContent
                             showCloseButton={false}
@@ -1990,6 +2073,7 @@ const CounsellorDashboard = () => {
                             </div>
                           </DialogContent>
                         </Dialog>
+                        )}
 
                         {/* Tabs */}
                         <div className="flex gap-1 p-1 rounded-xl" style={{ background: "#E8DFD0" }}>
@@ -2293,6 +2377,112 @@ const CounsellorDashboard = () => {
           <span>© {new Date().getFullYear()} Wabi Resolutions &amp; Career Guidance</span>
         </div>
       </footer>
+
+      {/* ─── RESET PASSWORD DIALOG ─── */}
+      <Dialog open={isResetPasswordOpen} onOpenChange={setIsResetPasswordOpen}>
+        <DialogContent className="sm:max-w-md rounded-2xl" style={{ background: "#FAF8F5" }}>
+          <DialogHeader>
+            <DialogTitle className="text-lg font-extrabold text-stone-900">Reset Password</DialogTitle>
+            <DialogDescription className="text-xs text-stone-500">
+              Change password for counsellor <code className="font-mono bg-stone-100 px-1 py-0.5 rounded text-[11px] text-[#7C5C3E] font-bold">{username || "your account"}</code>
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleResetPassword} className="space-y-3 mt-2">
+            {resetError && (
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs font-medium">
+                <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                <span>{resetError}</span>
+              </div>
+            )}
+            {resetSuccess && (
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-green-50 border border-green-200 text-green-800 text-xs font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                <span>Password updated and encrypted with bcrypt successfully!</span>
+              </div>
+            )}
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-stone-700">Current Password</label>
+              <div className="relative">
+                <Input
+                  type={showResetOld ? "text" : "password"}
+                  value={resetOldPassword}
+                  onChange={(e) => setResetOldPassword(e.target.value)}
+                  placeholder="Enter current password"
+                  className="h-10 rounded-xl border-stone-300 text-sm pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowResetOld(!showResetOld)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 cursor-pointer"
+                >
+                  {showResetOld ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-stone-700">New Password</label>
+              <div className="relative">
+                <Input
+                  type={showResetNew ? "text" : "password"}
+                  value={resetNewPassword}
+                  onChange={(e) => setResetNewPassword(e.target.value)}
+                  placeholder="Enter new password (min 6 characters)"
+                  className="h-10 rounded-xl border-stone-300 text-sm pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowResetNew(!showResetNew)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 cursor-pointer"
+                >
+                  {showResetNew ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-stone-700">Confirm New Password</label>
+              <Input
+                type="password"
+                value={resetConfirmPassword}
+                onChange={(e) => setResetConfirmPassword(e.target.value)}
+                placeholder="Re-enter new password"
+                className="h-10 rounded-xl border-stone-300 text-sm"
+              />
+            </div>
+
+            <div className="flex gap-2 pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsResetPasswordOpen(false)}
+                className="flex-1 h-10 rounded-xl text-xs font-bold cursor-pointer"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={isResetting}
+                className="flex-1 h-10 rounded-xl text-xs font-bold cursor-pointer"
+                style={{ background: "#1C1917", color: "#FAF8F5" }}
+              >
+                {isResetting ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+                    Updating...
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-3.5 h-3.5 mr-1.5" />
+                    Save Password
+                  </>
+                )}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 };

@@ -37,6 +37,7 @@ import sivaSai from "@/lib/p_sivasai.jpeg";
 import subhashReddy from "@/lib/v_subash_reddy.jpeg";
 import sravyaVempati from "@/lib/sri_sravya_vempati.jpeg";
 import ravikanthVarma from "@/lib/ravikanth_varma.jpeg";
+import satyaNagala from "@/lib/satya_nagala_pic.png";
 
 const counsellors = [
   {
@@ -59,6 +60,13 @@ const counsellors = [
     qualification: "B.Tech Mechanical • M.Sc. Psychology",
     role: "District Career Counsellor",
     specializations: ["Aptitude Mapping", "Career Planning"],
+  },
+  {
+    name: "Satya Nagala",
+    photo: satyaNagala,
+    qualification: "M.Sc. Psychology • PG Dip. Child & Adolescent Guidance",
+    role: "Behavioral Therapist & Mental Health Counsellor",
+    specializations: ["Child & Adolescent Counselling", "Behavioral Therapy"],
   },
   {
     name: "Dr. V. Subhash Reddy",
