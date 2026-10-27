@@ -762,8 +762,8 @@ const CounsellorDashboard = () => {
         </div>
       </header>
 
-      <div className="flex-1 py-6 sm:py-10 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto">
+      <div className="flex-1 py-6 sm:py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8">
           {!isLoggedIn ? (
             /* ─── LOGIN FORM ──────────────────────────────────────────────── */
             <div className="flex items-center justify-center min-h-[60vh]">

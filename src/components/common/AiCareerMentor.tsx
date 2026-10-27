@@ -23,6 +23,7 @@ import { askCareerMentor, transcribeAudioBlob } from "@/lib/ai-mentor";
 interface AiCareerMentorProps {
   onOpenBooking?: () => void;
   careerContext?: string;
+  schoolLogoUrl?: string;
 }
 
 interface ChatMessage {
@@ -52,7 +53,7 @@ const ENGAGING_CAREER_TIPS = [
   { icon: "🎯", text: "Did you know? Our platform tracks 54 in-depth Four-Circles career blueprints for 8th-10th graders." },
 ];
 
-export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking, careerContext }) => {
+export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking, careerContext, schoolLogoUrl }) => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const lastInputModeRef = useRef<"text" | "voice">("text");
@@ -423,7 +424,20 @@ export const AiCareerMentor: React.FC<AiCareerMentorProps> = ({ onOpenBooking, c
           </div>
 
           {/* Chat Messages Body */}
-          <div className="flex-1 p-3.5 overflow-y-auto space-y-3 bg-[#FAF8F5]">
+          <div className="flex-1 p-3.5 overflow-y-auto space-y-3 bg-[#FAF8F5] relative">
+            {/* School Logo Watermark */}
+            {schoolLogoUrl && (
+              <div
+                className="pointer-events-none absolute inset-0 flex items-center justify-center select-none overflow-hidden z-0"
+                aria-hidden="true"
+              >
+                <img
+                  src={schoolLogoUrl}
+                  alt="School Watermark"
+                  className="w-64 h-64 object-contain opacity-[0.07] filter grayscale mix-blend-multiply"
+                />
+              </div>
+            )}
             {messages.map((msg) => {
               const isUser = msg.sender === "user";
               const showBookingBtn = !isUser && mentionsCounselling(msg.text);

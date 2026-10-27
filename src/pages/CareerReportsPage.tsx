@@ -1252,7 +1252,7 @@ export default function CareerReportsPage() {
         />
 
         {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
-        <AiCareerMentor onOpenBooking={handleOpenBookingModal} careerContext={selectedCareer.label} />
+        <AiCareerMentor onOpenBooking={handleOpenBookingModal} careerContext={selectedCareer.label} schoolLogoUrl={verifiedSchool?.logo_url} />
       </main>
     );
   }
@@ -1372,11 +1372,20 @@ export default function CareerReportsPage() {
           <div className="shrink-0 flex items-center gap-4 sm:gap-6 justify-center md:justify-end w-full md:w-auto pt-1 md:pt-0">
             {verifiedSchool?.logo_url && (
               <div className="flex items-center justify-center shrink-0">
-                <img
-                  src={verifiedSchool.logo_url}
-                  alt={verifiedSchool.school_name || verifiedSchool.school_id}
-                  className="h-16 w-16 sm:h-24 sm:w-24 md:h-32 md:w-32 object-contain hover:scale-105 transition-transform"
-                />
+                {/* Circular gradient border ring — image sits directly against it */}
+                <div
+                  className="p-[3px] rounded-full shrink-0"
+                  style={{
+                    background: "linear-gradient(135deg, #C9A97A 0%, #F5E6C8 35%, #7C5C3E 65%, #C9A97A 100%)",
+                    boxShadow: "0 0 0 1px rgba(201,169,122,0.25), 0 4px 20px rgba(124,92,62,0.20), 0 1px 4px rgba(0,0,0,0.08)",
+                  }}
+                >
+                  <img
+                    src={verifiedSchool.logo_url}
+                    alt={verifiedSchool.school_name || verifiedSchool.school_id}
+                    className="h-14 w-14 sm:h-20 sm:w-20 md:h-28 md:w-28 rounded-full object-cover hover:scale-105 transition-transform duration-300 block"
+                  />
+                </div>
               </div>
             )}
 
@@ -1650,7 +1659,7 @@ export default function CareerReportsPage() {
         />
 
       {/* AI Career Mentor Floating Toggle Popup (Bottom Right) */}
-      <AiCareerMentor onOpenBooking={handleOpenBookingModal} careerContext="Explore All Careers" />
+      <AiCareerMentor onOpenBooking={handleOpenBookingModal} careerContext="Explore All Careers" schoolLogoUrl={verifiedSchool?.logo_url} />
     </main>
   );
 }
