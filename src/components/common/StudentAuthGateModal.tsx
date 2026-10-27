@@ -57,6 +57,7 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerifyingSchool, setIsVerifyingSchool] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
 
   // School ID input state
   const [inputSchoolId, setInputSchoolId] = useState("");
@@ -95,14 +96,16 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
     try {
       const res = await verifySchoolId(cleanId);
       if (res.success && res.school) {
-        onSchoolVerified(res.school);
+        setShowCelebration(true);
         toast({
-          title: "School Verified!",
-          description: `School logo set as background for ${res.school.school_name || res.school.school_id}!`,
+          title: "✅ Access Granted!",
+          description: `Welcome to ${res.school.school_name || res.school.school_id} Career Portal!`,
         });
-        if (onClose && user) {
-          onClose();
-        }
+        // Show celebration for 2.5s, then transition to next stage
+        setTimeout(() => {
+          onSchoolVerified(res.school!);
+          setShowCelebration(false);
+        }, 2500);
       } else {
         setErrorMessage(
           res.error || `School ID "${cleanId}" was not found. Please verify with your school coordinator.`
@@ -201,7 +204,8 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open && onClose && user && verifiedSchool) onClose(); }}>
       <DialogContent
-        className="max-w-md bg-white border border-stone-200 text-stone-900 rounded-3xl p-6 sm:p-7 shadow-2xl relative"
+        showCloseButton={false}
+        className="max-w-md w-[92vw] sm:w-full max-h-[90vh] overflow-y-auto bg-white border border-stone-200 text-stone-900 rounded-3xl p-6 sm:p-7 shadow-2xl"
         onPointerDownOutside={(e) => {
           if (!verifiedSchool || !user) e.preventDefault();
         }}
@@ -220,19 +224,60 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
           </button>
         )}
 
+        {/* ── Celebration Animation Overlay (above all stages) ── */}
+        {showCelebration && (
+          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/95 rounded-3xl animate-in fade-in duration-300">
+            <div className="relative">
+              <div className="absolute inset-0 -m-16">
+                {Array.from({ length: 20 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="absolute w-2 h-2 rounded-full"
+                    style={{
+                      background: ['#C9A97A', '#7C5C3E', '#34D399', '#3B82F6', '#F59E0B', '#EC4899'][i % 6],
+                      top: '50%',
+                      left: '50%',
+                      animation: `confetti-burst 1.2s ease-out ${i * 0.05}s forwards`,
+                      transform: `rotate(${i * 18}deg)`,
+                    }}
+                  />
+                ))}
+              </div>
+              <div className="w-20 h-20 rounded-full bg-emerald-100 border-2 border-emerald-300 flex items-center justify-center shadow-lg animate-in zoom-in-50 duration-500">
+                <CheckCircle2 className="w-10 h-10 text-emerald-600" />
+              </div>
+            </div>
+            <h3 className="text-xl font-extrabold text-stone-900 mt-4 animate-in slide-in-from-bottom-2 duration-500">Access Granted!</h3>
+            <p className="text-sm text-stone-500 font-medium mt-1 animate-in slide-in-from-bottom-2 duration-500 delay-100">Welcome to the Career Guidance Portal</p>
+            <style>{`
+              @keyframes confetti-burst {
+                0% { transform: translate(0, 0) scale(1); opacity: 1; }
+                100% { transform: translate(var(--tx, 60px), var(--ty, -80px)) scale(0); opacity: 0; }
+              }
+            `}</style>
+            <style>{`
+              ${Array.from({ length: 20 }).map((_, i) => {
+                const angle = (i * 18) * Math.PI / 180;
+                const dist = 50 + Math.random() * 60;
+                return `span:nth-child(${i + 1}) { --tx: ${Math.cos(angle) * dist}px; --ty: ${Math.sin(angle) * dist - 30}px; }`;
+              }).join('\n')}
+            `}</style>
+          </div>
+        )}
+
         {/* ── STAGE 0: ENTER SCHOOL ID (BEFORE SIGN IN / TO SET BACKGROUND LOGO) ── */}
         {!verifiedSchool ? (
           <div className="space-y-5 text-left">
             <DialogHeader className="space-y-2 text-left">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5F1EC] border border-[#E0D6CA] text-[#7C5C3E] text-xs font-bold uppercase tracking-wider w-fit">
-                <SchoolIcon className="w-3.5 h-3.5 text-[#C9A97A]" />
-                School Access &amp; Logo Setup
+                <Lock className="w-3.5 h-3.5 text-[#C9A97A]" />
+                Authorized Access Only
               </div>
               <DialogTitle className="text-xl sm:text-2xl font-extrabold text-stone-900 tracking-tight leading-snug">
-                Enter Your School ID
+                Enter Your Access Token
               </DialogTitle>
               <DialogDescription className="text-xs sm:text-sm text-stone-500 font-medium leading-relaxed">
-                Enter your School ID to activate your school's branded background and portal access across Explore Careers.
+                Enter the access token provided by your school to explore career reports and guidance resources.
               </DialogDescription>
             </DialogHeader>
 
@@ -246,19 +291,19 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
             <form onSubmit={handleVerifySchool} className="space-y-3 pt-1">
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-stone-700 flex items-center gap-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-[#7C5C3E]" />
-                  School ID or Image URL *
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#7C5C3E]" />
+                  School Access Token *
                 </label>
                 <Input
                   required
                   autoFocus
                   value={inputSchoolId}
                   onChange={(e) => setInputSchoolId(e.target.value)}
-                  placeholder="e.g. DPS101, DEMO, or paste Logo URL"
+                  placeholder="Enter your school token"
                   className="h-11 rounded-xl text-sm font-bold bg-stone-50 border-stone-200 focus:bg-white"
                 />
                 <p className="text-[11px] text-stone-400 font-medium">
-                  Matches your Supabase <code className="bg-stone-100 px-1 py-0.5 rounded text-stone-600 font-mono">schools</code> table. Or enter <code className="bg-stone-100 px-1 py-0.5 rounded text-stone-600 font-bold">DEMO</code> / direct image URL to test immediately.
+                  Contact your school coordinator if you have not received your access token.
                 </p>
               </div>
 
@@ -272,7 +317,7 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
                     <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                   ) : (
                     <>
-                      <span>Verify &amp; Set Background Logo</span>
+                      <span>Verify Access</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
@@ -292,18 +337,18 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
           </div>
         ) : !user ? (
           /* ── STAGE 1: GOOGLE SIGN-IN REQUIRED ── */
-          <div className="space-y-5 text-left">
-            {/* Verified School Banner & Background Preview */}
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-amber-50/70 border border-amber-200/80">
+          <div className="space-y-4 text-left">
+            {/* Verified School Banner */}
+            <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-amber-50/70 border border-amber-200/80">
               <img
                 src={verifiedSchool.logo_url}
                 alt="School Logo"
-                className="h-9 max-w-[85px] object-contain rounded-md shrink-0 bg-white p-1 border border-amber-100 shadow-2xs"
+                className="h-8 max-w-[70px] object-contain rounded-md shrink-0 bg-white p-1 border border-amber-100 shadow-2xs"
               />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-800">
                   <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                  <span>Verified School &amp; Background Active</span>
+                  <span>Verified &amp; Active</span>
                 </div>
                 <div className="text-xs font-extrabold text-stone-900 truncate">
                   {verifiedSchool.school_name || verifiedSchool.school_id}
@@ -319,42 +364,24 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
               </button>
             </div>
 
-            <DialogHeader className="space-y-2 text-left">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F5F1EC] border border-[#E0D6CA] text-[#7C5C3E] text-xs font-bold uppercase tracking-wider w-fit">
-                <Lock className="w-3.5 h-3.5 text-[#C9A97A]" />
-                Explore Careers Access
-              </div>
-              <DialogTitle className="text-xl sm:text-2xl font-extrabold text-stone-900 tracking-tight leading-snug">
-                Sign in to Explore Careers
+            <DialogHeader className="space-y-1.5 text-left">
+              <DialogTitle className="text-lg sm:text-xl font-extrabold text-stone-900 tracking-tight leading-snug">
+                Sign in to Continue
               </DialogTitle>
-              <DialogDescription className="text-xs sm:text-sm text-stone-500 font-medium leading-relaxed">
-                Sign in with your Google account to unlock free, unlimited access to 55+ in-depth career blueprints, salary guides, and educational roadmaps.
+              <DialogDescription className="text-xs text-stone-500 font-medium leading-relaxed">
+                Sign in with your Google account to access career reports and guidance resources.
               </DialogDescription>
             </DialogHeader>
 
-            {/* Feature highlights */}
-            <div className="space-y-2 py-1">
-              {[
-                "Complete 4-Circles career evaluation & roadmaps",
-                "Intermediate stream choices (MPC, BiPC, CEC, etc.)",
-                "Telugu & English audio explanations & salary growth insights",
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-stone-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-
             {errorMessage && (
-              <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2">
+              <div className="p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{errorMessage}</span>
               </div>
             )}
 
             {/* Google Sign-In Button */}
-            <div className="pt-2">
+            <div className="pt-1">
               <Button
                 type="button"
                 onClick={handleGoogleSignIn}
@@ -387,7 +414,7 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
               </Button>
             </div>
 
-            <div className="flex flex-col items-center gap-2 pt-1">
+            <div className="flex flex-col items-center gap-1 pt-1">
               <Link
                 to="/"
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-500 hover:text-stone-900 transition-colors cursor-pointer py-1"
@@ -395,9 +422,6 @@ export const StudentAuthGateModal: React.FC<StudentAuthGateModalProps> = ({
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Return to Home</span>
               </Link>
-              <p className="text-[11px] text-center text-stone-400 font-medium">
-                Secure authentication via Google. We never share your data.
-              </p>
             </div>
           </div>
         ) : (

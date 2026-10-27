@@ -1528,89 +1528,63 @@ export async function verifySchoolId(
 ): Promise<{ success: boolean; school?: SchoolRecord; error?: string }> {
   const cleanId = (inputSchoolId || "").trim();
   if (!cleanId) {
-    return { success: false, error: "Please enter a School ID." };
-  }
-
-  // 1. Direct Image URL support (convenient for instant testing with any image)
-  if (cleanId.startsWith("http://") || cleanId.startsWith("https://")) {
-    const directSchool: SchoolRecord = {
-      school_id: "CUSTOM",
-      school_name: "School Portal",
-      logo_url: cleanId,
-    };
-    setVerifiedSchoolSession(directSchool);
-    return { success: true, school: directSchool };
-  }
-
-  // 2. Built-in Demo IDs for instant local testing
-  const DEMO_SCHOOLS: Record<string, SchoolRecord> = {
-    "DEMO": {
-      school_id: "DEMO",
-      school_name: "Demo High School",
-      logo_url: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=300&h=300&fit=crop&q=80",
-    },
-    "DPS101": {
-      school_id: "DPS101",
-      school_name: "Delhi Public School",
-      logo_url: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=300&h=300&fit=crop&q=80",
-    },
-    "HPS": {
-      school_id: "HPS",
-      school_name: "Hyderabad Public School",
-      logo_url: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=300&h=300&fit=crop&q=80",
-    },
-  };
-
-  const demoMatch = DEMO_SCHOOLS[cleanId.toUpperCase()];
-  if (demoMatch) {
-    setVerifiedSchoolSession(demoMatch);
-    return { success: true, school: demoMatch };
+    return { success: false, error: "Please enter your access token." };
   }
 
   try {
-    // Case-insensitive query against schools table
+    // 1. Look up in schools table first (case-insensitive)
     const { data, error } = await supabase
       .from("schools")
       .select("id, school_id, school_name, logo_url, created_at")
       .ilike("school_id", cleanId)
       .maybeSingle();
 
-    if (error) {
-      console.warn("Error querying schools table from Supabase:", error.message);
-      if (error.code === "PGRST205") {
-        return {
-          success: false,
-          error: "Table 'schools' is not created in Supabase yet. Please execute the SQL in Supabase SQL Editor, or enter 'DEMO' / direct logo URL to preview.",
+    if (error && error.code !== "PGRST116") {
+      console.warn("Error querying schools table:", error.message);
+    }
+
+    if (data) {
+      const school: SchoolRecord = {
+        id: data.id,
+        school_id: data.school_id,
+        school_name: data.school_name || data.school_id,
+        logo_url: data.logo_url,
+        created_at: data.created_at,
+      };
+      setVerifiedSchoolSession(school);
+      return { success: true, school };
+    }
+
+    // 2. Fallback: check counsellor_customisation table (counsellor name as token)
+    try {
+      const { data: counsellorData, error: counsellorError } = await supabase
+        .from("counsellor_customisation")
+        .select("councellor_name")
+        .ilike("councellor_name", cleanId)
+        .maybeSingle();
+
+      if (!counsellorError && counsellorData) {
+        const school: SchoolRecord = {
+          school_id: counsellorData.councellor_name,
+          school_name: "Career Guidance Portal",
+          logo_url: "/wabi_logo.jpeg",
         };
+        setVerifiedSchoolSession(school);
+        return { success: true, school };
       }
-      return {
-        success: false,
-        error: "Unable to verify School ID: " + error.message,
-      };
+    } catch (fallbackErr) {
+      console.warn("Counsellor token fallback check failed:", fallbackErr);
     }
 
-    if (!data) {
-      return {
-        success: false,
-        error: "School ID \"" + cleanId + "\" was not found in the database. Please verify with your school coordinator.",
-      };
-    }
-
-    const school: SchoolRecord = {
-      id: data.id,
-      school_id: data.school_id,
-      school_name: data.school_name || data.school_id,
-      logo_url: data.logo_url,
-      created_at: data.created_at,
+    return {
+      success: false,
+      error: `Token "${cleanId}" was not recognized. Please check with your school coordinator or counsellor for the correct access token.`,
     };
-
-    setVerifiedSchoolSession(school);
-    return { success: true, school };
   } catch (err: any) {
     console.error("Exception during verifySchoolId:", err);
     return {
       success: false,
-      error: err?.message || "Network error while checking School ID. Please try again.",
+      error: err?.message || "Unable to verify token. Please check your internet connection and try again.",
     };
   }
 }
