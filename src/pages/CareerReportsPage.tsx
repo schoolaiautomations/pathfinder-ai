@@ -48,6 +48,7 @@ import {
 
 import type { CareerRoadmap } from "@/components/common/CareerRoadmapModal";
 import { StudentAuthGateModal } from "@/components/common/StudentAuthGateModal";
+import { CareerSimulationModal } from "@/components/common/CareerSimulationModal";
 import { AiCareerMentor } from "@/components/common/AiCareerMentor";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import {
@@ -458,6 +459,7 @@ export default function CareerReportsPage() {
   const [showBookingPopup, setShowBookingPopup] = useState(false);
   const [popupVariationIndex, setPopupVariationIndex] = useState(0);
   const [roadmapCareer, setRoadmapCareer] = useState<CareerRoadmap | null>(null);
+  const [isSimulationOpen, setIsSimulationOpen] = useState(false);
   const [popupCancelCount, setPopupCancelCount] = useState(0);
   const popupTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -958,8 +960,26 @@ export default function CareerReportsPage() {
               </button>
             </div>
 
-            {/* Roadmap Icon Button + Audio Button grouped together on same line */}
+            {/* Roadmap Icon Button + Simulation Button + Audio Button grouped together on same line */}
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {/* Simulation Game Button (Doctor & Nurse) */}
+              {(selectedCareer.id === "doctor" || selectedCareer.id === "nurse") && (
+                <button
+                  type="button"
+                  onClick={() => setIsSimulationOpen(true)}
+                  className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl font-black text-[11px] sm:text-xs bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white shadow-xs transition-all cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                  title={`Play A Day in the Life ${selectedCareer.label} Simulation`}
+                >
+                  <Gamepad2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-200" />
+                  <span className="hidden sm:inline">
+                    {language === "te" ? "సిమ్యులేషన్ ఆడండి 🎮" : "Play Simulation 🎮"}
+                  </span>
+                  <span className="sm:hidden">
+                    {language === "te" ? "సిమ్యులేషన్" : "Simulation"}
+                  </span>
+                </button>
+              )}
+
               {CAREER_ROADMAP_DATA[selectedCareer.id] && (
                 <button
                   type="button"
@@ -973,35 +993,28 @@ export default function CareerReportsPage() {
               )}
 
               {audioUrl ? (
-                <div className="flex items-center gap-1.5 sm:gap-2 bg-amber-50/90 border border-amber-300/80 rounded-2xl px-2 sm:px-3 py-1 sm:py-1.5 shadow-2xs shrink-0">
+                <div className="flex items-center gap-1.5 sm:gap-2 bg-amber-50/90 border border-amber-300/80 rounded-xl sm:rounded-2xl p-0.5 sm:p-1 shadow-2xs shrink-0">
                   <button
                     type="button"
                     onClick={togglePlayAudio}
                     disabled={isAudioLoading}
-                    className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl font-black text-xs transition-all shadow-xs cursor-pointer ${
+                    className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center transition-all shadow-xs cursor-pointer ${
                       isPlaying
                         ? "bg-amber-600 text-white animate-pulse"
-                        : "bg-amber-900 hover:bg-amber-950 text-white hover:scale-103"
+                        : "bg-amber-900 hover:bg-amber-950 text-white hover:scale-105 active:scale-95"
                     }`}
                     title={isPlaying ? "Pause Audio" : "Listen to Career Explanation Audio"}
+                    aria-label={isPlaying ? "Pause Audio" : "Listen to Career Explanation Audio"}
                   >
                     {isPlaying ? (
-                      <>
-                        <Pause className="w-3.5 h-3.5 fill-current" />
-                        <span className="hidden min-[360px]:inline">Pause Audio</span>
-                        <span className="min-[360px]:hidden">Pause</span>
-                      </>
+                      <Pause className="w-3.5 h-3.5 fill-current" />
                     ) : (
-                      <>
-                        <Play className="w-3.5 h-3.5 fill-current" />
-                        <span className="hidden min-[360px]:inline">Listen Audio</span>
-                        <span className="min-[360px]:hidden">Audio</span>
-                      </>
+                      <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                     )}
                   </button>
 
                   {/* Duration / Progress counter */}
-                  <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-amber-900 pr-1">
+                  <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-bold text-amber-900 px-1.5">
                     <Headphones className="w-3.5 h-3.5 text-amber-700" />
                     <span>
                       {formatTime(audioCurrentTime)} / {formatTime(audioDuration)}
@@ -1129,37 +1142,92 @@ export default function CareerReportsPage() {
                   subtitle: "Real routine, hours & work culture",
                   preview: "Realistic hour-by-hour day in the life, field or office duties, pressure points, career growth ladder, work-life balance realities and practitioner interview insights.",
                 },
-              ].map((card) => (
-                <div
-                  key={card.title}
-                  className="relative bg-white/70 border border-stone-200/80 rounded-2xl p-5 space-y-3 overflow-hidden"
-                >
-                  {/* Card Header */}
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-xl bg-stone-100 border border-stone-200/60 flex items-center justify-center shrink-0">
-                        <card.icon className="w-4.5 h-4.5 text-stone-400" />
+              ].map((card) => {
+                const hasSimulationCard =
+                  card.title.includes("Daily Life") &&
+                  (selectedCareer.id === "doctor" || selectedCareer.id === "nurse");
+
+                if (hasSimulationCard) {
+                  const isNurseCareer = selectedCareer.id === "nurse";
+                  return (
+                    <div
+                      key={card.title}
+                      onClick={() => setIsSimulationOpen(true)}
+                      className="relative bg-gradient-to-br from-amber-50/80 via-white to-emerald-50/50 border-2 border-emerald-300 rounded-2xl p-5 space-y-3 overflow-hidden cursor-pointer shadow-xs hover:shadow-md hover:scale-[1.01] transition-all group"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-300 flex items-center justify-center shrink-0 text-xl group-hover:scale-110 transition-transform">
+                            {isNurseCareer ? "👩‍⚕️" : "👨‍⚕️"}
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <h4 className="text-sm font-extrabold text-stone-900 leading-tight">
+                                {card.title}
+                              </h4>
+                              <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase tracking-wider">
+                                {language === "te" ? "సిమ్యులేషన్" : "SIMULATION"}
+                              </span>
+                            </div>
+                            <p className="text-[11px] font-medium text-emerald-800 mt-0.5">
+                              {language === "te"
+                                ? "వాస్తవ ఆసుపత్రి సందర్భాలు & రోజువారీ దినచర్య"
+                                : "Real Hospital Situations & Daily Routine Walkthrough"}
+                            </p>
+                          </div>
+                        </div>
+                        <Gamepad2 className="w-5 h-5 text-emerald-600 shrink-0 mt-1" />
                       </div>
-                      <div>
-                        <h4 className="text-sm font-extrabold text-stone-900 leading-tight">{card.title}</h4>
-                        <p className="text-[11px] font-medium text-stone-400 mt-0.5">{card.subtitle}</p>
+
+                      <p className="text-xs text-stone-600 leading-relaxed font-medium">
+                        {isNurseCareer
+                          ? language === "te"
+                            ? "మార్నింగ్ హ్యాండ్‌ఓవర్, వైటల్స్ చెకింగ్, వార్డ్ రౌండ్స్, మందులు ఇవ్వడం మరియు ఐసీయూ అత్యవసర పరిస్థితులు — స్వయంగా నర్సు రోజువారీ దినచర్యను అనుభవించండి!"
+                            : "Morning ICU handover, vitals checking, doctor ward rounds, medicine administration, and emergency response — experience a real nurse's daily routine!"
+                          : language === "te"
+                          ? "ఓపీ కన్సల్టేషన్, వార్డ్ రౌండ్స్, ఆపరేషన్ థియేటర్ మరియు ఎమర్జెన్సీ కాల్స్ — స్వయంగా డాక్టర్ రోజువారీ దినచర్యను అనుభవించండి!"
+                          : "Morning triage, OPD consultations, ward rounds, operating theatre, and night emergencies — experience a doctor's real daily life!"}
+                      </p>
+
+                      <div className="flex items-center gap-1.5 text-xs font-black text-emerald-700 pt-1 group-hover:translate-x-0.5 transition-transform">
+                        <span>▶ {language === "te" ? "సిమ్యులేషన్ ప్రారంభించండి" : "Start Simulation Walkthrough"}</span>
                       </div>
                     </div>
-                    <Lock className="w-4 h-4 text-stone-300 shrink-0 mt-1" />
-                  </div>
+                  );
+                }
 
-                  {/* Blurred Preview Text */}
-                  <p className="text-xs text-stone-400 leading-relaxed select-none" style={{ filter: "blur(4px)", WebkitUserSelect: "none" }}>
-                    {card.preview}
-                  </p>
+                return (
+                  <div
+                    key={card.title}
+                    className="relative bg-white/70 border border-stone-200/80 rounded-2xl p-5 space-y-3 overflow-hidden"
+                  >
+                    {/* Card Header */}
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-stone-100 border border-stone-200/60 flex items-center justify-center shrink-0">
+                          <card.icon className="w-4.5 h-4.5 text-stone-400" />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-extrabold text-stone-900 leading-tight">{card.title}</h4>
+                          <p className="text-[11px] font-medium text-stone-400 mt-0.5">{card.subtitle}</p>
+                        </div>
+                      </div>
+                      <Lock className="w-4 h-4 text-stone-300 shrink-0 mt-1" />
+                    </div>
 
-                  {/* Unlock Label */}
-                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-stone-400">
-                    <Lock className="w-3 h-3 text-[#C9A97A]" />
-                    Unlocked in 1-on-1 Guidance Session
+                    {/* Blurred Preview Text */}
+                    <p className="text-xs text-stone-400 leading-relaxed select-none" style={{ filter: "blur(4px)", WebkitUserSelect: "none" }}>
+                      {card.preview}
+                    </p>
+
+                    {/* Unlock Label */}
+                    <div className="flex items-center gap-1.5 text-[11px] font-bold text-stone-400">
+                      <Lock className="w-3 h-3 text-[#C9A97A]" />
+                      Unlocked in 1-on-1 Guidance Session
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Bottom CTA Bar */}
@@ -1237,6 +1305,14 @@ export default function CareerReportsPage() {
         roadmap={roadmapCareer}
         onClose={() => setRoadmapCareer(null)}
         onOpenBooking={handleOpenBookingModal}
+      />
+      {/* ── Career Simulation Quest Modal (Doctor & Nurse) ── */}
+      <CareerSimulationModal
+        isOpen={isSimulationOpen}
+        onClose={() => setIsSimulationOpen(false)}
+        onOpenBooking={handleOpenBookingModal}
+        initialLang={language === "te" ? "te" : "en"}
+        careerId={selectedCareer?.id || "doctor"}
       />
       {/* Student Auth & Mandatory Onboarding Gate Modal */}
         <StudentAuthGateModal
@@ -1644,6 +1720,14 @@ export default function CareerReportsPage() {
         roadmap={roadmapCareer}
         onClose={() => setRoadmapCareer(null)}
         onOpenBooking={handleOpenBookingModal}
+      />
+      {/* ── Career Simulation Quest Modal (Doctor & Nurse) ── */}
+      <CareerSimulationModal
+        isOpen={isSimulationOpen}
+        onClose={() => setIsSimulationOpen(false)}
+        onOpenBooking={handleOpenBookingModal}
+        initialLang={language === "te" ? "te" : "en"}
+        careerId={selectedCareer?.id || "doctor"}
       />
       {/* Student Auth & Mandatory Onboarding Gate Modal */}
       <StudentAuthGateModal
