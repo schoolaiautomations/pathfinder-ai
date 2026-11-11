@@ -962,8 +962,8 @@ export default function CareerReportsPage() {
 
             {/* Roadmap Icon Button + Simulation Button + Audio Button grouped together on same line */}
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              {/* Simulation Game Button (Doctor & Nurse) */}
-              {(selectedCareer.id === "doctor" || selectedCareer.id === "nurse") && (
+              {/* Simulation Game Button (Doctor, Nurse, Lawyer, Bank PO, Architect, Agri, Teacher, SWE, CA) */}
+              {["doctor", "nurse", "lawyer", "bank", "bank_po", "architect", "agri", "teacher", "swe", "software_engineer", "ca", "chartered_accountant"].includes(selectedCareer.id) && (
                 <button
                   type="button"
                   onClick={() => setIsSimulationOpen(true)}
@@ -1145,10 +1145,79 @@ export default function CareerReportsPage() {
               ].map((card) => {
                 const hasSimulationCard =
                   card.title.includes("Daily Life") &&
-                  (selectedCareer.id === "doctor" || selectedCareer.id === "nurse");
+                  ["doctor", "nurse", "lawyer", "bank", "bank_po", "architect", "agri", "teacher", "swe", "software_engineer", "ca", "chartered_accountant"].includes(selectedCareer.id);
 
                 if (hasSimulationCard) {
-                  const isNurseCareer = selectedCareer.id === "nurse";
+                  const cId = selectedCareer.id;
+                  const isNurseCareer = cId === "nurse";
+                  const isLawyerCareer = cId === "lawyer";
+                  const isBankCareer = cId === "bank" || cId === "bank_po";
+                  const isArchitectCareer = cId === "architect";
+                  const isAgriCareer = cId === "agri" || cId === "agricultural_officer";
+                  const isTeacherCareer = cId === "teacher";
+                  const isSweCareer = cId === "swe" || cId === "software_engineer";
+                  const isCaCareer = cId === "ca" || cId === "chartered_accountant";
+
+                  const cardEmoji = isNurseCareer
+                    ? "👩‍⚕️"
+                    : isLawyerCareer
+                    ? "⚖️"
+                    : isBankCareer
+                    ? "🏦"
+                    : isArchitectCareer
+                    ? "📐"
+                    : isAgriCareer
+                    ? "🌾"
+                    : isTeacherCareer
+                    ? "👩‍🏫"
+                    : isSweCareer
+                    ? "💻"
+                    : isCaCareer
+                    ? "📊"
+                    : "👨‍⚕️";
+                  const cardSubtitle = language === "te"
+                    ? "వాస్తవ వృత్తిపరమైన సందర్భాలు & రోజువారీ దినచర్య"
+                    : "Real Professional Situations & Daily Routine Walkthrough";
+
+                  let cardDesc = "";
+                  if (isNurseCareer) {
+                    cardDesc = language === "te"
+                      ? "మార్నింగ్ హ్యాండ్‌ఓవర్, వైటల్స్ చెకింగ్, వార్డ్ రౌండ్స్, మందులు ఇవ్వడం మరియు ఐసీయూ అత్యవసర పరిస్థితులు — స్వయంగా నర్సు రోజువారీ దినచర్యను అనుభవించండి!"
+                      : "Morning ICU handover, vitals checking, doctor ward rounds, medicine administration, and emergency response — experience a real nurse's daily routine!";
+                  } else if (isLawyerCareer) {
+                    cardDesc = language === "te"
+                      ? "ఉదయపు కేస్ ప్రిపరేషన్, ఆస్తి వివాద క్లయింట్ కౌన్సెలింగ్, కోర్టు హాల్లో వాదనలు మరియు కార్పొరేట్ అగ్రిమెంట్లు — స్వయంగా న్యాయవాది దినచర్యను అనుభవించండి!"
+                      : "Morning case prep, land dispute client counseling, legal research, courtroom arguments, and corporate contracts — experience an advocate's real day!";
+                  } else if (isBankCareer) {
+                    cardDesc = language === "te"
+                      ? "బ్రాంచ్ ఓపెనింగ్, వృద్ధులకు పెన్షన్ సహాయం, సేవింగ్స్ ఖాతాలు, ముద్ర లోన్స్, కిసాన్ క్రెడిట్ కార్డులు మరియు రాత్రి లెక్కల సరిచూత — స్వయంగా బ్యాంక్ పీవో దినచర్యను అనుభవించండి!"
+                      : "Branch opening, pension withdrawal help, new accounts, SME loans, farmer crop credit, and evening ledger balancing — experience a Bank PO's real day!";
+                  } else if (isArchitectCareer) {
+                    cardDesc = language === "te"
+                      ? "స్టూడియో డ్రాఫ్టింగ్, స్థల పరిశీలన, ఫ్లోర్ ప్లాన్ స్కెచ్‌లు, 3D మోడలింగ్, క్లయింట్ ప్రెజెంటేషన్ మరియు సైట్ తనిఖీ — స్వయంగా ఆర్కిటెక్ట్ రోజువారీ దినచర్యను అనుభవించండి!"
+                      : "Studio drafting, site sun/wind study, hand sketches, 3D digital modeling, family presentation, and foundation site inspections — experience an architect's real day!";
+                  } else if (isAgriCareer) {
+                    cardDesc = language === "te"
+                      ? "ఆఫీస్ సంప్రదింపులు, వరి పొలం తనిఖీ, భూసార పరీక్ష, ఎరువుల సలహా, ప్రభుత్వ రాయితీలు మరియు రైతులకు శిక్షణ — స్వయంగా వ్యవసాయ అధికారి (AO) దినచర్యను అనుభవించండి!"
+                      : "Morning farmer consultations, paddy field visits, soil test analysis, fertilizer advisory, government subsidies, and village farmer training — experience an Agricultural Officer's real day!";
+                  } else if (isTeacherCareer) {
+                    cardDesc = language === "te"
+                      ? "పాఠ్య ప్రణాళిక, ఉదయపు ప్రార్థన, పాఠాల బోధన, విద్యార్థులకు మార్గదర్శనం, పరీక్షల నిర్వహణ మరియు తల్లిదండ్రులతో సమావేశం — స్వయంగా టీచర్ దినచర్యను అనుభవించండి!"
+                      : "Morning lesson prep, school assembly, classroom teaching, student guidance, exam invigilation, and parent-teacher consultations — experience a teacher's real day!";
+                  } else if (isSweCareer) {
+                    cardDesc = language === "te"
+                      ? "మార్నింగ్ స్టాండ్-అప్, కొత్త ఫీచర్ ఆర్కిటెక్చర్, డీప్ ఫోకస్ కోడింగ్, బగ్ డిబగ్గింగ్, కోడ్ రివ్యూలు మరియు ప్రొడక్షన్ హాట్‌ఫిక్స్ — స్వయంగా సాఫ్ట్‌వేర్ ఇంజనీర్ దినచర్యను అనుభవించండి!"
+                      : "Morning stand-up, feature architecture, deep focus coding, live bug debugging, pull request reviews, and production hotfixes — experience a Software Engineer's real day!";
+                  } else if (isCaCareer) {
+                    cardDesc = language === "te"
+                      ? "మార్నింగ్ ప్లానింగ్, వ్యాపారుల అకౌంట్స్, చట్టబద్ధమైన టాక్స్ ప్లానింగ్, కార్పొరేట్ ఆడిట్, స్టార్టప్ కన్సల్టేషన్ మరియు నైతిక ఆర్థిక మార్గదర్శనం — స్వయంగా చార్టర్డ్ అకౌంటెంట్ (CA) దినచర్యను అనుభవించండి!"
+                      : "Morning planning, business bookkeeping, legal tax planning, corporate audit scrutiny, startup incorporation, and ethical financial integrity — experience a Chartered Accountant's real day!";
+                  } else {
+                    cardDesc = language === "te"
+                      ? "ఓపీ కన్సల్టేషన్, వార్డ్ రౌండ్స్, ఆపరేషన్ థియేటర్ మరియు ఎమర్జెన్సీ కాల్స్ — స్వయంగా డాక్టర్ రోజువారీ దినచర్యను అనుభవించండి!"
+                      : "Morning triage, OPD consultations, ward rounds, operating theatre, and night emergencies — experience a doctor's real daily life!";
+                  }
+
                   return (
                     <div
                       key={card.title}
@@ -1158,7 +1227,7 @@ export default function CareerReportsPage() {
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-3">
                           <div className="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-300 flex items-center justify-center shrink-0 text-xl group-hover:scale-110 transition-transform">
-                            {isNurseCareer ? "👩‍⚕️" : "👨‍⚕️"}
+                            {cardEmoji}
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5 flex-wrap">
@@ -1170,9 +1239,7 @@ export default function CareerReportsPage() {
                               </span>
                             </div>
                             <p className="text-[11px] font-medium text-emerald-800 mt-0.5">
-                              {language === "te"
-                                ? "వాస్తవ ఆసుపత్రి సందర్భాలు & రోజువారీ దినచర్య"
-                                : "Real Hospital Situations & Daily Routine Walkthrough"}
+                              {cardSubtitle}
                             </p>
                           </div>
                         </div>
@@ -1180,13 +1247,7 @@ export default function CareerReportsPage() {
                       </div>
 
                       <p className="text-xs text-stone-600 leading-relaxed font-medium">
-                        {isNurseCareer
-                          ? language === "te"
-                            ? "మార్నింగ్ హ్యాండ్‌ఓవర్, వైటల్స్ చెకింగ్, వార్డ్ రౌండ్స్, మందులు ఇవ్వడం మరియు ఐసీయూ అత్యవసర పరిస్థితులు — స్వయంగా నర్సు రోజువారీ దినచర్యను అనుభవించండి!"
-                            : "Morning ICU handover, vitals checking, doctor ward rounds, medicine administration, and emergency response — experience a real nurse's daily routine!"
-                          : language === "te"
-                          ? "ఓపీ కన్సల్టేషన్, వార్డ్ రౌండ్స్, ఆపరేషన్ థియేటర్ మరియు ఎమర్జెన్సీ కాల్స్ — స్వయంగా డాక్టర్ రోజువారీ దినచర్యను అనుభవించండి!"
-                          : "Morning triage, OPD consultations, ward rounds, operating theatre, and night emergencies — experience a doctor's real daily life!"}
+                        {cardDesc}
                       </p>
 
                       <div className="flex items-center gap-1.5 text-xs font-black text-emerald-700 pt-1 group-hover:translate-x-0.5 transition-transform">

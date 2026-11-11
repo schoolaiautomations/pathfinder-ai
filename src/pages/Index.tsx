@@ -24,6 +24,7 @@ import {
   CheckCircle2,
   ArrowDown,
   HelpCircle,
+  Briefcase,
 } from "lucide-react";
 import wabiLogo from "@/lib/wabi_resolutions_logo.jpeg";
 import { BookOnlineCounsellingModal } from "@/components/common/BookOnlineCounsellingModal";
@@ -267,6 +268,12 @@ const Index = () => {
               Explore Careers
             </Link>
             <Link
+              to="/student-internships"
+              className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
+            >
+              Student Internships
+            </Link>
+            <Link
               to="/career-mentors"
               className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-600 hover:text-stone-900 px-3 py-2 rounded-xl hover:bg-stone-100 transition-all"
             >
@@ -321,6 +328,17 @@ const Index = () => {
               <span className="flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-stone-500" />
                 Explore Careers
+              </span>
+              <ChevronRight className="w-4 h-4 opacity-50" />
+            </Link>
+            <Link
+              to="/student-internships"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl font-bold text-xs bg-white border border-stone-200 text-stone-800 shadow-2xs hover:bg-stone-50 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-stone-500" />
+                Student Internships
               </span>
               <ChevronRight className="w-4 h-4 opacity-50" />
             </Link>
